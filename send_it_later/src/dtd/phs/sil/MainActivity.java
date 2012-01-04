@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -24,6 +25,8 @@ public class MainActivity extends Activity {
 
 	private ArrayList<ImageView> tabButtons;
 
+	private int displayingFrameId;
+
     static final int FRAME_PENDING = 0;
     static final int FRAME_SENT = 1;
     
@@ -31,6 +34,7 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
         mainFrames = (FrameLayout) findViewById(R.id.main_frames);
         addFrames();
@@ -57,8 +61,14 @@ public class MainActivity extends Activity {
 	@Override
     protected void onResume() {
     	super.onResume();
-    	showOnlyView(savedFrameId());
+    	showOnlyView(displayingFrameId);
+    	frames.get(displayingFrameId).onResume();
     }
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
 
 	private void addFrames() {
 		frames = new ArrayList<FrameView>();
@@ -68,6 +78,8 @@ public class MainActivity extends Activity {
 		for(int i = 0 ; i < frames.size() ; i++) {
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		}
+		
+		displayingFrameId = savedFrameId();
 	}
 	
 	private int savedFrameId() {
@@ -81,6 +93,7 @@ public class MainActivity extends Activity {
 			frames.get(i).setVisibility(displayed);
 			frames.get(i).onDisplayed();
 		}
+		displayingFrameId = id;
 	}
 	
 }

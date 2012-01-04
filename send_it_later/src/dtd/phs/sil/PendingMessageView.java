@@ -97,6 +97,11 @@ public class PendingMessageView
 
 	@Override
 	public void onDisplayed() {
+
+	}
+
+	@Override
+	public void onResume() {
 		loadPendingMessageAsync();
 	}
 

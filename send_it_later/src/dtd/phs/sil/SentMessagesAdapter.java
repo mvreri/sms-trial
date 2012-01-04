@@ -43,6 +43,7 @@ public class SentMessagesAdapter extends BaseAdapter {
 		public TextView contact;
 		public TextView content;
 		public TextView status;
+		public ImageView failedIcon;
 
 	}
 
@@ -68,6 +69,10 @@ public class SentMessagesAdapter extends BaseAdapter {
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		holder.status.setText(message.getStatus());
+		if ( ! message.isDelivered() ) {
+			holder.failedIcon.setVisibility(View.INVISIBLE);
+			
+		} else holder.failedIcon.setVisibility(View.VISIBLE);
 	}
 
 	private void createHolder(View v, ViewHolder holder) {
@@ -75,6 +80,7 @@ public class SentMessagesAdapter extends BaseAdapter {
 		holder.contact = (TextView) v.findViewById(R.id.tvContact);
 		holder.content = (TextView) v.findViewById(R.id.tvContent);
 		holder.status = (TextView) v.findViewById(R.id.tvStatus);
+		holder.failedIcon = (ImageView) v.findViewById(R.id.ivFailed);
 	}
 
 	public void setMessages(SentMessagesList list) {

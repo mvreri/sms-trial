@@ -21,4 +21,6 @@ public abstract class FrameView extends LinearLayout {
 
 	abstract public void onDisplayed();
 
+	abstract public void onResume();
+
 }

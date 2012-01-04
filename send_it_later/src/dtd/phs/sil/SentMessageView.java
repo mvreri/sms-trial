@@ -30,6 +30,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 		inflater.inflate(R.layout.sent_messages, this);
 		createFrames();
 	}
+	
 
 	private void createFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
@@ -70,7 +71,10 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	}
 
 	@Override
-	public void onDisplayed() {
+	public void onDisplayed() {}
+
+	@Override
+	public void onResume() {
 		loadSentDataAsync();
 	}
 
