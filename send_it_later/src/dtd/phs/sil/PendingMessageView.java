@@ -25,13 +25,10 @@ public class PendingMessageView
 	private View btAdd;
 	private FrameLayout mainFrames;
 	private ListView list;
-	private Activity hostedActivity;
 	private PendingMessageAdapter adapter;
-	Handler handler = null;
 	
 	public PendingMessageView(Activity hostedActivity, Handler handler) {
-		super(hostedActivity.getApplicationContext(), handler);
-		this.hostedActivity = hostedActivity;	
+		super(hostedActivity, handler);
 	}
 
 	@Override
@@ -96,6 +93,11 @@ public class PendingMessageView
 				
 			}
 		});
+	}
+
+	@Override
+	public void onDisplayed() {
+		loadPendingMessageAsync();
 	}
 
 

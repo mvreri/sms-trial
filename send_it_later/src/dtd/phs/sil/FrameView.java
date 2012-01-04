@@ -1,5 +1,6 @@
 package dtd.phs.sil;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.widget.LinearLayout;
@@ -7,13 +8,17 @@ import android.widget.LinearLayout;
 public abstract class FrameView extends LinearLayout {
 
 	protected Handler handler;
-
-	public FrameView(Context context, Handler handler) {
-		super(context);
+	protected Activity hostedActivity;
+	
+	public FrameView(Activity activity, Handler handler) {
+		super(activity.getApplicationContext());
 		this.handler = handler;
-		onCreate(context);
+		this.hostedActivity = activity;
+		onCreate(activity.getApplicationContext());
 	}
 
 	abstract void onCreate(Context context);
+
+	abstract public void onDisplayed();
 
 }

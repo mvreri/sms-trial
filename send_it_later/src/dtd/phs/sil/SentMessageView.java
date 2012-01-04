@@ -16,14 +16,12 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	protected static final int MESSAGES_FRAME = 1;
 	private static final int WAIT_FRAME = 0;
-	private Activity hostedActivity;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private SentMessagesAdapter adapter;
 
 	public SentMessageView(Activity hostedActivity, Handler handler) {
-		super(hostedActivity.getApplicationContext(), handler);
-		this.hostedActivity = hostedActivity;
+		super(hostedActivity, handler);
 	}
 
 	@Override
@@ -69,6 +67,11 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			}
 		});
 
+	}
+
+	@Override
+	public void onDisplayed() {
+		loadSentDataAsync();
 	}
 
 }

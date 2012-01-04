@@ -2,19 +2,42 @@ package dtd.phs.sil.entities;
 
 public class SentMessageItem {
 
+	String contact;
+	String content;
+	String status;
+	boolean isDelivered = false;
+	
+	public boolean isDelivered() {
+		return isDelivered;
+	}
+
+	public void setDelivered(boolean isDelivered) {
+		this.isDelivered = isDelivered;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getContact() {
-		// TODO Auto-generated method stub
-		return null;
+		return contact;
 	}
 
 	public String getContent() {
-		// TODO Auto-generated method stub
-		return null;
+		return content;
 	}
 
 	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
+		return status;
 	}
+
 
 }
