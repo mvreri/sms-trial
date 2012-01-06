@@ -6,4 +6,5 @@
     <string name="pending_messages">Pending messages</string>
     <string name="next">Next</string>
     <string name="sent">Sent</string>
+    <color name="mainTextColor">#666666</color>
 </resources>

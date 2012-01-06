@@ -13,7 +13,7 @@ import dtd.phs.sil.utils.Helpers;
 public class PendingMessageAdapter extends BaseAdapter {
 
 
-	private static final int STUB_AVATAR = R.drawable.ic_launcher;
+	private static final int STUB_AVATAR = R.drawable.contact;
 	private Context context;
 	private PendingMessagesList messages;
 

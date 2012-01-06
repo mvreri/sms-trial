@@ -2,6 +2,7 @@
 <resources>
     <dimen name="normalTextSize">12sp</dimen>    
     <dimen name="image_padding">3dp</dimen>
-    <dimen name="smallTextSize">8sp</dimen>
+    <dimen name="smallTextSize">10sp</dimen>
+    <dimen name="contactTextSize">13sp</dimen>
     
 </resources>

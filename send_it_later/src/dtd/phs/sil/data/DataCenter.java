@@ -1,6 +1,5 @@
 package dtd.phs.sil.data;
 
-import dtd.phs.sil.SentMessageView;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessagesList;
 
