@@ -13,6 +13,6 @@
   	android:gravity="center_vertical"
   	android:paddingLeft="5dp"
   	android:text="Time: 09:00"
-  	android:background="#ffffffff"
+  	android:background="#ffffff"
   />
 </LinearLayout>
