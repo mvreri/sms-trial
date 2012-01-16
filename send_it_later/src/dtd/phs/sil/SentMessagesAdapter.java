@@ -70,9 +70,8 @@ public class SentMessagesAdapter extends BaseAdapter {
 		holder.content.setText(message.getContent());
 		holder.status.setText(message.getStatus());
 		if ( ! message.isDelivered() ) {
-			holder.failedIcon.setVisibility(View.INVISIBLE);
-			
-		} else holder.failedIcon.setVisibility(View.VISIBLE);
+			holder.failedIcon.setVisibility(View.VISIBLE );
+		} else holder.failedIcon.setVisibility(View.INVISIBLE );
 	}
 
 	private void createHolder(View v, ViewHolder holder) {

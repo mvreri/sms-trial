@@ -45,7 +45,7 @@ public class Database {
 		item.setContact("Cu Gung (0977686056)");
 		item.setContent("Hohoho, success , eh ?");
 		item.setStatus("Delivered on 21:00 Jan.04.2012");
-		item.setDelivered(false);
+		item.setDelivered(true);
 		list.add(item);
 
 		return list;

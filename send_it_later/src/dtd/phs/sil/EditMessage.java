@@ -12,7 +12,7 @@ public class EditMessage extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	
+	    setContentView(R.layout.edit_message);
 	    // TODO Auto-generated method stub
 	}
 

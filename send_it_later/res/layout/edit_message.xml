@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	<LinearLayout
+	    android:orientation="horizontal" 
+	    >
+	    <TextView
+	        android:text="To: " 
+	        />
+	    <EditText
+	        android:id="@+id/etTo" 
+	        />
+	</LinearLayout>
+	<FrameLayout >
+	    <LinearLayout >
+		<TextView
+		    android:id="@+id/tvCountWords"
+		    android:text="Message (225/320)"
+		    />
+		<EditText
+		    android:id="@+id/etMessage"
+		    />
+		</LinearLayout>
+		<ListView
+		    android:id="@+id/listAutoComplete" 
+		    />
+	</FrameLayout>
+	
+	<TextView
+	    android:id="@+id/tvDate"	     
+	    />    
+	<TextView
+	    android:id="@+id/tvTime"	     
+	    />    
+		
+    
+
+</ScrollView>
