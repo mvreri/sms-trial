@@ -255,11 +255,11 @@ public class EditMessage extends Activity {
 				}
 			};
 		case DIALOG_FREQ:
-			return new ChooseFrequencyDialog(this) {
+			return new ChooseFrequencyDialog(this,R.string.Choose_Frequency,FrequencyHelpers.FREQ_NAMES) {
 				
 				@Override
-				public void onFreqSelected(Frequencies f) {
-					frequency = f;
+				public void onItemSelected(int postion) {
+					frequency = FrequencyHelpers.FREQUENCIES[postion];
 					updateFrequency();
 				}
 			};

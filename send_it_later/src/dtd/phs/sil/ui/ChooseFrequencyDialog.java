@@ -12,10 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import dtd.phs.sil.R;
-import dtd.phs.sil.R.id;
-import dtd.phs.sil.R.layout;
-import dtd.phs.sil.utils.FrequencyHelpers;
-import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public abstract class ChooseFrequencyDialog extends Dialog {
 
@@ -38,10 +34,15 @@ public abstract class ChooseFrequencyDialog extends Dialog {
 
 	private ListView listview;
 	private ArrayAdapter<String> adapter;
+	private TextView tvTitle;
+	private int titleId;
+	private String[] texts;
 
 
-	public ChooseFrequencyDialog(Context context) {
+	public ChooseFrequencyDialog(Context context,int titleId, String[] texts) {
 		super(context);
+		this.titleId = titleId;
+		this.texts = texts;
 	}
 
 	
@@ -49,20 +50,22 @@ public abstract class ChooseFrequencyDialog extends Dialog {
 	protected void onCreate(Bundle savedInstanceState) {	
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.dialog_frequencies);
+		setContentView(R.layout.dialog_text_select);
 		setCancelable(true);
+		tvTitle = (TextView)findViewById(R.id.tvTitle);
+		tvTitle.setText(getContext().getString(titleId));
 		listview = (ListView)findViewById(R.id.list);
-		adapter = new MyAdapter(getContext(), android.R.layout.simple_list_item_1, FrequencyHelpers.FREQ_NAMES);
+		adapter = new MyAdapter(getContext(), android.R.layout.simple_list_item_1, texts);
 		listview.setAdapter(adapter);
 		listview.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
-				onFreqSelected(FrequencyHelpers.FREQUENCIES[position]);
+				onItemSelected(position);
 				cancel();
 			}
 		});
 	}
 
 
-	abstract public void onFreqSelected(Frequencies frequencies);
+	abstract public void onItemSelected(int position);
 }
