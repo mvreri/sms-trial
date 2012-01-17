@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">Send it later</string>
+    <string name="please_wait">Please wait</string>
+    <string name="pending_messages">Pending messages</string>
+    <string name="next">Next</string>
+    <string name="sent">Sent</string>
+    <string name="Date">Date:</string>
+    
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Hour">Hour</string>
+    <string name="Minute">Minute</string>
+    <string name="To">To:</string>
+    <string name="Time">Time:</string>
+    <string name="Frequency">Frequency: </string>
+    <string name="Alert_on_delivery">Alert:</string>
+    <string name="Words">Words</string>
+    <string name="Message">Message</string>
+    <string name="Choose_Frequency">Choose Frequency</string>
+</resources>
