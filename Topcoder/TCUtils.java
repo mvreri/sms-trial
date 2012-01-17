@@ -4,11 +4,28 @@ import java.util.Collections;
 
 
 public class TCUtils {
+	/**
+	 * 
+	 * @param num
+	 * @return true/false
+	 */
 	static public boolean isPrime(int num) {
 		if ( num <= 1) return false;
 		for(int d = 2 ; d*d <= num ; d++){
 			if ( num % d == 0 ) return false;
 		}
+		return true;
+	}
+	
+	
+	/**
+	 * Check for palindrome
+	 * @param s
+	 * @return
+	 */
+	static public boolean isPalindrome(String s) {
+		for(int i =  0 , j = s.length() - 1; i < j ; i++,j--)
+			if ( s.charAt(i) != s.charAt(j)) return false;
 		return true;
 	}
 	
