@@ -16,5 +16,6 @@
     <string name="Time">Time:</string>
     <string name="Frequency">Frequency: </string>
     <string name="Alert_on_delivery">Alert:</string>
-    <string name="Messages">Messages</string>
+    <string name="Words">Words</string>
+    <string name="Message">Message</string>
 </resources>

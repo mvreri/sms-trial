@@ -50,7 +50,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/text_left_padding"
-                    android:text="Message"
+                    android:text="@string/Message"
                     android:textColor="@color/edit_message_text_color" />
 
                 <EditText

@@ -107,7 +107,7 @@ public class EditMessage extends Activity {
 					
 					@Override
 					public void run() {
-						tvCountWords.setText(res.getString(R.string.Messages)+": " + parts.size() + " / " + s.length());
+						tvCountWords.setText(res.getString(R.string.Words)+": "  + s.length()+ " / " + parts.size());
 					}
 				});
 			}
