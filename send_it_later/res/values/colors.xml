@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <color name="white">#ffffffff</color>
-    <color name="mainTextColor">#666666</color>
-    <color name="edit_message_text_color">#666666</color>
-    <color name="border_color">#ddd</color>
-    <color name="blue">#1075d1</color>
-    <color name="blur_blue">#661075d1</color>
-</resources>
