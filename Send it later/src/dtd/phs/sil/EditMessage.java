@@ -25,9 +25,11 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
+import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.ui.ChooseDateDialog;
 import dtd.phs.sil.ui.ChooseFrequencyDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
+import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
@@ -65,6 +67,7 @@ public class EditMessage extends Activity {
 	private EditText etMessage;
 	private SmsManager sms;
 	protected Frequencies frequency;
+	protected AlertTypes alertType;
 	
 
 	/** Called when the activity is first created. */
@@ -89,6 +92,7 @@ public class EditMessage extends Activity {
 		res = getResources();
 		sms = SmsManager.getDefault();
 		frequency = Frequencies.ONCE;
+		alertType = AlertTypes.SILENT;
 	}
 
 	private void createViews() {
@@ -156,7 +160,15 @@ public class EditMessage extends Activity {
 		});
 		updateFrequency();
 		
-		tvAlert = getTextView(R.id.alertLine, res.getString(R.string.Alert_on_delivery),null);
+		tvAlert = getTextView(R.id.alertLine, res.getString(R.string.Alert_on_delivery),new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialog(DIALOG_ALERT);
+			}
+		});
+		
+		updateAlert();
 	}
 
 	private void updateFrequency() {
@@ -263,10 +275,23 @@ public class EditMessage extends Activity {
 					updateFrequency();
 				}
 			};
+		case DIALOG_ALERT:
+			return new ChooseFrequencyDialog(this,R.string.Alert_by_delivery,AlertHelpers.ALERT_STRINGS) {
+				
+				@Override
+				public void onItemSelected(int position) {
+					alertType = AlertHelpers.ALERT_TYPE[position];
+					updateAlert();
+				}
+			};
 				
 		}
 
 		return null;
+	}
+
+	protected void updateAlert() {
+		tvAlert.setText(AlertHelpers.mapAlertType2Str.get(alertType));
 	}
 
 	protected void updateTimeDateTexts(Calendar calendar) {

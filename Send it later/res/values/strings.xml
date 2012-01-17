@@ -19,4 +19,5 @@
     <string name="Words">Words</string>
     <string name="Message">Message</string>
     <string name="Choose_Frequency">Choose Frequency</string>
+    <string name="Alert_by_delivery">Alert by delivery</string>
 </resources>
