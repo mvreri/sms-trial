@@ -106,4 +106,10 @@ public class FrequencyHelpers {
 		}
 		return true;
 	}
+
+	public static int indexOf(Frequencies freq) {
+		for(int i = 0 ; i < FREQUENCIES.length ; i++)
+			if ( FREQUENCIES[i] == freq) return i;
+		return -1;
+	}
 }	

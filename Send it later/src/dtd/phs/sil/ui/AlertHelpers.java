@@ -12,4 +12,9 @@ public class AlertHelpers {
 			mapAlertType2Str.put(ALERT_TYPE[i], ALERT_STRINGS[i]);
 		}
 	}
+	public static int indexOf(AlertTypes alertType) {
+		for(int i = 0 ; i < ALERT_TYPE.length ; i++)
+			if ( ALERT_TYPE[i] == alertType ) return i;
+		return -1;
+	}
 }

@@ -15,9 +15,9 @@
     <string name="To">To:</string>
     <string name="Time">Time:</string>
     <string name="Frequency">Frequency: </string>
-    <string name="Alert_on_delivery">Alert:</string>
+    <string name="Alert_on_delivery">Alert on delivery:</string>
     <string name="Words">Words</string>
     <string name="Message">Message</string>
     <string name="Choose_Frequency">Choose Frequency</string>
-    <string name="Alert_by_delivery">Alert by delivery</string>
+    <string name="Add">Add</string>
 </resources>

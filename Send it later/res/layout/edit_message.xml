@@ -106,7 +106,7 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="64dp"
+        android:layout_height="58dp"
         android:orientation="horizontal"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -122,7 +122,7 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/trans_button_bg"
-            android:text="@string/Ok"
+            android:text="@string/Add"
             android:textColor="#FFF" />
 
         <Button

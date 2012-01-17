@@ -146,7 +146,7 @@ public abstract class ChooseDateDialog extends Dialog {
 		int y = selectedCalendar.get(Calendar.YEAR);
 		int m = selectedCalendar.get(Calendar.MONTH);
 		int d = selectedCalendar.get(Calendar.DATE);
-		tvSelectedDate.setText("Selected: " + new SimpleDateFormat("EEEE - MMMM.dd, yyyy").format(new Date(y-1900,m,d)));
+		tvSelectedDate.setText( new SimpleDateFormat("EEEE - MMMM.dd, yyyy").format(new Date(y-1900,m,d)));
 	}
 
 	private void updateCalendarFromViews() {

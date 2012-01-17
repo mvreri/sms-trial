@@ -15,7 +15,7 @@
 		</shape>
     </item>
 
-    <item android:top="32dp">
+    <item android:top="29dp">
         <shape>
 			<gradient
             	android:angle="90"

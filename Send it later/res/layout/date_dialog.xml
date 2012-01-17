@@ -8,12 +8,13 @@
         android:id="@+id/tvSelectedTime"
         android:layout_width="fill_parent"
         android:layout_height="36dp"
+        android:gravity="center"        
         android:background="@drawable/date_dialog_title_bg"
-        android:gravity="center_vertical"
         android:paddingLeft="5dp"
         android:text="Selected date: Jan.21, 2012"
         android:textColor="#ffffffff"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+	/>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"

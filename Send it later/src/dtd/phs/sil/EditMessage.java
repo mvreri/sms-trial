@@ -276,7 +276,7 @@ public class EditMessage extends Activity {
 				}
 			};
 		case DIALOG_ALERT:
-			return new ChooseFrequencyDialog(this,R.string.Alert_by_delivery,AlertHelpers.ALERT_STRINGS) {
+			return new ChooseFrequencyDialog(this,R.string.Alert_on_delivery,AlertHelpers.ALERT_STRINGS) {
 				
 				@Override
 				public void onItemSelected(int position) {
