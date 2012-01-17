@@ -26,11 +26,14 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.devsmart.android.ui.HorizontalListView;
 
 import dtd.phs.sil.ui.ChooseDateDialog;
+import dtd.phs.sil.ui.ChooseFrequencyDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
+import dtd.phs.sil.utils.FrequencyHelpers;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage extends Activity {
 
@@ -39,6 +42,8 @@ public class EditMessage extends Activity {
 
 	protected static final int DIALOG_DATE = 0;
 	protected static final int DIALOG_TIME = 1;
+	protected static final int DIALOG_FREQ = 2;
+	protected static final int DIALOG_ALERT = 3;
 
 	protected static final int FRAME_FILL_INFO = 0;
 	protected static final int FRAME_CONTACTS_LIST = 1;
@@ -59,6 +64,7 @@ public class EditMessage extends Activity {
 	private TextView tvCountWords;
 	private EditText etMessage;
 	private SmsManager sms;
+	protected Frequencies frequency;
 	
 
 	/** Called when the activity is first created. */
@@ -82,6 +88,7 @@ public class EditMessage extends Activity {
 		selectedCalendar = Calendar.getInstance();
 		res = getResources();
 		sms = SmsManager.getDefault();
+		frequency = Frequencies.ONCE;
 	}
 
 	private void createViews() {
@@ -140,8 +147,20 @@ public class EditMessage extends Activity {
 		
 		updateTimeDateTexts(selectedCalendar);
 		
-		tvFreq = getTextView(R.id.frequencyLine, res.getString(R.string.Frequency),null);
+		tvFreq = getTextView(R.id.frequencyLine, res.getString(R.string.Frequency),new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				showDialog(DIALOG_FREQ);
+			}
+		});
+		updateFrequency();
+		
 		tvAlert = getTextView(R.id.alertLine, res.getString(R.string.Alert_on_delivery),null);
+	}
+
+	private void updateFrequency() {
+		tvFreq.setText(FrequencyHelpers.mapFreq2Str.get(frequency));
 	}
 
 	private TextView getTextView(int layoutId, String title, OnClickListener onClickListener) {
@@ -235,6 +254,16 @@ public class EditMessage extends Activity {
 					updateTimeDateTexts(selectedCalendar);
 				}
 			};
+		case DIALOG_FREQ:
+			return new ChooseFrequencyDialog(this) {
+				
+				@Override
+				public void onFreqSelected(Frequencies f) {
+					frequency = f;
+					updateFrequency();
+				}
+			};
+				
 		}
 
 		return null;
@@ -258,6 +287,8 @@ public class EditMessage extends Activity {
 			break;
 		case DIALOG_TIME:
 			((ChooseTimeDialog)dialog).prepare(selectedCalendar);
+			break;
+		case DIALOG_FREQ:
 			break;
 		}
 	}
