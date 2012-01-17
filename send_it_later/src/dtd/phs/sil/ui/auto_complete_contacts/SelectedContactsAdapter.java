@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import dtd.phs.sil.R;
 
-public class SelectedContactsAdapter extends BaseAdapter {
+public abstract class SelectedContactsAdapter extends BaseAdapter {
 
 	private Context context;
 	private ContactsList list;
@@ -61,10 +61,13 @@ public class SelectedContactsAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				removeItem(position);
 				notifyDataSetChanged();
+				onItemRemoved(position);
 			}
 		});
 		return v;
 	}
+
+	abstract public void onItemRemoved(int position);
 
 	protected void removeItem(int position) {
 		list.remove(position);

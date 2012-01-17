@@ -1,6 +1,8 @@
 package dtd.phs.sil.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
@@ -141,11 +143,10 @@ public abstract class ChooseDateDialog extends Dialog {
 	}
 
 	private void updateTextView() {
-		tvSelectedDate.setText("Selected date: " +
-				selectedCalendar.get(Calendar.DATE) + "." 
-				+ MONTHS[selectedCalendar.get(Calendar.MONTH)] + ", "
-				+ selectedCalendar.get(Calendar.YEAR)
-		);
+		int y = selectedCalendar.get(Calendar.YEAR);
+		int m = selectedCalendar.get(Calendar.MONTH);
+		int d = selectedCalendar.get(Calendar.DATE);
+		tvSelectedDate.setText("Selected: " + new SimpleDateFormat("EEEE - MMMM.dd, yyyy").format(new Date(y-1900,m,d)));
 	}
 
 	private void updateCalendarFromViews() {

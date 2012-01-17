@@ -6,12 +6,15 @@
     <string name="pending_messages">Pending messages</string>
     <string name="next">Next</string>
     <string name="sent">Sent</string>
-    <color name="mainTextColor">#666666</color>
+    <string name="Date">Date:</string>
+    
     <string name="Ok">Ok</string>
     <string name="Cancel">Cancel</string>
     <string name="Hour">Hour</string>
     <string name="Minute">Minute</string>
     <string name="To">To:</string>
-    <string name="Frequency">Frequency</string>
-    <string name="Alert_on_delivery">Alert</string>
+    <string name="Time">Time:</string>
+    <string name="Frequency">Frequency: </string>
+    <string name="Alert_on_delivery">Alert:</string>
+    <string name="Messages">Messages</string>
 </resources>
