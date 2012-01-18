@@ -1,10 +1,12 @@
 package dtd.phs.sil.data;
 
+import android.content.Context;
 import android.content.IntentSender.SendIntentException;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
+import dtd.phs.sil.utils.Logger;
 
 public class Database {
 
@@ -49,6 +51,27 @@ public class Database {
 		list.add(item);
 
 		return list;
+	}
+
+	public static void savePendingMessageItem(Context context, PendingMessageItem item) {
+		DatabaseHelpers dbHelper = new DatabaseHelpers(context);
+		dbHelper.open();
+		dbHelper.savePendingMessageItem(item);
+		dbHelper.close();
+	}
+
+	public static PendingMessagesList getPendingMessages(Context context) {
+		PendingMessagesList list = new PendingMessagesList();
+		try {
+			DatabaseHelpers dbHelper = new DatabaseHelpers(context);
+			dbHelper.open();		
+			list = dbHelper.getPendingMessages();
+			dbHelper.close();			
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+		return list;
+
 	}
 
 }

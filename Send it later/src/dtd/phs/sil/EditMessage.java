@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -25,6 +26,8 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
+import dtd.phs.sil.data.Database;
+import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.ui.ChooseDateDialog;
 import dtd.phs.sil.ui.ChooseFrequencyDialog;
@@ -68,6 +71,8 @@ public class EditMessage extends Activity {
 	private SmsManager sms;
 	protected Frequencies frequency;
 	protected AlertTypes alertType;
+	private Button btOk;
+	private Button btCancel;
 	
 
 	/** Called when the activity is first created. */
@@ -99,6 +104,41 @@ public class EditMessage extends Activity {
 		createAutoContactModules();
 		createOptionViews();
 		createMessageViews();
+		createButtons();
+	}
+
+	private void createButtons() {
+		btOk = (Button) findViewById(R.id.btOk);
+		btOk.setText(res.getString(R.string.Add));
+		btOk.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Database.savePendingMessageItem(
+						getApplicationContext(),
+						createPendingMessage());
+			}
+		});
+		
+		btCancel = (Button) findViewById(R.id.btCancel);
+		btCancel.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		
+	}
+
+	protected PendingMessageItem createPendingMessage() {
+		dtd.phs.sil.ui.auto_complete_contacts.ContactsList contacts = selectedAdapter.getSelectedList();
+		return PendingMessageItem.createInstance(
+				contacts.getNames(),
+				contacts.getNumbers(), 
+				etMessage.getText().toString(), 
+				selectedCalendar.getTimeInMillis(), 
+				FrequencyHelpers.indexOf(frequency), 
+				AlertHelpers.indexOf(alertType)
+		);
 	}
 
 	private void createMessageViews() {

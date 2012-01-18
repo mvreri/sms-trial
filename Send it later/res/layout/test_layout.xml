@@ -3,16 +3,18 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:background="#fff7f7f7"
+  android:orientation="vertical"
   >
+  <Button
+      android:id="@+id/btAdd"
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content"
+      android:text="Add new sms schedule"
+      />
+  <ListView
+      android:id="@+id/list"
+      android:layout_width="fill_parent" 
+      android:layout_height="fill_parent"
+	></ListView>
   
-  <dtd.phs.sil.ui.AlarmTextView
-  	android:layout_width="wrap_content"
-  	android:layout_height="56dp"
-  	android:paddingRight="30dp"
-  	android:gravity="center_vertical"
-  	android:paddingLeft="5dp"
-  	android:text="Time: 09:00"
-  	android:background="#ffffff"
-  />
 </LinearLayout>

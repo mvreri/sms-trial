@@ -12,7 +12,15 @@ import dtd.phs.sil.R;
 public abstract class SelectedContactsAdapter extends BaseAdapter {
 
 	private Context context;
-	private ContactsList list;
+	private ContactsList selectedList;
+
+	public ContactsList getSelectedList() {
+		return selectedList;
+	}
+
+	public void setSelectedList(ContactsList selectedList) {
+		this.selectedList = selectedList;
+	}
 
 	public Context getContext() {
 		return context;
@@ -20,25 +28,23 @@ public abstract class SelectedContactsAdapter extends BaseAdapter {
 
 	public SelectedContactsAdapter(Context applicationContext) {
 		this.context = applicationContext;
-		list = new ContactsList();
+		selectedList = new ContactsList();
 	}
 
-	public void setContactsList(ContactsList list) {
-		this.list = list;
-	}
+
 	
 	public void addContact(ContactItem contact) {
-		list.add(0, contact);
+		selectedList.add(0, contact);
 	}
 	
 	@Override
 	public int getCount() {
-		return list.size();
+		return selectedList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return list.get(position);
+		return selectedList.get(position);
 	}
 
 	@Override
@@ -53,7 +59,7 @@ public abstract class SelectedContactsAdapter extends BaseAdapter {
 				context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).
 				inflate(R.layout.selected_contacts_item, null);
 		TextView tv = (TextView) v.findViewById(R.id.tvContact);
-		final String name = list.get(position).getName();
+		final String name = selectedList.get(position).getName();
 		tv.setText(name);
 		tv.setOnClickListener(new OnClickListener() {
 			
@@ -70,7 +76,7 @@ public abstract class SelectedContactsAdapter extends BaseAdapter {
 	abstract public void onItemRemoved(int position);
 
 	protected void removeItem(int position) {
-		list.remove(position);
+		selectedList.remove(position);
 	}
 
 }
