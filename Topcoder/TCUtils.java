@@ -1,6 +1,11 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 
 public class TCUtils {
@@ -149,4 +154,32 @@ public class TCUtils {
 			if ( RCODE.charAt(i) == c) return NVAL[i];
 		return -10000;
 	}
+	
+	public static Date convertStr2Date(String s,String pattern) {
+		try {
+			DateFormat f = new SimpleDateFormat(pattern);
+			return (Date) f.parse(s);
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Convert String to Calendar
+	 * @param s
+	 * @param pattern
+	 * @return
+	 */
+	public static Calendar convertStr2Calendar(String s,String pattern) {
+		try {
+			DateFormat f = new SimpleDateFormat(pattern);
+			Date date = (Date) f.parse(s);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			return calendar;
+		} catch (ParseException e) {
+			return null;
+		}
+	}
+
 }
