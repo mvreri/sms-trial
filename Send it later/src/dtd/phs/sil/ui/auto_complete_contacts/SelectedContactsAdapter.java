@@ -12,7 +12,9 @@ import dtd.phs.sil.R;
 public abstract class SelectedContactsAdapter extends BaseAdapter {
 
 	private Context context;
-	private ContactsList selectedList;
+	private ContactsList selectedList; 
+	//The list may has no info about "last contacted time" 
+	//(Operation: ContactsList.createContactsWithoutLastContactedTime()) 
 
 	public ContactsList getSelectedList() {
 		return selectedList;

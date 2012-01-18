@@ -34,6 +34,7 @@ import dtd.phs.sil.ui.ChooseFrequencyDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
 import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
+import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
 import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
@@ -52,6 +53,9 @@ public class EditMessage extends Activity {
 
 	protected static final int FRAME_FILL_INFO = 0;
 	protected static final int FRAME_CONTACTS_LIST = 1;
+	
+	//Set passedMessage = null -> Add new message , otherwise: edit
+	public static PendingMessageItem passedMessage = null;
 
 	private TextView tvDate;
 	private TextView tvTime;
@@ -73,6 +77,8 @@ public class EditMessage extends Activity {
 	protected AlertTypes alertType;
 	private Button btOk;
 	private Button btCancel;
+	private boolean isEditView;
+	private PendingMessageItem beingEditedMessage;
 	
 
 	/** Called when the activity is first created. */
@@ -89,7 +95,8 @@ public class EditMessage extends Activity {
 	protected void onResume() {
 		super.onResume();
 		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
-		selectedCalendar = Calendar.getInstance();
+		if ( !isEditView )
+			selectedCalendar = Calendar.getInstance();
 	}
 	
 	private void init() {
@@ -98,6 +105,15 @@ public class EditMessage extends Activity {
 		sms = SmsManager.getDefault();
 		frequency = Frequencies.ONCE;
 		alertType = AlertTypes.SILENT;
+		if (EditMessage.passedMessage != null) {
+			isEditView = true;
+			beingEditedMessage = EditMessage.passedMessage;		
+			EditMessage.passedMessage = null;
+			selectedCalendar = beingEditedMessage.getStartDateTime();
+			frequency = beingEditedMessage.getFreq();
+			alertType = beingEditedMessage.getAlert();
+		}
+
 	}
 
 	private void createViews() {
@@ -109,15 +125,27 @@ public class EditMessage extends Activity {
 
 	private void createButtons() {
 		btOk = (Button) findViewById(R.id.btOk);
-		btOk.setText(res.getString(R.string.Add));
+		btOk.setText(res.getString(R.string.Add));		
 		btOk.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Database.savePendingMessageItem(
 						getApplicationContext(),
 						createPendingMessage());
+				onBackPressed();
 			}
 		});
+		if ( isEditView ) {
+			btOk.setText(res.getString(R.string.Save));
+			btOk.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					long id = beingEditedMessage.getId();
+					Database.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
+					onBackPressed();
+				}
+			});
+		}
 		
 		btCancel = (Button) findViewById(R.id.btCancel);
 		btCancel.setOnClickListener(new OnClickListener() {
@@ -163,6 +191,11 @@ public class EditMessage extends Activity {
 				});
 			}
 		});
+		
+		if ( isEditView ) {
+			etMessage.setText(beingEditedMessage.getContent());
+			//TODO: check words count !
+		}
 	}
 
 	private void createOptionViews() {
@@ -188,6 +221,7 @@ public class EditMessage extends Activity {
 					}
 				}		
 		);
+		
 		
 		updateTimeDateTexts(selectedCalendar);
 		
@@ -237,7 +271,8 @@ public class EditMessage extends Activity {
 		contactsList.setAdapter(adapter);
 
 		lvSelectedContacts = (HorizontalListView) findViewById(R.id.listSelected);
-		lvSelectedContacts.setVisibility(View.GONE);
+		lvSelectedContacts.setVisibility(View.GONE);		
+		
 		selectedAdapter = new SelectedContactsAdapter(getApplicationContext()) {
 			@Override
 			public void onItemRemoved(int position) {
@@ -246,6 +281,12 @@ public class EditMessage extends Activity {
 				}
 			}
 		};
+		
+		if ( isEditView ) {
+			ContactsList selectedContacts = ContactsList.createContactsWithoutLastContactedTime(beingEditedMessage);
+			selectedAdapter.setSelectedList(selectedContacts);
+			lvSelectedContacts.setVisibility(View.VISIBLE);
+		}
 		lvSelectedContacts.setAdapter(selectedAdapter);
 
 		contactsList.setOnItemClickListener(new OnItemClickListener() {

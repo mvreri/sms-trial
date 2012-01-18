@@ -61,8 +61,10 @@ public class PendingMessageItem {
 	public long getId() {return id;}
 	public void setId(long id) {this.id = id;}
 	public FrequencyHelpers.Frequencies getFreq() {return freq;}
+	public int getFreqIndex() {return FrequencyHelpers.indexOf(getFreq()) ;}
 	public void setFreq(FrequencyHelpers.Frequencies freq) {this.freq = freq;}
 	public AlertHelpers.AlertTypes getAlert() {return alert;}
+	public int getAlertIndex() { return AlertHelpers.indexOf(alert) ;}
 	public void setAlert(AlertHelpers.AlertTypes alert) {this.alert = alert;}
 	public void setPhoneNumbers(String[] phoneNumbers) {this.phoneNumbers = phoneNumbers;}
 	public String getNextTime() {return nextTime;}

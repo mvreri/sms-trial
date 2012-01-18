@@ -52,4 +52,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		return TablePendingMessages.removeRow(database, id);
 	}
 
+	public boolean modifyPendingItem(long id, PendingMessageItem item) {
+		return TablePendingMessages.modify(database,id,item);
+	}
+
 }

@@ -1,7 +1,6 @@
 package dtd.phs.sil.data;
 
 import android.content.Context;
-import android.content.IntentSender.SendIntentException;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessageItem;
@@ -86,6 +85,19 @@ public class Database {
 			return false;
 		}
 
+	}
+
+	public static boolean modifyPendingMessage(Context context, long id,PendingMessageItem item) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			boolean successful = helper.modifyPendingItem( id, item);
+			helper.close();
+			return successful;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return false;
+		} 
 	}
 
 }

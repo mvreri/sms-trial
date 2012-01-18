@@ -15,8 +15,8 @@ public class TablePendingMessages {
 
 	static public final String SEPERATOR = "#@#";
 	public static final String TABLE_NAME = "PENDING_MESSAGES_TBL";
-	
-	
+
+
 	private static final String NAMEs = "names";
 	private static final String PHONE_NUMBERs = "phone_numbers";
 	private static final String MESSAGE_CONTENT = "message_content";
@@ -24,7 +24,7 @@ public class TablePendingMessages {
 	private static final String FREQ_TYPE = "freq_type";
 	private static final String ALERT_TYPE = "alert_type";
 	private static final String ID = "id";
-	
+
 	public static final String[] COLUMNS = {
 		ID + " INTEGER PRIMARY KEY AUTOINCREMENT",
 		NAMEs + " text",
@@ -34,8 +34,8 @@ public class TablePendingMessages {
 		FREQ_TYPE + " integer",
 		ALERT_TYPE+ " integer"
 	};
-	
-	
+
+
 	static protected void saveItem(SQLiteDatabase db,PendingMessageItem item) {
 		String names = StringHelpers.implode(item.getNames(),SEPERATOR);
 		String numbers = StringHelpers.implode(item.getPhoneNumbers(),SEPERATOR);
@@ -44,17 +44,17 @@ public class TablePendingMessages {
 		FrequencyHelpers.Frequencies freq = item.getFreq();
 		AlertHelpers.AlertTypes alertType = item.getAlert();
 		ContentValues values = new ContentValues();
-		
+
 		values.put(NAMEs, names );
 		values.put(PHONE_NUMBERs, numbers);
 		values.put(MESSAGE_CONTENT, content);
 		values.put(DATE_TIME, dateTime.getTimeInMillis());
 		values.put(FREQ_TYPE, FrequencyHelpers.indexOf(freq));
 		values.put(ALERT_TYPE, AlertHelpers.indexOf(alertType));
-		
+
 		db.insert(TABLE_NAME, null, values);
 	}
-	
+
 	/**
 	 * Get all pending messages (not sorted in any particular order)
 	 * @param db
@@ -88,7 +88,7 @@ public class TablePendingMessages {
 		long dateTime = cursor.getLong(cursor.getColumnIndex(DATE_TIME));
 		int freqIndex = cursor.getInt(cursor.getColumnIndex(FREQ_TYPE));
 		int alertIndex = cursor.getInt(cursor.getColumnIndex(ALERT_TYPE));
-		
+
 		return PendingMessageItem.createInstance(
 				id,
 				names.split(SEPERATOR), 
@@ -98,10 +98,36 @@ public class TablePendingMessages {
 				freqIndex, 
 				alertIndex);
 	}
-	
+
 	static protected boolean removeRow(SQLiteDatabase db,long rowId) {
 		int delete = db.delete(TABLE_NAME, ID +" = " + rowId, null);
 		if ( delete > 0 ) return true;
 		return false;
+	}
+
+	//	public static final String[] COLUMNS = {
+	//		ID + " INTEGER PRIMARY KEY AUTOINCREMENT",
+	//		NAMEs + " text",
+	//		PHONE_NUMBERs + " text",
+	//		MESSAGE_CONTENT + " text",
+	//		DATE_TIME + " integer",
+	//		FREQ_TYPE + " integer",
+	//		ALERT_TYPE+ " integer"
+	//	};
+	public static boolean modify(SQLiteDatabase database, long id, PendingMessageItem item) {
+		ContentValues values = new ContentValues();
+		values.put(NAMEs, StringHelpers.implode(item.getNames(),SEPERATOR));
+		values.put(PHONE_NUMBERs, StringHelpers.implode(item.getPhoneNumbers(), SEPERATOR));
+		values.put(MESSAGE_CONTENT, item.getContent());
+		values.put(DATE_TIME, item.getStartDateTime().getTimeInMillis());
+		values.put(FREQ_TYPE, item.getFreqIndex());
+		values.put(ALERT_TYPE, item.getAlertIndex());
+		try {
+			int update = database.update(TABLE_NAME, values, ID+" = " +id, null);
+			if ( update > 0) return true;
+			return false;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 }

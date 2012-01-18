@@ -70,7 +70,7 @@ public class TestAct extends Activity {
 	    btAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(getApplicationContext(),EditMessage.class);
+				Intent i = new Intent(getApplicationContext(),EditMessage.class);				
 				startActivity(i);
 			}
 		});
@@ -80,8 +80,11 @@ public class TestAct extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
-				Database.removePendingMessage(getApplicationContext(), messages.get(position).getId());
-				updateUIFromDB();
+				EditMessage.passedMessage = messages.get(position);
+				Intent i = new Intent(getApplicationContext(),EditMessage.class);
+				startActivity(i);
+//				Database.removePendingMessage(getApplicationContext(), messages.get(position).getId());
+//				updateUIFromDB();
 			}
 		});
 	}
