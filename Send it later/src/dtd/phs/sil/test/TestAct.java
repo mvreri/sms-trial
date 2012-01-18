@@ -11,12 +11,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import dtd.phs.sil.EditMessage;
 import dtd.phs.sil.R;
 import dtd.phs.sil.data.Database;
@@ -38,11 +38,11 @@ public class TestAct extends Activity {
 		public View getView(int position, View convertView, ViewGroup parent) {		
 			TextView v = (TextView) Helpers.inflate(getContext(), R.layout.simple_list_item);
 			PendingMessageItem item = getItem(position);
-			String s = "";
+			String s = ""+item.getId();
 			String sep = "##";
 			s += StringHelpers.implode(item.getNames(),sep) + "\n";
 			s += StringHelpers.implode(item.getPhoneNumbers(), sep) + "\n";
-			s += item.getContent();
+			s += item.getContent()+"\n";
 			Calendar startDateTime = item.getStartDateTime();
 			s += new SimpleDateFormat("EE - MMMM.dd, yyyy HH:mm").format(new Date(startDateTime.getTimeInMillis())) + "\n";
 			s += "Frequency: " + item.getFreq().toString() + "\n"; 
@@ -74,11 +74,24 @@ public class TestAct extends Activity {
 				startActivity(i);
 			}
 		});
+	    
+	    list.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				Database.removePendingMessage(getApplicationContext(), messages.get(position).getId());
+				updateUIFromDB();
+			}
+		});
 	}
 	@Override
 	protected void onResume() {
 		super.onResume();
-	    messages = Database.getPendingMessages(getApplicationContext());
+	    updateUIFromDB();
+	}
+	private void updateUIFromDB() {
+		messages = Database.getPendingMessages(getApplicationContext());
 	    adapter = new MyAdapter(
 	    		getApplicationContext(),	    		
 	    		messages);

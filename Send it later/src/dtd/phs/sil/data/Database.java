@@ -74,4 +74,18 @@ public class Database {
 
 	}
 
+	public static boolean removePendingMessage(Context context, long id) {
+		try {
+			DatabaseHelpers dbHelper = new DatabaseHelpers(context);
+			dbHelper.open();
+			boolean result = dbHelper.removePendingMessageItem(id);
+			dbHelper.close();
+			return result;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return false;
+		}
+
+	}
+
 }

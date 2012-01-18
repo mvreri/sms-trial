@@ -23,8 +23,10 @@ public class TablePendingMessages {
 	private static final String DATE_TIME = "date_time";
 	private static final String FREQ_TYPE = "freq_type";
 	private static final String ALERT_TYPE = "alert_type";
+	private static final String ID = "id";
 	
 	public static final String[] COLUMNS = {
+		ID + " INTEGER PRIMARY KEY AUTOINCREMENT",
 		NAMEs + " text",
 		PHONE_NUMBERs + " text",
 		MESSAGE_CONTENT + " text",
@@ -79,6 +81,7 @@ public class TablePendingMessages {
 	}
 
 	private static PendingMessageItem createFromCursor(Cursor cursor) {
+		long id = cursor.getLong(cursor.getColumnIndex(ID));
 		String names = cursor.getString(cursor.getColumnIndex(NAMEs));
 		String numbers = cursor.getString(cursor.getColumnIndex(PHONE_NUMBERs));
 		String content = cursor.getString(cursor.getColumnIndex(MESSAGE_CONTENT));
@@ -87,6 +90,7 @@ public class TablePendingMessages {
 		int alertIndex = cursor.getInt(cursor.getColumnIndex(ALERT_TYPE));
 		
 		return PendingMessageItem.createInstance(
+				id,
 				names.split(SEPERATOR), 
 				numbers.split(SEPERATOR), 
 				content, 
@@ -95,4 +99,9 @@ public class TablePendingMessages {
 				alertIndex);
 	}
 	
+	static protected boolean removeRow(SQLiteDatabase db,long rowId) {
+		int delete = db.delete(TABLE_NAME, ID +" = " + rowId, null);
+		if ( delete > 0 ) return true;
+		return false;
+	}
 }

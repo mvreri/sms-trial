@@ -26,6 +26,7 @@ public class PendingMessageItem {
 
 	
 	public static PendingMessageItem createInstance(
+			long id, 
 			String[] names,
 			String[] phoneNumbers,
 			String content,
@@ -34,6 +35,7 @@ public class PendingMessageItem {
 			int alertIndex)
 	{
 		PendingMessageItem item = new PendingMessageItem();
+		item.setId(id);
 		item.setNames( names );
 		item.setPhoneNumbers(phoneNumbers);
 		item.setContent(content);

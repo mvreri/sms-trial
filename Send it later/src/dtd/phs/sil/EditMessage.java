@@ -132,6 +132,7 @@ public class EditMessage extends Activity {
 	protected PendingMessageItem createPendingMessage() {
 		dtd.phs.sil.ui.auto_complete_contacts.ContactsList contacts = selectedAdapter.getSelectedList();
 		return PendingMessageItem.createInstance(
+				0,
 				contacts.getNames(),
 				contacts.getNumbers(), 
 				etMessage.getText().toString(), 
@@ -155,7 +156,6 @@ public class EditMessage extends Activity {
 				String content = s.toString();
 				final ArrayList<String> parts = sms.divideMessage(content);
 				tvCountWords.post(new Runnable() {
-					
 					@Override
 					public void run() {
 						tvCountWords.setText(res.getString(R.string.Words)+": "  + s.length()+ " / " + parts.size());
