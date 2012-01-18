@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
@@ -53,13 +54,13 @@ public class EditMessage extends Activity {
 
 	protected static final int FRAME_FILL_INFO = 0;
 	protected static final int FRAME_CONTACTS_LIST = 1;
-	
+
 	//Set passedMessage = null -> Add new message , otherwise: edit
 	public static PendingMessageItem passedMessage = null;
 
 	private TextView tvDate;
 	private TextView tvTime;
-	
+
 	protected Calendar selectedCalendar = null;
 	private FrameLayout mainFrames;
 	private ListView contactsList;
@@ -79,7 +80,7 @@ public class EditMessage extends Activity {
 	private Button btCancel;
 	private boolean isEditView;
 	private PendingMessageItem beingEditedMessage;
-	
+
 
 	/** Called when the activity is first created. */
 	@Override
@@ -98,7 +99,7 @@ public class EditMessage extends Activity {
 		if ( !isEditView )
 			selectedCalendar = Calendar.getInstance();
 	}
-	
+
 	private void init() {
 		selectedCalendar = Calendar.getInstance();
 		res = getResources();
@@ -129,10 +130,15 @@ public class EditMessage extends Activity {
 		btOk.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Database.savePendingMessageItem(
-						getApplicationContext(),
-						createPendingMessage());
-				onBackPressed();
+				if ( isValidMessage() ) {
+					Database.savePendingMessageItem(
+							getApplicationContext(),
+							createPendingMessage());
+					onBackPressed();
+				} else {
+					//TODO:
+					showInvalidMessageToast();
+				}
 			}
 		});
 		if ( isEditView ) {
@@ -140,13 +146,17 @@ public class EditMessage extends Activity {
 			btOk.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					long id = beingEditedMessage.getId();
-					Database.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
-					onBackPressed();
+					if ( isValidMessage() ) {
+						long id = beingEditedMessage.getId();
+						Database.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
+						onBackPressed();
+					} else {
+						showInvalidMessageToast();
+					}
 				}
 			});
 		}
-		
+
 		btCancel = (Button) findViewById(R.id.btCancel);
 		btCancel.setOnClickListener(new OnClickListener() {
 			@Override
@@ -154,7 +164,19 @@ public class EditMessage extends Activity {
 				onBackPressed();
 			}
 		});
-		
+
+	}
+
+	protected boolean isValidMessage() {
+		ContactsList selectedList = selectedAdapter.getSelectedList();
+		if ( selectedList.isEmpty() ) return false;
+		String content = etMessage.getText().toString();
+		if ( content.trim().length() == 0 ) return false;
+		return true;
+	}
+
+	protected void showInvalidMessageToast() {
+		Toast.makeText(getApplicationContext(), res.getString(R.string.Invalid_message_warning), Toast.LENGTH_LONG).show();
 	}
 
 	protected PendingMessageItem createPendingMessage() {
@@ -174,7 +196,7 @@ public class EditMessage extends Activity {
 		tvCountWords = (TextView) findViewById(R.id.tvCountWords);
 		etMessage = (EditText) findViewById(R.id.etMessage);
 		etMessage.addTextChangedListener(new TextWatcher() {
-			
+
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 			@Override
@@ -191,7 +213,7 @@ public class EditMessage extends Activity {
 				});
 			}
 		});
-		
+
 		if ( isEditView ) {
 			etMessage.setText(beingEditedMessage.getContent());
 			//TODO: check words count !
@@ -221,27 +243,27 @@ public class EditMessage extends Activity {
 					}
 				}		
 		);
-		
-		
+
+
 		updateTimeDateTexts(selectedCalendar);
-		
+
 		tvFreq = getTextView(R.id.frequencyLine, res.getString(R.string.Frequency),new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				showDialog(DIALOG_FREQ);
 			}
 		});
 		updateFrequency();
-		
+
 		tvAlert = getTextView(R.id.alertLine, res.getString(R.string.Alert_on_delivery),new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				showDialog(DIALOG_ALERT);
 			}
 		});
-		
+
 		updateAlert();
 	}
 
@@ -272,7 +294,7 @@ public class EditMessage extends Activity {
 
 		lvSelectedContacts = (HorizontalListView) findViewById(R.id.listSelected);
 		lvSelectedContacts.setVisibility(View.GONE);		
-		
+
 		selectedAdapter = new SelectedContactsAdapter(getApplicationContext()) {
 			@Override
 			public void onItemRemoved(int position) {
@@ -281,7 +303,7 @@ public class EditMessage extends Activity {
 				}
 			}
 		};
-		
+
 		if ( isEditView ) {
 			ContactsList selectedContacts = ContactsList.createContactsWithoutLastContactedTime(beingEditedMessage);
 			selectedAdapter.setSelectedList(selectedContacts);
@@ -349,7 +371,7 @@ public class EditMessage extends Activity {
 			};
 		case DIALOG_FREQ:
 			return new ChooseFrequencyDialog(this,R.string.Choose_Frequency,FrequencyHelpers.FREQ_NAMES) {
-				
+
 				@Override
 				public void onItemSelected(int postion) {
 					frequency = FrequencyHelpers.FREQUENCIES[postion];
@@ -358,14 +380,14 @@ public class EditMessage extends Activity {
 			};
 		case DIALOG_ALERT:
 			return new ChooseFrequencyDialog(this,R.string.Alert_on_delivery,AlertHelpers.ALERT_STRINGS) {
-				
+
 				@Override
 				public void onItemSelected(int position) {
 					alertType = AlertHelpers.ALERT_TYPE[position];
 					updateAlert();
 				}
 			};
-				
+
 		}
 
 		return null;
