@@ -181,5 +181,15 @@ public class TCUtils {
 			return null;
 		}
 	}
+	
+	public static Date convertCalendar2Date(Calendar calendar) {
+		return new Date(calendar.getTimeInMillis());
+	}
+	
+	public static Calendar convertDate2Calendar(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		return cal;
+	}
 
 }
