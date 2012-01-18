@@ -59,6 +59,7 @@
                     android:layout_height="wrap_content"
                     android:minHeight="108dp"
                     android:capitalize="sentences"
+                    android:gravity="top|left"
 				/>
 
                 <LinearLayout
