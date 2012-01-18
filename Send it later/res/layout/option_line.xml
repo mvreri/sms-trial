@@ -33,10 +33,10 @@
         android:textColor="@color/edit_message_text_color"
         android:textSize="@dimen/edit_options_text_size" />
     <ImageView
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/arrow"
+        android:src="@drawable/right_arrow"
         />
 
 </LinearLayout>
