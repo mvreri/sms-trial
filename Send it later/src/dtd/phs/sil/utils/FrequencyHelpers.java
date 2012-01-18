@@ -47,32 +47,54 @@ public class FrequencyHelpers {
 	 * Get next occurence, which is >= calendar ("=" is ok) and fulfills frequency f
 	 * @param calendar
 	 * @param f
-	 * @return
+	 * @return next occurence, null if there is no
 	 */
 	public static Calendar getNextCalendar(Calendar calendar,Frequencies f) {
 		Calendar result = (Calendar) calendar.clone();
+		long currentMillis = System.currentTimeMillis();
+		long calendarMills = calendar.getTimeInMillis();
 		switch (f) {
 		case ONCE:
-			break;
+			if ( currentMillis > calendarMills ) return null;
+			else return result;
 		case DAILY:
-			result.add(Calendar.DATE, 1);
+			while ( calendarMills < currentMillis ) {
+				result.add(Calendar.DATE, 1);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;
 		case WEEKLY:
-			result.add(Calendar.DATE, 7);
+			while ( calendarMills < currentMillis ) {
+				result.add(Calendar.DATE, 7);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;
 		case MONTHLY:
-			result.add(Calendar.MONTH, 1);
+			while ( calendarMills < currentMillis ) {
+				result.add(Calendar.MONTH, 1);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;
 		case YEARLY:
-			result.add(Calendar.YEAR, 1);
+			while ( calendarMills < currentMillis ) {
+				result.add(Calendar.YEAR, 1);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;
 		case EV_WEEK_DAY:
-			while ( ! isWeekDay(result) ) result.add(Calendar.DATE, 1); 
+			while ( ! isWeekDay(result) || calendarMills < currentMillis) {
+				result.add(Calendar.DATE, 1);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;
 		case EV_WEEKEND:
-			while ( isWeekDay(result) ) result.add(Calendar.DATE, 1);
+			while ( isWeekDay(result)  || calendarMills < currentMillis) {
+				result.add(Calendar.DATE, 1);
+				calendarMills = result.getTimeInMillis();
+			}
 			break;			
 		case EV_5:
+			aasdasd
 			result.add(Calendar.MINUTE, 5);
 			break;
 		case EV_15:
