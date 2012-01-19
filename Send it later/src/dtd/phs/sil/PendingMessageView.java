@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
 import dtd.phs.sil.entities.PendingMessagesList;
@@ -37,7 +39,7 @@ public class PendingMessageView
 		inflater.inflate(R.layout.pending_messages, this);
 		createViews();
 	}
-
+	
 	private void createViews() {
 		createTopBar();
 		createMainFrames();
@@ -46,6 +48,14 @@ public class PendingMessageView
 	private void createMainFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.pending_main_frames);
 		list = (ListView) findViewById(R.id.listPending);
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
+				EditMessage.passedMessage = adapter.getMessage(position);
+				Intent i = new Intent(getContext(),EditMessage.class);
+				hostedActivity.startActivity(i);
+			}
+		});
 		adapter = new PendingMessageAdapter(hostedActivity.getApplicationContext(),new PendingMessagesList() );
 		list.setAdapter(adapter);
 		loadPendingMessageAsync();		
@@ -53,7 +63,7 @@ public class PendingMessageView
 
 	private void loadPendingMessageAsync() {
 		Helpers.showOnlyView(mainFrames,WAIT_FRAME);
-		DataCenter.loadPendingMessages( this );
+		DataCenter.loadPendingMessages( this, getContext());
 	}
 
 	private void createTopBar() {

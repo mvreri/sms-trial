@@ -27,6 +27,8 @@
                 android:id="@+id/tvContact"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:text="CuGung (+84977686056)"
                 android:textColor="@color/mainTextColor"
                 android:textSize="@dimen/contactTextSize" />

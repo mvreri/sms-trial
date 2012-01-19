@@ -38,7 +38,7 @@ public class PendingMessageAdapter extends BaseAdapter {
 		return position;
 	}
 
-	
+
 	public class ViewHolder {
 		public ImageView avatar;
 		public TextView contact;
@@ -64,12 +64,20 @@ public class PendingMessageAdapter extends BaseAdapter {
 	}
 
 	private void updateView(View view, ViewHolder holder, PendingMessageItem message) {
-		
+
 		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
+
+		updateNext(holder, message);
+	}
+
+	private void updateNext(ViewHolder holder, PendingMessageItem message) {
+
 		String next = context.getResources().getString(R.string.next);
-		holder.status.setText(next+": " + message.getNextTime());
+		String nextTime = message.getNextTime();
+		if ( nextTime == null) nextTime = "TODO: remove this one !";
+		holder.status.setText(next+": " + nextTime);
 	}
 
 	private void createHolder(View view, ViewHolder holder) {
@@ -81,6 +89,10 @@ public class PendingMessageAdapter extends BaseAdapter {
 
 	public void setMessages(PendingMessagesList list) {
 		this.messages = list;
+	}
+
+	public PendingMessageItem getMessage(int position) {
+		return messages.get(position);
 	}
 
 }
