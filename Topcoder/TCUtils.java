@@ -191,5 +191,26 @@ public class TCUtils {
 		cal.setTime(date);
 		return cal;
 	}
+	
+	/***
+	 * BIT OPERATORS
+	 * bit operators
+	 */
+	
+	public static boolean isBit1At(int n,int index) {
+		return (n & (1<<index)) != 0;
+	}
+	
+	public static boolean isBit0At(int n,int index) {
+		return (n & (1<<index)) == 0;
+	}
+	
+	public static int setBit1At(int n,int index) {
+		return (n | (1 << index));
+	}
+	
+	public static int setBit0At(int n,int index) {
+		return (n &(~(1<<index)));
+	}
 
 }
