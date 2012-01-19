@@ -44,76 +44,111 @@ public class FrequencyHelpers {
 	}
 
 	/**
-	 * Get next occurence, which is >= calendar ("=" is ok) and fulfills frequency f
+	 * Get next occurence that fullfilled (mathmatical formulated):
+	 * nextOccurence(Calendar calendar,Frequencies f,long currentMillis) = time , such that:
+	 * time = min{ t | t >= currentMillis ^ t >= calendar.getTimeInMillis() ^ t is fullfilled(calendar,f) }
 	 * @param calendar
 	 * @param f
 	 * @return next occurence, null if there is no
 	 */
+	//TODO: create unit tests
 	public static Calendar getNextCalendar(Calendar calendar,Frequencies f) {
 		Calendar result = (Calendar) calendar.clone();
-		long currentMillis = System.currentTimeMillis();
-		long calendarMills = calendar.getTimeInMillis();
+		
+		long resultMills = calendar.getTimeInMillis();
+		long minTime = Math.max(System.currentTimeMillis(),calendar.getTimeInMillis());
+
 		switch (f) {
 		case ONCE:
-			if ( currentMillis > calendarMills ) return null;
+			if ( minTime > resultMills ) return null;
 			else return result;
 		case DAILY:
-			while ( calendarMills < currentMillis ) {
-				result.add(Calendar.DATE, 1);
-				calendarMills = result.getTimeInMillis();
-			}
+			adjustResultCalendarForNow(calendar, result, minTime);
+			long millis = result.getTimeInMillis();
+			if ( minTime > millis ) result.add(Calendar.DATE, 1);
 			break;
 		case WEEKLY:
-			while ( calendarMills < currentMillis ) {
+			while ( resultMills < minTime ) {
 				result.add(Calendar.DATE, 7);
-				calendarMills = result.getTimeInMillis();
+				resultMills = result.getTimeInMillis();
 			}
 			break;
 		case MONTHLY:
-			while ( calendarMills < currentMillis ) {
+			while ( resultMills < minTime ) {
 				result.add(Calendar.MONTH, 1);
-				calendarMills = result.getTimeInMillis();
+				resultMills = result.getTimeInMillis();
 			}
 			break;
 		case YEARLY:
-			while ( calendarMills < currentMillis ) {
+			while ( resultMills < minTime ) {
 				result.add(Calendar.YEAR, 1);
-				calendarMills = result.getTimeInMillis();
+				resultMills = result.getTimeInMillis();
 			}
 			break;
 		case EV_WEEK_DAY:
-			while ( ! isWeekDay(result) || calendarMills < currentMillis) {
+			adjustResultCalendarForNow(calendar, result, minTime);
+			resultMills = result.getTimeInMillis();
+			while ( ! isWeekDay(result) || resultMills < minTime) {
 				result.add(Calendar.DATE, 1);
-				calendarMills = result.getTimeInMillis();
+				resultMills = result.getTimeInMillis();
 			}
 			break;
 		case EV_WEEKEND:
-			while ( isWeekDay(result)  || calendarMills < currentMillis) {
+			adjustResultCalendarForNow(calendar, result, minTime);
+			while ( isWeekDay(result)  || resultMills < minTime) {
 				result.add(Calendar.DATE, 1);
-				calendarMills = result.getTimeInMillis();
+				resultMills = result.getTimeInMillis();
 			}
 			break;			
 		case EV_5:
-			aasdasd
-			result.add(Calendar.MINUTE, 5);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 5);
 			break;
 		case EV_15:
-			result.add(Calendar.MINUTE, 15);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 15);
 			break;
 		case EV_30:
-			result.add(Calendar.MINUTE, 30);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 30);
 			break;
 		case EV_HOUR:
-			result.add(Calendar.HOUR_OF_DAY, 1);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 60);
 			break;
 		case EV_2_HOURS:
-			result.add(Calendar.HOUR_OF_DAY, 2);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 120);
 			break;
 		case EV_12_HOURS:
-			result.add(Calendar.HOUR_OF_DAY, 12);
+			adjustTimeForEveryNMinutes(calendar, result, resultMills, minTime, 720);
 			break;
 		}
 		return result;
+	}
+
+	private static void adjustTimeForEveryNMinutes(
+			Calendar calendar,
+			Calendar result, 
+			long resultMills, 
+			long minTime, 
+			int every) {
+		adjustResultCalendarForNow(calendar, result, minTime);
+		while (resultMills < minTime) {
+			result.add(Calendar.MINUTE, every);
+			resultMills = result.getTimeInMillis();
+		}
+	}
+
+	/**
+	 * Set the result such that: it's nearest of minTime  moment &&same HH:mm:ss as the calendar
+	 * @param calendar
+	 * @param result
+	 * @param minTime
+	 */
+	private static void adjustResultCalendarForNow(
+			Calendar calendar,
+			Calendar result, 
+			long minTime) {
+		result.setTimeInMillis(minTime);
+		result.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+		result.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+		result.set(Calendar.SECOND, calendar.get(Calendar.SECOND));
 	}
 
 	private static boolean isWeekDay(Calendar result) {
