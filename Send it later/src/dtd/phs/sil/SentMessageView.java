@@ -43,7 +43,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	private void loadSentDataAsync() {
 		Helpers.showOnlyView(mainFrames, WAIT_FRAME );
-		DataCenter.loadSentMessages( this );
+		DataCenter.loadSentMessages( this.getContext(),this );
 	}
 
 	@Override

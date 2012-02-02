@@ -1,6 +1,8 @@
 package dtd.phs.sil.utils;
 
-import dtd.phs.sil.SendSMSService.RunAfterSendingFinish;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -44,6 +46,12 @@ public class Helpers {
 				runner.run();
 			}
 		}).start();
+	}
+
+	public static String formatTime(long sentTime) {
+		Date date = new Date(sentTime);
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy");
+		return formatter.format(date);
 	}
 
 }

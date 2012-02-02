@@ -2,6 +2,7 @@ package dtd.phs.sil.data;
 
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
+import dtd.phs.sil.entities.SentMessagesList;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -66,6 +67,10 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 
 	public void saveSentMessage(PendingMessageItem messageItem, boolean isDelivered) {
 		TableSentMessages.saveSentMessageFromPendingMessage(database,messageItem,isDelivered);
+	}
+
+	public SentMessagesList getSentMessages() {
+		return TableSentMessages.getAllSentMessages(database);
 	}
 
 }

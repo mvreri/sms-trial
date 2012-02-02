@@ -1,10 +1,13 @@
 package dtd.phs.sil.entities;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import dtd.phs.sil.utils.Helpers;
+
 public class SentMessageItem {
 
-	String contact;
 	String content;
-	String status;
 	boolean isDelivered = false;
 	private String[] names;
 	private String[] numbers;
@@ -18,19 +21,20 @@ public class SentMessageItem {
 		this.isDelivered = isDelivered;
 	}
 
-	public void setContact(String contact) {
-		this.contact = contact;
-	}
-
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 	public String getContact() {
+		String contact = "";
+		String[] names = getNames();
+		if ( names.length != 1 ) {
+			for(int i =  0 ; i < names.length - 1 ; i++)
+				contact += names[i] + " ; ";
+			contact += names[names.length-1];
+		} else {
+			contact= names[0] + " (" + getPhonenumbers()[0] + ")";
+		}
 		return contact;
 	}
 
@@ -39,6 +43,11 @@ public class SentMessageItem {
 	}
 
 	public String getStatus() {
+		String status = "";
+		if ( isDelivered() ) {
+			status += "Delivered at: ";
+		} else status += "Sent failed at: ";
+		status += Helpers.formatTime(getSentTime()); 
 		return status;
 	}
 

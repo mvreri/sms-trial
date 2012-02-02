@@ -5,7 +5,6 @@ import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
-import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 
 public class Database {
@@ -19,7 +18,7 @@ public class Database {
 			helpers.close();
 			return pendingMessages;
 		} catch (Exception e) {
-			return null;
+			return pendingMessages;
 		}
 
 		//TEST purpose:
@@ -42,23 +41,34 @@ public class Database {
 		return list;
 	}
 
-	public static SentMessagesList loadSentMessages() {
-		return StubSentMessages();
+	public static SentMessagesList loadSentMessages(Context context) {
+		SentMessagesList list = new SentMessagesList();
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			list = helper.getSentMessages();
+			helper.close();
+			return list;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return list;
+		}
+		//return StubSentMessages();
 	}
 
 	private static SentMessagesList StubSentMessages() {
 		SentMessagesList list = new SentMessagesList();
 		SentMessageItem item = new SentMessageItem();
-		item.setContact("Cu Gung (0916686056)");
+//		item.setContact("Cu Gung (0916686056)");
 		item.setContent("This must be failed !");
-		item.setStatus("Sent failed on 19:00 Jan.04.2012");
+//		item.setStatus("Sent failed on 19:00 Jan.04.2012");
 		item.setDelivered(false);
 		list.add(item);
 
 		item = new SentMessageItem();
-		item.setContact("Cu Gung (0977686056)");
+//		item.setContact("Cu Gung (0977686056)");
 		item.setContent("Hohoho, success , eh ?");
-		item.setStatus("Delivered on 21:00 Jan.04.2012");
+//		item.setStatus("Delivered on 21:00 Jan.04.2012");
 		item.setDelivered(true);
 		list.add(item);
 

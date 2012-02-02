@@ -24,12 +24,12 @@ public class DataCenter {
 		}).start();
 	}
 
-	public static void loadSentMessages(final IDataLoader loader) {
+	public static void loadSentMessages(final Context context, final IDataLoader loader) {
 		new Thread( new Runnable() {
 			@Override
 			public void run() {
 				try {
-					SentMessagesList list = Database.loadSentMessages();
+					SentMessagesList list = Database.loadSentMessages(context);
 					loader.onGetDataSuccess(list);
 				} catch (Exception e) {
 					loader.onGetDataFailed(e);
