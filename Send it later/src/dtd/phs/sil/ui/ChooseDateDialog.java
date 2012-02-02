@@ -29,8 +29,10 @@ public abstract class ChooseDateDialog extends Dialog {
 	private WheelView yearWheel;
 	private WheelView dayWheel;
 	private OnWheelChangedListener listener;
-	String MONTHS[] = new String[] {"January", "February", "March", "April", "May",
-			"June", "July", "August", "September", "October", "November", "December"};
+	String MONTHS[] = new String[] {
+			"Jan.", "Feb.", "Mar.", "Apr.", 
+			"May","Jun.", "Jul.", "Aug.", 
+			"Sep.", "Oct.","Nov.", "Dec."};
 	private Calendar selectedCalendar;
 	private Calendar currentTimeDate;
 	private TextView tvSelectedDate;

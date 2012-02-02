@@ -44,7 +44,7 @@ public class SendSMSService extends Service {
 				if ( rowid != -1) {
 					messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
 					sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
-					Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish(errorOcc));
+					Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish());
 				} else {
 					wakeLock.release();
 					setWakeLock(null);
@@ -58,18 +58,15 @@ public class SendSMSService extends Service {
 
 
 	public class RunAfterSendingFinish implements Runnable {
-		private boolean errorOcc;
-
-		public RunAfterSendingFinish(boolean errorOcc) {
-			this.errorOcc = errorOcc;
-		}
 
 		@Override
 		public void run() {
 			if ( errorOcc ) {
+				Logger.logInfo("Save failed message is progressing ... ");
 				DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
 			} else {
 				//TODO:save to SMS-content provider
+				Logger.logInfo("Save successful message is progressing ... ");
 				DataCenter.saveSentMessage(getApplicationContext(),messageItem);
 
 			}

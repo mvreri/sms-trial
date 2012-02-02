@@ -72,7 +72,9 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	}
 
 	@Override
-	public void onDisplayed() {}
+	public void onDisplayed() {
+		loadSentDataAsync();
+	}
 
 	@Override
 	public void onResume() {

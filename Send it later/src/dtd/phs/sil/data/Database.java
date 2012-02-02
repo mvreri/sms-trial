@@ -151,6 +151,7 @@ public class Database {
 
 	public static void saveSentMessage(Context context,PendingMessageItem messageItem, boolean isDelivered) {
 		try {
+			Logger.logInfo("Sent message with status: " + isDelivered + " is saving ...");
 			DatabaseHelpers helper = new DatabaseHelpers(context);
 			helper.open();
 			helper.saveSentMessage(messageItem,isDelivered);

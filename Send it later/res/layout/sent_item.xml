@@ -2,52 +2,64 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
-
-    <ImageView
-        android:id="@+id/ivAvatar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/image_padding"
-        android:src="@drawable/ic_launcher" />
+    android:background="@drawable/rect_5_corners"
+    android:orientation="vertical"
+    android:padding="5dp" >
 
     <LinearLayout
-        android:layout_width="1dp"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:orientation="vertical" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/tvContact"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="@dimen/image_padding"
+            android:src="@drawable/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="1dp"
             android:layout_weight="1"
-            android:text="CuGung (+84977686056)"
-            android:textSize="@dimen/normalTextSize"
-            android:textStyle="bold" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tvContent"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_weight="3"
-            android:text="This is the message content"
-            android:textSize="@dimen/normalTextSize" />
+            <TextView
+                android:id="@+id/tvContact"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="CuGung (+84977686056)"
+                android:textColor="@color/mainTextColor"
+                android:textSize="@dimen/contactTextSize" />
 
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:text="Delivered: 08:00 - Jan.4.2012"
-            android:textSize="@dimen/smallTextSize" />
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Next: 08:00 - Jan.4.2012"
+                android:textColor="@color/mainTextColor"
+                android:textSize="@dimen/smallTextSize" />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/ivFailed"
+            android:layout_width="24dp" 
+            android:layout_height="24dp"
+            android:src="@drawable/small_failed"
+            android:layout_gravity="center_vertical"
+            />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivFailed"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/small_failed" />
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="3dp"
+        android:singleLine="true"
+        android:text="Message content goes here !"
+        android:textColor="@color/mainTextColor"
+        android:textSize="@dimen/normalTextSize" />
 
 </LinearLayout>

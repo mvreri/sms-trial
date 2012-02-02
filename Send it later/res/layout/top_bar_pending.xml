@@ -2,20 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+    android:background="@drawable/title_bg" 
+    >
 	<TextView
 	    android:layout_width="1dp"
 	    android:layout_height="fill_parent"
 	    android:layout_weight="1"
 	    android:text="@string/pending_messages"
+	    android:textColor="#FFF"
 	    android:gravity="center"
+	    />
+	<TextView
+	    android:layout_height="fill_parent"
+	    android:layout_width="0.5dp"
+	    android:background="#dd666666"
 	    />
 	<ImageButton
 	    android:id="@+id/btAdd"
-	    android:layout_width="wrap_content"
+	    android:layout_width="48dp"
 	    android:layout_height="48dp"
 	    android:padding="@dimen/image_padding"
-	    android:src="@drawable/ic_launcher"
+	    android:src="@drawable/pencil"
 	    android:background="#00112233"
 	    />
     

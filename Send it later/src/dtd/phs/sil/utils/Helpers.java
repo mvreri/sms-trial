@@ -29,7 +29,7 @@ public class Helpers {
 
 	public static float dp2px(Context context, int i) {		
 		Resources r = context.getResources();
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, r.getDisplayMetrics());
+		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, r.getDisplayMetrics());
 	}
 
 	public static void startAfter(final int waitingTime,final Runnable runner) {
