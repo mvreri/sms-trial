@@ -139,11 +139,11 @@ public class Database {
 		}
 	}
 
-	public static void saveSentMessage(Context context,PendingMessageItem messageItem) {
+	public static void saveSentMessage(Context context,PendingMessageItem messageItem, boolean isDelivered) {
 		try {
 			DatabaseHelpers helper = new DatabaseHelpers(context);
 			helper.open();
-			helper.saveSentMessage(messageItem);
+			helper.saveSentMessage(messageItem,isDelivered);
 			helper.close();
 		} catch (Exception e) {
 			Logger.logError(e);

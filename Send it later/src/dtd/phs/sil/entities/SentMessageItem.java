@@ -43,17 +43,32 @@ public class SentMessageItem {
 	}
 
 	public static SentMessageItem createFromPendingMessage(
-			PendingMessageItem messageItem) {
-		
+			PendingMessageItem messageItem, boolean isDelivered) {
+		return createInstance(
+				messageItem.getNames(), 
+				messageItem.getPhoneNumbers(), 
+				messageItem.getContent(), 
+				isDelivered, 
+				System.currentTimeMillis());
+	}
+	
+	public static SentMessageItem createInstance(
+			String[] names,
+			String[] numbers,
+			String content,
+			boolean isDelivered,
+			long sentTime
+			) {
 		SentMessageItem sentMessage = new SentMessageItem();
-		sentMessage.setNames(messageItem.getNames());
-		sentMessage.setPhonenumbers(messageItem.getPhoneNumbers());
-		sentMessage.setContent(messageItem.getContent());
-		sentMessage.setDelivered(true);
-		sentMessage.setSentTime(System.currentTimeMillis());
-		
+		sentMessage.setNames(names);
+		sentMessage.setPhonenumbers(numbers);
+		sentMessage.setContent(content);
+		sentMessage.setDelivered(isDelivered);
+		sentMessage.setSentTime(sentTime);
+	
 		return sentMessage;
 	}
+	
 
 	private void setSentTime(long currentTimeMillis) {
 		sentTime = currentTimeMillis;

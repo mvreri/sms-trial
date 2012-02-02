@@ -51,8 +51,13 @@ public class DataCenter {
 		return Database.getPendingMessage(context,rowid);
 	}
 
-	public static void saveSentMessage(PendingMessageItem messageItem) {
-		Database.saveSentMessage(messageItem);
+	public static void saveSentMessage(Context context,PendingMessageItem messageItem) {
+		//TODO: save to content provider !
+		Database.saveSentMessage(context, messageItem, true);
+	}
+
+	public static void saveFailedMessage(Context context,PendingMessageItem messageItem) {
+		Database.saveSentMessage(context, messageItem, false);
 	}
 	
 

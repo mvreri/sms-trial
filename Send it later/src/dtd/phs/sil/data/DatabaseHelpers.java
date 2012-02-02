@@ -64,8 +64,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		return TablePendingMessages.getMessage(database,rowid);
 	}
 
-	public void saveSentMessage(PendingMessageItem messageItem) {
-		TableSentMessages.saveSentMessageFromPendingMessage(database,messageItem);
+	public void saveSentMessage(PendingMessageItem messageItem, boolean isDelivered) {
+		TableSentMessages.saveSentMessageFromPendingMessage(database,messageItem,isDelivered);
 	}
 
 }

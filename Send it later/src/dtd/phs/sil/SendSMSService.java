@@ -42,7 +42,7 @@ public class SendSMSService extends Service {
 			public void run() {
 				long rowid = intent.getLongExtra(AlarmReceiver.PENDING_MESSAGE_ID, -1);
 				if ( rowid != -1) {
-					messageItem = DataCenter.getPendingMessageWithId(rowid);
+					messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
 					sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
 					Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish(errorOcc));
 				} else {
@@ -67,20 +67,19 @@ public class SendSMSService extends Service {
 		@Override
 		public void run() {
 			if ( errorOcc ) {
-				//There is error during sending messages
+				DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
 			} else {
-				if ( messageItem.getFreq() == Frequencies.ONCE ) {
-					DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
-				}
+				//TODO:save to SMS-content provider
+				DataCenter.saveSentMessage(getApplicationContext(),messageItem);
 				
-				//save to private db
-				//save to SMS-content provider
-				DataCenter.saveSentMessage(messageItem);
-				
-				AlarmHelpers.refreshAlarm(getApplicationContext());
-				fireNotification();
 			}
-			wakeLock.release();
+			if ( messageItem.getFreq() == Frequencies.ONCE ) {
+				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
+			}
+			AlarmHelpers.refreshAlarm(getApplicationContext());
+			fireNotification();
+			
+			wakeLock.release();			
 			setWakeLock(null);
 		}
 
@@ -94,6 +93,10 @@ public class SendSMSService extends Service {
 		}
 	}
 
+
+	public void fireNotification() {
+		// TODO Auto-generated method stub
+	}
 
 	public void sendMessage(String receiverNumber, String content) {
 		SmsManager sms = SmsManager.getDefault();
