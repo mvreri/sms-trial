@@ -2,7 +2,10 @@ package dtd.phs.sil;
 
 import java.util.ArrayList;
 
+import dtd.phs.sil.ui.RemovePendingItemDialog;
+
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -27,8 +30,11 @@ public class MainActivity extends Activity {
 
 	private int displayingFrameId;
 
+
     static final int FRAME_PENDING = 0;
     static final int FRAME_SENT = 1;
+
+	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
     
 	/** Called when the activity is first created. */
     @Override
@@ -40,8 +46,9 @@ public class MainActivity extends Activity {
         addFrames();
         processBottomTabs();
     }
-    
-    private void processBottomTabs() {
+
+
+	private void processBottomTabs() {
 
     	tabButtons = new ArrayList<ImageView>();
     	tabButtons.add((ImageView) findViewById(R.id.bt_tab_pending));
@@ -72,7 +79,11 @@ public class MainActivity extends Activity {
 
 	private void addFrames() {
 		frames = new ArrayList<FrameView>();
-		frames.add(new PendingMessageView( this, handler ));
+		frames.add(new PendingMessageView(this,handler) {
+			@Override
+			public void onLongClick(IDBLinked dbLinkedObj, long rowId) {
+			}
+		});
 		frames.add(new SentMessageView( this,handler ));
 
 		for(int i = 0 ; i < frames.size() ; i++) {
@@ -80,6 +91,12 @@ public class MainActivity extends Activity {
 		}
 		
 		displayingFrameId = savedFrameId();
+	}
+	
+	
+	@Override
+	protected Dialog onCreateDialog(int id) {
+		return frames.get(displayingFrameId).onCreateDialog(id);
 	}
 	
 	private int savedFrameId() {

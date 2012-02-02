@@ -60,8 +60,10 @@ public class PendingMessageAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		updateView(view,holder,messages.get(position));
+
 		return view;
 	}
+
 
 	private void updateView(View view, ViewHolder holder, PendingMessageItem message) {
 
@@ -93,6 +95,10 @@ public class PendingMessageAdapter extends BaseAdapter {
 
 	public PendingMessageItem getMessage(int position) {
 		return messages.get(position);
+	}
+
+	public long getMessageRowId(int position) {
+		return messages.get(position).getId();
 	}
 
 }

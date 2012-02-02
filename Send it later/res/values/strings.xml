@@ -22,4 +22,5 @@
     <string name="Add">Add</string>
     <string name="Save">Save</string>
     <string name="Invalid_message_warning">Invalid SMS: Please fill in the contacts/message</string>
+    <string name="message_removed_success">Message removed successfully</string>
 </resources>

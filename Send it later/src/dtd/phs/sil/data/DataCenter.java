@@ -38,4 +38,13 @@ public class DataCenter {
 		}).start();
 	}
 
+	public static void removePendingItem(final Context context, final long rowId) {
+		new Thread( new Runnable() {
+			@Override
+			public void run() {
+				Database.removePendingMessage(context, rowId);
+			}
+		}).start();
+	}
+
 }
