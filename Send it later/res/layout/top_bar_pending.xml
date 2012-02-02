@@ -24,7 +24,7 @@
 	    android:layout_height="48dp"
 	    android:padding="@dimen/image_padding"
 	    android:src="@drawable/pencil"
-	    android:background="#00112233"
+	    android:background="@drawable/pressable_bg"
 	    />
     
 
