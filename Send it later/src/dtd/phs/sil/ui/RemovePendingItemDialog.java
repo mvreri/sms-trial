@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.Toast;
 import dtd.phs.sil.IDBLinked;
@@ -30,12 +31,15 @@ public class RemovePendingItemDialog extends Dialog {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.remove_pend_message_dialog);
+		getWindow().setLayout(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
 		btOk = (Button) findViewById(R.id.btOk);
 		btOk.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DataCenter.removePendingItem(getContext(),rowId);
 				Toast.makeText(getContext(), R.string.message_removed_success, Toast.LENGTH_SHORT).show();
+				listener.onDBUpdated();
+				cancel();
 			}
 		});
 		
