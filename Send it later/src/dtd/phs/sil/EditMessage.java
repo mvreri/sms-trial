@@ -27,6 +27,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
+import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.data.Database;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.ui.AlertHelpers;
@@ -134,6 +135,7 @@ public class EditMessage extends Activity {
 					Database.savePendingMessageItem(
 							getApplicationContext(),
 							createPendingMessage());
+					AlarmHelpers.refreshAlarm(getApplicationContext());
 					onBackPressed();
 				} else {
 					//TODO:
@@ -149,6 +151,7 @@ public class EditMessage extends Activity {
 					if ( isValidMessage() ) {
 						long id = beingEditedMessage.getId();
 						Database.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
+						AlarmHelpers.refreshAlarm(getApplicationContext());
 						onBackPressed();
 					} else {
 						showInvalidMessageToast();

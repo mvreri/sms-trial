@@ -26,7 +26,7 @@ public class SendSMSService extends Service {
 	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	protected static final int WAITING_TIME = 5000;
 
-	private static WakeLock wakeLock;
+	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
 	protected PendingMessageItem messageItem = null;
 
@@ -49,7 +49,7 @@ public class SendSMSService extends Service {
 					wakeLock.release();
 					setWakeLock(null);
 				}
-				
+
 			}
 		}).start();
 
@@ -71,16 +71,18 @@ public class SendSMSService extends Service {
 			} else {
 				//TODO:save to SMS-content provider
 				DataCenter.saveSentMessage(getApplicationContext(),messageItem);
-				
+
 			}
 			if ( messageItem.getFreq() == Frequencies.ONCE ) {
 				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
 			fireNotification();
-			
-			wakeLock.release();			
-			setWakeLock(null);
+
+			if (wakeLock != null) {
+				wakeLock.release();			
+				setWakeLock(null);
+			}
 		}
 
 	}

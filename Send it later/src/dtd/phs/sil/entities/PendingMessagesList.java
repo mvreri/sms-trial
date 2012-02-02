@@ -12,6 +12,7 @@ public class PendingMessagesList extends ArrayList<PendingMessageItem> {
 	private static final long serialVersionUID = -4228781323997712912L;
 
 	public static void sortByNextOccurence(PendingMessagesList allMessages) {
+		if ( allMessages != null )
 		Collections.sort(allMessages, new Comparator<PendingMessageItem>() {
 			@Override
 			public int compare(PendingMessageItem lhs, PendingMessageItem rhs) {

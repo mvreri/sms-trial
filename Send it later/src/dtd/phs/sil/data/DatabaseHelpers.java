@@ -21,7 +21,7 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(createTableString(TablePendingMessages.TABLE_NAME,TablePendingMessages.COLUMNS));
-		db.execSQL(createTableString(TablePendingMessages.TABLE_NAME, TableSentMessages.COLUMNS));
+		db.execSQL(createTableString(TableSentMessages.TABLE_NAME, TableSentMessages.COLUMNS));
 	}
 
 	@Override
