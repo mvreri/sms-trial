@@ -1,6 +1,7 @@
 package dtd.phs.sil;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -76,6 +77,12 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	@Override
 	public void onResume() {
 		loadSentDataAsync();
+	}
+
+	@Override
+	public Dialog onCreateDialog(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

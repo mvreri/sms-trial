@@ -23,4 +23,8 @@
     <string name="Save">Save</string>
     <string name="Invalid_message_warning">Invalid SMS: Please fill in the contacts/message</string>
     <string name="message_removed_success">Message removed successfully</string>
+    <string name="remove_item">Remove message</string>
+    <string name="confirm_delete_item">Do you want to delete this message ?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
 </resources>
