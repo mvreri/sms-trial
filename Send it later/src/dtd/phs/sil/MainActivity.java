@@ -2,8 +2,6 @@ package dtd.phs.sil;
 
 import java.util.ArrayList;
 
-import dtd.phs.sil.ui.RemovePendingItemDialog;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,17 +15,9 @@ import android.widget.FrameLayout.LayoutParams;
 
 public class MainActivity extends Activity {
     private FrameLayout mainFrames;
-
 	private Handler handler = new Handler();
-
 	private ArrayList<FrameView> frames;
-
-	private ImageView btPending;
-
-	private ImageView btSent;
-
 	private ArrayList<ImageView> tabButtons;
-
 	private int displayingFrameId;
 
 

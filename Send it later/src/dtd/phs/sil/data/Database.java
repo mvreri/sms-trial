@@ -5,6 +5,7 @@ import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
+import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 
 public class Database {
@@ -110,6 +111,19 @@ public class Database {
 			Logger.logError(e);
 			return false;
 		} 
+	}
+	
+	public static PendingMessageItem getTheNextMessageToSend(Context context) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			PendingMessageItem message = helper.getNextPendingMessage(context);
+			helper.close();
+			return message;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return null;
+		}
 	}
 
 }

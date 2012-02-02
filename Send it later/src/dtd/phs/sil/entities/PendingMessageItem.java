@@ -73,6 +73,17 @@ public class PendingMessageItem {
 			return new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy  ").format(new Date(next.getTimeInMillis()));
 		else return null;
 	}
+	
+	public Calendar getNextCalendar() {
+		return FrequencyHelpers.getNextCalendar(startDateTime, getFreq());
+	}
+	public long getNextTimeMillis() {
+		Calendar nextCalendar = getNextCalendar();
+		if ( nextCalendar == null ) return -1;
+		return nextCalendar.getTimeInMillis();
+	}
+
+
 	public String getContact() {
 		if ( names.length == 0 ) return "";
 		if ( names.length == 1 ) return mergeInfo(0);

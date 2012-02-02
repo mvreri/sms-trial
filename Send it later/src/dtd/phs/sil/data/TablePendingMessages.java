@@ -9,6 +9,7 @@ import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.utils.FrequencyHelpers;
+import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.StringHelpers;
 
 public class TablePendingMessages {
@@ -128,6 +129,27 @@ public class TablePendingMessages {
 			return false;
 		} catch (Exception e) {
 			return false;
+		}
+	}
+
+	/**
+	 * 
+	 * @param database
+	 * @return 
+	 * 	the next message to be sent, 
+	 * 	null if there is no message to be sent anymore 
+	 */
+	public static PendingMessageItem getNextMessage(SQLiteDatabase database) {
+		PendingMessagesList allMessages = getAllMessages(database);
+		PendingMessagesList.sortByNextOccurence(allMessages);
+		try {
+			PendingMessageItem pendingMessageItem = allMessages.get(0);
+			if ( pendingMessageItem.getNextCalendar() != null) {
+				return pendingMessageItem;
+			} else return null;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return null;
 		}
 	}
 }

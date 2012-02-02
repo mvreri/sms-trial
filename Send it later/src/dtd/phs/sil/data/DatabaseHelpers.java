@@ -56,4 +56,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		return TablePendingMessages.modify(database,id,item);
 	}
 
+	public PendingMessageItem getNextPendingMessage(Context context) {
+		return TablePendingMessages.getNextMessage(database);
+	}
+
 }

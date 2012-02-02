@@ -1,7 +1,6 @@
 package dtd.phs.sil.data;
 
 import android.content.Context;
-import dtd.phs.sil.PendingMessageView;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessagesList;
 

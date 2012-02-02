@@ -125,6 +125,7 @@ public abstract class PendingMessageView
 			@Override
 			public void run() {
 				PendingMessagesList list = (PendingMessagesList) data;
+				PendingMessagesList.sortByNextOccurence(list);
 				adapter.setMessages( list );
 				adapter.notifyDataSetChanged();
 				Helpers.showOnlyView(mainFrames, MESSAGES_FRAME);
