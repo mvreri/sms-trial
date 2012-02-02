@@ -77,7 +77,8 @@ public class TablePendingMessages {
 		} catch (Exception e) {
 			return list;
 		} finally {
-			cursor.close();
+			if ( cursor != null )
+				cursor.close();
 		}
 	}
 
@@ -151,5 +152,23 @@ public class TablePendingMessages {
 			Logger.logError(e);
 			return null;
 		}
+	}
+
+	public static PendingMessageItem getMessage(SQLiteDatabase database,
+			long rowid) {
+		Cursor cursor = null;
+		try {
+			cursor = database.query(TABLE_NAME, null, ID+" = "+rowid, null, null, null, null);
+			if ( cursor.moveToFirst() ) {
+				return createFromCursor(cursor);
+			} else return null;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return null;
+		} finally {
+			if (cursor != null)
+				cursor.close();
+		}
+
 	}
 }

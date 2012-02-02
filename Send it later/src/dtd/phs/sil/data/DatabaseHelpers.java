@@ -21,8 +21,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(createTableString(TablePendingMessages.TABLE_NAME,TablePendingMessages.COLUMNS));
+		db.execSQL(createTableString(TablePendingMessages.TABLE_NAME, TableSentMessages.COLUMNS));
 	}
-
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -58,6 +58,14 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 
 	public PendingMessageItem getNextPendingMessage(Context context) {
 		return TablePendingMessages.getNextMessage(database);
+	}
+
+	public PendingMessageItem getPendingMessage(long rowid) {
+		return TablePendingMessages.getMessage(database,rowid);
+	}
+
+	public void saveSentMessage(PendingMessageItem messageItem) {
+		TableSentMessages.saveSentMessageFromPendingMessage(database,messageItem);
 	}
 
 }

@@ -1,5 +1,6 @@
 package dtd.phs.sil.utils;
 
+import dtd.phs.sil.SendSMSService.RunAfterSendingFinish;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
@@ -27,6 +28,22 @@ public class Helpers {
 	public static float dp2px(Context context, int i) {		
 		Resources r = context.getResources();
 		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, r.getDisplayMetrics());
+	}
+
+	public static void startAfter(final int waitingTime,final Runnable runner) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					synchronized (this) {
+						this.wait(waitingTime);
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				runner.run();
+			}
+		}).start();
 	}
 
 }

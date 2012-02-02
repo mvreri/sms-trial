@@ -1,6 +1,7 @@
 package dtd.phs.sil.data;
 
 import android.content.Context;
+import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessagesList;
 
@@ -40,5 +41,19 @@ public class DataCenter {
 	public static void removePendingItem(final Context context, final long rowId) {
 		Database.removePendingMessage(context, rowId);
 	}
+
+	public static PendingMessageItem getNextPendingMessage(Context context) {
+		return Database.getTheNextMessageToSend(context);
+	}
+
+
+	public static PendingMessageItem getPendingMessageWithId(Context context,long rowid) {
+		return Database.getPendingMessage(context,rowid);
+	}
+
+	public static void saveSentMessage(PendingMessageItem messageItem) {
+		Database.saveSentMessage(messageItem);
+	}
+	
 
 }

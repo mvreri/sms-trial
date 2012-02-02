@@ -6,6 +6,9 @@ public class SentMessageItem {
 	String content;
 	String status;
 	boolean isDelivered = false;
+	private String[] names;
+	private String[] numbers;
+	private long sentTime;
 	
 	public boolean isDelivered() {
 		return isDelivered;
@@ -37,6 +40,43 @@ public class SentMessageItem {
 
 	public String getStatus() {
 		return status;
+	}
+
+	public static SentMessageItem createFromPendingMessage(
+			PendingMessageItem messageItem) {
+		
+		SentMessageItem sentMessage = new SentMessageItem();
+		sentMessage.setNames(messageItem.getNames());
+		sentMessage.setPhonenumbers(messageItem.getPhoneNumbers());
+		sentMessage.setContent(messageItem.getContent());
+		sentMessage.setDelivered(true);
+		sentMessage.setSentTime(System.currentTimeMillis());
+		
+		return sentMessage;
+	}
+
+	private void setSentTime(long currentTimeMillis) {
+		sentTime = currentTimeMillis;
+	}
+
+	private void setPhonenumbers(String[] phoneNumbers) {
+		this.numbers = phoneNumbers;
+	}
+
+	private void setNames(String[] names) {
+		this.names = names;
+	}
+
+	public String[] getNames() {
+		return names;
+	}
+
+	public String[] getPhonenumbers() {
+		return numbers;
+	}
+
+	public long getSentTime() {
+		return sentTime;
 	}
 
 

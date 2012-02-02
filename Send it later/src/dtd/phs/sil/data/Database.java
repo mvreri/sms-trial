@@ -30,14 +30,14 @@ public class Database {
 	private static PendingMessagesList StubPendingMessages() {
 		PendingMessagesList list = new PendingMessagesList();
 		PendingMessageItem m1 = new PendingMessageItem();
-//		m1.setContact("Cu Gung (0977686056)");
+		//		m1.setContact("Cu Gung (0977686056)");
 		m1.setContent("Thuc day di !");
-//		m1.setNextTime("08:00 Jan.05.2012");
+		//		m1.setNextTime("08:00 Jan.05.2012");
 		list.add(m1);
 		m1 = new PendingMessageItem();
-//		m1.setContact("0986601094");
+		//		m1.setContact("0986601094");
 		m1.setContent("Long long long message, let's see what happens then. Okie, try too blah blah asdsdad adas a. adsd adas ad ad");
-//		m1.setNextTime("19:00 Jan.06.2012");
+		//		m1.setNextTime("19:00 Jan.06.2012");
 		list.add(m1);
 		return list;
 	}
@@ -112,7 +112,7 @@ public class Database {
 			return false;
 		} 
 	}
-	
+
 	public static PendingMessageItem getTheNextMessageToSend(Context context) {
 		try {
 			DatabaseHelpers helper = new DatabaseHelpers(context);
@@ -123,6 +123,30 @@ public class Database {
 		} catch (Exception e) {
 			Logger.logError(e);
 			return null;
+		}
+	}
+
+	public static PendingMessageItem getPendingMessage(Context context,long rowid) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			PendingMessageItem message = helper.getPendingMessage(rowid);
+			helper.close();
+			return message;
+		} catch (Exception e) {
+			Logger.logError(e);
+			return null;
+		}
+	}
+
+	public static void saveSentMessage(Context context,PendingMessageItem messageItem) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			helper.saveSentMessage(messageItem);
+			helper.close();
+		} catch (Exception e) {
+			Logger.logError(e);
 		}
 	}
 
