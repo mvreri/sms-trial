@@ -1,8 +1,5 @@
 package dtd.phs.sil.entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import dtd.phs.sil.utils.Helpers;
 
 public class SentMessageItem {

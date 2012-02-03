@@ -122,7 +122,7 @@
             android:layout_height="fill_parent"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/trans_button_bg"
+            android:background="@drawable/trans_button_selector"
             android:text="@string/Add"
             android:textColor="#FFF" />
 
@@ -132,7 +132,7 @@
             android:layout_height="fill_parent"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@drawable/trans_button_bg"
+            android:background="@drawable/trans_button_selector"
             android:text="@string/Cancel"
             android:textColor="#FFF" />
     </LinearLayout>
