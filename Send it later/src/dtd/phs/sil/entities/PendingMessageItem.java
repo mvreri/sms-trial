@@ -6,6 +6,7 @@ import java.util.Date;
 
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.utils.FrequencyHelpers;
+import dtd.phs.sil.utils.Helpers;
 
 public class PendingMessageItem {
 
@@ -70,7 +71,8 @@ public class PendingMessageItem {
 	public String getNextTime() {
 		Calendar next = FrequencyHelpers.getNextCalendar(startDateTime, getFreq());
 		if ( next != null)
-			return new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy  ").format(new Date(next.getTimeInMillis()));
+			return Helpers.formatTime(next.getTimeInMillis());
+//		new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy  ").format(new Date(next.getTimeInMillis()));
 		else return null;
 	}
 	

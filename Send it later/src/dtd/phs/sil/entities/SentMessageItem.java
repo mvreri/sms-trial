@@ -45,8 +45,8 @@ public class SentMessageItem {
 	public String getStatus() {
 		String status = "";
 		if ( isDelivered() ) {
-			status += "Delivered at: ";
-		} else status += "Sent failed at: ";
+			status += "Delivered: ";
+		} else status += "Sent failed: ";
 		status += Helpers.formatTime(getSentTime()); 
 		return status;
 	}
