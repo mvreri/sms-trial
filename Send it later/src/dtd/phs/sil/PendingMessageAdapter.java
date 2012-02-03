@@ -8,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
+import dtd.phs.sil.ui.OnListItemTouchListener;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.Logger;
 
-public class PendingMessageAdapter extends BaseAdapter {
+public abstract class PendingMessageAdapter extends BaseAdapter {
 
 
 	private static final int STUB_AVATAR = R.drawable.contact;
@@ -60,10 +62,32 @@ public class PendingMessageAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		updateView(view,holder,messages.get(position));
-
+		view.setOnTouchListener(new OnListItemTouchListener(position) {
+			
+			@Override
+			public void onSwipe(int position) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onLongClick(int position) {
+				
+				onItemLongClick(position);
+			}
+			
+			@Override
+			public void onClick(int position) {
+				onItemClick(position);
+			}
+		});
 		return view;
 	}
 
+
+	abstract public void onItemClick(int position);
+
+	abstract public void onItemLongClick(int position);
 
 	private void updateView(View view, ViewHolder holder, PendingMessageItem message) {
 

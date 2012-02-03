@@ -71,11 +71,7 @@ public class MainActivity extends Activity {
 
 	private void addFrames() {
 		frames = new ArrayList<FrameView>();
-		frames.add(new PendingMessageView(this,handler) {
-			@Override
-			public void onLongClick(IDBLinked dbLinkedObj, long rowId) {
-			}
-		});
+		frames.add(new PendingMessageView(this,handler));
 		frames.add(new SentMessageView( this,handler ));
 
 		for(int i = 0 ; i < frames.size() ; i++) {

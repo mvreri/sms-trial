@@ -19,7 +19,7 @@ import dtd.phs.sil.ui.RemovePendingItemDialog;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 
-public abstract class PendingMessageView 
+public class PendingMessageView 
 	extends FrameView
 	implements 
 		IDataLoader,
@@ -58,36 +58,60 @@ public abstract class PendingMessageView
 	private void createMainFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.pending_main_frames);
 		list = (ListView) findViewById(R.id.listPending);
-		list.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
-				EditMessage.passedMessage = adapter.getMessage(position);
-				Intent i = new Intent(getContext(),EditMessage.class);
-				hostedActivity.startActivity(i);
-			}
-		});		
-		list.setOnItemLongClickListener(new OnItemLongClickListener() {
+//		list.setOnItemClickListener(new OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
+//				onItemClick(position);
+//			}
+//
+//		});		
+//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
+//
+//			@Override
+//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
+//				onItemLongClick(position);
+//				return true;
+//			}
+//
+//		});
+
+		adapter = new PendingMessageAdapter(hostedActivity.getApplicationContext(),new PendingMessagesList() ) {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
-				dialogRemovePendingItem.setRemovedRowId(adapter.getMessageRowId(position));
-				dialogRemovePendingItem.setLinkedDBObject(PendingMessageView.this);
-				showDialog(DIALOG_REMOVE_PENDING_ITEM);
-				return true;
+			public void onItemClick(int position) {
+				PendingMessageView.this.onItemClick(position);
 			}
-		});
 
-		adapter = new PendingMessageAdapter(hostedActivity.getApplicationContext(),new PendingMessagesList() );
+			@Override
+			public void onItemLongClick(int position) {
+				PendingMessageView.this.onItemLongClick(position);				
+			}
+			
+		};
 		list.setAdapter(adapter);
 		loadPendingMessageAsync();		
 	}
-
-	public void onLongClick(IDBLinked obj,long rowId) {
-		
-		dialogRemovePendingItem.setLinkedDBObject(obj);
-		
-
+	
+	protected void onItemClick(int position) {
+		EditMessage.passedMessage = adapter.getMessage(position);
+		Intent i = new Intent(getContext(),EditMessage.class);
+		hostedActivity.startActivity(i);
 	}
+	
+	private void onItemLongClick(int position) {
+		dialogRemovePendingItem.setRemovedRowId(adapter.getMessageRowId(position));
+		dialogRemovePendingItem.setLinkedDBObject(PendingMessageView.this);
+		showDialog(DIALOG_REMOVE_PENDING_ITEM);
+	}
+
+
+
+//	public void onLongClick(IDBLinked obj,long rowId) {
+//		
+//		dialogRemovePendingItem.setLinkedDBObject(obj);
+//		
+//
+//	}
 
 	private void loadPendingMessageAsync() {
 		Helpers.showOnlyView(mainFrames,WAIT_FRAME);
