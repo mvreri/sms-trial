@@ -78,7 +78,7 @@ public class PendingMessageAdapter extends BaseAdapter {
 
 		String next = context.getResources().getString(R.string.next);
 		String nextTime = message.getNextTime();
-		if ( nextTime == null) nextTime = "TODO: remove this one !";
+		if ( nextTime == null) nextTime = next + ": Never";
 		holder.status.setText(next+": " + nextTime);
 	}
 

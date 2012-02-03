@@ -7,7 +7,7 @@ import android.view.View.OnTouchListener;
 public abstract class OnListItemTouchListener implements OnTouchListener {
 	final private float MIN_X_SWIPE = 100;
 	final private float MAX_Y_SWIPE = 30;
-	final private float MIN_VELOCITY = 0;
+	final private float MIN_VELOCITY = 100;
 	protected static final float MAX_CLICK = 20;
 	protected static final long CLICK_TIME = 200;
 	
@@ -44,9 +44,13 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 			if ( dx > MIN_X_SWIPE && dy < MAX_Y_SWIPE && velo > MIN_VELOCITY) {
 				onSwipe(position);
 				return true;
-			} else if ( dx < MAX_CLICK && dy < MAX_CLICK && dtime < CLICK_TIME ) {
-				onClick(position);
-				return true;
+			} else if ( dx < MAX_CLICK && dy < MAX_CLICK) {
+				if ( dtime < CLICK_TIME ) {
+					onClick(position);
+					return true;
+				} else {
+					onLongClick(position);
+				}
 			}
 				return false;
 		case MotionEvent.ACTION_CANCEL:
@@ -59,6 +63,7 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 		
 	}
 
+	abstract public void onLongClick(int position);
 	abstract public void onClick(int position);
 	abstract public void onSwipe(int position);
 	
