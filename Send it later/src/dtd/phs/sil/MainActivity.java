@@ -25,6 +25,8 @@ public class MainActivity extends Activity {
     static final int FRAME_SENT = 1;
 
 	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
+	private static final int[] HIGHLIGHT_TAB_RES = {R.drawable.clock , R.drawable.message};
+	private static final int[] NORMAL_TAB_RES = {R.drawable.clock_desat , R.drawable.message_desat};
     
 	/** Called when the activity is first created. */
     @Override
@@ -101,6 +103,17 @@ public class MainActivity extends Activity {
 			frames.get(i).onDisplayed();
 		}
 		displayingFrameId = id;
+		highlightTab(id);
+	}
+
+
+	private void highlightTab(int id) {
+		for(int i =  0 ; i < frames.size() ; i++) {
+			ImageView imageView = tabButtons.get(i);
+			if ( i == id )
+				imageView.setImageResource(HIGHLIGHT_TAB_RES[i]);
+			else imageView.setImageResource(NORMAL_TAB_RES[i]);
+		}
 	}
 	
 }
