@@ -1,7 +1,5 @@
 package dtd.phs.sil.ui;
 
-import android.content.Context;
-import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
