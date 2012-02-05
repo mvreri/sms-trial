@@ -68,7 +68,11 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			
 			@Override
 			public void onSwipe(View view,int position) {
-				view.findViewById(R.id.btDelete).setVisibility(View.VISIBLE);
+				
+				View delete = view.findViewById(R.id.btDelete);
+				if ( delete.getVisibility() == View.VISIBLE) {
+					delete.setVisibility(View.GONE);
+				} else delete.setVisibility(View.VISIBLE);
 			}			
 			@Override
 			public void onLongClick(int position) {

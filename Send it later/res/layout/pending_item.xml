@@ -46,6 +46,8 @@
         	android:id="@+id/btDelete"
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
+        	android:paddingLeft="8dp"
+            android:paddingRight="8dp"
         	android:text="@string/Delete"
         	android:visibility="gone"
         />

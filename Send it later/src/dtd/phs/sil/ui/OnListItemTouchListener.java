@@ -6,9 +6,9 @@ import android.view.View.OnTouchListener;
 import dtd.phs.sil.utils.Logger;
 
 public abstract class OnListItemTouchListener implements OnTouchListener {
-	final private float MIN_X_SWIPE = 100;
-	final private float MAX_Y_SWIPE = 30;
-	final private float MIN_VELOCITY = 100;
+	final private float MIN_X_SWIPE = 50;
+	final private float MAX_Y_SWIPE = 60;
+	final private float MIN_VELOCITY = 0;
 	protected static final float MAX_CLICK = 20;
 	protected static final long CLICK_TIME = 200;
 	private static final long MIN_LONG_CLICK_TIME = 1000;
@@ -49,6 +49,7 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 			long dtime = endTime - startTime;
 			float velo = (float) (Math.sqrt(dx*dy + dy*dy) / dtime );
 			if ( dx > MIN_X_SWIPE && dy < MAX_Y_SWIPE && velo > MIN_VELOCITY) {
+				Logger.logInfo("OnSwipe is called !");
 				onSwipe(this.view,position);
 				return true;
 			} else if ( dx < MAX_CLICK && dy < MAX_CLICK) {
