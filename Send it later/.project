@@ -30,4 +30,11 @@
 		<nature>com.android.ide.eclipse.adt.AndroidNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>DevsmartAndroid_src</name>
+			<type>2</type>
+			<locationURI>_android_DevsmartAndroid_9d9198db/src</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

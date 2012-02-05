@@ -3,14 +3,15 @@ package dtd.phs.sil;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
 import dtd.phs.sil.utils.Helpers;
-import dtd.phs.sil.utils.Logger;
 
 public abstract class PendingMessageAdapter extends BaseAdapter {
 
@@ -46,6 +47,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		public TextView contact;
 		public TextView content;
 		public TextView status;
+		public Button delete;
 
 	}
 
@@ -62,23 +64,25 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		updateView(view,holder,messages.get(position));
-		view.setOnTouchListener(new OnListItemTouchListener(position) {
+		view.setOnTouchListener(new OnListItemTouchListener(position,view) {
 			
 			@Override
-			public void onSwipe(int position) {
-				// TODO Auto-generated method stub
-				
-			}
-			
+			public void onSwipe(View view,int position) {
+				view.findViewById(R.id.btDelete).setVisibility(View.VISIBLE);
+			}			
 			@Override
 			public void onLongClick(int position) {
-				
 				onItemLongClick(position);
 			}
 			
 			@Override
-			public void onClick(int position) {
-				onItemClick(position);
+			public void onClick(View view,int position) {
+				View delete = view.findViewById(R.id.btDelete);
+				if ( delete.getVisibility() == View.VISIBLE ) {
+					delete.setVisibility(View.GONE);
+				} else {
+					onItemClick(position);
+				}
 			}
 		});
 		return view;
@@ -94,8 +98,15 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
-
 		updateNext(holder, message);
+		holder.delete.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	private void updateNext(ViewHolder holder, PendingMessageItem message) {
@@ -111,6 +122,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		holder.contact = (TextView) view.findViewById(R.id.tvContact);
 		holder.content = (TextView) view.findViewById(R.id.tvContent);
 		holder.status = (TextView) view.findViewById(R.id.tvStatus);
+		holder.delete = (Button) view.findViewById(R.id.btDelete);
 	}
 
 	public void setMessages(PendingMessagesList list) {

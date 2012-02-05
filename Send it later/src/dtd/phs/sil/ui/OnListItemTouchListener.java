@@ -22,10 +22,12 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 	private long endTime;
 	
 	private int position;
+	private View view;
 	
-	public OnListItemTouchListener(int position) {
+	public OnListItemTouchListener(int position, View view) {
 		super();
 		this.position = position;
+		this.view = view;
 	}
 
 	@Override
@@ -47,11 +49,11 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 			long dtime = endTime - startTime;
 			float velo = (float) (Math.sqrt(dx*dy + dy*dy) / dtime );
 			if ( dx > MIN_X_SWIPE && dy < MAX_Y_SWIPE && velo > MIN_VELOCITY) {
-				onSwipe(position);
+				onSwipe(this.view,position);
 				return true;
 			} else if ( dx < MAX_CLICK && dy < MAX_CLICK) {
 				if ( dtime < CLICK_TIME ) {
-					onClick(position);
+					onClick(this.view,position);
 					return true;
 				} 
 //				else {
@@ -82,7 +84,7 @@ public abstract class OnListItemTouchListener implements OnTouchListener {
 	}
 
 	abstract public void onLongClick(int position);
-	abstract public void onClick(int position);
-	abstract public void onSwipe(int position);
+	abstract public void onClick(View view,int position);
+	abstract public void onSwipe(View view,int position);
 	
 }
