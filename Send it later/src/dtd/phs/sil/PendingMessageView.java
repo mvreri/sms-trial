@@ -160,7 +160,7 @@ public class PendingMessageView
 
 	@Override
 	public void onDisplayed() {
-
+		loadPendingMessageAsync();
 	}
 
 	@Override
