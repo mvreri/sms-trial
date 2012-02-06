@@ -29,4 +29,6 @@
     <string name="No">No</string>
     <string name="Delete">Delete</string>
     <string name="message_removed_failed">Message removed failed</string>
+    <string name="sent_notification_title">Message sent</string>
+    <string name="A_message_is_sent_to">A message is sent successfully to: </string>
 </resources>

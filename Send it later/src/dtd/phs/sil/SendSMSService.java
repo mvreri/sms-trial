@@ -3,12 +3,15 @@ package dtd.phs.sil;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.telephony.SmsManager;
@@ -25,6 +28,7 @@ public class SendSMSService extends Service {
 	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	protected static final int WAITING_TIME = 5000;
+	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 
 	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
@@ -65,7 +69,6 @@ public class SendSMSService extends Service {
 				Logger.logInfo("Save failed message is progressing ... ");
 				DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
 			} else {
-				//TODO:save to SMS-content provider
 				Logger.logInfo("Save successful message is progressing ... ");
 				DataCenter.saveSentMessage(getApplicationContext(),messageItem);
 
@@ -74,6 +77,8 @@ public class SendSMSService extends Service {
 				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
+			
+
 			fireNotification();
 
 			if (wakeLock != null) {
@@ -94,7 +99,34 @@ public class SendSMSService extends Service {
 
 
 	public void fireNotification() {
-		// TODO Auto-generated method stub
+		Resources res = getApplicationContext().getResources();
+		String title = res.getString(R.string.sent_notification_title);
+		String text = res.getString(R.string.A_message_is_sent_to) + messageItem.getContact();
+		Notification notification = createNotification(
+				getApplicationContext(), 
+				NOTIFICATION_ICON, 
+				title, 
+				text);
+		 NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+		 manager.notify(NOTIFICATION_ICON, notification);
+	}
+	
+	public static Notification createNotification(Context context,int icon,String notificationTitle,String notificationText) {
+		Notification notification = new Notification(icon, notificationTitle, System.currentTimeMillis());		
+		
+		CharSequence contentTitle = notificationTitle;
+		CharSequence contentText =  notificationText;
+		Intent notificationIntent = new Intent(context, MainActivity.class);
+		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		PendingIntent contentIntent = PendingIntent.getActivity(
+				context, 
+				0, 
+				notificationIntent, 
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		return notification;
 	}
 
 	public void sendMessage(String receiverNumber, String content) {

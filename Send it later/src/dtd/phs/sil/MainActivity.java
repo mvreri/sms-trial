@@ -2,8 +2,11 @@ package dtd.phs.sil;
 
 import java.util.ArrayList;
 
+import dtd.phs.sil.utils.Logger;
+
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -23,10 +26,12 @@ public class MainActivity extends Activity {
 
     static final int FRAME_PENDING = 0;
     static final int FRAME_SENT = 1;
+    public static final String SELECTED_FRAME = "selected_frame";
 
 	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
 	private static final int[] HIGHLIGHT_TAB_RES = {R.drawable.clock , R.drawable.message};
 	private static final int[] NORMAL_TAB_RES = {R.drawable.clock_desat , R.drawable.message_desat};
+	
     
 	/** Called when the activity is first created. */
     @Override
@@ -68,6 +73,12 @@ public class MainActivity extends Activity {
 	protected void onPause() {
 		super.onPause();
 	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		displayingFrameId = savedFrameId(intent);
+	}
 
 	private void addFrames() {
 		frames = new ArrayList<FrameView>();
@@ -78,7 +89,8 @@ public class MainActivity extends Activity {
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		}
 		
-		displayingFrameId = savedFrameId();
+		Logger.logInfo("Calling .addFrames()");
+		displayingFrameId = FRAME_PENDING;
 	}
 	
 	
@@ -87,7 +99,12 @@ public class MainActivity extends Activity {
 		return frames.get(displayingFrameId).onCreateDialog(id);
 	}
 	
-	private int savedFrameId() {
+	private int savedFrameId(Intent intent) {
+		int selectedFrame = intent.getIntExtra(SELECTED_FRAME, -1);
+		Logger.logInfo("Selected frame: " + selectedFrame);
+		if ( selectedFrame != -1) {
+			return selectedFrame;
+		}
 		return FRAME_PENDING;
 	}
 
