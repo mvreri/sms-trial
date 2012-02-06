@@ -124,9 +124,9 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 	private void updateNext(ViewHolder holder, PendingMessageItem message) {
 
 		String next = context.getResources().getString(R.string.next);
-		String nextTime = message.getNextTime();
+		String nextTime = next+ ": " + message.getNextTime();
 		if ( nextTime == null) nextTime = next + ": Never";
-		holder.status.setText(next+": " + nextTime);
+		holder.status.setText(nextTime);
 	}
 
 	private void createHolder(View view, ViewHolder holder) {

@@ -1,13 +1,19 @@
 package dtd.phs.sil.data;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
 import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
+import dtd.phs.sil.entities.SMSItem;
 import dtd.phs.sil.entities.SentMessagesList;
+import dtd.phs.sil.utils.Logger;
 
 
 public class DataCenter {
+
+	private static final String SMS_SENT_CONTENT_URI = "content://sms/sent";
 
 	public static void loadPendingMessages(final IDataLoader loader,final Context context) {
 		new Thread(new Runnable() {
@@ -47,7 +53,7 @@ public class DataCenter {
 					AlarmHelpers.refreshAlarm(context);
 				}
 			}).start();
-				
+
 		}
 
 	}
@@ -61,14 +67,56 @@ public class DataCenter {
 		return Database.getPendingMessage(context,rowid);
 	}
 
-	public static void saveSentMessage(Context context,PendingMessageItem messageItem) {
-		//TODO: save to content provider !
+	public static void saveSentMessage(final Context context,final PendingMessageItem messageItem) {
 		Database.saveSentMessage(context, messageItem, true);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Logger.logInfo("Start save message to content provider ...");
+				try {
+					saveToSMSProvider(context,messageItem);
+				} catch (Exception e) {
+					Logger.logError(e);
+				}
+			}
+		}).start();
+	}
+
+	protected static void saveToSMSProvider(
+			Context context,
+			PendingMessageItem message) {
+
+		String[] phoneNumbers = message.getPhoneNumbers();
+		ContentValues values = new ContentValues();
+		for(String num : phoneNumbers) {
+			values.clear();
+			values.put(SMSItem.ADDRESS, num);
+			values.put(SMSItem.BODY, message.getContent());
+			context.getContentResolver().insert(Uri.parse(SMS_SENT_CONTENT_URI), values);
+		}
 	}
 
 	public static void saveFailedMessage(Context context,PendingMessageItem messageItem) {
 		Database.saveSentMessage(context, messageItem, false);
 	}
-	
+
+	public static void savePendingMessageItem(
+			Context context,
+			PendingMessageItem message) {
+		Database.savePendingMessageItem(
+				context,
+				message);
+		AlarmHelpers.refreshAlarm(context);
+
+	}
+
+	public static void modifyPendingMessage(
+			Context context,
+			long id, 
+			PendingMessageItem message) {
+		Database.modifyPendingMessage(context,id,message);
+		AlarmHelpers.refreshAlarm(context);
+	}
+
 
 }

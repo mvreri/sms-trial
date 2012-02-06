@@ -49,7 +49,7 @@ public class SendSMSService extends Service {
 					wakeLock.release();
 					setWakeLock(null);
 				}
-
+				stopSelf();
 			}
 		}).start();
 
