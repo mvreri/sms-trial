@@ -1,6 +1,7 @@
 package dtd.phs.sil.data;
 
 import android.content.Context;
+import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SentMessagesList;
@@ -39,7 +40,16 @@ public class DataCenter {
 	}
 
 	public static void removePendingItem(final Context context, final long rowId) {
-		Database.removePendingMessage(context, rowId);
+		if ( Database.removePendingMessage(context, rowId) ) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					AlarmHelpers.refreshAlarm(context);
+				}
+			}).start();
+				
+		}
+
 	}
 
 	public static PendingMessageItem getNextPendingMessage(Context context) {

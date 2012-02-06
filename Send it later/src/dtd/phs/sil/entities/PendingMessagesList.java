@@ -27,4 +27,18 @@ public class PendingMessagesList extends ArrayList<PendingMessageItem> {
 		});
 	}
 
+	public boolean removeMessageWithId(long id) {
+		int index = -1;
+		for(int i = 0 ; i < this.size() ; i++) {
+			if ( id == this.get(i).getId() ) {
+				index = i;
+				break;
+			}
+		}
+		if ( index != -1) {
+			this.remove(index);
+			return true;
+		} else return false;
+	}
+
 }

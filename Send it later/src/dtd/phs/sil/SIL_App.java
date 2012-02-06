@@ -30,7 +30,6 @@ public class SIL_App extends Application {
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
-	        
 	        Thread.getDefaultUncaughtExceptionHandler().uncaughtException(thread, ex);
 		}
 

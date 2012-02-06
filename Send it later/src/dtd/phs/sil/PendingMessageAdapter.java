@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
@@ -97,7 +99,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 
 	abstract public void onItemLongClick(int position);
 
-	private void updateView(View view, ViewHolder holder, PendingMessageItem message) {
+	private void updateView(View view, ViewHolder holder, final PendingMessageItem message) {
 
 		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
@@ -107,8 +109,14 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				long id = message.getId();
+				DataCenter.removePendingItem(context, id);
+				if ( messages.removeMessageWithId(id) ) {
+					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_SHORT).show();
+					notifyDataSetChanged();
+				} else {
+					Toast.makeText(context, R.string.message_removed_failed, Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}

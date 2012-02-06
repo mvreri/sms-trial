@@ -46,7 +46,6 @@ public class TableSentMessages {
 			status = DELIVERED;
 		}
 
-
 		ContentValues values = new ContentValues();	
 		values.put(NAMEs,StringHelpers.implode(sentMessage.getNames(),SEPERATOR));
 		values.put(PHONE_NUMBERs, StringHelpers.implode(sentMessage.getPhonenumbers(), SEPERATOR));
