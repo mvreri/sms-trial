@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -41,6 +42,7 @@ import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage extends Activity {
@@ -99,6 +101,10 @@ public class EditMessage extends Activity {
 		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
 		if ( !isEditView )
 			selectedCalendar = Calendar.getInstance();
+		else {
+			Logger.logInfo("Hide keyboard is called !");
+			Helpers.hideSoftKeyboard(this);
+		}
 	}
 
 	private void init() {

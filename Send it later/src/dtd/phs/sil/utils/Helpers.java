@@ -4,11 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import dtd.phs.sil.EditMessage;
+
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 
 public class Helpers {
@@ -79,4 +84,12 @@ public class Helpers {
 		return true;
 	}
 
+	public static void hideSoftKeyboard(Activity act, View view) {
+		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+	}
+
+	public static void hideSoftKeyboard(Activity activity) {
+		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);		
+	}
 }

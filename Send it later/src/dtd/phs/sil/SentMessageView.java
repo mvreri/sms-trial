@@ -63,6 +63,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			@Override
 			public void run() {
 				SentMessagesList list = (SentMessagesList) data;
+				SentMessagesList.sortByTime(list);
 				adapter.setMessages( list );
 				adapter.notifyDataSetChanged();
 				Helpers.showOnlyView(mainFrames, MESSAGES_FRAME);

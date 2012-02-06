@@ -17,7 +17,6 @@ public class SIL_App extends Application {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
-//	        String timestamp = TimestampFormatter.getInstance().getTimestamp();
 	        final Writer result = new StringWriter();
 	        final PrintWriter printWriter = new PrintWriter(result);
 	        ex.printStackTrace(printWriter);
