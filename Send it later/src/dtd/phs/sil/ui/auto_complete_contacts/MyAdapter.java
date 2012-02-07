@@ -26,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 import dtd.phs.sil.R;
+import dtd.phs.sil.utils.Logger;
 
 public class MyAdapter extends ArrayAdapter<String> {
 
@@ -66,13 +67,19 @@ public class MyAdapter extends ArrayAdapter<String> {
 				CharSequence constraint,
 				ContactsList allContacts) {
 			ContactsList list = new ContactsList();
-			for (ContactItem item : allContacts) {
-				if ( matchContraint(item,constraint)) {
-					list.add( item );
-				}
+			if ( constraint.equals("097768")) {
+				printAllContacts(allContacts);
 			}
-			sortPriorityList(list);
-			return list;
+			synchronized (allContacts) {
+				for (ContactItem item : allContacts) {
+					if ( matchContraint(item,constraint)) {
+						list.add( item );
+					}
+				}
+				sortPriorityList(list);
+				return list;
+				
+			}
 		}
 
 		private void sortPriorityList(ContactsList list) {
@@ -96,12 +103,19 @@ public class MyAdapter extends ArrayAdapter<String> {
 
 		private boolean isSubStr(String str, String fullContact) {
 			int j = 0;
+			if ( str.equals("097768") ) {
+				j++;
+				j--;
+			}
 			String lowerCase = fullContact.toLowerCase();
 //			Log.i(PHS_SMS, "Input string: " + str + " -- Verifying full contact: " + lowerCase);
 			for(int i = 0 ; i < str.length() ; i++) {
-				while ( lowerCase.charAt(j) != str.charAt(i)) {
+				if ( j >= lowerCase.length() ) 
+					return false;
+				while ( j < lowerCase.length() && lowerCase.charAt(j) != str.charAt(i)) {
 					j++;
-					if ( j >= lowerCase.length() ) return false;
+					if ( j >= lowerCase.length() ) 
+						return false;
 				}
 				j++;
 			}
@@ -124,6 +138,12 @@ public class MyAdapter extends ArrayAdapter<String> {
 		super(context, android.R.layout.simple_list_item_1);
 		data = new ContactsList();
 		allContacts = new ContactsList();
+	}
+
+	public void printAllContacts(ContactsList allContacts) {
+		for(ContactItem contact : allContacts) {
+			Logger.logInfo(contact.getName() + " " + contact.getNumber());
+		}
 	}
 
 	@Override
