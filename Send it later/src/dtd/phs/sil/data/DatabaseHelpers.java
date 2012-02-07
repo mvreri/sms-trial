@@ -77,4 +77,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		return TableSentMessages.cleanUp(database,maxSentSize);
 	}
 
+	public void removeSentItem(long id) {
+		TableSentMessages.removeRow(database, id);
+	}
+
 }

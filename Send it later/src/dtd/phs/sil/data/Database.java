@@ -172,6 +172,17 @@ public class Database {
 		}
 	}
 
+	public static void removeSentMessage(Context context, long id) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			helper.removeSentItem(id);
+			helper.close();
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+	}
+
 
 
 }

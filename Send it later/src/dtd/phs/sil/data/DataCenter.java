@@ -127,5 +127,15 @@ public class DataCenter {
 		}).start();
 	}
 
+	public static void removeSentItem(final Context context, final long id) {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Database.removeSentMessage(context, id);
+			}
+		}).start();
+	}
+
 
 }

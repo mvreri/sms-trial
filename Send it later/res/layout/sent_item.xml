@@ -41,14 +41,32 @@
                 android:text="Next: 08:00 - Jan.4.2012"
                 android:textColor="@color/mainTextColor"
                 android:textSize="@dimen/smallTextSize" />
+                
         </LinearLayout>
-        <ImageView
-            android:id="@+id/ivFailed"
-            android:layout_width="24dp" 
-            android:layout_height="24dp"
-            android:src="@drawable/small_failed"
-            android:layout_gravity="center_vertical"
+        <FrameLayout
+        	android:layout_height="fill_parent"
+        	android:layout_width="wrap_content"
+        	android:layout_marginLeft="18dp"
+        >
+        	<ImageView
+            	android:id="@+id/ivFailed"
+            	android:layout_width="24dp" 
+            	android:layout_height="24dp"
+            	android:src="@drawable/small_failed"
+            	android:layout_gravity="center_vertical"
             />
+	        <Button
+	        	android:id="@+id/btDelete"
+	        	android:layout_width="wrap_content"
+	        	android:layout_height="36dp"
+	        	android:text="@string/Delete"
+	        	android:visibility="gone"
+	        	android:paddingLeft="18dp"
+            	android:paddingRight="18dp"
+	        	android:textColor="@color/white"
+	        	android:background="@drawable/bt_delete_bg"
+	        />            
+        </FrameLayout>
     </LinearLayout>
 
     <TextView
