@@ -9,11 +9,12 @@ import android.widget.TextView;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.Logger;
 
 public class SentMessagesAdapter extends BaseAdapter {
 
 	
-	private static final int STUB_AVATAR = R.drawable.contact;
+//	private static final int STUB_AVATAR = R.drawable.contact;
 	private Context context;
 	private SentMessagesList messages;
 
@@ -49,6 +50,7 @@ public class SentMessagesAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		Logger.logInfo("Position: " + position);
 		View v = convertView;
 		ViewHolder holder;
 		if ( v == null ) {
@@ -65,7 +67,7 @@ public class SentMessagesAdapter extends BaseAdapter {
 	}
 
 	private void updateView(ViewHolder holder, SentMessageItem message) {
-		holder.avatar.setImageResource(STUB_AVATAR);
+//		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		holder.status.setText(message.getStatus());

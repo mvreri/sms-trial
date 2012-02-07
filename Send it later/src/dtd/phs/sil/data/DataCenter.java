@@ -118,5 +118,14 @@ public class DataCenter {
 		AlarmHelpers.refreshAlarm(context);
 	}
 
+	public static void cleanUpSentMessages(final Context context, final int maxSentSize) {
+		new Thread( new Runnable() {
+			@Override
+			public void run() {
+				Database.cleanUpSentMessages(context,maxSentSize);
+			}
+		}).start();
+	}
+
 
 }

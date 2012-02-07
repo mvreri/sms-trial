@@ -17,6 +17,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	protected static final int MESSAGES_FRAME = 1;
 	private static final int WAIT_FRAME = 0;
+	private static final int MAX_SENT_SIZE = 5;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private SentMessagesAdapter adapter;
@@ -64,12 +65,21 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			public void run() {
 				SentMessagesList list = (SentMessagesList) data;
 				SentMessagesList.sortByTime(list);
+				int maxSentSize = getMaxSentSize();
+				if ( list.size() > 2 *  maxSentSize) {
+					DataCenter.cleanUpSentMessages(getContext(),maxSentSize);
+				}
+				SentMessagesList.cutList(list,maxSentSize);
 				adapter.setMessages( list );
 				adapter.notifyDataSetChanged();
 				Helpers.showOnlyView(mainFrames, MESSAGES_FRAME);
 			}
 		});
 
+	}
+
+	protected int getMaxSentSize() {
+		return MAX_SENT_SIZE;
 	}
 
 	@Override

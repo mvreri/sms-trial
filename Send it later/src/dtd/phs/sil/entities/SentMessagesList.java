@@ -25,4 +25,13 @@ public class SentMessagesList extends ArrayList<SentMessageItem> {
 		});
 	}
 
+	public static void cutList(SentMessagesList list, int maxSentSize) {
+		if ( maxSentSize < list.size() )
+			list.removeRange(maxSentSize, list.size());
+	}
+
+	public long getId(int i) {
+		return this.get(i).getId();
+	}
+
 }

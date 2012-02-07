@@ -16,7 +16,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="@dimen/image_padding"
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/contact" />
 
         <LinearLayout
             android:layout_width="1dp"

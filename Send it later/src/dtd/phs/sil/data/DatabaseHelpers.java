@@ -70,7 +70,11 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 	}
 
 	public SentMessagesList getSentMessages() {
-		return TableSentMessages.getAllSentMessages(database);
+		return TableSentMessages.getAllSentMessages(database,null);
+	}
+
+	public int cleanUpSentMessages(int maxSentSize) {
+		return TableSentMessages.cleanUp(database,maxSentSize);
 	}
 
 }

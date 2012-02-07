@@ -9,6 +9,7 @@ public class SentMessageItem {
 	private String[] names;
 	private String[] numbers;
 	private long sentTime;
+	private long id;
 	
 	public boolean isDelivered() {
 		return isDelivered;
@@ -98,6 +99,14 @@ public class SentMessageItem {
 
 	public long getSentTime() {
 		return sentTime;
+	}
+
+	public long getId() {
+		return this.id;
+	}
+
+	public void setId(long _id) {
+		id = _id;
 	}
 
 
