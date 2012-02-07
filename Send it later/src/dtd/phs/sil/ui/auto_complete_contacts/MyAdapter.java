@@ -37,6 +37,12 @@ public class MyAdapter extends ArrayAdapter<String> {
 	private final Object lock = new Object();
 	public class MyFilter extends Filter {
 
+		private IFilterListener listener;
+
+		public MyFilter(IFilterListener listener) {
+			this.listener = listener;
+		}
+
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
@@ -127,17 +133,21 @@ public class MyAdapter extends ArrayAdapter<String> {
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
 			MyAdapter.this.notifyDataSetChanged();
+			listener.onPublishResult(data);
+			
 		}
 	}
 
 	private ContactsList data;
 	private ContactsList allContacts;
 	private MyFilter filter;
+	private IFilterListener listener;
 
-	public MyAdapter(Context context) {
+	public MyAdapter(Context context,IFilterListener listener) {
 		super(context, android.R.layout.simple_list_item_1);
 		data = new ContactsList();
 		allContacts = new ContactsList();
+		this.listener = listener;
 	}
 
 	public void printAllContacts(ContactsList allContacts) {
@@ -184,7 +194,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 	@Override
 	public Filter getFilter() {
 		if ( filter == null ) {
-			filter = new MyFilter();
+			filter = new MyFilter(listener);
 		} 
 		return filter;
 	}
@@ -291,14 +301,11 @@ public class MyAdapter extends ArrayAdapter<String> {
 					}
 					fis.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.logError(e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.logError(e);
 				} catch (Exception e) {
-					
-					e.printStackTrace();
+					Logger.logError(e);
 				}
 			}
 
@@ -385,13 +392,13 @@ public class MyAdapter extends ArrayAdapter<String> {
 
 					return data;
 				} catch (Exception e) {
-					//TODO:
+					Logger.logError(e);
 					return null;
 				} finally {
 					try {
 						cursor.close();
 					} catch (Exception e) {
-						//TODO:
+						Logger.logError(e);
 					}
 				}
 

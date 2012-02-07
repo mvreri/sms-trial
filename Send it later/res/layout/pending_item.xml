@@ -45,11 +45,13 @@
         <Button
         	android:id="@+id/btDelete"
         	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
+        	android:layout_height="36dp"
         	android:paddingLeft="18dp"
             android:paddingRight="18dp"
         	android:text="@string/Delete"
         	android:visibility="gone"
+        	android:textColor="@color/white"
+        	android:background="@drawable/bt_delete_bg"
         />
     </LinearLayout>
 

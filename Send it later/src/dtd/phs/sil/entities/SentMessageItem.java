@@ -31,6 +31,7 @@ public class SentMessageItem {
 				contact += names[i] + " ; ";
 			contact += names[names.length-1];
 		} else {
+			if ( names[0].equals(numbers[0])) return names[0];
 			contact= names[0] + " (" + getPhonenumbers()[0] + ")";
 		}
 		return contact;

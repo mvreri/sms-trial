@@ -39,6 +39,7 @@ import dtd.phs.sil.ui.ChooseTimeDialog;
 import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
+import dtd.phs.sil.ui.auto_complete_contacts.IFilterListener;
 import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
@@ -46,7 +47,9 @@ import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
-public class EditMessage extends Activity {
+public class EditMessage 
+	extends Activity 
+	implements IFilterListener {
 
 	protected static final String EDIT_TYPE = "edit_type";
 	protected static final String TYPE_NEW = "type_new";
@@ -84,6 +87,7 @@ public class EditMessage extends Activity {
 	private Button btCancel;
 	private boolean isEditView;
 	private PendingMessageItem beingEditedMessage;
+	private Button btAddContact;
 
 
 	/** Called when the activity is first created. */
@@ -142,7 +146,6 @@ public class EditMessage extends Activity {
 					DataCenter.savePendingMessageItem(getApplicationContext(),createPendingMessage());
 					onBackPressed();
 				} else {
-					//TODO:
 					showInvalidMessageToast();
 				}
 			}
@@ -171,6 +174,27 @@ public class EditMessage extends Activity {
 			}
 		});
 
+		btAddContact = (Button) findViewById(R.id.btAddContact);
+		btAddContact.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String str = etContact.getText().toString();
+				if ( Helpers.isPhoneNumber(str)) {
+					str = Helpers.parsePhoneNumber(str);
+					ContactItem item = new ContactItem(str, str, System.currentTimeMillis());
+					onContactAdded(item);
+				} else {
+					btAddContact.post(new Runnable() {
+						@Override
+						public void run() {
+							Toast.makeText(getApplicationContext(), R.string.Please_enter_a_phone_number, Toast.LENGTH_LONG).show();
+						}
+					});
+					
+				}
+			}
+		});
 	}
 
 	protected boolean isValidMessage() {
@@ -222,7 +246,6 @@ public class EditMessage extends Activity {
 
 		if ( isEditView ) {
 			etMessage.setText(beingEditedMessage.getContent());
-			//TODO: check words count !
 		}
 	}
 
@@ -293,7 +316,7 @@ public class EditMessage extends Activity {
 
 		etContact = (EditText) findViewById(R.id.etTo);
 		contactsList = (ListView) findViewById(R.id.listAutoComplete);
-		adapter = new MyAdapter(getApplicationContext());
+		adapter = new MyAdapter(getApplicationContext(),this);
 
 		adapter.loadAllContacts();
 		contactsList.setAdapter(adapter);
@@ -323,12 +346,10 @@ public class EditMessage extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
 				ContactItem contact = adapter.getContact(position);
-				selectedAdapter.addContact(contact);
-				selectedAdapter.notifyDataSetChanged();
-				lvSelectedContacts.setVisibility(View.VISIBLE);
-				etContact.setText("");
-				onBackPressed();
+				onContactAdded(contact);
 			}
+
+
 		});
 
 		etContact.addTextChangedListener(new TextWatcher() {
@@ -347,6 +368,14 @@ public class EditMessage extends Activity {
 		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
 	}
 
+	private void onContactAdded(ContactItem contact) {
+		selectedAdapter.addContact(contact);
+		selectedAdapter.notifyDataSetChanged();
+		lvSelectedContacts.setVisibility(View.VISIBLE);
+		etContact.setText("");
+		onBackPressed();
+	}	
+	
 	@Override
 	public void onBackPressed() {
 		if (mainFrames.getChildAt(FRAME_CONTACTS_LIST).getVisibility() == View.VISIBLE) {
@@ -424,6 +453,17 @@ public class EditMessage extends Activity {
 			break;
 		case DIALOG_FREQ:
 			break;
+		}
+	}
+
+	@Override
+	public void onPublishResult(Object data) {
+		dtd.phs.sil.ui.auto_complete_contacts.ContactsList list = 
+			(dtd.phs.sil.ui.auto_complete_contacts.ContactsList) data;
+		if ( list.size() == 0) {
+			btAddContact.setVisibility(View.VISIBLE);
+		} else {
+			btAddContact.setVisibility(View.GONE);
 		}
 	}
 

@@ -88,7 +88,10 @@ public class PendingMessageItem {
 
 	public String getContact() {
 		if ( names.length == 0 ) return "";
-		if ( names.length == 1 ) return mergeInfo(0);
+		if ( names.length == 1 ) {
+			if ( names[0].equals(phoneNumbers[0])) return names[0];
+			return mergeInfo(0);
+		}
 		String contact = names[0];
 		for(int i = 1 ; i < names.length ; i++) {
 			contact += " ; " + names[i];

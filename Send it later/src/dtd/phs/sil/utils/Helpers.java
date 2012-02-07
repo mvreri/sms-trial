@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.devsmart.android.StringUtils;
+
 import dtd.phs.sil.EditMessage;
 
 import android.app.Activity;
@@ -91,5 +93,19 @@ public class Helpers {
 
 	public static void hideSoftKeyboard(Activity activity) {
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);		
+	}
+
+	public static String parsePhoneNumber(String str) {
+		return str.replaceAll(" ", "");
+	}
+
+	public static boolean isPhoneNumber(String str) {
+		str = parsePhoneNumber(str);
+		char[] s = str.toCharArray();
+		if (! Character.isDigit(s[0]) && s[0] != '+' ) return false;
+		for(int i = 1; i < s.length ; i++) {
+			if ( ! Character.isDigit(s[i])) return false;
+		}
+		return true;
 	}
 }

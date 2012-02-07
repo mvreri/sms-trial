@@ -13,9 +13,16 @@
 
         <EditText
             android:id="@+id/etTo"
-            android:layout_width="fill_parent"
+            android:layout_width="1dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="@string/To"
+		/>
+		<Button
+			android:id="@+id/btAddContact"
+			android:layout_width="72dp"
+			android:layout_height="wrap_content"
+			android:text="@string/Add"
 		/>
     </LinearLayout>
 

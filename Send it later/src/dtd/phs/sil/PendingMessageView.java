@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
 import dtd.phs.sil.entities.PendingMessagesList;
@@ -20,23 +18,23 @@ import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 
 public class PendingMessageView 
-	extends FrameView
-	implements 
-		IDataLoader,
-		IDBLinked
+extends FrameView
+implements 
+IDataLoader,
+IDBLinked
 {
 
 	private static final int WAIT_FRAME = 0;
 	private static final int MESSAGES_FRAME = 1;
 	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
-	
+
 	private View topFrame;
 	private View btAdd;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private PendingMessageAdapter adapter;
 	private RemovePendingItemDialog dialogRemovePendingItem;
-	
+
 	public PendingMessageView(Activity hostedActivity, Handler handler) {
 		super(hostedActivity, handler);
 	}
@@ -47,9 +45,9 @@ public class PendingMessageView
 		inflater.inflate(R.layout.pending_messages, this);
 		dialogRemovePendingItem = new RemovePendingItemDialog(hostedActivity);
 		createViews();
-		
+
 	}
-	
+
 	private void createViews() {
 		createTopBar();
 		createMainFrames();
@@ -58,46 +56,54 @@ public class PendingMessageView
 	private void createMainFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.pending_main_frames);
 		list = (ListView) findViewById(R.id.listPending);
-//		list.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
-//				onItemClick(position);
-//			}
-//
-//		});		
-//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
-//
-//			@Override
-//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
-//				onItemLongClick(position);
-//				return true;
-//			}
-//
-//		});
+		//		list.setOnItemClickListener(new OnItemClickListener() {
+		//			@Override
+		//			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
+		//				onItemClick(position);
+		//			}
+		//
+		//		});		
+		//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
+		//
+		//			@Override
+		//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
+		//				onItemLongClick(position);
+		//				return true;
+		//			}
+		//
+		//		});
 
 		adapter = new PendingMessageAdapter(hostedActivity.getApplicationContext(),new PendingMessagesList() ) {
 
 			@Override
-			public void onItemClick(int position) {
-				PendingMessageView.this.onItemClick(position);
+			public void onItemClick(View view,int position) {
+				PendingMessageView.this.onItemClick(view,position);
 			}
 
 			@Override
 			public void onItemLongClick(int position) {
 				PendingMessageView.this.onItemLongClick(position);				
 			}
-			
+
 		};
 		list.setAdapter(adapter);
 		loadPendingMessageAsync();		
 	}
-	
-	protected void onItemClick(int position) {
+
+	protected void onItemClick(final View view, int position) {
 		EditMessage.passedMessage = adapter.getMessage(position);
+		final Drawable oldBackground = view.getBackground();
+		view.setBackgroundColor(getResources().getColor(R.color.blur_blue));
+		Helpers.startAfter(300, new Runnable() {
+			@Override
+			public void run() {
+				view.setBackgroundDrawable(oldBackground);
+			}
+		});
 		Intent i = new Intent(getContext(),EditMessage.class);
 		hostedActivity.startActivity(i);
 	}
-	
+
 	private void onItemLongClick(int position) {
 		dialogRemovePendingItem.setRemovedRowId(adapter.getMessageRowId(position));
 		dialogRemovePendingItem.setLinkedDBObject(PendingMessageView.this);
@@ -106,12 +112,12 @@ public class PendingMessageView
 
 
 
-//	public void onLongClick(IDBLinked obj,long rowId) {
-//		
-//		dialogRemovePendingItem.setLinkedDBObject(obj);
-//		
-//
-//	}
+	//	public void onLongClick(IDBLinked obj,long rowId) {
+	//		
+	//		dialogRemovePendingItem.setLinkedDBObject(obj);
+	//		
+	//
+	//	}
 
 	private void loadPendingMessageAsync() {
 		Helpers.showOnlyView(mainFrames,WAIT_FRAME);
@@ -145,7 +151,7 @@ public class PendingMessageView
 	@Override
 	public void onGetDataSuccess(final Object data) {
 		handler.post(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				PendingMessagesList list = (PendingMessagesList) data;
@@ -153,7 +159,7 @@ public class PendingMessageView
 				adapter.setMessages( list );
 				adapter.notifyDataSetChanged();
 				Helpers.showOnlyView(mainFrames, MESSAGES_FRAME);
-				
+
 			}
 		});
 	}
@@ -172,7 +178,7 @@ public class PendingMessageView
 	public void onResume() {
 		loadPendingMessageAsync();
 	}
-	
+
 	@Override
 	public Dialog onCreateDialog(int id) {
 		switch (id) {

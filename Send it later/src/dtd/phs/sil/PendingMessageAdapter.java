@@ -87,7 +87,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 				if ( delete.getVisibility() == View.VISIBLE ) {
 					delete.setVisibility(View.GONE);
 				} else {
-					onItemClick(position);
+					onItemClick(view,position);
 				}
 			}
 		});
@@ -95,7 +95,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 	}
 
 
-	abstract public void onItemClick(int position);
+	abstract public void onItemClick(View view, int position);
 
 	abstract public void onItemLongClick(int position);
 

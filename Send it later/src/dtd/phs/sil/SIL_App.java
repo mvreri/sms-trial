@@ -17,24 +17,24 @@ public class SIL_App extends Application {
 
 		@Override
 		public void uncaughtException(Thread thread, Throwable ex) {
-	        final Writer result = new StringWriter();
-	        final PrintWriter printWriter = new PrintWriter(result);
-	        ex.printStackTrace(printWriter);
-	        String stacktrace = result.toString();
-	        printWriter.close();
-	        try {
-	            BufferedWriter bos = new BufferedWriter(new FileWriter(PATH + "/" + FILE_NAME));
-	            bos.write(stacktrace);
-	            bos.flush();
-	            bos.close();
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	        Thread.getDefaultUncaughtExceptionHandler().uncaughtException(thread, ex);
+//			try {
+//				final Writer result = new StringWriter();
+//				final PrintWriter printWriter = new PrintWriter(result);
+//				ex.printStackTrace(printWriter);
+//				String stacktrace = result.toString();
+//				printWriter.close();
+//				BufferedWriter bos = new BufferedWriter(new FileWriter(PATH + "/" + FILE_NAME));
+//				bos.write(stacktrace);
+//				bos.flush();
+//				bos.close();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+			Thread.getDefaultUncaughtExceptionHandler().uncaughtException(thread, ex);
 		}
 
 
-		
+
 	}
 
 	@Override

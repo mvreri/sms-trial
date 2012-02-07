@@ -31,4 +31,5 @@
     <string name="message_removed_failed">Message removed failed</string>
     <string name="sent_notification_title">Message sent</string>
     <string name="Delivered_to">Delivered to: </string>
+    <string name="Please_enter_a_phone_number">Please enter a phone number</string>
 </resources>
