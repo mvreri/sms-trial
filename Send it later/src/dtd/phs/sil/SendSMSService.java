@@ -1,5 +1,6 @@
 package dtd.phs.sil;
 
+import java.nio.channels.AlreadyConnectedException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -19,6 +20,7 @@ import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.alarm.AlarmReceiver;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
+import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
@@ -101,17 +103,23 @@ public class SendSMSService extends Service {
 	public void fireNotification() {
 		Resources res = getApplicationContext().getResources();
 		String title = res.getString(R.string.sent_notification_title);
-		String text = res.getString(R.string.A_message_is_sent_to) + messageItem.getContact();
+		String text = res.getString(R.string.Delivered_to) + messageItem.getContact();
 		Notification notification = createNotification(
 				getApplicationContext(), 
 				NOTIFICATION_ICON, 
 				title, 
-				text);
+				text,
+				messageItem.getAlert());
 		 NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 		 manager.notify(NOTIFICATION_ICON, notification);
 	}
 	
-	public static Notification createNotification(Context context,int icon,String notificationTitle,String notificationText) {
+	public static Notification createNotification(
+			Context context,
+			int icon,
+			String notificationTitle,
+			String notificationText, 
+			AlertTypes alertTypes) {
 		Notification notification = new Notification(icon, notificationTitle, System.currentTimeMillis());		
 		
 		CharSequence contentTitle = notificationTitle;
@@ -126,6 +134,22 @@ public class SendSMSService extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		
+		notification.defaults |= Notification.DEFAULT_LIGHTS;
+		switch (alertTypes) {
+		case SILENT:
+			break;
+		case SMS_TONE:
+			notification.defaults |= Notification.DEFAULT_SOUND;
+			break;
+		case VIBRANT:
+			notification.defaults |= Notification.DEFAULT_VIBRATE;	
+			break;
+		case VIBRANT_N_TONE:
+			notification.defaults |= Notification.DEFAULT_SOUND;
+			notification.defaults |= Notification.DEFAULT_VIBRATE;
+			break;
+		}
 		return notification;
 	}
 
