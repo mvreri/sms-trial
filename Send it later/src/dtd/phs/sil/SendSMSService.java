@@ -1,6 +1,5 @@
 package dtd.phs.sil;
 
-import java.nio.channels.AlreadyConnectedException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -21,9 +20,9 @@ import dtd.phs.sil.alarm.AlarmReceiver;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
+import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
-import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class SendSMSService extends Service {
 
@@ -80,7 +79,6 @@ public class SendSMSService extends Service {
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
 			
-
 			fireNotification();
 
 			if (wakeLock != null) {
@@ -124,9 +122,15 @@ public class SendSMSService extends Service {
 		
 		CharSequence contentTitle = notificationTitle;
 		CharSequence contentText =  notificationText;
-		Intent notificationIntent = new Intent(context, MainActivity.class);
-		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
-		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		
+		
+		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
+		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
+		notificationIntent.setType("vnd.android-dir/mms-sms");
+		
+//		Intent notificationIntent = new Intent(context, MainActivity.class);
+//		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
+//		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(
 				context, 
 				0, 
