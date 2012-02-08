@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="mainTextColor">#666666</color>
+    <color name="edit_message_text_color">#666666</color>
+    <color name="border_color">#ddd</color>
+    <color name="blue">#1075d1</color>
+    <color name="blur_blue">#ff006eff</color>
+    <color name="red">#ff0000</color>
+    <color name="dark_red">#7c0505</color>
+    <color name="dialog_text_color">#000000</color>
+</resources>

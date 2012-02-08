@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">Send it later</string>
+    <string name="please_wait">Please wait</string>
+    <string name="pending_messages">Pending messages</string>
+    <string name="next">Next</string>
+    <string name="sent">Sent</string>
+    <string name="Date">Date:</string>
+    
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Hour">Hour</string>
+    <string name="Minute">Minute</string>
+    <string name="To">To:</string>
+    <string name="Time">Time:</string>
+    <string name="Frequency">Frequency: </string>
+    <string name="Alert_on_delivery">Alert on delivery:</string>
+    <string name="Words">Words</string>
+    <string name="Message">Message</string>
+    <string name="Choose_Frequency">Choose Frequency</string>
+    <string name="Add">Add</string>
+    <string name="Save">Save</string>
+    <string name="Invalid_message_warning">Invalid SMS: Please fill in the contacts/message</string>
+    <string name="message_removed_success">Message removed successfully</string>
+    <string name="remove_item">Remove message</string>
+    <string name="confirm_delete_item">Do you want to delete this message ?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Delete">Delete</string>
+    <string name="message_removed_failed">Message removed failed</string>
+    <string name="sent_notification_title">Message sent</string>
+    <string name="Delivered_to">Delivered to: </string>
+    <string name="Please_enter_a_phone_number">Please enter a phone number</string>
+    <string name="Preferences">Preferences</string>
+    <string name="Exit">Exit</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">#Keep max sent items</string>
+    <string name="Max_sent_item_summary">Max sent item summary</string>
+    <string name="about_us">About us</string>
+    <string name="sil_version">Send it later, version 1.0</string>
+    <string name="feel_free">Feel free to modify codes at:</string>
+    <string name="or_send_email">Or drop me an email: &lt;a href=&quot;mailto:sphamhung@yahoo.com&quot;&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
+    <string name="Close">Close</string>
+    <string name="google_code">&lt;a href=&quot;https://sms-trial.googlecode.com/svn/&quot;&gt; Google Code &lt;/a&gt;</string>
+</resources>
