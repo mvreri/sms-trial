@@ -124,13 +124,13 @@ public class SendSMSService extends Service {
 		CharSequence contentText =  notificationText;
 		
 		
-		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
-		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		notificationIntent.setType("vnd.android-dir/mms-sms");
+//		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
+//		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
+//		notificationIntent.setType("vnd.android-dir/mms-sms");
 		
-//		Intent notificationIntent = new Intent(context, MainActivity.class);
-//		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
-//		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+		Intent notificationIntent = new Intent(context, MainActivity.class);
+		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
+		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(
 				context, 
 				0, 
