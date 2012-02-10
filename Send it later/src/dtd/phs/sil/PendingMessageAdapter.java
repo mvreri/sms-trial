@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,11 +23,15 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 	private static final int STUB_AVATAR = R.drawable.contact;
 	private Context context;
 	private PendingMessagesList messages;
+	private Animation occurenceAnim;
+	private Animation disapearAnim;
 
 	public PendingMessageAdapter(Context context, PendingMessagesList pendingMessagesList) {
 		super();
 		this.context = context;
 		this.messages = pendingMessagesList;
+		this.occurenceAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
+		this.disapearAnim = AnimationUtils.loadAnimation(context,R.anim.push_right_out);
 	}
 
 	@Override
@@ -72,10 +78,19 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			public void onSwipe(View view,int position) {
 				
 				View delete = view.findViewById(R.id.btDelete);
-				if ( delete.getVisibility() == View.VISIBLE) {
-					delete.setVisibility(View.GONE);
-				} else delete.setVisibility(View.VISIBLE);
-			}			
+				if ( delete.getVisibility() == View.VISIBLE) {	
+					makeButtonDisapear(delete);
+				} else {
+					delete.startAnimation(occurenceAnim);
+					delete.setVisibility(View.VISIBLE);
+				}
+			}
+			
+			private void makeButtonDisapear(View delete) {
+				delete.startAnimation(disapearAnim);
+				delete.setVisibility(View.GONE);
+			}
+			
 			@Override
 			public void onLongClick(int position) {
 				onItemLongClick(position);
@@ -85,7 +100,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			public void onClick(View view,int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE ) {
-					delete.setVisibility(View.GONE);
+					makeButtonDisapear(delete);
 				} else {
 					onItemClick(view,position);
 				}
@@ -112,6 +127,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 				long id = message.getId();
 				DataCenter.removePendingItem(context, id);
 				if ( messages.removeMessageWithId(id) ) {
+					v.setVisibility(View.GONE);
 					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_SHORT).show();
 					notifyDataSetChanged();
 				} else {

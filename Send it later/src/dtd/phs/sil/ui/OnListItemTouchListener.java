@@ -6,13 +6,12 @@ import android.view.View.OnTouchListener;
 import dtd.phs.sil.utils.Logger;
 
 public abstract class OnListItemTouchListener implements OnTouchListener {
-	final private float MIN_X_SWIPE = 20;
+	final private float MIN_X_SWIPE = 30;
 	final private float MAX_Y_SWIPE = 120;
 	final private float MIN_VELOCITY = 0;
 	protected static final float MAX_CLICK = 10;
-	protected static final long CLICK_TIME = 200;
+	protected static final long CLICK_TIME = 400;
 	private static final long MIN_LONG_CLICK_TIME = 1000;
-	private static final long VIBRATOR_PERIOD = 10;
 	
 	private float startX;
 	private float startY;

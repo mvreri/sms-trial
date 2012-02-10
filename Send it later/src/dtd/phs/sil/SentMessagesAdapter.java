@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,10 +23,14 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 //	private static final int STUB_AVATAR = R.drawable.contact;
 	private Context context;
 	private SentMessagesList messages;
+	private Animation occAnim;
+	private Animation disAnim;
 
 	public SentMessagesAdapter(Context applicationContext,SentMessagesList sentMessagesList) {
 		this.context = applicationContext;
 		this.messages = sentMessagesList;
+		this.occAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
+		this.disAnim = AnimationUtils.loadAnimation(context, R.anim.push_right_out);
 	}
 
 	@Override
@@ -73,12 +79,18 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 			public void onSwipe(View view, int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
-					delete.setVisibility(View.GONE);			
+					makeButtonDispear(delete);			
 					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
 				} else {
+					delete.startAnimation(occAnim);
 					delete.setVisibility(View.VISIBLE);
 					view.findViewById(R.id.ivFailed).setVisibility(View.GONE);
 				}
+			}
+
+			private void makeButtonDispear(View delete) {
+				delete.startAnimation(disAnim);
+				delete.setVisibility(View.GONE);
 			}
 			
 			@Override
@@ -90,7 +102,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 			public void onClick(View view, int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
-					delete.setVisibility(View.GONE);
+					makeButtonDispear(delete);
 					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
 				} else {
 					onItemClick(view,position);
