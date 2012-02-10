@@ -36,9 +36,9 @@
     <string name="Exit">Exit</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
     <string name="Max_sent_item">Clean sent messages</string>
-    <string name="Max_sent_item_summary">Automatically clean the sent messages, when certain number reached</string>
+    <string name="Max_sent_item_summary">Display only newest message, hide the rest</string>
     <string name="about_us">About us</string>
-    <string name="sil_version">Send it later, version 1.0</string>
+    <string name="sil_version">Send it later, version </string>
     <string name="feel_free">Feel free to modify codes at:</string>
     <string name="or_send_email">Or drop me an email: &lt;a href=&quot;mailto:sphamhung@yahoo.com&quot;&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
     <string name="Close">Close</string>

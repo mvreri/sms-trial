@@ -101,7 +101,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 				SentMessagesList list = (SentMessagesList) data;
 				SentMessagesList.sortByTime(list);
 				int maxSentSize = getMaxSentSize();
-				if ( list.size() > maxSentSize) {
+				if ( list.size() > 2 * maxSentSize) {
 					DataCenter.cleanUpSentMessages(getContext(),maxSentSize);
 				}
 				SentMessagesList.cutList(list,maxSentSize);
