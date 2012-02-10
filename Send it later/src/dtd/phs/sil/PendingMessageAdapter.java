@@ -1,5 +1,7 @@
 package dtd.phs.sil;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +27,23 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 	private PendingMessagesList messages;
 	private Animation occurenceAnim;
 	private Animation disapearAnim;
+	private ArrayList<Boolean> displayingDeleteButton;
 
 	public PendingMessageAdapter(Context context, PendingMessagesList pendingMessagesList) {
 		super();
 		this.context = context;
 		this.messages = pendingMessagesList;
+		initDisplayingDeleteButton();
 		this.occurenceAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
 		this.disapearAnim = AnimationUtils.loadAnimation(context,R.anim.push_right_out);
 	}
-
+	
+	private void initDisplayingDeleteButton() {
+		displayingDeleteButton = new ArrayList<Boolean>();
+		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
+	}
+	
+	
 	@Override
 	public int getCount() {
 		return messages.size();
@@ -71,7 +81,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		updateView(view,holder,messages.get(position));
+		updateView(view,holder,messages.get(position),position);
 		view.setOnTouchListener(new OnListItemTouchListener(position,view) {
 			
 			@Override
@@ -79,14 +89,16 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 				
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {	
-					makeButtonDisapear(delete);
+					makeButtonDisapear(delete,position);
 				} else {
+					displayingDeleteButton.set(position, true);
 					delete.startAnimation(occurenceAnim);
 					delete.setVisibility(View.VISIBLE);
 				}
 			}
 			
-			private void makeButtonDisapear(View delete) {
+			private void makeButtonDisapear(View delete, int position) {
+				displayingDeleteButton.set(position, false);
 				delete.startAnimation(disapearAnim);
 				delete.setVisibility(View.GONE);
 			}
@@ -100,7 +112,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 			public void onClick(View view,int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE ) {
-					makeButtonDisapear(delete);
+					makeButtonDisapear(delete,position);
 				} else {
 					onItemClick(view,position);
 				}
@@ -114,20 +126,24 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 
 	abstract public void onItemLongClick(int position);
 
-	private void updateView(View view, ViewHolder holder, final PendingMessageItem message) {
+	private void updateView(View view, ViewHolder holder, final PendingMessageItem message, int position) {
 
 		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		updateNext(holder, message);
+		if (displayingDeleteButton.get(position)) {
+			holder.delete.setVisibility(View.VISIBLE);
+		} else holder.delete.setVisibility(View.GONE);
 		holder.delete.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(final View v) {
 				long id = message.getId();
 				DataCenter.removePendingItem(context, id);
-				if ( messages.removeMessageWithId(id) ) {
+				int index = messages.removeMessageWithId(id);
+				if ( index !=- 1) {
+					displayingDeleteButton.remove(index);
 					v.post(new Runnable() {
-						
 						@Override
 						public void run() {
 							v.setVisibility(View.GONE);
@@ -163,6 +179,7 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 
 	public void setMessages(PendingMessagesList list) {
 		this.messages = list;
+		initDisplayingDeleteButton();
 	}
 
 	public PendingMessageItem getMessage(int position) {

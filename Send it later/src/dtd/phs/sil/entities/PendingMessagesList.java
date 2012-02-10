@@ -27,7 +27,7 @@ public class PendingMessagesList extends ArrayList<PendingMessageItem> {
 		});
 	}
 
-	public boolean removeMessageWithId(long id) {
+	public int removeMessageWithId(long id) {
 		int index = -1;
 		for(int i = 0 ; i < this.size() ; i++) {
 			if ( id == this.get(i).getId() ) {
@@ -37,8 +37,8 @@ public class PendingMessagesList extends ArrayList<PendingMessageItem> {
 		}
 		if ( index != -1) {
 			this.remove(index);
-			return true;
-		} else return false;
+		}
+		return index;
 	}
 
 }
