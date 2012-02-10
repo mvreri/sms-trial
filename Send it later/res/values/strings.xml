@@ -35,8 +35,8 @@
     <string name="Preferences">Preferences</string>
     <string name="Exit">Exit</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
-    <string name="Max_sent_item">#Keep max sent items</string>
-    <string name="Max_sent_item_summary">Max sent item summary</string>
+    <string name="Max_sent_item">Clean sent messages</string>
+    <string name="Max_sent_item_summary">Automatically clean the sent messages, when certain number reached</string>
     <string name="about_us">About us</string>
     <string name="sil_version">Send it later, version 1.0</string>
     <string name="feel_free">Feel free to modify codes at:</string>

@@ -21,6 +21,7 @@ public class TableSentMessages {
 	private static final String MESSAGE_CONTENT = "content";
 	private static final String STATUS = "status";
 	private static final String SENT_TIME = "sent_time";
+	private static final String PENDING_ID = "pending_id";
 
 	public static final String[] COLUMNS = {
 		ID + " INTEGER PRIMARY KEY AUTOINCREMENT",
@@ -28,7 +29,8 @@ public class TableSentMessages {
 		PHONE_NUMBERs + " text",
 		MESSAGE_CONTENT + " text",
 		STATUS + " integer",
-		SENT_TIME + " integer"
+		SENT_TIME + " integer",
+		PENDING_ID + " integer"
 	};
 	private static final int DELIVERED = 1;
 	private static final int FAILED = 0;
@@ -52,6 +54,7 @@ public class TableSentMessages {
 		values.put(MESSAGE_CONTENT, sentMessage.getContent());
 		values.put(STATUS, status);
 		values.put(SENT_TIME, sentMessage.getSentTime());
+		values.put(PENDING_ID, sentMessage.getPendingId());
 
 		database.insert(TABLE_NAME, null, values);
 	}
@@ -82,6 +85,7 @@ public class TableSentMessages {
 		String strNumbers = cursor.getString(cursor.getColumnIndex(PHONE_NUMBERs));
 		
 		SentMessageItem item = SentMessageItem.createInstance(
+				cursor.getLong(cursor.getColumnIndex(PENDING_ID)),
 				strNames.split(SEPERATOR), 
 				strNumbers.split(SEPERATOR), 
 				cursor.getString(cursor.getColumnIndex(MESSAGE_CONTENT)), 

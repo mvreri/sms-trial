@@ -3,7 +3,8 @@ package dtd.phs.sil.ui;
 import java.util.HashMap;
 
 public class AlertHelpers {
-	static public enum AlertTypes { SILENT,VIBRANT,SMS_TONE,VIBRANT_N_TONE};
+	static public enum AlertTypes { SILENT,VIBRANT,SMS_TONE,VIBRANT_N_TONE}
+	public static final int DEFAULT_ALERT_INDEX = 0;;
 	static public String[] ALERT_STRINGS = {"Silent","Vibrant","Play sound","Both vibrant & sound"};
 	static public AlertTypes[] ALERT_TYPE = { AlertTypes.SILENT,AlertTypes.VIBRANT,AlertTypes.SMS_TONE,AlertTypes.VIBRANT_N_TONE};
 	public static HashMap<AlertTypes, String> mapAlertType2Str = new HashMap<AlertTypes, String>();

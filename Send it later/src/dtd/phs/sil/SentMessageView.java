@@ -3,8 +3,11 @@ package dtd.phs.sil;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import dtd.phs.sil.data.DataCenter;
@@ -37,7 +40,39 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	private void createFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
 		list = (ListView) findViewById(R.id.listSent);
-		adapter = new SentMessagesAdapter(hostedActivity.getApplicationContext(), new SentMessagesList());
+		
+		adapter = new SentMessagesAdapter(hostedActivity.getApplicationContext(), new SentMessagesList()) {
+			@Override
+			public void onItemLongClick(int position) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onItemClick(final View view, int position) {
+				EditMessage.passedSentMessage = adapter.getMessage(position);
+				//traps: id non-existent
+				
+				final Drawable oldBackground = view.getBackground();
+				view.setBackgroundColor(getResources().getColor(R.color.blur_blue));
+				Helpers.startAfter(300, new Runnable() {
+					@Override
+					public void run() {
+						view.post(new Runnable() {
+							@Override
+							public void run() {
+								view.setBackgroundDrawable(oldBackground);
+							}
+						});
+						
+					}
+				});				
+				
+				Intent i = new Intent(getContext(),EditMessage.class);
+				hostedActivity.startActivity(i);
+			}
+		};
+		
 		list.setAdapter(adapter);
 		loadSentDataAsync();
 	}

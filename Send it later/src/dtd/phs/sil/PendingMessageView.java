@@ -97,7 +97,14 @@ IDBLinked
 		Helpers.startAfter(300, new Runnable() {
 			@Override
 			public void run() {
-				view.setBackgroundDrawable(oldBackground);
+				view.post(new Runnable() {
+					
+					@Override
+					public void run() {
+						view.setBackgroundDrawable(oldBackground);
+					}
+				});
+				
 			}
 		});
 		Intent i = new Intent(getContext(),EditMessage.class);

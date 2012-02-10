@@ -14,9 +14,8 @@ import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
 import dtd.phs.sil.utils.Helpers;
-import dtd.phs.sil.utils.Logger;
 
-public class SentMessagesAdapter extends BaseAdapter {
+public abstract class SentMessagesAdapter extends BaseAdapter {
 
 	
 //	private static final int STUB_AVATAR = R.drawable.contact;
@@ -74,7 +73,8 @@ public class SentMessagesAdapter extends BaseAdapter {
 			public void onSwipe(View view, int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
-					delete.setVisibility(View.GONE);
+					delete.setVisibility(View.GONE);			
+					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
 				} else {
 					delete.setVisibility(View.VISIBLE);
 					view.findViewById(R.id.ivFailed).setVisibility(View.GONE);
@@ -100,15 +100,8 @@ public class SentMessagesAdapter extends BaseAdapter {
 		return v;
 	}
 
-	protected void onItemClick(View view, int position) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	protected void onItemLongClick(int position) {
-		// TODO Auto-generated method stub
-		
-	}
+	abstract public void onItemClick(View view, int position);
+	abstract public void onItemLongClick(int position);
 
 	private void updateView(ViewHolder holder, final SentMessageItem message) {
 //		holder.avatar.setImageResource(STUB_AVATAR);
@@ -151,6 +144,10 @@ public class SentMessagesAdapter extends BaseAdapter {
 
 	public void setMessages(SentMessagesList list) {
 		messages = list;
+	}
+
+	public SentMessageItem getMessage(int position) {
+		return messages.get(position);
 	}
 
 }

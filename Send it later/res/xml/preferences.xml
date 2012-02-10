@@ -3,12 +3,13 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference 
     	android:entryValues="@array/max_sent_number"
-    	android:defaultValue="5" 
     	android:entries="@array/max_sent_number_str" 
-    	android:key="@string/PREF_MAX_SENT_ITEM" 
+    	android:key="PREF_MAX_SENT_ITEM" 
     	android:title="@string/Max_sent_item" 
     	android:summary="@string/Max_sent_item_summary"
- 		android:dialogTitle="@string/Max_sent_item">
+ 		android:dialogTitle="@string/Max_sent_item"
+ 		android:defaultValue="5"
+ 	>
     </ListPreference>
     <Preference 
     	android:title="@string/about_us" 

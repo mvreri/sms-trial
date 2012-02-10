@@ -10,6 +10,7 @@ public class SentMessageItem {
 	private String[] numbers;
 	private long sentTime;
 	private long id;
+	private long pendingId;
 	
 	public boolean isDelivered() {
 		return isDelivered;
@@ -53,6 +54,7 @@ public class SentMessageItem {
 	public static SentMessageItem createFromPendingMessage(
 			PendingMessageItem messageItem, boolean isDelivered) {
 		return createInstance(
+				messageItem.getId(),
 				messageItem.getNames(), 
 				messageItem.getPhoneNumbers(), 
 				messageItem.getContent(), 
@@ -61,6 +63,7 @@ public class SentMessageItem {
 	}
 	
 	public static SentMessageItem createInstance(
+			long pending_id, 
 			String[] names,
 			String[] numbers,
 			String content,
@@ -73,10 +76,19 @@ public class SentMessageItem {
 		sentMessage.setContent(content);
 		sentMessage.setDelivered(isDelivered);
 		sentMessage.setSentTime(sentTime);
+		sentMessage.setPendingId(pending_id);
 	
 		return sentMessage;
 	}
 	
+
+	private void setPendingId(long pendingId) {
+		this.pendingId = pendingId;
+	}
+
+	public long getPendingId() {
+		return pendingId;
+	}
 
 	private void setSentTime(long currentTimeMillis) {
 		sentTime = currentTimeMillis;

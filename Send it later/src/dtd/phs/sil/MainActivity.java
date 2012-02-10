@@ -2,6 +2,7 @@ package dtd.phs.sil;
 
 import java.util.ArrayList;
 
+import dtd.phs.sil.ui.OptionsMenu;
 import dtd.phs.sil.utils.Logger;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
@@ -23,6 +25,7 @@ public class MainActivity extends Activity {
 	private ArrayList<FrameView> frames;
 	private ArrayList<ImageView> tabButtons;
 	private int displayingFrameId;
+	private OptionsMenu optionsMenu;
 
 
     static final int FRAME_PENDING = 0;
@@ -77,7 +80,14 @@ public class MainActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		return super.onCreateOptionsMenu(menu);
+		optionsMenu = new OptionsMenu(this);
+		optionsMenu.createOptionsMenu(menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		return optionsMenu.onItemSelected(item);
 	}
 	@Override
 	protected void onNewIntent(Intent intent) {

@@ -15,7 +15,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,10 +27,9 @@ import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
-import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.data.DataCenter;
-import dtd.phs.sil.data.Database;
 import dtd.phs.sil.entities.PendingMessageItem;
+import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.ui.ChooseDateDialog;
 import dtd.phs.sil.ui.ChooseFrequencyDialog;
@@ -48,8 +46,8 @@ import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage 
-	extends Activity 
-	implements IFilterListener {
+extends Activity 
+implements IFilterListener {
 
 	protected static final String EDIT_TYPE = "edit_type";
 	protected static final String TYPE_NEW = "type_new";
@@ -64,6 +62,7 @@ public class EditMessage
 
 	//Set passedMessage = null -> Add new message , otherwise: edit
 	public static PendingMessageItem passedMessage = null;
+	public static SentMessageItem passedSentMessage = null;
 
 	private TextView tvDate;
 	private TextView tvTime;
@@ -86,8 +85,10 @@ public class EditMessage
 	private Button btOk;
 	private Button btCancel;
 	private boolean isEditView;
+
 	private PendingMessageItem beingEditedMessage;
 	private Button btAddContact;
+	private boolean isEditSentMessage;
 
 
 	/** Called when the activity is first created. */
@@ -122,11 +123,31 @@ public class EditMessage
 			isEditView = true;
 			beingEditedMessage = EditMessage.passedMessage;		
 			EditMessage.passedMessage = null;
-			selectedCalendar = beingEditedMessage.getStartDateTime();
-			frequency = beingEditedMessage.getFreq();
-			alertType = beingEditedMessage.getAlert();
+			getInfoFromBeingEditedMessage(beingEditedMessage);
 		}
 
+		if (EditMessage.passedSentMessage != null) {
+			Logger.logInfo("A sent message is passed !");
+			isEditView = true;
+			long pendingId = EditMessage.passedSentMessage.getPendingId();
+			Logger.logInfo("Pending message id: " + pendingId);
+			beingEditedMessage = DataCenter.getPendingMessageWithId(getApplicationContext(), pendingId);
+			
+			if ( beingEditedMessage == null ) {
+				Logger.logInfo("No pending message with id: " + pendingId + " exists");	
+				beingEditedMessage = PendingMessageItem.createFromSentItem(EditMessage.passedSentMessage);
+				isEditSentMessage = true;
+			}
+			EditMessage.passedSentMessage = null;
+			getInfoFromBeingEditedMessage(beingEditedMessage);
+		}
+
+	}
+
+	private void getInfoFromBeingEditedMessage(PendingMessageItem beingEditedMessage2) {
+		selectedCalendar = beingEditedMessage.getStartDateTime();
+		frequency = beingEditedMessage.getFreq();
+		alertType = beingEditedMessage.getAlert();
 	}
 
 	private void createViews() {
@@ -156,8 +177,12 @@ public class EditMessage
 				@Override
 				public void onClick(View v) {
 					if ( isValidMessage() ) {
-						long id = beingEditedMessage.getId();
-						DataCenter.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
+						if ( !isEditSentMessage) {
+							long id = beingEditedMessage.getId();
+							DataCenter.modifyPendingMessage(getApplicationContext(),id,createPendingMessage());
+						} else {
+							DataCenter.savePendingMessageItem(getApplicationContext(), createPendingMessage());
+						}
 						onBackPressed();
 					} else {
 						showInvalidMessageToast();
@@ -176,13 +201,27 @@ public class EditMessage
 
 		btAddContact = (Button) findViewById(R.id.btAddContact);
 		btAddContact.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				String str = etContact.getText().toString();
+
 				if ( Helpers.isPhoneNumber(str)) {
 					str = Helpers.parsePhoneNumber(str);
 					ContactItem item = new ContactItem(str, str, System.currentTimeMillis());
+					Logger.logInfo("Button add contact pressed !");
+					Helpers.startAfter(300, new Runnable() {
+						@Override
+						public void run() {
+							btAddContact.post(new Runnable() {
+								@Override
+								public void run() {
+									Logger.logInfo("Button add visibility changed !");
+									btAddContact.setVisibility(View.GONE);							
+								}
+							});
+						}
+					});
 					onContactAdded(item);
 				} else {
 					btAddContact.post(new Runnable() {
@@ -191,7 +230,7 @@ public class EditMessage
 							Toast.makeText(getApplicationContext(), R.string.Please_enter_a_phone_number, Toast.LENGTH_LONG).show();
 						}
 					});
-					
+
 				}
 			}
 		});
@@ -375,7 +414,7 @@ public class EditMessage
 		etContact.setText("");
 		onBackPressed();
 	}	
-	
+
 	@Override
 	public void onBackPressed() {
 		if (mainFrames.getChildAt(FRAME_CONTACTS_LIST).getVisibility() == View.VISIBLE) {

@@ -105,6 +105,18 @@ public class PendingMessageItem {
 	public void setContent(String content) {this.content = content;}
 	public String[] getPhoneNumbers() {return phoneNumbers;}
 	public String[] getNames() {return names;}
+	
+	public static PendingMessageItem createFromSentItem(
+			SentMessageItem passedSentMessage) {
+		return createInstance(
+				passedSentMessage.getPendingId(), 
+				passedSentMessage.getNames(), 
+				passedSentMessage.getPhonenumbers(), 
+				passedSentMessage.getContent(), 
+				passedSentMessage.getSentTime(), 
+				FrequencyHelpers.DEFAULT_FREQ_INDEX, 
+				AlertHelpers.DEFAULT_ALERT_INDEX);
+	}
 
 
 

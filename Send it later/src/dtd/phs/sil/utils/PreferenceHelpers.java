@@ -2,7 +2,7 @@ package dtd.phs.sil.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import dtd.phs.sil.R;
+import android.preference.PreferenceManager;
 
 public class PreferenceHelpers {
 	private static final String PREF_FILE_NAME = "pref_send_it_later";
@@ -16,13 +16,13 @@ public class PreferenceHelpers {
 	}
 
 	public static String getPreference(Context context,String prefName) {
-		SharedPreferences settings = context.getSharedPreferences(PREF_FILE_NAME, Context.MODE_PRIVATE);
+		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		String prefData = settings.getString(prefName, null); 
 		return prefData;        
 	}
 
 	public static int getMaxSentSize(Context context) {
-		String str = getPreference(context, context.getResources().getString(R.string.PREF_MAX_SENT_ITEM));
+		String str = getPreference(context, "PREF_MAX_SENT_ITEM");//context.getResources().getString(R.string.PREF_MAX_SENT_ITEM));
 		try {
 			return Integer.parseInt(str);
 		} catch (Exception e) {

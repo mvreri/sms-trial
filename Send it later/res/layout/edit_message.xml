@@ -22,6 +22,7 @@
 			android:id="@+id/btAddContact"
 			android:layout_width="72dp"
 			android:layout_height="wrap_content"
+			android:visibility="gone"
 			android:text="@string/Add"
 		/>
     </LinearLayout>

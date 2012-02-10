@@ -16,6 +16,7 @@ public class FrequencyHelpers {
 		//		EV_HOUR,EV_2_HOURS,EV_12_HOURS
 		//	}
 
+		static public final int DEFAULT_FREQ_INDEX = 0;
 		static public final Frequencies[] FREQUENCIES = {
 			Frequencies.ONCE,Frequencies.DAILY,Frequencies.WEEKLY,Frequencies.MONTHLY,Frequencies.YEARLY,
 			Frequencies.EV_WEEK_DAY,Frequencies.EV_WEEKEND};
