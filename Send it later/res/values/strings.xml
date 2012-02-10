@@ -29,7 +29,8 @@
     <string name="No">No</string>
     <string name="Delete">Delete</string>
     <string name="message_removed_failed">Message removed failed</string>
-    <string name="sent_notification_title">Message sent</string>
+    <string name="successful_sent_notification_title">Message sent successful</string>
+    <string name="failed_sent_notification_title">Failed to send message</string>
     <string name="Delivered_to">Delivered to: </string>
     <string name="Please_enter_a_phone_number">Please enter a phone number</string>
     <string name="Preferences">Preferences</string>
@@ -42,5 +43,6 @@
     <string name="feel_free">Feel free to modify codes at:</string>
     <string name="or_send_email">Or drop me an email: &lt;a href=&quot;mailto:sphamhung@yahoo.com&quot;&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
     <string name="Close">Close</string>
+    <string name="Sent_failed">Failed to send to: </string>
     <string name="google_code">&lt;a href=&quot;https://sms-trial.googlecode.com/svn/&quot;&gt; Google Code &lt;/a&gt;</string>
 </resources>

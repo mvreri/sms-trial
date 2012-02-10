@@ -80,7 +80,7 @@ public class SendSMSService extends Service {
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
 			
-			fireNotification();
+			fireNotification(errorOcc);
 			broadcastAlarmIntent();
 			
 			if (wakeLock != null) {
@@ -106,10 +106,18 @@ public class SendSMSService extends Service {
 		getApplicationContext().sendBroadcast(i);
 	}
 
-	public void fireNotification() {
+	public void fireNotification(boolean errorOcc) {
+		
 		Resources res = getApplicationContext().getResources();
-		String title = res.getString(R.string.sent_notification_title);
-		String text = res.getString(R.string.Delivered_to) + messageItem.getContact();
+		String title = null;
+		String text = null;
+		if ( ! errorOcc ) {
+			text = res.getString(R.string.Delivered_to) + " " + messageItem.getContact();
+			title = res.getString(R.string.successful_sent_notification_title);
+		} else {
+			title = res.getString(R.string.failed_sent_notification_title);
+			text = res.getString(R.string.Sent_failed) + messageItem.getContact();
+		}
 		Notification notification = createNotification(
 				getApplicationContext(), 
 				NOTIFICATION_ICON, 
