@@ -34,7 +34,7 @@ public class SentMessagesList extends ArrayList<SentMessageItem> {
 		return this.get(i).getId();
 	}
 
-	public boolean removeMessageWithId(long id) {
+	public int removeMessageWithId(long id) {
 		int index = -1;
 		for(int i = 0 ; i < this.size() ; i++) {
 			if (this.getId(i) == id) {
@@ -44,9 +44,8 @@ public class SentMessagesList extends ArrayList<SentMessageItem> {
 		}
 		if ( index != -1) {
 			this.remove(index);
-			return true;
 		}
-		return false;
+		return index;
 	}
 
 }

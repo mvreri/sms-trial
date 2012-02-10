@@ -30,6 +30,7 @@ public class SendSMSService extends Service {
 	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	protected static final int WAITING_TIME = 5000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
+	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
 
 	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
@@ -80,7 +81,8 @@ public class SendSMSService extends Service {
 			AlarmHelpers.refreshAlarm(getApplicationContext());
 			
 			fireNotification();
-
+			broadcastAlarmIntent();
+			
 			if (wakeLock != null) {
 				wakeLock.release();			
 				setWakeLock(null);
@@ -97,6 +99,12 @@ public class SendSMSService extends Service {
 		}
 	}
 
+
+	public void broadcastAlarmIntent() {
+		Intent i = new Intent();
+		i.setAction(ACTION_MESSAGE_SENT);
+		getApplicationContext().sendBroadcast(i);
+	}
 
 	public void fireNotification() {
 		Resources res = getApplicationContext().getResources();

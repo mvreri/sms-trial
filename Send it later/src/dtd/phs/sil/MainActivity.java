@@ -7,7 +7,10 @@ import dtd.phs.sil.utils.Logger;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -26,6 +29,7 @@ public class MainActivity extends Activity {
 	private ArrayList<ImageView> tabButtons;
 	private int displayingFrameId;
 	private OptionsMenu optionsMenu;
+	private BroadcastReceiver myReceiver;
 
 
     static final int FRAME_PENDING = 0;
@@ -69,6 +73,13 @@ public class MainActivity extends Activity {
 	@Override
     protected void onResume() {
     	super.onResume();
+    	myReceiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				frames.get(displayingFrameId).onDisplayed();
+			}
+    	};
+    	registerReceiver( myReceiver, new IntentFilter(SendSMSService.ACTION_MESSAGE_SENT));
     	showOnlyView(displayingFrameId);
     	frames.get(displayingFrameId).onResume();
     }
@@ -76,6 +87,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onPause() {
 		super.onPause();
+		unregisterReceiver(myReceiver);
 	}
 	
 	@Override

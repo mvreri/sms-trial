@@ -121,13 +121,19 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		holder.content.setText(message.getContent());
 		updateNext(holder, message);
 		holder.delete.setOnClickListener(new OnClickListener() {
-			
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				long id = message.getId();
 				DataCenter.removePendingItem(context, id);
 				if ( messages.removeMessageWithId(id) ) {
-					v.setVisibility(View.GONE);
+					v.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							v.setVisibility(View.GONE);
+						}
+					});
+					
 					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_SHORT).show();
 					notifyDataSetChanged();
 				} else {

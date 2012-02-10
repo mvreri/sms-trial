@@ -1,9 +1,11 @@
 package dtd.phs.sil;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
@@ -25,12 +27,19 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 	private SentMessagesList messages;
 	private Animation occAnim;
 	private Animation disAnim;
+	private ArrayList<Boolean> displayingDeleteButton;
 
 	public SentMessagesAdapter(Context applicationContext,SentMessagesList sentMessagesList) {
 		this.context = applicationContext;
 		this.messages = sentMessagesList;
+		initDisplayingDeleteButton();
 		this.occAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
 		this.disAnim = AnimationUtils.loadAnimation(context, R.anim.push_right_out);
+	}
+
+	private void initDisplayingDeleteButton() {
+		displayingDeleteButton = new ArrayList<Boolean>();
+		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
 	}
 
 	@Override
@@ -72,23 +81,25 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		updateView( holder, messages.get(position) );
+		updateView( holder, messages.get(position), position );
 		v.setOnTouchListener(new OnListItemTouchListener(position,v) {
 			
 			@Override
 			public void onSwipe(View view, int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
-					makeButtonDispear(delete);			
+					makeButtonDispear(delete, position);			
 					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
 				} else {
+					displayingDeleteButton.set(position, true);
 					delete.startAnimation(occAnim);
 					delete.setVisibility(View.VISIBLE);
 					view.findViewById(R.id.ivFailed).setVisibility(View.GONE);
 				}
 			}
 
-			private void makeButtonDispear(View delete) {
+			private void makeButtonDispear(View delete,int position) {
+				displayingDeleteButton.set(position, false);
 				delete.startAnimation(disAnim);
 				delete.setVisibility(View.GONE);
 			}
@@ -102,7 +113,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 			public void onClick(View view, int position) {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
-					makeButtonDispear(delete);
+					makeButtonDispear(delete,position);
 					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
 				} else {
 					onItemClick(view,position);
@@ -115,24 +126,34 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 	abstract public void onItemClick(View view, int position);
 	abstract public void onItemLongClick(int position);
 
-	private void updateView(ViewHolder holder, final SentMessageItem message) {
+	private void updateView(ViewHolder holder, final SentMessageItem message, int position) {
 //		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		holder.status.setText(message.getStatus());
 		updateMessageDeliveredIcon(holder.failedIcon, message);
+		if ( displayingDeleteButton.get(position) ) {
+			holder.delete.setVisibility(View.VISIBLE);
+		} else holder.delete.setVisibility(View.GONE);
 		holder.delete.setOnClickListener(new OnClickListener() {
 			
 			@Override
-			public void onClick(View v) {
+			public void onClick(final View v) {
 				long id = message.getId();
 				DataCenter.removeSentItem(context,id);
-				if ( messages.removeMessageWithId(id)) {
-					v.setVisibility(View.GONE);
-					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_LONG).show();
+				int index = messages.removeMessageWithId(id);
+				if ( index != -1 ) {
+					displayingDeleteButton.remove(index);
+					v.post(new Runnable() {
+						@Override
+						public void run() {
+							v.setVisibility(View.GONE);
+						}
+					});
+					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_SHORT).show();
 					notifyDataSetChanged();
 				} else {
-					Toast.makeText(context, R.string.message_removed_failed, Toast.LENGTH_LONG).show();
+					Toast.makeText(context, R.string.message_removed_failed, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -156,6 +177,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 
 	public void setMessages(SentMessagesList list) {
 		messages = list;
+		initDisplayingDeleteButton();
 	}
 
 	public SentMessageItem getMessage(int position) {
