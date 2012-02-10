@@ -8,6 +8,7 @@ import java.util.Date;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -112,7 +113,7 @@ implements IFilterListener {
 			Helpers.hideSoftKeyboard(this);
 		}
 	}
-
+	
 	private void init() {
 		selectedCalendar = Calendar.getInstance();
 		res = getResources();
