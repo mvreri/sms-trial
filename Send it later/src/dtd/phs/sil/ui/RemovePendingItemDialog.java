@@ -8,9 +8,9 @@ import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.Toast;
-import dtd.phs.sil.IDBLinked;
 import dtd.phs.sil.R;
 import dtd.phs.sil.data.DataCenter;
+import dtd.phs.sil.data.IDBLinked;
 
 public class RemovePendingItemDialog extends Dialog {
 
