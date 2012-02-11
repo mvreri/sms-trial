@@ -257,7 +257,7 @@ implements IFilterListener {
 				contacts.getNames(),
 				contacts.getNumbers(), 
 				etMessage.getText().toString(), 
-				selectedCalendar.getTimeInMillis() - DELTA_TIME, 
+				selectedCalendar.getTimeInMillis(), 
 				FrequencyHelpers.indexOf(frequency), 
 				AlertHelpers.indexOf(alertType)
 		);
