@@ -3,9 +3,6 @@ package dtd.phs.sil;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.entities.PendingMessageItem;
@@ -24,19 +21,6 @@ public abstract class PendingMessageAdapter extends MessageAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		return super.getView(position, convertView, R.layout.pending_item);
-//		View view = convertView;
-//		ViewHolder holder;
-//		if ( view == null ) {
-//			view = Helpers.inflate(context,R.layout.pending_item);
-//			holder = new ViewHolder();
-//			createHolder(view, holder);
-//			view.setTag(holder);
-//		} else {
-//			holder = (ViewHolder) view.getTag();
-//		}
-//		updateView(view,holder,(PendingMessageItem)messages.get(position),position);
-//		processOnItemTouch(position, view);
-//		return view;
 	}
 
 
@@ -80,7 +64,6 @@ public abstract class PendingMessageAdapter extends MessageAdapter {
 		holder.content.setText(message.getContent());
 		updateDeleteButton(holder.delete, position, message);
 		updateNext(holder, (PendingMessageItem)message);
-		
 	}
 	
 	protected void modifyDatabaseOnDeleteButtonClick(long id) {

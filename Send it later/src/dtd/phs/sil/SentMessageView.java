@@ -20,8 +20,8 @@ import dtd.phs.sil.utils.PreferenceHelpers;
 
 public class SentMessageView extends FrameView implements IDataLoader {
 
-	protected static final int MESSAGES_FRAME = 1;
 	private static final int WAIT_FRAME = 0;
+	protected static final int MESSAGES_FRAME = 1;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private SentMessagesAdapter adapter;
@@ -45,15 +45,11 @@ public class SentMessageView extends FrameView implements IDataLoader {
 		adapter = new SentMessagesAdapter(hostedActivity.getApplicationContext(), new SentMessagesList()) {
 			@Override
 			public void onItemLongClick(int position) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void onItemClick(final View view, int position) {
 				EditMessage.passedSentMessage = (SentMessageItem) adapter.getMessage(position);
-				//traps: id non-existent
-				
 				final Drawable oldBackground = view.getBackground();
 				view.setBackgroundColor(getResources().getColor(R.color.blur_blue));
 				Helpers.startAfter(300, new Runnable() {
@@ -89,7 +85,6 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			@Override
 			public void run() {
 				Logger.logError(e);
-				hostedActivity.finish();
 			}
 		});
 	}

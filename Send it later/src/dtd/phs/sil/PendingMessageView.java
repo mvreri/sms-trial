@@ -28,13 +28,11 @@ IDBLinked
 
 	private static final int WAIT_FRAME = 0;
 	private static final int MESSAGES_FRAME = 1;
-	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
-
-	private View topFrame;
-	private View btAdd;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private PendingMessageAdapter adapter;
+	
+	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
 	private RemovePendingItemDialog dialogRemovePendingItem;
 
 	public PendingMessageView(Activity hostedActivity, Handler handler) {
@@ -58,22 +56,6 @@ IDBLinked
 	private void createMainFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.pending_main_frames);
 		list = (ListView) findViewById(R.id.listPending);
-		//		list.setOnItemClickListener(new OnItemClickListener() {
-		//			@Override
-		//			public void onItemClick(AdapterView<?> arg0, View arg1, int position,long arg3) {
-		//				onItemClick(position);
-		//			}
-		//
-		//		});		
-		//		list.setOnItemLongClickListener(new OnItemLongClickListener() {
-		//
-		//			@Override
-		//			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,int position, long arg3) {
-		//				onItemLongClick(position);
-		//				return true;
-		//			}
-		//
-		//		});
 
 		adapter = new PendingMessageAdapter(hostedActivity.getApplicationContext(),new PendingMessagesList() ) {
 
@@ -134,8 +116,8 @@ IDBLinked
 	}
 
 	private void createTopBar() {
-		topFrame = findViewById(R.id.top_bar_pending);
-		btAdd = topFrame.findViewById(R.id.btAdd);
+		View topFrame = findViewById(R.id.top_bar_pending);
+		View btAdd = topFrame.findViewById(R.id.btAdd);
 		btAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -152,7 +134,6 @@ IDBLinked
 			@Override
 			public void run() {
 				Logger.logError(e);
-				hostedActivity.finish();
 			}
 		});
 	}
