@@ -2,51 +2,32 @@ package dtd.phs.sil;
 
 import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import dtd.phs.sil.data.DataCenter;
+import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
-import dtd.phs.sil.utils.Helpers;
 
 public abstract class SentMessagesAdapter extends MessageAdapter {
 
-	
 //	private static final int STUB_AVATAR = R.drawable.contact;
 	public SentMessagesAdapter(Context applicationContext,SentMessagesList sentMessagesList) {
 		super(applicationContext,sentMessagesList);
 	}
 
-	public class ViewHolder {
-
-		public ImageView avatar;
-		public TextView contact;
-		public TextView content;
-		public TextView status;
-		public ImageView failedIcon;
-		public Button delete;
-
+	protected void modifyDatabaseOnDeleteButtonClick(long id) {
+		DataCenter.removeSentItem(context,id);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-//		Logger.logInfo("Position: " + position);
-		View v = convertView;
-		ViewHolder holder;
-		if ( v == null ) {
-			v = Helpers.inflate(context, R.layout.sent_item);
-			holder = new ViewHolder();
-			createHolder(v, holder);
-			v.setTag(holder);
-		} else {
-			holder = (ViewHolder) v.getTag();
-		}
-		updateView( holder, (SentMessageItem) messages.get(position), position );
+		return super.getView(position,convertView,R.layout.sent_item);
+
+	}
+
+	protected void processOnItemTouch(int position, View v) {
 		v.setOnTouchListener(new OnListItemTouchListener(position,v) {
 			
 			@Override
@@ -61,12 +42,6 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 					delete.setVisibility(View.VISIBLE);
 					view.findViewById(R.id.ivFailed).setVisibility(View.GONE);
 				}
-			}
-
-			private void makeButtonDispear(View delete,int position) {
-				displayingDeleteButton.set(position, false);
-				delete.startAnimation(disAnim);
-				delete.setVisibility(View.GONE);
 			}
 			
 			@Override
@@ -85,45 +60,18 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 				}
 			}
 		});
-		return v;
 	}
 
-	abstract public void onItemClick(View view, int position);
-	abstract public void onItemLongClick(int position);
-
-	private void updateView(ViewHolder holder, final SentMessageItem message, int position) {
+	protected void updateView(ViewHolder holder, final MessageItem message, int position) {
 //		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
-		holder.status.setText(message.getStatus());
-		updateMessageDeliveredIcon(holder.failedIcon, message);
-		if ( displayingDeleteButton.get(position) ) {
-			holder.delete.setVisibility(View.VISIBLE);
-		} else holder.delete.setVisibility(View.GONE);
-		holder.delete.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(final View v) {
-				long id = message.getId();
-				DataCenter.removeSentItem(context,id);
-				int index = messages.removeMessageWithId(id);
-				if ( index != -1 ) {
-					displayingDeleteButton.remove(index);
-					v.post(new Runnable() {
-						@Override
-						public void run() {
-							v.setVisibility(View.GONE);
-						}
-					});
-					Toast.makeText(context, R.string.message_removed_success, Toast.LENGTH_SHORT).show();
-					notifyDataSetChanged();
-				} else {
-					Toast.makeText(context, R.string.message_removed_failed, Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+		updateDeleteButton(holder.delete, position, message);
+		holder.status.setText(((SentMessageItem)message).getStatus());
+		updateMessageDeliveredIcon(holder.failedIcon, (SentMessageItem)message);
 	}
 
+	
 	private void updateMessageDeliveredIcon(View failedIcon,
 			SentMessageItem message) {
 		if ( ! message.isDelivered() ) {
@@ -131,12 +79,8 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 		} else failedIcon.setVisibility(View.INVISIBLE );
 	}
 
-	private void createHolder(View v, ViewHolder holder) {
-		holder.avatar = (ImageView) v.findViewById(R.id.ivAvatar);
-		holder.contact = (TextView) v.findViewById(R.id.tvContact);
-		holder.content = (TextView) v.findViewById(R.id.tvContent);
-		holder.status = (TextView) v.findViewById(R.id.tvStatus);
+	protected void createHolder(View v, ViewHolder holder) {
+		super.createHolder(v,holder);
 		holder.failedIcon = (ImageView) v.findViewById(R.id.ivFailed);
-		holder.delete = (Button) v.findViewById(R.id.btDelete);
 	}
 }

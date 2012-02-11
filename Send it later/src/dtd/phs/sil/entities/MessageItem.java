@@ -1,6 +1,6 @@
 package dtd.phs.sil.entities;
 
-public class MessageItem {
+public abstract class MessageItem {
 	protected long id; // auto id in database
 	protected String[] names;
 	protected String[] phoneNumbers; 
@@ -14,5 +14,6 @@ public class MessageItem {
 	public void setContent(String content) {this.content = content;}
 	public String[] getNames() {return names;}
 	public void setNames(String[] names) { this.names = names; }
+	abstract public String getContact();
 
 }
