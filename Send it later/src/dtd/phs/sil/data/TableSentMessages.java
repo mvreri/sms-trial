@@ -50,7 +50,7 @@ public class TableSentMessages {
 
 		ContentValues values = new ContentValues();	
 		values.put(NAMEs,StringHelpers.implode(sentMessage.getNames(),SEPERATOR));
-		values.put(PHONE_NUMBERs, StringHelpers.implode(sentMessage.getPhonenumbers(), SEPERATOR));
+		values.put(PHONE_NUMBERs, StringHelpers.implode(sentMessage.getPhoneNumbers(), SEPERATOR));
 		values.put(MESSAGE_CONTENT, sentMessage.getContent());
 		values.put(STATUS, status);
 		values.put(SENT_TIME, sentMessage.getSentTime());

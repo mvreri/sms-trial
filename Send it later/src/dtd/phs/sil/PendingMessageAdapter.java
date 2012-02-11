@@ -1,14 +1,9 @@
 package dtd.phs.sil;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,44 +14,13 @@ import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
 import dtd.phs.sil.utils.Helpers;
 
-public abstract class PendingMessageAdapter extends BaseAdapter {
+public abstract class PendingMessageAdapter extends MessageAdapter {
 
 
-	private static final int STUB_AVATAR = R.drawable.contact;
-	private Context context;
-	private PendingMessagesList messages;
-	private Animation occurenceAnim;
-	private Animation disapearAnim;
-	private ArrayList<Boolean> displayingDeleteButton;
+//	private static final int STUB_AVATAR = R.drawable.contact;
 
 	public PendingMessageAdapter(Context context, PendingMessagesList pendingMessagesList) {
-		super();
-		this.context = context;
-		this.messages = pendingMessagesList;
-		initDisplayingDeleteButton();
-		this.occurenceAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
-		this.disapearAnim = AnimationUtils.loadAnimation(context,R.anim.push_right_out);
-	}
-	
-	private void initDisplayingDeleteButton() {
-		displayingDeleteButton = new ArrayList<Boolean>();
-		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
-	}
-	
-	
-	@Override
-	public int getCount() {
-		return messages.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return messages.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
+		super(context,pendingMessagesList);
 	}
 
 
@@ -81,7 +45,8 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		updateView(view,holder,messages.get(position),position);
+		updateView(view,holder,(PendingMessageItem)messages.get(position),position);
+
 		view.setOnTouchListener(new OnListItemTouchListener(position,view) {
 			
 			@Override
@@ -92,14 +57,14 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 					makeButtonDisapear(delete,position);
 				} else {
 					displayingDeleteButton.set(position, true);
-					delete.startAnimation(occurenceAnim);
+					delete.startAnimation(occAnim);
 					delete.setVisibility(View.VISIBLE);
 				}
 			}
 			
 			private void makeButtonDisapear(View delete, int position) {
 				displayingDeleteButton.set(position, false);
-				delete.startAnimation(disapearAnim);
+				delete.startAnimation(disAnim);
 				delete.setVisibility(View.GONE);
 			}
 			
@@ -123,12 +88,11 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 
 
 	abstract public void onItemClick(View view, int position);
-
 	abstract public void onItemLongClick(int position);
 
 	private void updateView(View view, ViewHolder holder, final PendingMessageItem message, int position) {
 
-		holder.avatar.setImageResource(STUB_AVATAR);
+//		holder.avatar.setImageResource(STUB_AVATAR);
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		updateNext(holder, message);
@@ -160,7 +124,6 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 	}
 
 	private void updateNext(ViewHolder holder, PendingMessageItem message) {
-
 		String next = context.getResources().getString(R.string.next);
 		String nextTime = message.getNextTime();
 		if ( nextTime == null) 
@@ -175,19 +138,6 @@ public abstract class PendingMessageAdapter extends BaseAdapter {
 		holder.content = (TextView) view.findViewById(R.id.tvContent);
 		holder.status = (TextView) view.findViewById(R.id.tvStatus);
 		holder.delete = (Button) view.findViewById(R.id.btDelete);
-	}
-
-	public void setMessages(PendingMessagesList list) {
-		this.messages = list;
-		initDisplayingDeleteButton();
-	}
-
-	public PendingMessageItem getMessage(int position) {
-		return messages.get(position);
-	}
-
-	public long getMessageRowId(int position) {
-		return messages.get(position).getId();
 	}
 
 }

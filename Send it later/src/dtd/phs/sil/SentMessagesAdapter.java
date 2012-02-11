@@ -1,14 +1,9 @@
 package dtd.phs.sil;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,42 +14,12 @@ import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
 import dtd.phs.sil.utils.Helpers;
 
-public abstract class SentMessagesAdapter extends BaseAdapter {
+public abstract class SentMessagesAdapter extends MessageAdapter {
 
 	
 //	private static final int STUB_AVATAR = R.drawable.contact;
-	private Context context;
-	private SentMessagesList messages;
-	private Animation occAnim;
-	private Animation disAnim;
-	private ArrayList<Boolean> displayingDeleteButton;
-
 	public SentMessagesAdapter(Context applicationContext,SentMessagesList sentMessagesList) {
-		this.context = applicationContext;
-		this.messages = sentMessagesList;
-		initDisplayingDeleteButton();
-		this.occAnim = AnimationUtils.loadAnimation(context, R.anim.push_left_in);
-		this.disAnim = AnimationUtils.loadAnimation(context, R.anim.push_right_out);
-	}
-
-	private void initDisplayingDeleteButton() {
-		displayingDeleteButton = new ArrayList<Boolean>();
-		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
-	}
-
-	@Override
-	public int getCount() {
-		return messages.size();
-	}
-
-	@Override
-	public Object getItem(int position) {
-		return messages.get(position);
-	}
-
-	@Override
-	public long getItemId(int position) {
-		return position;
+		super(applicationContext,sentMessagesList);
 	}
 
 	public class ViewHolder {
@@ -81,7 +46,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		updateView( holder, messages.get(position), position );
+		updateView( holder, (SentMessageItem) messages.get(position), position );
 		v.setOnTouchListener(new OnListItemTouchListener(position,v) {
 			
 			@Override
@@ -89,7 +54,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
 					makeButtonDispear(delete, position);			
-					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
+					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
 				} else {
 					displayingDeleteButton.set(position, true);
 					delete.startAnimation(occAnim);
@@ -114,7 +79,7 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
 					makeButtonDispear(delete,position);
-					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), messages.get(position));
+					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
 				} else {
 					onItemClick(view,position);
 				}
@@ -174,14 +139,4 @@ public abstract class SentMessagesAdapter extends BaseAdapter {
 		holder.failedIcon = (ImageView) v.findViewById(R.id.ivFailed);
 		holder.delete = (Button) v.findViewById(R.id.btDelete);
 	}
-
-	public void setMessages(SentMessagesList list) {
-		messages = list;
-		initDisplayingDeleteButton();
-	}
-
-	public SentMessageItem getMessage(int position) {
-		return messages.get(position);
-	}
-
 }

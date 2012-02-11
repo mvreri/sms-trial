@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
+import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
@@ -50,7 +51,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			
 			@Override
 			public void onItemClick(final View view, int position) {
-				EditMessage.passedSentMessage = adapter.getMessage(position);
+				EditMessage.passedSentMessage = (SentMessageItem) adapter.getMessage(position);
 				//traps: id non-existent
 				
 				final Drawable oldBackground = view.getBackground();

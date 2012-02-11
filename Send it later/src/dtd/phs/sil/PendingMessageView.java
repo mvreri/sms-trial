@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
+import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.ui.RemovePendingItemDialog;
 import dtd.phs.sil.utils.Helpers;
@@ -91,7 +92,7 @@ IDBLinked
 	}
 
 	protected void onItemClick(final View view, int position) {
-		EditMessage.passedMessage = adapter.getMessage(position);
+		EditMessage.passedMessage = (PendingMessageItem) adapter.getMessage(position);
 		final Drawable oldBackground = view.getBackground();
 		view.setBackgroundColor(getResources().getColor(R.color.blur_blue));
 		Helpers.startAfter(300, new Runnable() {

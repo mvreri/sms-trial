@@ -2,26 +2,18 @@ package dtd.phs.sil.entities;
 
 import dtd.phs.sil.utils.Helpers;
 
-public class SentMessageItem {
+public class SentMessageItem extends MessageItem {
 
-	String content;
+	
 	boolean isDelivered = false;
-	private String[] names;
-	private String[] numbers;
 	private long sentTime;
-	private long id;
 	private long pendingId;
 	
 	public boolean isDelivered() {
 		return isDelivered;
 	}
-
 	public void setDelivered(boolean isDelivered) {
 		this.isDelivered = isDelivered;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public String getContact() {
@@ -32,14 +24,10 @@ public class SentMessageItem {
 				contact += names[i] + " ; ";
 			contact += names[names.length-1];
 		} else {
-			if ( names[0].equals(numbers[0])) return names[0];
-			contact= names[0] + " (" + getPhonenumbers()[0] + ")";
+			if ( names[0].equals(phoneNumbers[0])) return names[0];
+			contact= names[0] + " (" + getPhoneNumbers()[0] + ")";
 		}
 		return contact;
-	}
-
-	public String getContent() {
-		return content;
 	}
 
 	public String getStatus() {
@@ -72,7 +60,7 @@ public class SentMessageItem {
 			) {
 		SentMessageItem sentMessage = new SentMessageItem();
 		sentMessage.setNames(names);
-		sentMessage.setPhonenumbers(numbers);
+		sentMessage.setPhoneNumbers(numbers);
 		sentMessage.setContent(content);
 		sentMessage.setDelivered(isDelivered);
 		sentMessage.setSentTime(sentTime);
@@ -92,22 +80,6 @@ public class SentMessageItem {
 
 	private void setSentTime(long currentTimeMillis) {
 		sentTime = currentTimeMillis;
-	}
-
-	private void setPhonenumbers(String[] phoneNumbers) {
-		this.numbers = phoneNumbers;
-	}
-
-	private void setNames(String[] names) {
-		this.names = names;
-	}
-
-	public String[] getNames() {
-		return names;
-	}
-
-	public String[] getPhonenumbers() {
-		return numbers;
 	}
 
 	public long getSentTime() {

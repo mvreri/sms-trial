@@ -1,29 +1,23 @@
 package dtd.phs.sil.entities;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.utils.FrequencyHelpers;
 import dtd.phs.sil.utils.Helpers;
 
-public class PendingMessageItem {
+public class PendingMessageItem extends MessageItem {
 
 
-	long id; // auto id in database
-	String[] phoneNumbers;  
-	String[] names; 
-	String content;
+
+	
 	Calendar startDateTime;	//saved in db as long
-
-	public Calendar getStartDateTime() {return startDateTime;}
-	public void setStartDateTime(Calendar startDateTime) {this.startDateTime = startDateTime;}
-
-
 	FrequencyHelpers.Frequencies freq; //saved in db as index of this type
 	AlertHelpers.AlertTypes alert; //saved in db as index of this type
 
+
+	public Calendar getStartDateTime() {return startDateTime;}
+	public void setStartDateTime(Calendar startDateTime) {this.startDateTime = startDateTime;}
 
 	public static PendingMessageItem createInstance(
 			long id, 
@@ -57,16 +51,13 @@ public class PendingMessageItem {
 	}
 
 
-	private void setNames(String[] names) { this.names = names; }
-	public long getId() {return id;}
-	public void setId(long id) {this.id = id;}
+	
 	public FrequencyHelpers.Frequencies getFreq() {return freq;}
 	public int getFreqIndex() {return FrequencyHelpers.indexOf(getFreq()) ;}
 	public void setFreq(FrequencyHelpers.Frequencies freq) {this.freq = freq;}
 	public AlertHelpers.AlertTypes getAlert() {return alert;}
 	public int getAlertIndex() { return AlertHelpers.indexOf(alert) ;}
 	public void setAlert(AlertHelpers.AlertTypes alert) {this.alert = alert;}
-	public void setPhoneNumbers(String[] phoneNumbers) {this.phoneNumbers = phoneNumbers;}
 	
 	public String getNextTime() {
 		Calendar next = FrequencyHelpers.getNextCalendar(startDateTime, getFreq());
@@ -101,17 +92,13 @@ public class PendingMessageItem {
 	private String mergeInfo(int i) {
 		return names[i] + " (" + phoneNumbers[i] + ")";
 	}
-	public String getContent() {return content;}
-	public void setContent(String content) {this.content = content;}
-	public String[] getPhoneNumbers() {return phoneNumbers;}
-	public String[] getNames() {return names;}
 	
 	public static PendingMessageItem createFromSentItem(
 			SentMessageItem passedSentMessage) {
 		return createInstance(
 				passedSentMessage.getPendingId(), 
 				passedSentMessage.getNames(), 
-				passedSentMessage.getPhonenumbers(), 
+				passedSentMessage.getPhoneNumbers(), 
 				passedSentMessage.getContent(), 
 				passedSentMessage.getSentTime(), 
 				FrequencyHelpers.DEFAULT_FREQ_INDEX, 

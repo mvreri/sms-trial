@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class PendingMessagesList extends ArrayList<PendingMessageItem> {
+public class PendingMessagesList 
+	extends ArrayList<PendingMessageItem>
+	implements IMessagesList
+{
 
 	/**
 	 * 

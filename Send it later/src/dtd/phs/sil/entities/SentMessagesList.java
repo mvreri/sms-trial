@@ -5,7 +5,10 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-public class SentMessagesList extends ArrayList<SentMessageItem> {
+public class SentMessagesList 
+	extends ArrayList<SentMessageItem>
+	implements IMessagesList
+{
 
 	/**
 	 * 
