@@ -33,8 +33,8 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		}
 	}
 
-	public void savePendingMessageItem(PendingMessageItem item) {
-		TablePendingMessages.saveItem(database, item);
+	public long savePendingMessageItem(PendingMessageItem item) {
+		return TablePendingMessages.saveItem(database, item);
 	}
 
 	public void open() {

@@ -49,8 +49,10 @@ public class SendSMSService extends Service {
 				long rowid = intent.getLongExtra(AlarmReceiver.PENDING_MESSAGE_ID, -1);
 				if ( rowid != -1) {
 					messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
-					sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
-					Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish());
+					if ( messageItem != null ) {
+						sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
+						Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish());
+					}
 				} else {
 					wakeLock.release();
 					setWakeLock(null);
@@ -79,10 +81,10 @@ public class SendSMSService extends Service {
 				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
-			
+
 			fireNotification(errorOcc);
 			broadcastAlarmIntent();
-			
+
 			if (wakeLock != null) {
 				wakeLock.release();			
 				setWakeLock(null);
@@ -107,7 +109,7 @@ public class SendSMSService extends Service {
 	}
 
 	public void fireNotification(boolean errorOcc) {
-		
+
 		Resources res = getApplicationContext().getResources();
 		String title = null;
 		String text = null;
@@ -124,10 +126,10 @@ public class SendSMSService extends Service {
 				title, 
 				text,
 				messageItem.getAlert());
-		 NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-		 manager.notify(NOTIFICATION_ICON, notification);
+		NotificationManager manager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+		manager.notify(NOTIFICATION_ICON, notification);
 	}
-	
+
 	public static Notification createNotification(
 			Context context,
 			int icon,
@@ -135,15 +137,15 @@ public class SendSMSService extends Service {
 			String notificationText, 
 			AlertTypes alertTypes) {
 		Notification notification = new Notification(icon, notificationTitle, System.currentTimeMillis());		
-		
+
 		CharSequence contentTitle = notificationTitle;
 		CharSequence contentText =  notificationText;
-		
-		
-//		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
-//		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
-//		notificationIntent.setType("vnd.android-dir/mms-sms");
-		
+
+
+		//		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
+		//		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
+		//		notificationIntent.setType("vnd.android-dir/mms-sms");
+
 		Intent notificationIntent = new Intent(context, MainActivity.class);
 		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -154,7 +156,7 @@ public class SendSMSService extends Service {
 				PendingIntent.FLAG_UPDATE_CURRENT);
 		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-		
+
 		notification.defaults |= Notification.DEFAULT_LIGHTS;
 		switch (alertTypes) {
 		case SILENT:

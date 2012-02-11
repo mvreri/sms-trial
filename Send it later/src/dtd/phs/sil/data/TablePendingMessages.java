@@ -37,7 +37,7 @@ public class TablePendingMessages {
 	};
 
 
-	static protected void saveItem(SQLiteDatabase db,PendingMessageItem item) {
+	static protected long saveItem(SQLiteDatabase db,PendingMessageItem item) {
 		String names = StringHelpers.implode(item.getNames(),SEPERATOR);
 		String numbers = StringHelpers.implode(item.getPhoneNumbers(),SEPERATOR);
 		String content = item.getContent();
@@ -53,7 +53,7 @@ public class TablePendingMessages {
 		values.put(FREQ_TYPE, FrequencyHelpers.indexOf(freq));
 		values.put(ALERT_TYPE, AlertHelpers.indexOf(alertType));
 
-		db.insert(TABLE_NAME, null, values);
+		return db.insert(TABLE_NAME, null, values);
 	}
 
 	/**

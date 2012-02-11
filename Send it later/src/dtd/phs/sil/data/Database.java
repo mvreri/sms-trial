@@ -1,5 +1,7 @@
 package dtd.phs.sil.data;
 
+import java.util.Calendar;
+
 import android.content.Context;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
@@ -8,6 +10,8 @@ import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.utils.Logger;
 
 public class Database {
+
+
 
 	public static PendingMessagesList loadPendingMessages(Context context) {
 		PendingMessagesList pendingMessages = new PendingMessagesList();
@@ -75,11 +79,12 @@ public class Database {
 	//		return list;
 	//	}
 
-	public static void savePendingMessageItem(Context context, PendingMessageItem item) {
+	public static long savePendingMessageItem(Context context, PendingMessageItem item) {
 		DatabaseHelpers dbHelper = new DatabaseHelpers(context);
 		dbHelper.open();
-		dbHelper.savePendingMessageItem(item);
+		long rowid = dbHelper.savePendingMessageItem(item);
 		dbHelper.close();
+		return rowid;
 	}
 
 	public static PendingMessagesList getPendingMessages(Context context) {
@@ -180,6 +185,51 @@ public class Database {
 			helper.close();
 		} catch (Exception e) {
 			Logger.logError(e);
+		}
+	}
+
+
+	private static final long CONFLICT_INCREASE_MILLIS = 20 * 1000;
+	public static void checkConflict(Context context, long rowId) {
+		PendingMessagesList messages = Database.getPendingMessages(context);
+		PendingMessagesList.sortByNextOccurence(messages); //decr order
+		PendingMessageItem toCheckItem = null;
+		for(int i = 0 ; i < messages.size() ; i++) {
+			PendingMessageItem item = messages.get(i);
+			if ( item.getId() == rowId) {
+				synchronized (item) {
+					toCheckItem = item;
+					if ( i < messages.size() - 1 ) {
+						while ( Math.abs(item.getNextTimeMillis() - messages.get(i+1).getNextTimeMillis()) < CONFLICT_INCREASE_MILLIS) {
+							Logger.logInfo("Plus 20 seconds");
+							Calendar startDateTime = item.getStartDateTime();
+							startDateTime.add(Calendar.MILLISECOND, (int)CONFLICT_INCREASE_MILLIS);
+							item.setStartDateTime(startDateTime);
+						}
+					}
+					if ( i > 0) {
+						long later = messages.get(i-1).getNextTimeMillis();
+						long current = item.getNextTimeMillis();
+						long diff = later - current;
+						Logger.logInfo("Later: " + later +  " -- current: " + current + " -- with difference: " + diff);
+						while ( Math.abs(messages.get(i-1).getNextTimeMillis() - item.getNextTimeMillis()) < CONFLICT_INCREASE_MILLIS) {
+							Logger.logInfo("Plus 20 seconds");
+							Calendar startDateTime = item.getStartDateTime();
+							startDateTime.add(Calendar.MILLISECOND, (int)CONFLICT_INCREASE_MILLIS);
+							item.setStartDateTime(startDateTime);
+						}
+					}
+					break;
+				}
+			}
+		}
+
+		if ( toCheckItem != null) {
+			if ( Database.modifyPendingMessage(context, rowId, toCheckItem) ) {
+				Logger.logInfo("Successfully time adjusted !");
+			} else{
+				Logger.logInfo("Failed time adjusted !");
+			}
 		}
 	}
 

@@ -101,21 +101,35 @@ public class DataCenter {
 	}
 
 	public static void savePendingMessageItem(
-			Context context,
+			final Context context,
 			PendingMessageItem message) {
-		Database.savePendingMessageItem(
+		final long rowid = Database.savePendingMessageItem(
 				context,
 				message);
-		AlarmHelpers.refreshAlarm(context);
+		new Thread( new Runnable() {
+			@Override
+			public void run() {
+				Database.checkConflict(context,rowid);
+				AlarmHelpers.refreshAlarm(context);
+			}
+		}).start();
 
 	}
 
 	public static void modifyPendingMessage(
-			Context context,
-			long id, 
+			final Context context,
+			final long id, 
 			PendingMessageItem message) {
 		Database.modifyPendingMessage(context,id,message);
-		AlarmHelpers.refreshAlarm(context);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Database.checkConflict(context,  id);
+				AlarmHelpers.refreshAlarm(context);
+			}
+		}).start();
+		
 	}
 
 	public static void cleanUpSentMessages(final Context context, final int maxSentSize) {
