@@ -66,7 +66,7 @@ IDBLinked
 
 			@Override
 			public void onItemLongClick(int position) {
-				PendingMessageView.this.onItemLongClick(position);				
+//				PendingMessageView.this.onItemLongClick(position);				
 			}
 
 		};
@@ -94,21 +94,12 @@ IDBLinked
 		Intent i = new Intent(getContext(),EditMessage.class);
 		hostedActivity.startActivity(i);
 	}
-
-	private void onItemLongClick(int position) {
-		dialogRemovePendingItem.setRemovedRowId(adapter.getMessageRowId(position));
-		dialogRemovePendingItem.setLinkedDBObject(PendingMessageView.this);
-		showDialog(DIALOG_REMOVE_PENDING_ITEM);
-	}
-
-
-
-	//	public void onLongClick(IDBLinked obj,long rowId) {
-	//		
-	//		dialogRemovePendingItem.setLinkedDBObject(obj);
-	//		
-	//
-	//	}
+//
+//	private void onItemLongClick(int position) {
+//		dialogRemovePendingItem.setRemovedRowId(adapter.getMessageRowId(position));
+//		dialogRemovePendingItem.setLinkedDBObject(PendingMessageView.this);
+//		showDialog(DIALOG_REMOVE_PENDING_ITEM);
+//	}
 
 	private void loadPendingMessageAsync() {
 		Helpers.showOnlyView(mainFrames,WAIT_FRAME);
