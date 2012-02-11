@@ -7,7 +7,7 @@
     	android:key="PREF_MAX_SENT_ITEM" 
     	android:title="@string/Max_sent_item" 
     	android:summary="@string/Max_sent_item_summary"
- 		android:dialogTitle="@string/Max_sent_item"
+ 		android:dialogTitle="@string/Max_sent_item_dialog_title"
  		android:defaultValue="5"
  	>
     </ListPreference>
