@@ -23,6 +23,7 @@ import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
+import dtd.phs.sil.utils.PreferenceHelpers;
 
 public class SendSMSService extends Service {
 
@@ -31,6 +32,8 @@ public class SendSMSService extends Service {
 	protected static final int WAITING_TIME = 5000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
+	private static final int START_REMIND_RATING_COUNT = 1;
+	private static final int PERIOD_REMINDER_RATING = 1;
 
 	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
@@ -116,11 +119,13 @@ public class SendSMSService extends Service {
 		if ( ! errorOcc ) {
 			text = res.getString(R.string.Delivered_to) + " " + messageItem.getContact();
 			title = res.getString(R.string.successful_sent_notification_title);
+			PreferenceHelpers.increaseSuccMessagesCount(getApplicationContext());
 		} else {
 			title = res.getString(R.string.failed_sent_notification_title);
 			text = res.getString(R.string.Sent_failed) + messageItem.getContact();
 		}
 		Notification notification = createNotification(
+				errorOcc,
 				getApplicationContext(), 
 				NOTIFICATION_ICON, 
 				title, 
@@ -131,6 +136,7 @@ public class SendSMSService extends Service {
 	}
 
 	public static Notification createNotification(
+			boolean errorOcc, 
 			Context context,
 			int icon,
 			String notificationTitle,
@@ -147,7 +153,20 @@ public class SendSMSService extends Service {
 		//		notificationIntent.setType("vnd.android-dir/mms-sms");
 
 		Intent notificationIntent = new Intent(context, MainActivity.class);
-		notificationIntent.putExtra(MainActivity.SELECTED_FRAME, MainActivity.FRAME_SENT);
+		notificationIntent.putExtra(MainActivity.EXTRA_SELECTED_FRAME, MainActivity.FRAME_SENT);
+		notificationIntent.putExtra(MainActivity.EXTRA_SHOW_DIALOG_RATE, false);
+		if ( !errorOcc ) {
+			Logger.logInfo("No error occurs by sending message");
+			int succCount = PreferenceHelpers.getSuccessSentMessagesCount(context);
+			boolean clicked = PreferenceHelpers.clickedOnRateLink(context);
+			Logger.logInfo("Succ count: " + succCount + " -- clicked: " + clicked);
+			if ( ! clicked && succCount >= START_REMIND_RATING_COUNT && (succCount-START_REMIND_RATING_COUNT)%PERIOD_REMINDER_RATING==0 ) {
+				Logger.logInfo("Set extra to show rate dialog");
+				notificationIntent.putExtra(MainActivity.EXTRA_SHOW_DIALOG_RATE, true);
+			}
+		} else {
+			Logger.logInfo("Error occurs by sending message");
+		}
 		notificationIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		PendingIntent contentIntent = PendingIntent.getActivity(
 				context, 
@@ -239,7 +258,7 @@ public class SendSMSService extends Service {
 		}
 	}
 	protected void toast(String string) {
-		Logger.logInfo(string);
+//		Logger.logInfo(string);
 	}
 
 	public static void setWakeLock(WakeLock lock) {

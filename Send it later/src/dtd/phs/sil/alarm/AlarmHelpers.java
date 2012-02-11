@@ -8,14 +8,10 @@ import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
 
 public class AlarmHelpers {
-	private static final long DELTA_TIME = 59 * 1000;
 
 	public static void createNewAlarm(Context context,PendingMessageItem message) {
 		AlarmManager alarm = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		long time = message.getNextTimeMillis() - DELTA_TIME;
-		if ( time > System.currentTimeMillis() ) {
-			time += DELTA_TIME;
-		}
+		long time = message.getNextTimeMillis();
 		Intent intent = new Intent(context,AlarmReceiver.class);
 		intent.putExtra(AlarmReceiver.PENDING_MESSAGE_ID, message.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
