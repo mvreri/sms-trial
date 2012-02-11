@@ -14,7 +14,6 @@ import dtd.phs.sil.data.DataCenter;
 
 public class RemovePendingItemDialog extends Dialog {
 
-	private Activity hostedActivity;
 	private long rowId;
 	private IDBLinked listener;
 	private Button btOk;
@@ -22,7 +21,6 @@ public class RemovePendingItemDialog extends Dialog {
 
 	public RemovePendingItemDialog(Activity activity) {
 		super(activity);
-		this.hostedActivity = activity;
 	}
 
 	

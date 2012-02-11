@@ -118,19 +118,22 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	}
 
 	@Override
-	public void onDisplayed() {
-		loadSentDataAsync();
-	}
-
-	@Override
 	public void onResume() {
 		loadSentDataAsync();
 	}
 
 	@Override
 	public Dialog onCreateDialog(int id) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void onPause() {
+	}
+
+	@Override
+	public void onRefresh() {
+		loadSentDataAsync();
 	}
 
 }

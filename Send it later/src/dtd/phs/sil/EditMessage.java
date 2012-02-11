@@ -420,7 +420,10 @@ implements IFilterListener {
 	public void onBackPressed() {
 		if (mainFrames.getChildAt(FRAME_CONTACTS_LIST).getVisibility() == View.VISIBLE) {
 			Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
-		} else super.onBackPressed();
+		} else {
+			
+			super.onBackPressed();
+		}
 	}
 
 	@Override

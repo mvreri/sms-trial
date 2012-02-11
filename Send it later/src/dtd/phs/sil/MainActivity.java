@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.FrameLayout.LayoutParams;
@@ -30,6 +32,7 @@ public class MainActivity extends Activity {
 	private int displayingFrameId;
 	private OptionsMenu optionsMenu;
 	private BroadcastReceiver myReceiver;
+	private Animation occAnimation;
 
 
     static final int FRAME_PENDING = 0;
@@ -47,10 +50,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main);
-        mainFrames = (FrameLayout) findViewById(R.id.main_frames);
+        
+        initAnimations();
         addFrames();
         processBottomTabs();
     }
+
+
+	private void initAnimations() {
+		occAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_alpha_occ);
+	}
 
 
 	private void processBottomTabs() {
@@ -76,7 +85,7 @@ public class MainActivity extends Activity {
     	myReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				frames.get(displayingFrameId).onDisplayed();
+				frames.get(displayingFrameId).onRefresh();
 			}
     	};
     	registerReceiver( myReceiver, new IntentFilter(SendSMSService.ACTION_MESSAGE_SENT));
@@ -108,6 +117,8 @@ public class MainActivity extends Activity {
 	}
 
 	private void addFrames() {
+		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
+
 		frames = new ArrayList<FrameView>();
 		frames.add(new PendingMessageView(this,handler));
 		frames.add(new SentMessageView( this,handler ));
@@ -137,12 +148,15 @@ public class MainActivity extends Activity {
 
 	private void showOnlyView(int id) {
 		for(int i = 0 ; i < frames.size() ; i++) {
-			int displayed = View.INVISIBLE;
-			if ( id == i ) displayed = View.VISIBLE;
-			frames.get(i).setVisibility(displayed);
-			frames.get(i).onDisplayed();
+			if ( id != i ) {
+				frames.get(i).setVisibility(View.INVISIBLE);
+				frames.get(i).onPause();
+			}
 		}
 		displayingFrameId = id;
+		frames.get(id).startAnimation(occAnimation);
+		frames.get(id).setVisibility(View.VISIBLE);
+		frames.get(id).onResume();
 		highlightTab(id);
 	}
 

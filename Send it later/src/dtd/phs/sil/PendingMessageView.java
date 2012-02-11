@@ -172,15 +172,19 @@ IDBLinked
 	}
 
 	@Override
-	public void onDisplayed() {
-		loadPendingMessageAsync();
-	}
-
-	@Override
 	public void onDBUpdated() {
 		loadPendingMessageAsync();
 	}
 
+	@Override
+	public void onPause() {
+	}
+
+	@Override
+	public void onRefresh() {
+		loadPendingMessageAsync();
+	}
+	
 	@Override
 	public void onResume() {
 		loadPendingMessageAsync();
@@ -196,6 +200,8 @@ IDBLinked
 		}
 		return null;
 	}
+
+
 
 
 }
