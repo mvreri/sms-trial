@@ -11,19 +11,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 import dtd.phs.sil.EditMessage;
 import dtd.phs.sil.R;
+import dtd.phs.sil.SendSMSService;
 import dtd.phs.sil.SentMessageView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.I_SMSListener;
+import dtd.phs.sil.utils.Logger;
 
 public class SentMessageDialog extends Dialog{
+
 
 	private TextView tvTitle;
 
 	private Resources resources;
 
-//	private TextView tvRemove;
+	//	private TextView tvRemove;
 
 	private TextView tvResend;
 
@@ -35,12 +38,14 @@ public class SentMessageDialog extends Dialog{
 
 	protected Activity hostedActivity;
 
+	protected boolean errorOcc;
+
 	public SentMessageDialog(Activity hostedActivity, SentMessageView sentMessageView) {
 		super(hostedActivity);
 		this.hostedActivity = hostedActivity;
 		init(sentMessageView);
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,18 +58,18 @@ public class SentMessageDialog extends Dialog{
 	private void initViews() {
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 
-//		tvRemove = (TextView) findViewById(R.id.textview01);
-//		tvRemove.setText(resources.getString(R.string.Remove));
-//		tvRemove.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if ( message != null ) {
-//					DataCenter.removeSentItem(getContext(), message.getId());
-//					sentFrame.onRefresh();
-//					cancel();
-//				}
-//			}
-//		});
+		//		tvRemove = (TextView) findViewById(R.id.textview01);
+		//		tvRemove.setText(resources.getString(R.string.Remove));
+		//		tvRemove.setOnClickListener(new View.OnClickListener() {
+		//			@Override
+		//			public void onClick(View v) {
+		//				if ( message != null ) {
+		//					DataCenter.removeSentItem(getContext(), message.getId());
+		//					sentFrame.onRefresh();
+		//					cancel();
+		//				}
+		//			}
+		//		});
 
 
 		tvResend = (TextView) findViewById(R.id.textview02);
@@ -72,8 +77,9 @@ public class SentMessageDialog extends Dialog{
 		tvResend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				
+				toast(R.string.Sending_please_wait);
 				if (message != null) {
+					errorOcc = false;
 					for(String number : message.getPhoneNumbers())
 						Helpers.sendMessage(
 								getContext(), 
@@ -88,38 +94,22 @@ public class SentMessageDialog extends Dialog{
 
 									@Override
 									public void onSentFailed(int errorCode) {
-										toastFailed(R.string.Message_resend_later);
-									}
-
-									private void toastFailed(final int textRes) {
-										tvResend.post(new Runnable() {
-											@Override
-											public void run() {
-												Toast.makeText(
-														getContext(), 
-														textRes, 
-														Toast.LENGTH_LONG).show();
-											}
-										});
+										errorOcc = true;
 									}
 
 									@Override
 									public void onMessageDeliveryFailed() {
+										errorOcc = true;
 										//TODO: test 2 case : cannot sent And cannot delivered (turn off each phone)
-										toastFailed(R.string.Message_resend_later);
-										DataCenter.saveSentMessage(getContext(), message, false);
-										sentFrame.onRefresh();
 									}
 
 									@Override
 									public void onMessageDelivered() {
-										toastFailed(R.string.Message_is_sent_sucessfully);
-										DataCenter.saveSentMessage(getContext(), message, true);
-										sentFrame.onRefresh();
 									}
 								});
 				}
 				cancel();
+				Helpers.startAfter(SendSMSService.WAITING_DELIVERY_REPORT_TIME, new RunAfterSendingFinish());
 			}
 		});
 
@@ -154,5 +144,35 @@ public class SentMessageDialog extends Dialog{
 
 	public void setMessage(SentMessageItem message) {
 		this.message = message;
+	}
+
+	public class RunAfterSendingFinish implements Runnable {
+
+		@Override
+		public void run() {
+			if ( errorOcc ) {
+				Logger.logInfo("Save failed message is progressing ... ");
+				DataCenter.saveSentMessage(getContext(), message, false);
+			} else {
+				Logger.logInfo("Save successful message is progressing ... ");
+				DataCenter.saveSentMessage(getContext(), message, true);
+			}
+			Logger.logInfo("Weird !");
+			Helpers.broadcastDatabaseChanged(getContext());
+			
+		}
+
+	}
+	
+	private void toast(final int res) {
+		tvTitle.post(new  Runnable() {
+			
+			@Override
+			public void run() {
+				Toast.makeText(getContext(), res, Toast.LENGTH_LONG).show();
+			}
+		});
+		
+		
 	}
 }

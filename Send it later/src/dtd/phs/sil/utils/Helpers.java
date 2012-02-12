@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import dtd.phs.sil.SendSMSService;
+
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -163,6 +165,12 @@ public class Helpers {
 		} catch (Exception e) {
 			Logger.logError(e);
 		}
+	}
+
+	public static void broadcastDatabaseChanged(Context context) {
+		Intent i = new Intent();
+		i.setAction(SendSMSService.ACTION_MESSAGE_SENT);
+		context.sendBroadcast(i);
 	}
 
 }

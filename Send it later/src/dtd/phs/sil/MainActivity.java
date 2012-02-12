@@ -2,11 +2,6 @@ package dtd.phs.sil;
 
 import java.util.ArrayList;
 
-import dtd.phs.sil.ui.OptionsMenu;
-import dtd.phs.sil.ui.RateDialog;
-import dtd.phs.sil.utils.Logger;
-import dtd.phs.sil.utils.PreferenceHelpers;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -18,13 +13,16 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.FrameLayout.LayoutParams;
+import android.widget.ImageView;
+import dtd.phs.sil.ui.OptionsMenu;
+import dtd.phs.sil.ui.RateDialog;
+import dtd.phs.sil.utils.Logger;
 
 public class MainActivity extends Activity {
 	private FrameLayout mainFrames;

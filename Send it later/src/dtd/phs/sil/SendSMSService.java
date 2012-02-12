@@ -24,7 +24,7 @@ public class SendSMSService extends Service {
 
 //	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 //	private static final String SENT = "dtd.phs.sil.send_message.sent";
-	protected static final int WAITING_TIME = 5000;
+	public static final int WAITING_DELIVERY_REPORT_TIME = 5000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
 	private static final int START_REMIND_RATING_COUNT = 1;
@@ -49,7 +49,7 @@ public class SendSMSService extends Service {
 					messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
 					if ( messageItem != null ) {
 						sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
-						Helpers.startAfter(WAITING_TIME,new RunAfterSendingFinish());
+						Helpers.startAfter(WAITING_DELIVERY_REPORT_TIME,new RunAfterSendingFinish());
 					}
 				} else {
 					wakeLock.release();
@@ -81,7 +81,7 @@ public class SendSMSService extends Service {
 			AlarmHelpers.refreshAlarm(getApplicationContext());
 
 			fireNotification(errorOcc);
-			broadcastAlarmIntent();
+			Helpers.broadcastDatabaseChanged(getApplicationContext());
 
 			if (wakeLock != null) {
 				wakeLock.release();			
@@ -119,12 +119,6 @@ public class SendSMSService extends Service {
 		}
 	}
 
-
-	public void broadcastAlarmIntent() {
-		Intent i = new Intent();
-		i.setAction(ACTION_MESSAGE_SENT);
-		getApplicationContext().sendBroadcast(i);
-	}
 
 	public void fireNotification(boolean errorOcc) {
 

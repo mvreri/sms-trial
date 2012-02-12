@@ -78,7 +78,7 @@ public class SentMessageItem extends MessageItem {
 		return pendingId;
 	}
 
-	private void setSentTime(long currentTimeMillis) {
+	public void setSentTime(long currentTimeMillis) {
 		sentTime = currentTimeMillis;
 	}
 

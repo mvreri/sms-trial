@@ -12,8 +12,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import dtd.phs.sil.R;
@@ -68,11 +68,11 @@ public abstract class ChooseTimeDialog extends Dialog {
 		
 	}
 
-	private String filZero(int h) {
-		String s = "" + h;
-		if ( h < 10) s = "0" + h;
-		return s;
-	}
+//	private String filZero(int h) {
+//		String s = "" + h;
+//		if ( h < 10) s = "0" + h;
+//		return s;
+//	}
 	
 	private void updateTitle() {
 //		tvSelectedTime.setText("Selected: " + filZero(selectedCalendar.get(Calendar.HOUR_OF_DAY))  +":"+ filZero(selectedCalendar.get(Calendar.MINUTE)));
@@ -177,35 +177,35 @@ public abstract class ChooseTimeDialog extends Dialog {
     /**
      * Adapter for string based wheel. Highlights the current value.
      */
-    private class DateArrayAdapter extends ArrayWheelAdapter<String> {
-        // Index of current item
-        int currentItem;
-        // Index of item to be highlighted
-        int currentValue;
-        
-        /**
-         * Constructor
-         */
-        public DateArrayAdapter(Context context, String[] items, int current) {
-            super(context, items);
-            this.currentValue = current;
-            setTextSize(FONT_SIZE);
-        }
-        
-        @Override
-        protected void configureTextView(TextView view) {
-            super.configureTextView(view);
-            if (currentItem == currentValue) {
-                view.setTextColor(0xFF0000F0);
-            }
-            view.setTypeface(Typeface.SANS_SERIF);
-        }
-        
-        @Override
-        public View getItem(int index, View cachedView, ViewGroup parent) {
-            currentItem = index;
-            return super.getItem(index, cachedView, parent);
-        }
-    }
+//    private class DateArrayAdapter extends ArrayWheelAdapter<String> {
+//        // Index of current item
+//        int currentItem;
+//        // Index of item to be highlighted
+//        int currentValue;
+//        
+//        /**
+//         * Constructor
+//         */
+//        public DateArrayAdapter(Context context, String[] items, int current) {
+//            super(context, items);
+//            this.currentValue = current;
+//            setTextSize(FONT_SIZE);
+//        }
+//        
+//        @Override
+//        protected void configureTextView(TextView view) {
+//            super.configureTextView(view);
+//            if (currentItem == currentValue) {
+//                view.setTextColor(0xFF0000F0);
+//            }
+//            view.setTypeface(Typeface.SANS_SERIF);
+//        }
+//        
+//        @Override
+//        public View getItem(int index, View cachedView, ViewGroup parent) {
+//            currentItem = index;
+//            return super.getItem(index, cachedView, parent);
+//        }
+//    }
 	
 }

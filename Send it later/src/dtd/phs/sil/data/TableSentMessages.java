@@ -44,6 +44,8 @@ public class TableSentMessages {
 			SQLiteDatabase database,
 			SentMessageItem message, 
 			boolean isDelivered) {
+		message.setSentTime(System.currentTimeMillis());
+		message.setDelivered(isDelivered);
 		saveSentMessage(database, message);
 	}
 
