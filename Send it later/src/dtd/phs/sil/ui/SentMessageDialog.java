@@ -40,6 +40,8 @@ public class SentMessageDialog extends Dialog{
 
 	protected boolean errorOcc;
 
+	protected boolean hasDeliveredMessage;
+
 	public SentMessageDialog(Activity hostedActivity, SentMessageView sentMessageView) {
 		super(hostedActivity);
 		this.hostedActivity = hostedActivity;
@@ -80,6 +82,7 @@ public class SentMessageDialog extends Dialog{
 				toast(R.string.Sending_please_wait);
 				if (message != null) {
 					errorOcc = false;
+					hasDeliveredMessage = false;
 					for(String number : message.getPhoneNumbers())
 						Helpers.sendMessage(
 								getContext(), 
@@ -105,6 +108,7 @@ public class SentMessageDialog extends Dialog{
 
 									@Override
 									public void onMessageDelivered() {
+										hasDeliveredMessage = true;
 									}
 								});
 				}
@@ -150,14 +154,13 @@ public class SentMessageDialog extends Dialog{
 
 		@Override
 		public void run() {
-			if ( errorOcc ) {
+			if ( errorOcc || !hasDeliveredMessage) {
 				Logger.logInfo("Save failed message is progressing ... ");
 				DataCenter.saveSentMessage(getContext(), message, false);
 			} else {
 				Logger.logInfo("Save successful message is progressing ... ");
 				DataCenter.saveSentMessage(getContext(), message, true);
 			}
-			Logger.logInfo("Weird !");
 			Helpers.broadcastDatabaseChanged(getContext());
 			
 		}

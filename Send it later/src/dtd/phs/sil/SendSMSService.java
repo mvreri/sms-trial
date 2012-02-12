@@ -24,7 +24,7 @@ public class SendSMSService extends Service {
 
 //	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 //	private static final String SENT = "dtd.phs.sil.send_message.sent";
-	public static final int WAITING_DELIVERY_REPORT_TIME = 5000;
+	public static final int WAITING_DELIVERY_REPORT_TIME = 30*1000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
 	private static final int START_REMIND_RATING_COUNT = 1;
@@ -33,6 +33,7 @@ public class SendSMSService extends Service {
 	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
 	protected PendingMessageItem messageItem = null;
+	public boolean hasDeliveredMessage;
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -67,7 +68,7 @@ public class SendSMSService extends Service {
 
 		@Override
 		public void run() {
-			if ( errorOcc ) {
+			if ( errorOcc || ! hasDeliveredMessage ) {
 				Logger.logInfo("Save failed message is progressing ... ");
 				DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
 			} else {
@@ -79,8 +80,7 @@ public class SendSMSService extends Service {
 				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
 			}
 			AlarmHelpers.refreshAlarm(getApplicationContext());
-
-			fireNotification(errorOcc);
+			fireNotification(errorOcc || !hasDeliveredMessage);
 			Helpers.broadcastDatabaseChanged(getApplicationContext());
 
 			if (wakeLock != null) {
@@ -94,6 +94,7 @@ public class SendSMSService extends Service {
 
 	protected void sendMessages(String[] phoneNumbers, String smsContent) {
 		errorOcc = false;
+		hasDeliveredMessage = false;
 		for(String number : phoneNumbers) {
 			Helpers.sendMessage(getApplicationContext(), number,smsContent, new I_SMSListener() {
 				@Override
@@ -114,6 +115,7 @@ public class SendSMSService extends Service {
 				@Override
 				public void onMessageDelivered() {
 					//Nothing
+					hasDeliveredMessage = true;
 				}
 			});
 		}
