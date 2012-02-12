@@ -22,6 +22,7 @@ import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.I_SMSListener;
 import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.PreferenceHelpers;
 
@@ -100,7 +101,27 @@ public class SendSMSService extends Service {
 	protected void sendMessages(String[] phoneNumbers, String smsContent) {
 		errorOcc = false;
 		for(String number : phoneNumbers) {
-			sendMessage(number,smsContent);
+			Helpers.sendMessage(getApplicationContext(), number,smsContent, new I_SMSListener() {
+				@Override
+				public void onSentSuccess() {
+					//Nothing
+				}
+				
+				@Override
+				public void onSentFailed(int errorCode) {
+					errorOcc = true;
+				}
+				
+				@Override
+				public void onMessageDeliveryFailed() {
+					errorOcc = true;
+				}
+				
+				@Override
+				public void onMessageDelivered() {
+					//Nothing
+				}
+			});
 		}
 	}
 
@@ -194,72 +215,72 @@ public class SendSMSService extends Service {
 		return notification;
 	}
 
-	public void sendMessage(String receiverNumber, String content) {
-		SmsManager sms = SmsManager.getDefault();
-		Context context = getApplicationContext();
-		PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
-		PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
-
-		//Note: Be careful : listener.onNormalMessageSendSuccess() called 2 times (1 sent, 1 delivered)
-		context.registerReceiver(new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				switch (getResultCode()) {
-				case Activity.RESULT_OK:
-					toast("Sent");
-					return;
-				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-					toast("Generic error");
-					errorOcc = true;
-					break;
-				case SmsManager.RESULT_ERROR_NO_SERVICE:
-					toast("No service");
-					errorOcc = true;
-					break;
-				case SmsManager.RESULT_ERROR_NULL_PDU:
-					toast("Null pdu");
-					errorOcc = true;
-					break;
-				case SmsManager.RESULT_ERROR_RADIO_OFF:
-					toast("Radio off");
-					errorOcc = true;
-					break;
-				}
-
-			}
-		},new IntentFilter(SENT));
-
-		context.registerReceiver(new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				switch (getResultCode()) {
-				case Activity.RESULT_OK:
-					toast("Delivered");
-					break;
-				case Activity.RESULT_CANCELED:
-					toast("NOT delivered");
-					errorOcc = true;
-					break;
-				}
-			}
-		},new IntentFilter(DELIVERED));
-
-		try {
-			ArrayList<String> parts = sms.divideMessage(content);
-			ArrayList<PendingIntent> sendPIs = new ArrayList<PendingIntent>();	
-			ArrayList<PendingIntent> deliveryPIs = new ArrayList<PendingIntent>();
-			for(int i = 0 ; i < parts.size() ; i++) {
-				sendPIs.add(sentPI);
-				deliveryPIs.add(deliveredPI);
-			}
-			sms.sendMultipartTextMessage(receiverNumber, null, parts,sendPIs,deliveryPIs);
-		} catch (Exception e) {
-			Logger.logError(e);
-		}
-	}
-	protected void toast(String string) {
-//		Logger.logInfo(string);
-	}
+//	public void sendMessage(String receiverNumber, String content) {
+//		SmsManager sms = SmsManager.getDefault();
+//		Context context = getApplicationContext();
+//		PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
+//		PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
+//
+//		//Note: Be careful : listener.onNormalMessageSendSuccess() called 2 times (1 sent, 1 delivered)
+//		context.registerReceiver(new BroadcastReceiver() {
+//			@Override
+//			public void onReceive(Context context, Intent intent) {
+//				switch (getResultCode()) {
+//				case Activity.RESULT_OK:
+//					toast("Sent");
+//					return;
+//				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+//					toast("Generic error");
+//					errorOcc = true;
+//					break;
+//				case SmsManager.RESULT_ERROR_NO_SERVICE:
+//					toast("No service");
+//					errorOcc = true;
+//					break;
+//				case SmsManager.RESULT_ERROR_NULL_PDU:
+//					toast("Null pdu");
+//					errorOcc = true;
+//					break;
+//				case SmsManager.RESULT_ERROR_RADIO_OFF:
+//					toast("Radio off");
+//					errorOcc = true;
+//					break;
+//				}
+//
+//			}
+//		},new IntentFilter(SENT));
+//
+//		context.registerReceiver(new BroadcastReceiver() {
+//			@Override
+//			public void onReceive(Context context, Intent intent) {
+//				switch (getResultCode()) {
+//				case Activity.RESULT_OK:
+//					toast("Delivered");
+//					break;
+//				case Activity.RESULT_CANCELED:
+//					toast("NOT delivered");
+//					errorOcc = true;
+//					break;
+//				}
+//			}
+//		},new IntentFilter(DELIVERED));
+//
+//		try {
+//			ArrayList<String> parts = sms.divideMessage(content);
+//			ArrayList<PendingIntent> sendPIs = new ArrayList<PendingIntent>();	
+//			ArrayList<PendingIntent> deliveryPIs = new ArrayList<PendingIntent>();
+//			for(int i = 0 ; i < parts.size() ; i++) {
+//				sendPIs.add(sentPI);
+//				deliveryPIs.add(deliveredPI);
+//			}
+//			sms.sendMultipartTextMessage(receiverNumber, null, parts,sendPIs,deliveryPIs);
+//		} catch (Exception e) {
+//			Logger.logError(e);
+//		}
+//	}
+//	protected void toast(String string) {
+////		Logger.logInfo(string);
+//	}
 
 	public static void setWakeLock(WakeLock lock) {
 		SendSMSService.wakeLock = lock;

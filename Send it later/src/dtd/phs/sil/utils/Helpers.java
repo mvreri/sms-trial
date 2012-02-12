@@ -1,16 +1,18 @@
 package dtd.phs.sil.utils;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.devsmart.android.StringUtils;
-
-import dtd.phs.sil.EditMessage;
-
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.telephony.SmsManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,4 +110,59 @@ public class Helpers {
 		}
 		return true;
 	}
+	
+	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
+	private static final String SENT = "dtd.phs.sil.send_message.sent";
+	public static void sendMessage(
+			Context context,
+			String receiverNumber, 
+			String content,
+			final I_SMSListener listener) {
+		SmsManager sms = SmsManager.getDefault();
+		PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
+		PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
+
+		//Note: Be careful : listener.onNormalMessageSendSuccess() called 2 times (1 sent, 1 delivered)
+		context.registerReceiver(new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				switch (getResultCode()) {
+				case Activity.RESULT_OK:
+					listener.onSentSuccess();
+					return;
+				default:
+					listener.onSentFailed(getResultCode());
+				}
+
+			}
+		},new IntentFilter(SENT));
+
+		context.registerReceiver(new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				switch (getResultCode()) {
+				case Activity.RESULT_OK:
+					listener.onMessageDelivered();
+					break;
+				case Activity.RESULT_CANCELED:
+					listener.onMessageDeliveryFailed();
+					break;
+				}
+			}
+		},new IntentFilter(DELIVERED));
+
+		try {
+			ArrayList<String> parts = sms.divideMessage(content);
+			ArrayList<PendingIntent> sendPIs = new ArrayList<PendingIntent>();	
+			ArrayList<PendingIntent> deliveryPIs = new ArrayList<PendingIntent>();
+			for(int i = 0 ; i < parts.size() ; i++) {
+				sendPIs.add(sentPI);
+				deliveryPIs.add(deliveredPI);
+			}
+			sms.sendMultipartTextMessage(receiverNumber, null, parts,sendPIs,deliveryPIs);
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+	}
+
 }

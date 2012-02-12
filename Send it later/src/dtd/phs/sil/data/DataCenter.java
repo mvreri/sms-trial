@@ -4,9 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import dtd.phs.sil.alarm.AlarmHelpers;
+import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
 import dtd.phs.sil.entities.SMSItem;
+import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.utils.Logger;
 
@@ -67,24 +69,49 @@ public class DataCenter {
 		return Database.getPendingMessage(context,rowid);
 	}
 
-	public static void saveSentMessage(final Context context,final PendingMessageItem messageItem) {
-		Database.saveSentMessage(context, messageItem, true);
+	public static void saveSentMessage(final Context context,final PendingMessageItem message) {
+		Database.saveSentMessage(context, message, true);
+		asyncSaveToContentProvider(context, message);
+//		
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				Logger.logInfo("Start save message to content provider ...");
+//				try {
+//					saveToSMSProvider(context,messageItem);
+//				} catch (Exception e) {
+//					Logger.logError(e);
+//				}
+//			}
+//		}).start();
+	}
+
+	public static void saveSentMessage(
+			final Context context, 
+			final SentMessageItem message, 
+			boolean isDelivered) {
+		Database.saveSentMessage(context, message, isDelivered);
+		asyncSaveToContentProvider(context, message);
+	}
+
+	private static void asyncSaveToContentProvider(
+			final Context context,
+			final MessageItem message) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				Logger.logInfo("Start save message to content provider ...");
 				try {
-					saveToSMSProvider(context,messageItem);
+					saveToSMSProvider(context,message);
 				} catch (Exception e) {
 					Logger.logError(e);
 				}
 			}
 		}).start();
 	}
-
 	protected static void saveToSMSProvider(
 			Context context,
-			PendingMessageItem message) {
+			MessageItem message) {
 
 		String[] phoneNumbers = message.getPhoneNumbers();
 		ContentValues values = new ContentValues();
@@ -150,6 +177,7 @@ public class DataCenter {
 			}
 		}).start();
 	}
+
 
 
 }

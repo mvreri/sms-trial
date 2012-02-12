@@ -2,6 +2,7 @@ package dtd.phs.sil.data;
 
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.PendingMessagesList;
+import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,6 +70,11 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 		TableSentMessages.saveSentMessageFromPendingMessage(database,messageItem,isDelivered);
 	}
 
+	public void saveSentMessage(SentMessageItem message, boolean isDelivered) {
+		TableSentMessages.saveSentMessage(database,message,isDelivered);
+	}
+
+	
 	public SentMessagesList getSentMessages() {
 		return TableSentMessages.getAllSentMessages(database,null);
 	}
@@ -80,5 +86,6 @@ public class DatabaseHelpers extends PHS_DatabaseHelpers {
 	public void removeSentItem(long id) {
 		TableSentMessages.removeRow(database, id);
 	}
+
 
 }

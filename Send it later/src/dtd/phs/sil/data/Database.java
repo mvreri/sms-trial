@@ -165,6 +165,21 @@ public class Database {
 			Logger.logError(e);
 		}
 	}
+	
+	public static void saveSentMessage(
+			Context context,
+			SentMessageItem message, 
+			boolean isDelivered) {
+		try {
+			DatabaseHelpers helper = new DatabaseHelpers(context);
+			helper.open();
+			helper.saveSentMessage(message,isDelivered);
+			helper.close();
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+	}
+
 
 	public static void cleanUpSentMessages(Context context, int maxSentSize) {
 		try {
@@ -232,6 +247,7 @@ public class Database {
 			}
 		}
 	}
+
 
 
 

@@ -28,7 +28,10 @@ public abstract class FrameView extends LinearLayout {
 	abstract public void onPause();
 	
 	abstract public Dialog onCreateDialog(int id);
+	abstract public void onPrepareDialog(int id);
 
 	abstract public void onRefresh();
+
+	
 
 }

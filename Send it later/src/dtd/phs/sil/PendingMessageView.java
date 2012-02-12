@@ -174,6 +174,12 @@ IDBLinked
 		}
 		return null;
 	}
+	
+	@Override
+	public void onPrepareDialog(int id) {
+	}
+
+
 
 
 

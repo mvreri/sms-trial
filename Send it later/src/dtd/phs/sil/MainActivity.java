@@ -158,6 +158,15 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	@Override
+	protected void onPrepareDialog(int id, Dialog dialog) {
+		switch (id) {
+		case DIALOG_RATE:
+			break;
+			default: frames.get(displayingFrameId).onPrepareDialog(id);
+		}
+		super.onPrepareDialog(id, dialog);
+	}
 	private int savedFrameId(Intent intent) {
 		int selectedFrame = intent.getIntExtra(EXTRA_SELECTED_FRAME, -1);
 		Logger.logInfo("Selected frame: " + selectedFrame);

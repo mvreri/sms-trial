@@ -14,6 +14,7 @@ import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
+import dtd.phs.sil.ui.SentMessageDialog;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.PreferenceHelpers;
@@ -22,12 +23,15 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	private static final int WAIT_FRAME = 0;
 	protected static final int MESSAGES_FRAME = 1;
+	protected static final int DIALOG_OPTIONS = 0;
 	private FrameLayout mainFrames;
 	private ListView list;
 	private SentMessagesAdapter adapter;
+	private SentMessageDialog dialogOptions;
 
 	public SentMessageView(Activity hostedActivity, Handler handler) {
 		super(hostedActivity, handler);
+		dialogOptions = new SentMessageDialog(hostedActivity, this);
 	}
 
 	@Override
@@ -49,7 +53,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 			
 			@Override
 			public void onItemClick(final View view, int position) {
-				EditMessage.passedSentMessage = (SentMessageItem) adapter.getMessage(position);
+				//TODO: prepare & show dialog
 				final Drawable oldBackground = view.getBackground();
 				view.setBackgroundColor(getResources().getColor(R.color.blur_blue));
 				Helpers.startAfter(300, new Runnable() {
@@ -64,9 +68,12 @@ public class SentMessageView extends FrameView implements IDataLoader {
 						
 					}
 				});				
-				
-				Intent i = new Intent(getContext(),EditMessage.class);
-				hostedActivity.startActivity(i);
+				//Later
+				dialogOptions.setMessage((SentMessageItem) adapter.getMessage(position));
+				showDialog(DIALOG_OPTIONS);
+//				EditMessage.passedSentMessage = (SentMessageItem) adapter.getMessage(position);
+//				Intent i = new Intent(getContext(),EditMessage.class);
+//				hostedActivity.startActivity(i);
 			}
 		};
 		
@@ -120,7 +127,12 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	@Override
 	public Dialog onCreateDialog(int id) {
-		return null;
+		return dialogOptions;
+	}
+	
+	@Override
+	public void onPrepareDialog(int id) {
+		dialogOptions.prepare();
 	}
 
 	@Override
@@ -131,5 +143,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	public void onRefresh() {
 		loadSentDataAsync();
 	}
+
+
 
 }

@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content"
-  android:minWidth="300dp"
-  android:orientation="vertical"
-  android:background="@drawable/dialog_bg"
-  android:paddingBottom="20dp"
-  >
-  <TextView
-  	android:id="@+id/tvTitle"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  	android:background="@drawable/dialog_title_bg"
-  	android:text="Contact: xxxxx"
-  	android:textColor="#ffffff"
-  	android:textSize="16sp"
-  	android:gravity="center"
-  	android:paddingTop="5dp"
-  	android:paddingBottom="5dp"
-  />
-  <include 
-  	android:id="@+id/tvCall"
-  	layout="@layout/dialog_options_item"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  />
-  <TextView
-  	android:layout_width="fill_parent"
-  	android:layout_height="0.5dp"
-  	android:background="#ff999999"
-  />
-  <include 
-  	android:id="@+id/tvSMS"
-  	layout="@layout/dialog_options_item"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  />
-  <TextView
-  	android:layout_width="fill_parent"
-  	android:layout_height="0.5dp"
-  	android:background="#ff999999"
-  />
-  <include 
-  	android:id="@+id/tvRemove"
-  	layout="@layout/dialog_options_item"
-  	android:layout_width="fill_parent"
-  	android:layout_height="wrap_content"
-  />  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:minWidth="300dp"
+    android:orientation="vertical"
+    android:paddingBottom="20dp" >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_title_bg"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:singleLine="true"
+        android:text="Contact: xxxxx"
+        android:textColor="#ffffff"
+        android:textSize="16sp" />
+
+    <!--
+         <include
+        android:id="@+id/textview01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/dialog_options_item" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#ff999999" />
+    -->
+
+    <include
+        android:id="@+id/textview02"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/dialog_options_item" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:background="#ff999999" />
+
+    <include
+        android:id="@+id/textview03"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/dialog_options_item" />
+
 </LinearLayout>

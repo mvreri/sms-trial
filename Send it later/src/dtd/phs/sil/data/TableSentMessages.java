@@ -39,6 +39,14 @@ public class TableSentMessages {
 		SentMessageItem sentMessage = SentMessageItem.createFromPendingMessage(messageItem,isDelivered);
 		saveSentMessage(database, sentMessage);
 	}
+	
+	public static void saveSentMessage(
+			SQLiteDatabase database,
+			SentMessageItem message, 
+			boolean isDelivered) {
+		saveSentMessage(database, message);
+	}
+
 
 	private static void saveSentMessage(
 			SQLiteDatabase database,
@@ -110,5 +118,6 @@ public class TableSentMessages {
 		}
 		return cnt;
 	}
+
 
 }
