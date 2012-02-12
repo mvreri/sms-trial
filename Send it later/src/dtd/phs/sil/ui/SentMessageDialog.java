@@ -31,7 +31,7 @@ public class SentMessageDialog extends Dialog{
 
 	private SentMessageItem message;
 
-//	private SentMessageView sentFrame;
+	private SentMessageView sentFrame;
 
 	protected Activity hostedActivity;
 
@@ -108,12 +108,14 @@ public class SentMessageDialog extends Dialog{
 										//TODO: test 2 case : cannot sent And cannot delivered (turn off each phone)
 										toastFailed(R.string.Message_resend_later);
 										DataCenter.saveSentMessage(getContext(), message, false);
+										sentFrame.onRefresh();
 									}
 
 									@Override
 									public void onMessageDelivered() {
 										toastFailed(R.string.Message_is_sent_sucessfully);
 										DataCenter.saveSentMessage(getContext(), message, true);
+										sentFrame.onRefresh();
 									}
 								});
 				}
@@ -139,7 +141,7 @@ public class SentMessageDialog extends Dialog{
 
 	private void init(SentMessageView sentFrame) {
 		this.resources = getContext().getResources();
-//		this.sentFrame = sentFrame;
+		this.sentFrame = sentFrame;
 	}
 
 	public void setTitle(String title) {

@@ -1,20 +1,14 @@
 package dtd.phs.sil;
 
-import java.util.ArrayList;
-
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
-import android.telephony.SmsManager;
 import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.alarm.AlarmReceiver;
 import dtd.phs.sil.data.DataCenter;
@@ -28,8 +22,8 @@ import dtd.phs.sil.utils.PreferenceHelpers;
 
 public class SendSMSService extends Service {
 
-	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
-	private static final String SENT = "dtd.phs.sil.send_message.sent";
+//	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
+//	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	protected static final int WAITING_TIME = 5000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";

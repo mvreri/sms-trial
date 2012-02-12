@@ -91,7 +91,9 @@ public class DataCenter {
 			final SentMessageItem message, 
 			boolean isDelivered) {
 		Database.saveSentMessage(context, message, isDelivered);
-		asyncSaveToContentProvider(context, message);
+		if ( isDelivered ) {
+			asyncSaveToContentProvider(context, message);
+		}
 	}
 
 	private static void asyncSaveToContentProvider(
