@@ -10,6 +10,7 @@
     <string name="Ok">Ok</string>
     <string name="Done">Xong</string>
     <string name="Cancel">Quay lại</string>
+        <string name="Rate_Application">Đánh giá qua market</string>
     <string name="Hour">Giờ</string>
     <string name="Never"> Quá hạn</string>
     <string name="Minute">Phút</string>
@@ -38,7 +39,7 @@
     <string name="Exit">Thoát</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
     <string name="Max_sent_item">Tự xóa tin nhắn đã gửi</string>
-    <string name="Max_sent_item_summary">Chỉ giữ tin nhắn mới nhất</string>
+    <string name="Max_sent_item_summary">Chỉ giữ những tin nhắn mới nhất</string>
     <string name="Max_sent_item_dialog_title">Giữ</string>
     <string name="about_us">Giới thiệu</string>
     <string name="sil_version">Send it later, version </string>

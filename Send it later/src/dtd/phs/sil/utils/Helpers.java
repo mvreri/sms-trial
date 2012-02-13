@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.telephony.SmsManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import dtd.phs.sil.SendSMSService;
 
 public class Helpers {
 
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 
 	public static View inflate(Context context, int layout) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -175,6 +176,13 @@ public class Helpers {
 		Intent i = new Intent();
 		i.setAction(SendSMSService.ACTION_MESSAGE_SENT);
 		context.sendBroadcast(i);
+	}
+
+	public static final String APP_SIL_MARKET = "market://details?id=dtd.phs.sil";
+	public static void gotoMarket(Activity activity) {
+		Intent goToMarket = null;
+		goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_SIL_MARKET));
+		activity.startActivity(goToMarket);
 	}
 
 }

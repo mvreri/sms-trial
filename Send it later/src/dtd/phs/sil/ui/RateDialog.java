@@ -2,18 +2,17 @@ package dtd.phs.sil.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import dtd.phs.sil.R;
+import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.PreferenceHelpers;
 
 public class RateDialog extends Dialog {
 
-	protected static final String APP_SIL_MARKET = "market://details?id=dtd.phs.sil";
+	
 	protected Activity activity;
 
 	public RateDialog(Activity mainActivity) {
@@ -41,12 +40,11 @@ public class RateDialog extends Dialog {
 			
 			@Override
 			public void onClick(View v) {
-				Intent goToMarket = null;
-				goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_SIL_MARKET));
-				activity.startActivity(goToMarket);		
+				Helpers.gotoMarket(activity);		
 				PreferenceHelpers.markOnRateLinkClicked(getContext());
 				cancel();
 			}
+
 		});
 	}
 

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-  xmlns:android="http://schemas.android.com/apk/res/android">
-    <ListPreference 
-    	android:entryValues="@array/max_sent_number"
-    	android:entries="@array/max_sent_number_str" 
-    	android:key="PREF_MAX_SENT_ITEM" 
-    	android:title="@string/Max_sent_item" 
-    	android:summary="@string/Max_sent_item_summary"
- 		android:dialogTitle="@string/Max_sent_item_dialog_title"
- 		android:defaultValue="5"
- 	>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ListPreference
+        android:defaultValue="5"
+        android:dialogTitle="@string/Max_sent_item_dialog_title"
+        android:entries="@array/max_sent_number_str"
+        android:entryValues="@array/max_sent_number"
+        android:key="PREF_MAX_SENT_ITEM"
+        android:summary="@string/Max_sent_item_summary"
+        android:title="@string/Max_sent_item" >
     </ListPreference>
-    <Preference 
-    	android:title="@string/about_us" 
-    	android:key="ABOUT">
+    <Preference
+        android:key="RATE_APP"
+        android:title="@string/Rate_Application" >
     </Preference>
-    
+    <Preference
+        android:key="ABOUT"
+        android:title="@string/about_us" >
+    </Preference>
+
 </PreferenceScreen>

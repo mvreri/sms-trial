@@ -23,6 +23,7 @@
     <string name="Choose_Frequency">Choose Frequency</string>
     <string name="Add">Add</string>
     <string name="Save">Save</string>
+    <string name="Rate_Application">Rate app on market</string>
     <string name="Invalid_message_warning">Invalid SMS: Please fill in the contacts/message</string>
     <string name="message_removed_success">Message removed successfully</string>
     <string name="remove_item">Remove message</string>

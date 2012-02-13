@@ -157,7 +157,13 @@ public class SentMessageView extends FrameView implements IDataLoader {
 
 	@Override
 	public void onResume() {
+		updateEditMode();
 		loadSentDataAsync();
+	}
+
+	private void updateEditMode() {
+		onEditMode = false;
+		tvEdit.setText(R.string.Edit);
 	}
 
 	@Override

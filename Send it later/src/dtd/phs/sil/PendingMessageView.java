@@ -185,7 +185,13 @@ IDBLinked
 	
 	@Override
 	public void onResume() {
+		updateEditMode();
 		loadPendingMessageAsync();
+	}
+
+	private void updateEditMode() {
+		onEditMode = false;
+		tvEdit.setText(R.string.Edit);
 	}
 
 	@Override

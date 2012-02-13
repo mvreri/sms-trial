@@ -6,6 +6,8 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import dtd.phs.sil.R;
+import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.PreferenceHelpers;
 
 public class SIL_Preferences extends PreferenceActivity {
 
@@ -15,6 +17,18 @@ public class SIL_Preferences extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.preferences);
+		
+		Preference ratePref = findPreference("RATE_APP");
+		ratePref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				PreferenceHelpers.markOnRateLinkClicked(getApplicationContext());
+				Helpers.gotoMarket(SIL_Preferences.this);
+				return true;
+			}
+		});
+		
 		Preference aboutPref = findPreference("ABOUT");
 		aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			

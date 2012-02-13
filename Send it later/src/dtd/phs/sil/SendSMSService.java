@@ -27,8 +27,8 @@ public class SendSMSService extends Service {
 	public static final int WAITING_DELIVERY_REPORT_TIME = 30*1000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
-	private static final int START_REMIND_RATING_COUNT = 1;
-	private static final int PERIOD_REMINDER_RATING = 1;
+	private static final int START_REMIND_RATING_COUNT = 5;
+	private static final int PERIOD_REMINDER_RATING = 3;
 
 	private static WakeLock wakeLock = null;
 	protected boolean errorOcc;
