@@ -95,6 +95,10 @@ public class MainActivity extends Activity {
 		registerReceiver( myReceiver, new IntentFilter(SendSMSService.ACTION_MESSAGE_SENT));
 		showOnlyView(displayingFrameId);
 		frames.get(displayingFrameId).onResume();
+
+		//debug code
+//		toShowRateDialog = true;
+
 		if (toShowRateDialog) {
 			toShowRateDialog = false;
 			showDialog(DIALOG_RATE);

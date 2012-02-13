@@ -1,5 +1,8 @@
 package dtd.phs.sil.entities;
 
+import android.content.Context;
+import android.content.res.Resources;
+import dtd.phs.sil.R;
 import dtd.phs.sil.utils.Helpers;
 
 public class SentMessageItem extends MessageItem {
@@ -29,15 +32,27 @@ public class SentMessageItem extends MessageItem {
 		}
 		return contact;
 	}
-
-	public String getStatus() {
+//
+//	public String getStatus() {
+//		String status = "";
+//		if ( isDelivered() ) {
+//			status += "Delivered: ";
+//		} else status += "Sent failed: ";
+//		status += Helpers.formatTime(getSentTime()); 
+//		return status;
+//	}
+	
+	public String getStatus(Context context) {
 		String status = "";
+		Resources res = context.getResources();
 		if ( isDelivered() ) {
-			status += "Delivered: ";
-		} else status += "Sent failed: ";
-		status += Helpers.formatTime(getSentTime()); 
+			status += res.getString(R.string.Delivered_to)+" ";
+		} else status += res.getString(R.string.Sent_failed_short)+" ";
+		status += Helpers.formatTime(context,getSentTime()); 
 		return status;
+
 	}
+
 
 	public static SentMessageItem createFromPendingMessage(
 			PendingMessageItem messageItem, boolean isDelivered) {
@@ -93,6 +108,7 @@ public class SentMessageItem extends MessageItem {
 	public void setId(long _id) {
 		id = _id;
 	}
+	
 
 
 }

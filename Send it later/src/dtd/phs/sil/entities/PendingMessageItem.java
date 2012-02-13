@@ -2,6 +2,8 @@ package dtd.phs.sil.entities;
 
 import java.util.Calendar;
 
+import android.content.Context;
+
 import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.utils.FrequencyHelpers;
 import dtd.phs.sil.utils.Helpers;
@@ -59,10 +61,10 @@ public class PendingMessageItem extends MessageItem {
 	public int getAlertIndex() { return AlertHelpers.indexOf(alert) ;}
 	public void setAlert(AlertHelpers.AlertTypes alert) {this.alert = alert;}
 	
-	public String getNextTime() {
+	public String getNextTime(Context context) {
 		Calendar next = FrequencyHelpers.getNextCalendar(startDateTime, getFreq());
 		if ( next != null)
-			return Helpers.formatTime(next.getTimeInMillis());
+			return Helpers.formatTime(context, next.getTimeInMillis());
 //		new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy  ").format(new Date(next.getTimeInMillis()));
 		else return null;
 	}

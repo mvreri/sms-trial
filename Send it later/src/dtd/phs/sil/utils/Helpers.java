@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import dtd.phs.sil.SendSMSService;
-
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -21,6 +19,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
+import dtd.phs.sil.R;
+import dtd.phs.sil.SendSMSService;
 
 public class Helpers {
 
@@ -60,22 +60,26 @@ public class Helpers {
 		}).start();
 	}
 
-	public static String formatTime(long sentTime) {
+	public static String formatTime(Context context, long sentTime) {
 		Date date = new Date(sentTime);
 		
 		Calendar current = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
+		Resources resources = context.getResources();
+		String today = resources.getString(R.string.Today_at);
+		String tommorw = resources.getString(R.string.Tomorrow_at);
+		String yesterday = resources.getString(R.string.Yesterday_at);
 		if ( equalsDate(cal,current)) {
-			return "Today, at " + (new SimpleDateFormat("HH:mm").format(date));
+			return today+ " " + (new SimpleDateFormat("HH:mm").format(date));
 		}
 		cal.add(Calendar.DATE, 1);
 		if ( equalsDate(cal,current)) {
-			return "Yesterday, at " + (new SimpleDateFormat("HH:mm").format(date));
+			return yesterday+ " " + (new SimpleDateFormat("HH:mm").format(date));
 		}
 		cal.add(Calendar.DATE, -2);
 		if ( equalsDate(cal,current)) {
-			return "Tomorrow, at " + (new SimpleDateFormat("HH:mm").format(date));
+			return tommorw +" "+ (new SimpleDateFormat("HH:mm").format(date));
 		}
 
 		

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Send it later</string>
+    <string name="please_wait">Vui lòng chờ</string>
+    <string name="pending_messages">Chờ gửi</string>
+    <string name="next">Sẽ gửi</string>
+    <string name="sent">Đã gửi</string>
+    <string name="Date">Ngày:</string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Quay lại</string>
+    <string name="Hour">Giờ</string>
+    <string name="Never"> Quá hạn</string>
+    <string name="Minute">Phút</string>
+    <string name="To">Tới:</string>
+    <string name="Time">Thời gian:</string>
+    <string name="Frequency">Lặp: </string>
+    <string name="Alert_on_delivery">Báo động khi gửi:</string>
+    <string name="Words">Từ</string>
+    <string name="Message">Tin nhắn</string>
+    <string name="Choose_Frequency">Chọn tần suất:</string>
+    <string name="Add">Thêm</string>
+    <string name="Save">Lưu</string>
+    <string name="Invalid_message_warning">Thiếu thông tin: làm ơn nhập số/nội dung</string>
+    <string name="message_removed_success">Tin nhắn đã được xóa</string>
+    <string name="remove_item">Xóa tin</string>
+    <string name="confirm_delete_item">Bạn có muốn xóa tin nhắn này không ?</string>
+    <string name="Yes">Có</string>
+    <string name="No">Không</string>
+    <string name="Delete">Xóa</string>
+    <string name="message_removed_failed">Tin nhắn chưa được xóa</string>
+    <string name="successful_sent_notification_title">Tin nhắn đã gửi thành công</string>
+    <string name="failed_sent_notification_title">Tin nhắn chưa được gửi</string>
+    <string name="Delivered_to">Đã gửi: </string>
+    <string name="Please_enter_a_phone_number">Làm ơn nhập số điện thoại đúng</string>
+    <string name="Preferences">Tùy chọn</string>
+    <string name="Exit">Thoát</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">Tự xóa tin nhắn đã gửi</string>
+    <string name="Max_sent_item_summary">Chỉ giữ tin nhắn mới nhất</string>
+    <string name="Max_sent_item_dialog_title">Giữ</string>
+    <string name="about_us">Giới thiệu</string>
+    <string name="sil_version">Send it later, version </string>
+    <string name="feel_free">"Vọc" tại:</string>
+    <string name="or_send_email">Email: &lt;a href="mailto:sphamhung@yahoo.com">sphamhung@yahoo.com&lt;/a></string>
+    <string name="Close">Đóng</string>
+    <string name="Sent_failed">Gửi lỗi: </string>
+    <string name="Sent_failed_short">Gửi lỗi: </string>
+    <string name="google_code">&lt;a href="https://sms-trial.googlecode.com/svn/"> Google Code &lt;/a></string>
+    <string name="Rate_App">Đánh giá app</string>
+    <string name="Rate">Đánh giá</string>
+    <string name="https_sms_trial_googlecode_com_svn_">https://sms-trial.googlecode.com/svn/</string>
+    <string name="Please_support_us">Hãy giúp đỡ chúng tôi bằng cách đánh giá app này trên Market. Xin cám ơn !</string>
+    <string name="Remove">Xóa</string>
+    <string name="Resend_now">Gửi lại ngay</string>
+    <string name="Edit">Sửa</string>
+    <string name="Message_is_sent_sucessfully">Tin nhắn đã được gửi</string>
+    <string name="Message_resend_later">Lỗi, xin thử lại sau</string>
+    <string name="Sending_please_wait">Tin nhắn đang được gửi … </string>
+    <string name="Today_at">Hôm nay, lúc</string>
+    <string name="Tomorrow_at">Ngày mai, lúc</string>
+    <string name="Yesterday_at">Hôm qua, lúc</string>
+
+</resources>

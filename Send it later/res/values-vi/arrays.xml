@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 tin</item>
+        <item>10 tin</item>
+        <item>Tất cả</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Một lần</item>
+        <item>Hàng ngày</item>
+        <item>Hàng tuần</item>
+        <item>Hàng tháng</item>
+        <item>Hàng năm</item>
+        <item>Ngày làm việc (Th2 - Th6)</item>
+        <item>Cuối tuần (Th7, CN)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Yên lặng</item>
+        <item>Rung</item>
+        <item>Đổ chuông</item>
+        <item>Cả rung và chuông</item>
+    </string-array>
+
+</resources>

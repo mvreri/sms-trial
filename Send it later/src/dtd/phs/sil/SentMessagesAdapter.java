@@ -67,7 +67,7 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		updateDeleteButton(holder.delete, position, message);
-		holder.status.setText(((SentMessageItem)message).getStatus());
+		holder.status.setText(((SentMessageItem)message).getStatus(context));
 		updateMessageDeliveredIcon(holder.failedIcon, (SentMessageItem)message);
 	}
 

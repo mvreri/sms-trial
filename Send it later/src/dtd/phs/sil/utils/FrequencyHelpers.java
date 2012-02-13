@@ -3,6 +3,10 @@ package dtd.phs.sil.utils;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import dtd.phs.sil.R;
+
+import android.content.Context;
+
 public class FrequencyHelpers {
 	/**
 	 * The order is IMPORTANT - please be carefull
@@ -17,14 +21,19 @@ public class FrequencyHelpers {
 		//	}
 
 		static public final int DEFAULT_FREQ_INDEX = 0;
-		static public final Frequencies[] FREQUENCIES = {
-			Frequencies.ONCE,Frequencies.DAILY,Frequencies.WEEKLY,Frequencies.MONTHLY,Frequencies.YEARLY,
-			Frequencies.EV_WEEK_DAY,Frequencies.EV_WEEKEND};
+		static public Frequencies[] FREQUENCIES = {
+			Frequencies.ONCE,
+			Frequencies.DAILY,
+			Frequencies.WEEKLY,
+			Frequencies.MONTHLY,
+			Frequencies.YEARLY,
+			Frequencies.EV_WEEK_DAY,
+			Frequencies.EV_WEEKEND};
 		//	,Frequencies.EV_5,Frequencies.EV_15,
 		//		Frequencies.EV_30,Frequencies.EV_HOUR,Frequencies.EV_2_HOURS,Frequencies.EV_12_HOURS
 		//	};
 
-		static public final String[] FREQ_NAMES = {
+		static public String[] FREQ_NAMES = {
 			"Once","Daily","Weekly","Monthly","Yearly",
 			"Weekday (Mon.-Fri.)","Weekend (Sat. Sun.)"
 		};
@@ -33,13 +42,14 @@ public class FrequencyHelpers {
 
 		static public final HashMap<Frequencies, String> mapFreq2Str = new HashMap<Frequencies, String>();
 		static {
-			mapFreq2Str.put(Frequencies.ONCE, "Once");
-			mapFreq2Str.put(Frequencies.DAILY, "Daily");
-			mapFreq2Str.put(Frequencies.WEEKLY, "Weekly");
-			mapFreq2Str.put(Frequencies.MONTHLY, "Monthly");
-			mapFreq2Str.put(Frequencies.YEARLY, "Yearly");
-			mapFreq2Str.put(Frequencies.EV_WEEK_DAY, "Weekday (Mon.-Fri.)");
-			mapFreq2Str.put(Frequencies.EV_WEEKEND, "Weekend (Sat. Sun.)");
+			initMap();
+//			mapFreq2Str.put(Frequencies.ONCE, FREQ_NAMES[0]);
+//			mapFreq2Str.put(Frequencies.DAILY, FREQ_NAMES[1]);
+//			mapFreq2Str.put(Frequencies.WEEKLY, FREQ_NAMES[2]);
+//			mapFreq2Str.put(Frequencies.MONTHLY, FREQ_NAMES[3]);
+//			mapFreq2Str.put(Frequencies.YEARLY, FREQ_NAMES[4]);
+//			mapFreq2Str.put(Frequencies.EV_WEEK_DAY, FREQ_NAMES[5]);
+//			mapFreq2Str.put(Frequencies.EV_WEEKEND, FREQ_NAMES[6]);
 
 			//		mapFreq2Str.put(Frequencies.EV_5, "Every 5 minutes");
 			//		mapFreq2Str.put(Frequencies.EV_15, "Every 15 minutes");
@@ -47,6 +57,13 @@ public class FrequencyHelpers {
 			//		mapFreq2Str.put(Frequencies.EV_HOUR, "Every hour");
 			//		mapFreq2Str.put(Frequencies.EV_2_HOURS, "Every 2 hours");
 			//		mapFreq2Str.put(Frequencies.EV_12_HOURS, "Every 12 hours");
+		}
+
+		private static void initMap() {
+			mapFreq2Str.clear();
+			for(int i = 0 ; i < FREQ_NAMES.length ; i++) {
+				mapFreq2Str.put(FREQUENCIES[i],FREQ_NAMES[i]);
+			}
 		}
 
 		/**
@@ -58,6 +75,10 @@ public class FrequencyHelpers {
 		 * @return next occurence, null if there is no
 		 */
 		//TODO: create unit tests
+		public static void initFrequencies(Context context) {
+			FREQ_NAMES = context.getResources().getStringArray(R.array.frequencies);
+			initMap();
+		}
 		public static Calendar getNextCalendar(Calendar calendar,Frequencies f) {
 			Calendar result = (Calendar) calendar.clone();
 
