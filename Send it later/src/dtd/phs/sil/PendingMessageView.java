@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDBLinked;
 import dtd.phs.sil.data.IDataLoader;
@@ -34,6 +35,8 @@ IDBLinked
 	
 	protected static final int DIALOG_REMOVE_PENDING_ITEM = 0;
 	private RemovePendingItemDialog dialogRemovePendingItem;
+	private boolean onEditMode;
+	private TextView tvEdit;
 
 	public PendingMessageView(Activity hostedActivity, Handler handler) {
 		super(hostedActivity, handler);
@@ -108,6 +111,27 @@ IDBLinked
 
 	private void createTopBar() {
 		View topFrame = findViewById(R.id.top_bar_pending);
+		tvEdit = (TextView) topFrame.findViewById(R.id.tvEdit);
+		onEditMode = false;
+		tvEdit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.post(new Runnable() {
+					public void run() {
+						if ( ! onEditMode ) {
+							adapter.displayAllDeleteButton();
+							onEditMode = true;
+							tvEdit.setText(R.string.Done);
+						} else {
+							onEditMode = false;
+							adapter.clearAllDeleteButton();
+							tvEdit.setText(R.string.Edit);
+						}
+						
+					}
+				});
+			}
+		});
 		View btAdd = topFrame.findViewById(R.id.btAdd);
 		btAdd.setOnClickListener(new OnClickListener() {
 			@Override

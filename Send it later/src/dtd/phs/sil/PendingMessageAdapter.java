@@ -34,11 +34,11 @@ public abstract class PendingMessageAdapter extends MessageAdapter {
 				if ( delete.getVisibility() == View.VISIBLE) {	
 					makeButtonDispear(delete,position);
 				} else {
-					displayingDeleteButton.set(position, true);
-					delete.startAnimation(occAnim);
-					delete.setVisibility(View.VISIBLE);
+					makeButtonOccur(position, delete);
 				}
 			}
+
+
 			
 			@Override
 			public void onLongClick(int position) {
@@ -78,5 +78,7 @@ public abstract class PendingMessageAdapter extends MessageAdapter {
 		else nextTime = next +": "+ nextTime;
 		holder.status.setText(nextTime);
 	}
+
+
 
 }

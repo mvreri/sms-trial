@@ -15,6 +15,7 @@ import android.widget.Toast;
 import dtd.phs.sil.entities.IMessagesList;
 import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.utils.Helpers;
+import dtd.phs.sil.utils.Logger;
 
 abstract public class MessageAdapter extends BaseAdapter {
 	protected IMessagesList messages;
@@ -23,6 +24,7 @@ abstract public class MessageAdapter extends BaseAdapter {
 	protected Animation occAnim;
 	protected Animation disAnim;
 	protected ArrayList<Boolean> displayingDeleteButton;
+	protected boolean useAnimationOnDeleteButton = true;
 
 	abstract public void onItemClick(View view, int position);
 	abstract public void onItemLongClick(int position);
@@ -75,7 +77,12 @@ abstract public class MessageAdapter extends BaseAdapter {
 		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
 	}
 
-
+	protected void makeButtonOccur(int position, View delete) {
+		displayingDeleteButton.set(position, true);
+		delete.startAnimation(occAnim);
+		delete.setVisibility(View.VISIBLE);
+	}
+	
 	protected void makeButtonDispear(View delete,int position) {
 		displayingDeleteButton.set(position, false);
 		delete.startAnimation(disAnim);
@@ -84,11 +91,49 @@ abstract public class MessageAdapter extends BaseAdapter {
 
 	protected void updateDeleteButton(Button delete, int position, MessageItem message) {
 		if ( displayingDeleteButton.get(position) ) {
-			delete.setVisibility(View.VISIBLE);
-		} else delete.setVisibility(View.GONE);
+//			Logger.logInfo("useAnimationOnDeleteButton: " + useAnimationOnDeleteButton);
+			if (useAnimationOnDeleteButton) {
+				makeButtonOccur(position, delete);
+			} else delete.setVisibility(View.VISIBLE);
+		} else {
+//			Logger.logInfo("useAnimationOnDeleteButton: " + useAnimationOnDeleteButton);
+			if ( useAnimationOnDeleteButton ) {
+				makeButtonDispear(delete, position);
+			} else delete.setVisibility(View.GONE);
+		}
 		delete.setOnClickListener(new OnDeleteButtonClickListener(message));
 	}
 
+	public void displayAllDeleteButton() {
+		useAnimationOnDeleteButton = true;
+		for(int i = 0 ; i < displayingDeleteButton.size() ; i++)
+			displayingDeleteButton.set(i, true);
+		
+		notifyDataSetChanged();
+		Helpers.startAfter(500, new Runnable() {
+			
+			@Override
+			public void run() {
+				useAnimationOnDeleteButton = false;
+			}
+		});		
+	}
+
+	public void clearAllDeleteButton() {
+		useAnimationOnDeleteButton = true;
+		for(int i = 0 ; i < displayingDeleteButton.size() ; i++)
+			displayingDeleteButton.set(i, false);
+
+		notifyDataSetChanged();
+		Helpers.startAfter(500, new Runnable() {
+			
+			@Override
+			public void run() {
+				useAnimationOnDeleteButton = false;
+			}
+		});
+		
+	}
 
 	@Override
 	public int getCount() {

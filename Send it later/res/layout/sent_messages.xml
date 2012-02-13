@@ -4,21 +4,41 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="54dp"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:gravity="center"
-        android:textColor="#FFF"
         android:background="@drawable/title_bg"
-        android:text="@string/sent" />
+        android:orientation="horizontal" >
 
-    <FrameLayout 
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="64dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/pressable_bg"
+            android:gravity="center"
+            android:text="@string/Edit"
+            android:textColor="#FFF" />
+
+        <TextView
+            android:layout_width="0.5dp"
+            android:layout_height="fill_parent"
+            android:background="#dd666666" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="3dp"
+            android:paddingTop="3dp"
+            android:text="@string/sent"
+            android:textColor="#FFF" />
+    </LinearLayout>
+
+    <FrameLayout
         android:id="@+id/main_frames"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
+        android:layout_height="fill_parent" >
 
         <include
             android:layout_width="fill_parent"

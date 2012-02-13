@@ -8,8 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.data.IDataLoader;
 import dtd.phs.sil.entities.SentMessageItem;
@@ -28,6 +30,8 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	private ListView list;
 	private SentMessagesAdapter adapter;
 	private SentMessageDialog dialogOptions;
+	private TextView tvEdit;
+	private boolean onEditMode;
 
 	public SentMessageView(Activity hostedActivity, Handler handler) {
 		super(hostedActivity, handler);
@@ -38,11 +42,42 @@ public class SentMessageView extends FrameView implements IDataLoader {
 	void onCreate(Context context) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		inflater.inflate(R.layout.sent_messages, this);
+		createViews();
+	}
+
+	private void createViews() {
+		createTopbar();
 		createFrames();
 	}
 	
 
+	private void createTopbar() {
+		tvEdit = (TextView) findViewById(R.id.tvEdit);
+		onEditMode = false;
+		tvEdit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				v.post(new Runnable() {
+					public void run() {
+						if ( ! onEditMode ) {
+							adapter.displayAllDeleteButton();
+							onEditMode = true;
+							tvEdit.setText(R.string.Done);
+						} else {
+							onEditMode = false;
+							adapter.clearAllDeleteButton();
+							tvEdit.setText(R.string.Edit);
+						}
+						
+					}
+				});
+			}
+		});
+	}
+
 	private void createFrames() {
+		
+		
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
 		list = (ListView) findViewById(R.id.listSent);
 		

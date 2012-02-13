@@ -14,6 +14,7 @@
     <string name="Minute">Minute</string>
     <string name="To">To:</string>
     <string name="Time">Time:</string>
+    <string name="Done">Done</string>
     <string name="Never">Never</string>
     <string name="Frequency">Frequency: </string>
     <string name="Alert_on_delivery">Alert on delivery:</string>
