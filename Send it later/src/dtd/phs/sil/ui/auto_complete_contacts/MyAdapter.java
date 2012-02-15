@@ -329,8 +329,8 @@ public class MyAdapter extends ArrayAdapter<String> {
 					int contactIndex = 0;
 					int dataIndex = 0;
 					allContacts.clear();
-					while (true) {
-						while (	contactIndex < contacts.size() 
+					while (dataIndex < data.size()) {
+						while (	contactIndex < contacts.size()
 								&& 	contacts.getId(contactIndex).
 								compareTo(data.getId(dataIndex)) < 0) contactIndex++;
 						if ( contactIndex >= contacts.size() ) break;
@@ -339,7 +339,8 @@ public class MyAdapter extends ArrayAdapter<String> {
 								&& data.getId(dataIndex).compareTo(contacts.getId(contactIndex)) < 0) dataIndex++;
 						if ( dataIndex >= data.size() ) break;					
 
-						while ( dataIndex < data.size() && data.getId(dataIndex).equals(contacts.getId(contactIndex))) {
+						while ( dataIndex < data.size() 
+								&& data.getId(dataIndex).equals(contacts.getId(contactIndex))) {
 							String name = contacts.get(contactIndex).getName();
 							String number = data.get(dataIndex).getNumber();
 							allContacts.add(new ContactItem(name, number,contacts.get(contactIndex).getLastTimeContacted()));

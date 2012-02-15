@@ -73,6 +73,7 @@ abstract public class MessageAdapter extends BaseAdapter {
 	protected abstract void modifyDatabaseOnDeleteButtonClick(long id);
 
 	protected void initDisplayingDeleteButton() {
+		useAnimationOnDeleteButton = false;
 		displayingDeleteButton = new ArrayList<Boolean>();
 		for(int i = 0 ; i < messages.size() ; i++) displayingDeleteButton.add(new Boolean(false));
 	}
