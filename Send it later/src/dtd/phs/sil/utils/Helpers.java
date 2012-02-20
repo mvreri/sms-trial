@@ -109,6 +109,7 @@ public class Helpers {
 	}
 
 	public static boolean isPhoneNumber(String str) {
+		if ( str == null || str.length() == 0 ) return false;
 		str = parsePhoneNumber(str);
 		char[] s = str.toCharArray();
 		if (! Character.isDigit(s[0]) && s[0] != '+' ) return false;
