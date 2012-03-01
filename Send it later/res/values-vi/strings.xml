@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">Send it later</string>
     <string name="please_wait">Vui lòng chờ</string>
     <string name="pending_messages">Chờ gửi</string>
@@ -9,7 +10,7 @@
     <string name="Ok">Ok</string>
     <string name="Done">Xong</string>
     <string name="Cancel">Quay lại</string>
-        <string name="Rate_Application">Đánh giá qua market</string>
+    <string name="Rate_Application">Đánh giá qua market</string>
     <string name="Hour">Giờ</string>
     <string name="Never"> Quá hạn</string>
     <string name="Minute">Phút</string>
@@ -61,5 +62,7 @@
     <string name="Today_at">Hôm nay, lúc</string>
     <string name="Tomorrow_at">Ngày mai, lúc</string>
     <string name="Yesterday_at">Hôm qua, lúc</string>
+    <string name="First_time_running">Chạy lần đầu</string>
+    <string name="please_wait_while_loading_contact">Đang nạp dữ liệu …</string>
 
 </resources>

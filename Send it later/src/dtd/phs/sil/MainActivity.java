@@ -22,9 +22,16 @@ import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import dtd.phs.sil.ui.OptionsMenu;
 import dtd.phs.sil.ui.RateDialog;
+import dtd.phs.sil.ui.auto_complete_contacts.AutoContactLoader;
+import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
+import dtd.phs.sil.ui.auto_complete_contacts.IContactLoader;
 import dtd.phs.sil.utils.Logger;
+import dtd.phs.sil.utils.PreferenceHelpers;
 
-public class MainActivity extends Activity {
+public class MainActivity 
+extends Activity 
+implements IContactLoader 
+{
 	private FrameLayout mainFrames;
 	private Handler handler = new Handler();
 	private ArrayList<FrameView> frames;
@@ -86,6 +93,13 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+
+		if ( PreferenceHelpers.firstTimeRunning(getApplicationContext()) ) {
+			showDialog(R.id.dialog_first_time);
+			loadContactsForTheFirstTime();
+			PreferenceHelpers.disableFirstTimeRunning(getApplicationContext());
+		}
+
 		myReceiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -97,12 +111,32 @@ public class MainActivity extends Activity {
 		frames.get(displayingFrameId).onResume();
 
 		//debug code
-//		toShowRateDialog = true;
+		//		toShowRateDialog = true;
 
 		if (toShowRateDialog) {
 			toShowRateDialog = false;
 			showDialog(DIALOG_RATE);
 		}
+	}
+
+
+	private void loadContactsForTheFirstTime() {
+		ContactsList allContacts = new ContactsList();
+		new Thread( new AutoContactLoader(getApplicationContext(), allContacts, this) ).start();
+	}
+
+	@Override
+	public void onContactCacheSuccess(Object data) {
+		try {
+			dismissDialog(R.id.dialog_first_time);
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+	}
+
+
+	@Override
+	public void onContactLoadFailed(Exception e) {
 	}
 
 	@Override
@@ -165,7 +199,7 @@ public class MainActivity extends Activity {
 		switch (id) {
 		case DIALOG_RATE:
 			break;
-			default: frames.get(displayingFrameId).onPrepareDialog(id);
+		default: frames.get(displayingFrameId).onPrepareDialog(id);
 		}
 		super.onPrepareDialog(id, dialog);
 	}
@@ -201,5 +235,8 @@ public class MainActivity extends Activity {
 			else imageView.setImageResource(NORMAL_TAB_RES[i]);
 		}
 	}
+
+
+
 
 }

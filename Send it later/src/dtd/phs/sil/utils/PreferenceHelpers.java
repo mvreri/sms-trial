@@ -49,6 +49,7 @@ public class PreferenceHelpers {
 	}
 
 	private static final String PREF_COUNT_SUCC_SENT = "PREF_COUNT_SUCC_SENT";
+	private static final String PREF_FIRST_TIME = "PREF_FIRST_TIME";
 	public static int getSuccessSentMessagesCount(Context context) {
 		String str = getPreference(context, PREF_COUNT_SUCC_SENT);
 		try {
@@ -67,6 +68,18 @@ public class PreferenceHelpers {
 
 	private static void setSuccessSentMessageCount(Context context, int count) {
 		setPreference(context, PREF_COUNT_SUCC_SENT, String.valueOf(count));
+	}
+
+	public static boolean firstTimeRunning(Context context) {
+		String firstTime = getPreference(context, PREF_FIRST_TIME );
+		if ( firstTime == null ) {
+			return true;
+		} else return false;
+		
+	}
+
+	public static void disableFirstTimeRunning(Context context) {
+		setPreference(context, PREF_FIRST_TIME, "false");
 	}
 	
 //	public static void saveMaxSentSize(Context context, int maxSentSize) {
