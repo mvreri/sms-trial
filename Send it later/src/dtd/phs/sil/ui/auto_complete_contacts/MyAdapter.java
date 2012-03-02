@@ -13,6 +13,7 @@ import android.widget.Filter;
 import android.widget.TextView;
 import dtd.phs.sil.R;
 import dtd.phs.sil.utils.Logger;
+import dtd.phs.sil.utils.StringHelpers;
 
 public class MyAdapter extends ArrayAdapter<String> {
 
@@ -38,7 +39,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 					results.count = 0;
 				}
 			} else {
-				data = findMatchResults(constraint,allContacts);
+				data = findMatchResults(constraint.toString(),allContacts);
 				results.values = mergeInfo( data );
 				results.count = data.size();
 			}
@@ -55,9 +56,10 @@ public class MyAdapter extends ArrayAdapter<String> {
 		}
 
 		private ContactsList findMatchResults(
-				CharSequence constraint,
+				String constraint,
 				ContactsList allContacts) {
 			ContactsList list = new ContactsList();
+			constraint = StringHelpers.replaceLowerSignCharacter(getContext(), constraint);
 			synchronized (allContacts) {
 				for (ContactItem item : allContacts) {
 					if ( matchContraint(item,constraint)) {
@@ -82,8 +84,9 @@ public class MyAdapter extends ArrayAdapter<String> {
 			});
 		}
 
-		private boolean matchContraint(ContactItem item, CharSequence constraint) {
-			String fullContact = item.getName() + " " + item.getNumber();
+		private boolean matchContraint(ContactItem item, String constraint) {
+			String fullContact = (item.getName() + " " + item.getNumber()).toLowerCase();
+			fullContact = StringHelpers.replaceLowerSignCharacter(getContext(), fullContact);
 			String str = constraint.toString();
 			if ( isSubStr(str,fullContact)) return true;
 			return false;
@@ -91,23 +94,16 @@ public class MyAdapter extends ArrayAdapter<String> {
 
 		private boolean isSubStr(String str, String fullContact) {
 			int j = 0;
-			if ( str.equals("097768") ) {
-				j++;
-				j--;
-			}
-			String lowerCase = fullContact.toLowerCase();
-			//			Log.i(PHS_SMS, "Input string: " + str + " -- Verifying full contact: " + lowerCase);
 			for(int i = 0 ; i < str.length() ; i++) {
-				if ( j >= lowerCase.length() ) 
+				if ( j >= fullContact.length() ) 
 					return false;
-				while ( j < lowerCase.length() && lowerCase.charAt(j) != str.charAt(i)) {
+				while ( j < fullContact.length() && fullContact.charAt(j) != str.charAt(i)) {
 					j++;
-					if ( j >= lowerCase.length() ) 
+					if ( j >= fullContact.length() ) 
 						return false;
 				}
 				j++;
 			}
-			//			Log.i(PHS_SMS, "Passed full contact: " + lowerCase);
 			return true;
 		}
 

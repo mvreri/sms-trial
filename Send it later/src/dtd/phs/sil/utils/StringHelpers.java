@@ -1,5 +1,8 @@
 package dtd.phs.sil.utils;
 
+import android.content.Context;
+import dtd.phs.sil.R;
+
 public class StringHelpers {
 
 	public static String implode(String[] phoneNumbers, String seperator) {
@@ -9,5 +12,13 @@ public class StringHelpers {
 		}
 		return b.toString();
 	}
-
+	
+	public static String replaceLowerSignCharacter (Context context, String str) {
+		String strOld = context.getResources().getString(R.string.vn_special_characters);
+		String strNew = "aaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyaaaaaaaaaaaad";
+		for (int i = 0; i < strNew.length(); i ++) {
+			str = str.replace(strOld.charAt(i), strNew.charAt(i));
+		}
+		return str;
+	}
 }
