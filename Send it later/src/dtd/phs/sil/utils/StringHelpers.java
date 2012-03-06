@@ -15,7 +15,7 @@ public class StringHelpers {
 	
 	public static String replaceLowerSignCharacter (Context context, String str) {
 		String strOld = context.getResources().getString(R.string.vn_special_characters);
-		String strNew = "aaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyaaaaaaaaaaaad";
+		String strNew = "aaaaaaeeeeeeeeeeeiiiiioooooooooooooooooouuuuuuuuuuuuyyyyyaaaaaaaaaaaad";
 		for (int i = 0; i < strNew.length(); i ++) {
 			str = str.replace(strOld.charAt(i), strNew.charAt(i));
 		}

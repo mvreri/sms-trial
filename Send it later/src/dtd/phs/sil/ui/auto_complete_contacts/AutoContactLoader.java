@@ -91,6 +91,7 @@ public class AutoContactLoader implements Runnable {
 			if ( listener != null ) {
 				listener.onContactCacheSuccess(allContacts);
 			}
+			Logger.logInfo("Contacts are written on storage");
 		} catch (IOException e) {
 			if ( listener != null ) {
 				listener.onContactLoadFailed(e);

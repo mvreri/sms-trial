@@ -95,6 +95,7 @@ implements IContactLoader
 		super.onResume();
 
 		if ( PreferenceHelpers.firstTimeRunning(getApplicationContext()) ) {
+			Logger.logInfo("First time running !");
 			showDialog(R.id.dialog_first_time);
 			loadContactsForTheFirstTime();
 			PreferenceHelpers.disableFirstTimeRunning(getApplicationContext());
