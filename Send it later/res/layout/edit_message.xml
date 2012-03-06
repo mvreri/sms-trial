@@ -68,6 +68,7 @@
                     android:minHeight="108dp"
                     android:capitalize="sentences"
                     android:gravity="top|left"
+                    android:text="@string/Enter_message_here"
 				/>
 
                 <LinearLayout
