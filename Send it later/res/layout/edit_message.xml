@@ -17,6 +17,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:hint="@string/To"
+            android:inputType="textVisiblePassword"
 		/>
 		<Button
 			android:id="@+id/btAddContact"
