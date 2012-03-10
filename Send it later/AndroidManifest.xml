@@ -50,7 +50,7 @@
         </receiver>
         <service android:name="SendSMSService"></service>
         <activity android:name=".ui.SIL_Preferences"></activity>
-        
+        <meta-data android:name="vn.vimarket.dev.key" android:value="2df0bad27abf4692f95b31f252eb25c8"></meta-data>
     </application>
 
 </manifest>
