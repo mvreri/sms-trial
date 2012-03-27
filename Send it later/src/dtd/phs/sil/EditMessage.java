@@ -14,16 +14,16 @@ import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
@@ -31,19 +31,19 @@ import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.ui.AlertHelpers;
-import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.ChooseDateDialog;
 import dtd.phs.sil.ui.ChooseFrequencyDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
+import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
 import dtd.phs.sil.ui.auto_complete_contacts.IFilterListener;
 import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
-import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
+import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage 
 extends Activity 

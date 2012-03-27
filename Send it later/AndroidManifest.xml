@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dtd.phs.sil"
-    android:versionCode="4"
-    android:versionName="1.12" >
+    android:versionCode="5"
+    android:versionName="1.15" >
 
     <uses-sdk android:minSdkVersion="7" />
 
@@ -49,8 +49,7 @@
             </intent-filter>
         </receiver>
         <service android:name="SendSMSService"></service>
-        <activity android:name=".ui.SIL_Preferences"></activity>
-        <meta-data android:name="vn.vimarket.dev.key" android:value="2df0bad27abf4692f95b31f252eb25c8"></meta-data>
+        <activity android:name=".ui.SIL_Preferences"></activity>        
     </application>
 
 </manifest>
