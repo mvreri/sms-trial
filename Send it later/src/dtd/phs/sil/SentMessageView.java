@@ -108,7 +108,7 @@ public class SentMessageView extends FrameView implements IDataLoader {
 //				showDialog(DIALOG_OPTIONS);
 				EditMessage.passedSentMessage = (SentMessageItem) adapter.getMessage(position);
 				Intent i = new Intent(getContext(),EditMessage.class);
-				hostedActivity.startActivity(i);
+				Helpers.enterActivity(hostedActivity, i);
 			}
 		};
 		

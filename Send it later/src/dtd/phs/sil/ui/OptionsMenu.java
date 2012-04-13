@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import dtd.phs.sil.R;
+import dtd.phs.sil.utils.Helpers;
 
 public class OptionsMenu {
 
@@ -27,7 +28,7 @@ public class OptionsMenu {
 			activity.startActivity(i);
 			return true;
 		case R.id.menu_exit:
-			activity.finish();
+			Helpers.launchHomeScreen(activity);
 			return true;
 		default: return false;
 		}

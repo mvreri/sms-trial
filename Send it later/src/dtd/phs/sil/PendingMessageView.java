@@ -95,7 +95,8 @@ IDBLinked
 			}
 		});
 		Intent i = new Intent(getContext(),EditMessage.class);
-		hostedActivity.startActivity(i);
+		Helpers.enterActivity(hostedActivity,i);
+			
 	}
 //
 //	private void onItemLongClick(int position) {
@@ -138,7 +139,7 @@ IDBLinked
 			public void onClick(View v) {
 				Intent i = new Intent(hostedActivity.getApplicationContext() , EditMessage.class);
 				i.putExtra(EditMessage.EDIT_TYPE,EditMessage.TYPE_NEW);
-				hostedActivity.startActivity(i);
+				Helpers.enterActivity(hostedActivity, i);
 			}
 		});
 	}

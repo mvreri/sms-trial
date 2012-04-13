@@ -24,7 +24,7 @@ public class SendSMSService extends Service {
 
 //	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 //	private static final String SENT = "dtd.phs.sil.send_message.sent";
-	public static final int WAITING_DELIVERY_REPORT_TIME = 60*1000;
+	public static final int WAITING_DELIVERY_REPORT_TIME = 45*1000;
 	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
 	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
 	private static final int START_REMIND_RATING_COUNT = 5;

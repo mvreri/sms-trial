@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg_x8"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp" >
+
+        <EditText
+            android:id="@+id/etTo"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/To"
+            android:inputType="textVisiblePassword" />
+
+        <Button
+            android:id="@+id/btAddContact"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Add"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.devsmart.android.ui.HorizontalListView
+        android:id="@+id/listSelected"
+        android:layout_width="fill_parent"
+        android:layout_height="36dp"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/mainFrames"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1" >
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fadingEdge="none"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="0dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_rect"
+                    android:orientation="vertical"
+                    android:padding="2dp" >
+
+                    <TextView
+                        android:id="@+id/tvCountWords"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/text_left_padding"
+                        android:text="@string/Message"
+                        android:textColor="@color/edit_message_text_color" />
+
+                    <EditText
+                        android:id="@+id/etMessage"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:capitalize="sentences"
+                        android:gravity="top|left"
+                        android:minHeight="108dp" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/rounded_rect"
+                        android:orientation="vertical" >
+
+                        <include
+                            android:id="@+id/dateLine"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/option_line" />
+
+                        <include
+                            android:id="@+id/timeLine"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/option_line" />
+
+                        <include
+                            android:id="@+id/frequencyLine"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/option_line" />
+
+                        <include
+                            android:id="@+id/alertLine"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            layout="@layout/option_line" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="58dp"
+                    android:background="@drawable/edit_title_bg"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp" >
+
+                    <Button
+                        android:id="@+id/btOk"
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/trans_button_selector"
+                        android:text="@string/Add"
+                        android:textColor="#FFF" />
+
+                    <Button
+                        android:id="@+id/btCancel"
+                        android:layout_width="1dp"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/trans_button_selector"
+                        android:text="@string/Cancel"
+                        android:textColor="#FFF" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <ListView
+            android:id="@+id/listAutoComplete"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="#eee"
+            android:dividerHeight="0.3dp" />
+    </FrameLayout>
+
+</LinearLayout>

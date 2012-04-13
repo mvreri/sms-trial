@@ -97,7 +97,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 			for(int i = 0 ; i < str.length() ; i++) {
 				if ( j >= fullContact.length() ) 
 					return false;
-				while ( j < fullContact.length() && fullContact.charAt(j) != str.charAt(i)) {
+				while ( j < fullContact.length() && fullContact.charAt(j) != str.charAt(i) ) {
 					j++;
 					if ( j >= fullContact.length() ) 
 						return false;

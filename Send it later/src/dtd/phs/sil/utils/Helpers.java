@@ -95,10 +95,10 @@ public class Helpers {
 		return true;
 	}
 
-	public static void hideSoftKeyboard(Activity act, View view) {
-		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
-	}
+//	public static void hideSoftKeyboard(Activity act, View view) {
+//		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
+//		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+//	}
 
 	public static void hideSoftKeyboard(Activity activity) {
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);		
@@ -184,6 +184,31 @@ public class Helpers {
 		Intent goToMarket = null;
 		goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_SIL_MARKET));
 		activity.startActivity(goToMarket);
+	}
+
+	public static void launchHomeScreen(Activity activity) {
+		Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(startMain);		
+	}
+
+	public static void enterTransition(Activity hostedActivity) {
+		hostedActivity.overridePendingTransition(R.anim.zoom_out_haft_one,R.anim.zoom_out_one_2);		
+	}
+
+	public static void exitTransition(Activity hostedActivity) {
+		hostedActivity.overridePendingTransition(R.anim.zoom_in_2o,R.anim.zoom_in_oh);		
+	}
+
+	public static void enterActivity(Activity hostedActivity, Intent i) {
+		hostedActivity.startActivity(i);
+		Helpers.enterTransition(hostedActivity);
+	}
+
+	public static void exitActivity(Activity hostedActivity, Intent i) {
+		hostedActivity.startActivity(i);
+		Helpers.exitTransition(hostedActivity);
 	}
 
 }

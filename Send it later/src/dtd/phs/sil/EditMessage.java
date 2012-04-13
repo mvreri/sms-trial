@@ -10,12 +10,15 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,7 +93,7 @@ implements IFilterListener {
 	private PendingMessageItem beingEditedMessage;
 	private Button btAddContact;
 	private boolean isEditSentMessage;
-
+	private Handler handler = new Handler();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -210,14 +213,12 @@ implements IFilterListener {
 				if ( Helpers.isPhoneNumber(str)) {
 					str = Helpers.parsePhoneNumber(str);
 					ContactItem item = new ContactItem(str, str, System.currentTimeMillis());
-					Logger.logInfo("Button add contact pressed !");
 					Helpers.startAfter(300, new Runnable() {
 						@Override
 						public void run() {
 							btAddContact.post(new Runnable() {
 								@Override
 								public void run() {
-									Logger.logInfo("Button add visibility changed !");
 									btAddContact.setVisibility(View.GONE);							
 								}
 							});
@@ -396,12 +397,32 @@ implements IFilterListener {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+				if ( s.length() == 0 ) 
+					handler.post(new Runnable() {
+						
+						@Override
+						public void run() {
+							btAddContact.setVisibility(View.VISIBLE);
+						}
+					});
+					
+					
+			}
 			@Override
 			public void afterTextChanged(Editable s) {
 				String text = s.toString();
 				Helpers.showOnlyView(mainFrames, FRAME_CONTACTS_LIST);
 				adapter.getFilter().filter(text);
+			}
+		});
+		
+		contactsList.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				Helpers.hideSoftKeyboard(EditMessage.this);
+				return false;
 			}
 		});
 
@@ -421,8 +442,8 @@ implements IFilterListener {
 		if (mainFrames.getChildAt(FRAME_CONTACTS_LIST).getVisibility() == View.VISIBLE) {
 			Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
 		} else {
-			
 			super.onBackPressed();
+			Helpers.exitTransition(this);
 		}
 	}
 
@@ -503,11 +524,11 @@ implements IFilterListener {
 	public void onPublishResult(Object data) {
 		dtd.phs.sil.ui.auto_complete_contacts.ContactsList list = 
 			(dtd.phs.sil.ui.auto_complete_contacts.ContactsList) data;
-		if ( list.size() == 0) {
-			btAddContact.setVisibility(View.VISIBLE);
-		} else {
-			btAddContact.setVisibility(View.GONE);
-		}
+//		if ( list.size() == 0) {
+//			btAddContact.setVisibility(View.VISIBLE);
+//		} else {
+//			btAddContact.setVisibility(View.GONE);
+//		}
 	}
 
 }
