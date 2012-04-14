@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="transition_time">300</integer>
+    <integer name="transition_time">450</integer>
 </resources>

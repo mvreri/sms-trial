@@ -14,7 +14,7 @@
     <string name="Hour">Giờ</string>
     <string name="Never"> Quá hạn</string>
     <string name="Minute">Phút</string>
-    <string name="To">Tới:</string>
+    <string name="To">Gửi:</string>
     <string name="Time">Thời gian:</string>
     <string name="Frequency">Lặp: </string>
     <string name="Alert_on_delivery">Báo động khi gửi:</string>

@@ -9,7 +9,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="5dp" >
+        android:paddingTop="3dp"	        
+        android:paddingBottom="3dp"
+        android:paddingLeft="3dp" >
 
         <EditText
             android:id="@+id/etTo"
@@ -24,7 +26,8 @@
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:text="@string/Add"
-            android:visibility="gone" />
+            style="@style/button_style"
+            android:visibility="visible" />
     </LinearLayout>
 
     <com.devsmart.android.ui.HorizontalListView

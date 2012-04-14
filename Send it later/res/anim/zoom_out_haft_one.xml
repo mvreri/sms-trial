@@ -7,6 +7,7 @@
 
     <scale
         android:duration="@integer/transition_time"
+        android:interpolator="@android:anim/anticipate_overshoot_interpolator"
         android:fromXScale=".5"
         android:fromYScale=".5"
         android:pivotX="50%"

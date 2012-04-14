@@ -89,6 +89,7 @@
 	  		android:layout_gravity="center"
 	  		android:paddingLeft="50dp"
 	  		android:paddingRight="50dp"
+	  		style="@style/button_style"
 	  	/>
 	  </LinearLayout>	  
 </LinearLayout>

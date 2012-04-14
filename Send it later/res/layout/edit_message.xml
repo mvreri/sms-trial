@@ -9,7 +9,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="5dp" >
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp" 
+        android:paddingLeft="3dp"
+   >
 
         <EditText
             android:id="@+id/etTo"
@@ -21,9 +24,11 @@
 
         <Button
             android:id="@+id/btAddContact"
-            android:layout_width="72dp"
+            android:layout_width="86dp"
             android:layout_height="wrap_content"
             android:text="@string/Add"
+            style="@style/button_style"
+            android:layout_marginLeft="3dp"
             android:visibility="visible" />
     </LinearLayout>
 
