@@ -146,7 +146,8 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="#eee"
-            android:dividerHeight="0.3dp" />
+            android:dividerHeight="0.3dp"
+            android:fadingEdge="none" />
     </FrameLayout>
 
 </LinearLayout>

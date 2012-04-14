@@ -181,7 +181,7 @@ abstract public class MessageAdapter extends BaseAdapter {
 		View v = convertView;
 		ViewHolder holder;
 		if ( v == null ) {
-			v = Helpers.inflate(context, itemLayout);
+			v = Helpers.inflate(context, itemLayout, null);
 			holder = new ViewHolder();
 			createHolder(v, holder);
 			v.setTag(holder);

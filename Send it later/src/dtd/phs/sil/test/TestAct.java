@@ -37,7 +37,7 @@ public class TestAct extends Activity {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {		
-			TextView v = (TextView) Helpers.inflate(getContext(), R.layout.simple_list_item);
+			TextView v = (TextView) Helpers.inflate(getContext(), R.layout.simple_list_item, null);
 			PendingMessageItem item = getItem(position);
 			String s = ""+item.getId();
 			String sep = "##";

@@ -203,6 +203,10 @@ implements IFilterListener {
 			}
 		});
 
+
+	}
+
+	private void createButtonAddContact() {
 		btAddContact = (Button) findViewById(R.id.btAddContact);
 		btAddContact.setOnClickListener(new OnClickListener() {
 
@@ -356,7 +360,10 @@ implements IFilterListener {
 		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
 
 		etContact = (EditText) findViewById(R.id.etTo);
+		createButtonAddContact();
 		contactsList = (ListView) findViewById(R.id.listAutoComplete);
+		
+		createHideSoftKeyboardModule();
 		adapter = new MyAdapter(getApplicationContext(),this);
 
 		adapter.loadAllContacts();
@@ -393,6 +400,7 @@ implements IFilterListener {
 
 		});
 
+
 		etContact.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -406,27 +414,29 @@ implements IFilterListener {
 							btAddContact.setVisibility(View.VISIBLE);
 						}
 					});
-					
-					
 			}
 			@Override
 			public void afterTextChanged(Editable s) {
 				String text = s.toString();
 				Helpers.showOnlyView(mainFrames, FRAME_CONTACTS_LIST);
 				adapter.getFilter().filter(text);
+				contactsList.setSelection(0);
 			}
 		});
 		
+
+		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
+	}
+	
+	private void createHideSoftKeyboardModule() {
+
 		contactsList.setOnTouchListener(new OnTouchListener() {
-			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				Helpers.hideSoftKeyboard(EditMessage.this);
+				Helpers.hideSoftKeyboard(EditMessage.this, btAddContact);
 				return false;
 			}
 		});
-
-		Helpers.showOnlyView(mainFrames, FRAME_FILL_INFO);
 	}
 
 	private void onContactAdded(ContactItem contact) {

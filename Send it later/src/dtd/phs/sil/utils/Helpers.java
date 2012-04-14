@@ -17,6 +17,7 @@ import android.telephony.SmsManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
@@ -27,9 +28,9 @@ public class Helpers {
 
 	public static final boolean DEBUG_MODE = false;
 
-	public static View inflate(Context context, int layout) {
+	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		return inf.inflate(layout, null);
+		return inf.inflate(layout, parent);
 	}
 
 	public static void showOnlyView(FrameLayout mainFrames, int id) {
@@ -95,10 +96,10 @@ public class Helpers {
 		return true;
 	}
 
-//	public static void hideSoftKeyboard(Activity act, View view) {
-//		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
-//		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
-//	}
+	public static void hideSoftKeyboard(Activity act, View view) {
+		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);
+	}
 
 	public static void hideSoftKeyboard(Activity activity) {
 		activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);		
