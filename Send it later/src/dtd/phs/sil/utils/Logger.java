@@ -6,11 +6,13 @@ import android.util.Log;
 public class Logger {
 	
 
+	private static final String SIL_LOG_TAG = "SIL_TAG";
+
 	public static void logInfo(String extra) {
 		if ( Helpers.DEBUG_MODE ) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
-			Log.i("[phs.vne]",extra + " == Location: " + location  );
+			Log.i(SIL_LOG_TAG,extra + " == Location: " + location  );
 					
 		}
 	}
@@ -19,7 +21,7 @@ public class Logger {
 		if ( Helpers.DEBUG_MODE ) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
-			Log.e("[phs.vne]",extra + " -- Location: " + location);
+			Log.e(SIL_LOG_TAG,extra + " -- Location: " + location);
 		}
 					
 	}
@@ -28,7 +30,7 @@ public class Logger {
 		if ( Helpers.DEBUG_MODE ) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3+extraDeepInStack];
 			String location = extractLocation(elm);
-			Log.e("[phs.vne]",extra + " -- location: " + location);
+			Log.e(SIL_LOG_TAG,extra + " -- location: " + location);
 		}
 					
 	}

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.PowerManager;
 import android.telephony.SmsManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -181,6 +182,7 @@ public class Helpers {
 	}
 
 	public static final String APP_SIL_MARKET = "market://details?id=dtd.phs.sil";
+	
 	public static void gotoMarket(Activity activity) {
 		Intent goToMarket = null;
 		goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_SIL_MARKET));
@@ -210,6 +212,14 @@ public class Helpers {
 	public static void exitActivity(Activity hostedActivity, Intent i) {
 		hostedActivity.startActivity(i);
 		Helpers.exitTransition(hostedActivity);
+	}
+
+	private static final String POWER_TAG = "dtd.phs.wakelock";
+	public static PowerManager.WakeLock acquireWakelock(Context context) {
+		PowerManager pm  = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+	    PowerManager.WakeLock lock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, POWER_TAG);
+	    lock.acquire();
+		return lock;
 	}
 
 }
