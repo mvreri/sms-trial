@@ -31,17 +31,16 @@ public class ContactEventReceiver extends BroadcastReceiver {
 			if(!message.isEmail()) {				 
 				number = message.getOriginatingAddress();
 				//TODO: test with multiple message received at the same time !
-				//Fuck: Go SMS pro "uc uc" this intent !!!!
 				Logger.logInfo("Message: " + number);
 			}
 		}	
 		
-//		if ( number != null) {
-//			UpdateLTCService.acquireWakelock(context);
-//			Intent service = new Intent(context,UpdateLTCService.class);
-//			service.putExtra(UpdateLTCService.EXTRA_NUMBER, number);
-//			context.startService(service);
-//		}
+		if ( number != null) {
+			UpdateLTCService.acquireWakelock(context);
+			Intent service = new Intent(context,UpdateLTCService.class);
+			service.putExtra(UpdateLTCService.EXTRA_NUMBER, number);
+			context.startService(service);
+		}
 	}
 
 }

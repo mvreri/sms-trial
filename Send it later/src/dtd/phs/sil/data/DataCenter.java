@@ -2,7 +2,9 @@ package dtd.phs.sil.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+import dtd.phs.sil.UpdateLTCService;
 import dtd.phs.sil.alarm.AlarmHelpers;
 import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.entities.PendingMessageItem;
@@ -122,6 +124,11 @@ public class DataCenter {
 			values.put(SMSItem.ADDRESS, num);
 			values.put(SMSItem.BODY, message.getContent());
 			context.getContentResolver().insert(Uri.parse(SMS_SENT_CONTENT_URI), values);
+		}
+		for(String num : phoneNumbers) {
+			Intent service = new Intent(context,UpdateLTCService.class);
+			service.putExtra(UpdateLTCService.EXTRA_NUMBER, num);
+			context.startService(service);
 		}
 	}
 
