@@ -60,6 +60,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 				ContactsList allContacts) {
 			ContactsList list = new ContactsList();
 			constraint = StringHelpers.replaceLowerSignCharacter(getContext(), constraint);
+			constraint = constraint.replaceAll(" ","");
 			synchronized (allContacts) {
 				for (ContactItem item : allContacts) {
 					if ( matchContraint(item,constraint)) {
