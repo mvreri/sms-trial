@@ -67,4 +67,8 @@
     <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
     <string name="Enter_message_here">Nội dung SMS…</string>
     <string name="more_apps">Cùng tác giả</string>
+    <string name="Share">Chia sẻ</string>
+    <string name="Contact">Liên hệ</string>
+    <string name="Share_subject">Chia sẻ</string>
+    <string name="Share_content">Android app dat lich SMS: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
 </resources>

@@ -228,5 +228,15 @@ public class Helpers {
 	    lock.acquire();
 		return lock;
 	}
+	
+	public static void share(Activity activity,int subjectId, int contentId) {
+	     final Intent intent = new Intent(Intent.ACTION_SEND);
+	     Resources res = activity.getResources();
+	     intent.setType("text/plain");
+	     intent.putExtra(Intent.EXTRA_SUBJECT, res.getString(subjectId));
+	     intent.putExtra(Intent.EXTRA_TEXT, res.getString(contentId));
+	     
+	     activity.startActivity(Intent.createChooser(intent, res.getString(R.string.Share)));
+	}
 
 }

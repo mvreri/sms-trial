@@ -3,12 +3,17 @@
 	<item 
 		android:id="@+id/menu_preferences"
 		android:title="@string/Preferences"
-		android:icon="@drawable/mnu_setting"
+		android:icon="@android:drawable/ic_menu_preferences"
 	/>
-	<item 
+	<item
+	    android:id="@+id/menu_share"
+	    android:title="@string/Share"
+	    android:icon="@android:drawable/ic_menu_share" 
+	    />
+<!-- 	<item 
 		android:id="@+id/menu_exit"
 		android:title="@string/Exit"
-		android:icon="@drawable/mnu_exit"
-	/>
+		android:icon="@android:drawable/ic_menu_"
+	/> -->
 	
 </menu>

@@ -69,4 +69,8 @@
     <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
     <string name="Enter_message_here">Enter message here…</string>
     <string name="more_apps">More apps…</string>
+    <string name="Share">Share</string>
+    <string name="Contact">Contact</string>
+    <string name="Share_subject">Share</string>
+    <string name="Share_content">Nice SMS scheduler app: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
 </resources>

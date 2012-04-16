@@ -27,9 +27,12 @@ public class OptionsMenu {
 			Intent i = new Intent(activity, SIL_Preferences.class);
 			Helpers.enterActivity(activity, i);
 			return true;
-		case R.id.menu_exit:
-			Helpers.launchHomeScreen(activity);
+		case R.id.menu_share:
+			Helpers.share(activity, R.string.Share_subject, R.string.Share_content);
 			return true;
+/*		case R.id.menu_exit:
+			Helpers.launchHomeScreen(activity);
+			return true;*/
 		default: return false;
 		}
 	}
