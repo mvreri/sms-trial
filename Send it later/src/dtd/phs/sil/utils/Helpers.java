@@ -239,4 +239,16 @@ public class Helpers {
 	     activity.startActivity(Intent.createChooser(intent, res.getString(R.string.Share)));
 	}
 
+	public static void launchIntentCall(Activity activity, String number) {
+		Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+		activity.startActivity(intent);
+	}
+
+	public static void launchIntentSMS(Activity activity, String number) {
+		Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+		smsIntent.setType("vnd.android-dir/mms-sms");
+		smsIntent.putExtra("address", number);
+		activity.startActivity(smsIntent);
+	}
+
 }

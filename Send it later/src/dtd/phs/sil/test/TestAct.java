@@ -32,12 +32,12 @@ public class TestAct extends Activity {
 
 		public MyAdapter(Context applicationContext,
 				PendingMessagesList messages) {
-			super(applicationContext,R.layout.simple_list_item,messages);
+			super(applicationContext,android.R.layout.simple_list_item_1,messages);
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {		
-			TextView v = (TextView) Helpers.inflate(getContext(), R.layout.simple_list_item, null);
+			TextView v = (TextView) Helpers.inflate(getContext(), android.R.layout.simple_list_item_1, null);
 			PendingMessageItem item = getItem(position);
 			String s = ""+item.getId();
 			String sep = "##";

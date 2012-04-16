@@ -67,18 +67,24 @@ public abstract class SelectedContactsAdapter extends BaseAdapter {
 			
 			@Override
 			public void onClick(View v) {
-				removeItem(position);
-				notifyDataSetChanged();
-				onItemRemoved(position);
+				onItemClick(position);
+//				removeItem(position);
+//				notifyDataSetChanged();
+//				onItemRemoved(position);
 			}
 		});
 		return v;
 	}
 
+	abstract public void onItemClick(int position);
 	abstract public void onItemRemoved(int position);
 
-	protected void removeItem(int position) {
+	public void removeItem(int position) {
 		selectedList.remove(position);
 	}
 
+	public ContactItem getSelectedContact(int position) {
+		return selectedList.get(position);
+	}
+	
 }

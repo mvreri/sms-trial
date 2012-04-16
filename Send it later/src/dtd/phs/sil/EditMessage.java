@@ -37,6 +37,7 @@ import dtd.phs.sil.ui.AlertHelpers;
 import dtd.phs.sil.ui.ChooseDateDialog;
 import dtd.phs.sil.ui.ChooseFrequencyDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
+import dtd.phs.sil.ui.OnContactItemClickDialog;
 import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
@@ -60,10 +61,12 @@ extends Activity
 	protected static final int DIALOG_TIME = 1;
 	protected static final int DIALOG_FREQ = 2;
 	protected static final int DIALOG_ALERT = 3;
+	protected static final int DIALOG_CONTACT_ITEM_CLICK = 4;
 
 	protected static final int FRAME_FILL_INFO = 0;
 	protected static final int FRAME_CONTACTS_LIST = 1;
 //	private static final long DELTA_TIME = 59*1000; 
+
 
 	//Set passedMessage = null -> Add new message , otherwise: edit
 	public static PendingMessageItem passedMessage = null;
@@ -94,6 +97,7 @@ extends Activity
 	private PendingMessageItem beingEditedMessage;
 	private Button btAddContact;
 	private boolean isEditSentMessage;
+	protected OnContactItemClickDialog dialogItemClick;
 //	private Handler handler = new Handler();
 
 	/** Called when the activity is first created. */
@@ -156,10 +160,16 @@ extends Activity
 	}
 
 	private void createViews() {
+		createDialogs();
 		createAutoContactModules();
 		createOptionViews();
 		createMessageViews();
 		createButtons();
+		
+	}
+
+	private void createDialogs() {
+		dialogItemClick = new OnContactItemClickDialog(this);
 	}
 
 	private void createButtons() {
@@ -371,7 +381,8 @@ extends Activity
 		contactsList.setAdapter(adapter);
 
 		lvSelectedContacts = (HorizontalListView) findViewById(R.id.listSelected);
-		lvSelectedContacts.setVisibility(View.GONE);		
+		lvSelectedContacts.setVisibility(View.GONE);	
+		
 
 		selectedAdapter = new SelectedContactsAdapter(getApplicationContext()) {
 			@Override
@@ -380,8 +391,15 @@ extends Activity
 					lvSelectedContacts.setVisibility(View.GONE);
 				}
 			}
-		};
 
+			@Override
+			public void onItemClick(int position) {
+				dialogItemClick.setPosition(position);
+				showDialog(DIALOG_CONTACT_ITEM_CLICK);
+			}
+		};
+		dialogItemClick.setAdapter(selectedAdapter);
+		
 		if ( isEditView ) {
 			ContactsList selectedContacts = ContactsList.createContactsWithoutLastContactedTime(beingEditedMessage);
 			selectedAdapter.setSelectedList(selectedContacts);
@@ -497,7 +515,8 @@ extends Activity
 					updateAlert();
 				}
 			};
-
+		case DIALOG_CONTACT_ITEM_CLICK:
+			return dialogItemClick;
 		}
 
 		return null;
@@ -527,6 +546,9 @@ extends Activity
 			((ChooseTimeDialog)dialog).prepare(selectedCalendar);
 			break;
 		case DIALOG_FREQ:
+			break;
+		case DIALOG_CONTACT_ITEM_CLICK:
+			((OnContactItemClickDialog)dialog).prepare();
 			break;
 		}
 	}
