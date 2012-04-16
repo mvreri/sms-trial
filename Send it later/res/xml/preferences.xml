@@ -15,6 +15,11 @@
         android:title="@string/Rate_Application" >
     </Preference>
     <Preference
+        android:key="MORE_APPS"
+        android:title="@string/more_apps" >
+    </Preference>
+    
+    <Preference
         android:key="ABOUT"
         android:title="@string/about_us" >
     </Preference>

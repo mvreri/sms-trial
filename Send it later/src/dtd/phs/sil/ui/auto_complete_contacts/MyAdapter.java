@@ -1,8 +1,6 @@
 package dtd.phs.sil.ui.auto_complete_contacts;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.Filter;
 import android.widget.TextView;
 import dtd.phs.sil.R;
 import dtd.phs.sil.utils.Logger;
-import dtd.phs.sil.utils.StringHelpers;
 
 public class MyAdapter extends ArrayAdapter<String> {
 
@@ -39,7 +36,7 @@ public class MyAdapter extends ArrayAdapter<String> {
 					results.count = 0;
 				}
 			} else {
-				data = findMatchResults(constraint.toString(),allContacts);
+				data = allContacts.findMatchResults(getContext(),constraint.toString());
 				results.values = mergeInfo( data );
 				results.count = data.size();
 			}
@@ -53,59 +50,6 @@ public class MyAdapter extends ArrayAdapter<String> {
 				list.add(s);
 			}
 			return list;
-		}
-
-		private ContactsList findMatchResults(
-				String constraint,
-				ContactsList allContacts) {
-			ContactsList list = new ContactsList();
-			constraint = StringHelpers.replaceLowerSignCharacter(getContext(), constraint);
-			constraint = constraint.replaceAll(" ","");
-			synchronized (allContacts) {
-				for (ContactItem item : allContacts) {
-					if ( matchContraint(item,constraint)) {
-						list.add( item );
-					}
-				}
-				sortPriorityList(list);
-				return list;
-
-			}
-		}
-
-		private void sortPriorityList(ContactsList list) {
-			Collections.sort(list, new Comparator<ContactItem>() {
-				@Override
-				public int compare(ContactItem lhs, ContactItem rhs) {
-					long diff = lhs.getLastTimeContacted() - rhs.getLastTimeContacted();
-					if ( diff < 0 ) return 1;
-					if ( diff == 0) return 0;
-					return -1;
-				}
-			});
-		}
-
-		private boolean matchContraint(ContactItem item, String constraint) {
-			String fullContact = (item.getName() + " " + item.getNumber()).toLowerCase();
-			fullContact = StringHelpers.replaceLowerSignCharacter(getContext(), fullContact);
-			String str = constraint.toString();
-			if ( isSubStr(str,fullContact)) return true;
-			return false;
-		}
-
-		private boolean isSubStr(String str, String fullContact) {
-			int j = 0;
-			for(int i = 0 ; i < str.length() ; i++) {
-				if ( j >= fullContact.length() ) 
-					return false;
-				while ( j < fullContact.length() && fullContact.charAt(j) != str.charAt(i) ) {
-					j++;
-					if ( j >= fullContact.length() ) 
-						return false;
-				}
-				j++;
-			}
-			return true;
 		}
 
 		@Override

@@ -1,5 +1,8 @@
 package dtd.phs.sil.ui.auto_complete_contacts;
 
+import android.content.Context;
+import dtd.phs.sil.utils.StringHelpers;
+
 public class ContactItem {
 	private String name;
 	private String number;
@@ -29,4 +32,15 @@ public class ContactItem {
 	public long getLastTimeContacted() {
 		return lastTimeContacted;
 	}
+	
+	public boolean matchContraint(Context context, String constraint) {
+		String fullContact = (this.getName() + " " + this.getNumber()).toLowerCase();
+		fullContact = StringHelpers.replaceLowerSignCharacter(context, fullContact);
+		String str = constraint.toString();
+		if ( StringHelpers.isSubStr(str,fullContact)) return true;
+		return false;
+	}
+
+
+
 }

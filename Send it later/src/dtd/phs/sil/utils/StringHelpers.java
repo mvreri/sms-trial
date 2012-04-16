@@ -21,6 +21,21 @@ public class StringHelpers {
 		}
 		return str;
 	}
+	
+	static public boolean isSubStr(String str, String fullContact) {
+		int j = 0;
+		for(int i = 0 ; i < str.length() ; i++) {
+			if ( j >= fullContact.length() ) 
+				return false;
+			while ( j < fullContact.length() && fullContact.charAt(j) != str.charAt(i) ) {
+				j++;
+				if ( j >= fullContact.length() ) 
+					return false;
+			}
+			j++;
+		}
+		return true;
+	}
 //
 //	public static boolean[][] QWERTY_Like_Arr = {
 //		{true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,true},

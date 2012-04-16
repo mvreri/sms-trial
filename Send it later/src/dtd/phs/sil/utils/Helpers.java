@@ -189,6 +189,13 @@ public class Helpers {
 		activity.startActivity(goToMarket);
 	}
 
+	public static final String APP_AUTHOR_MARKET = "market://search?q=pham+hung+son";
+	public static void gotoMarketSameAuthor(Activity activity) {
+		Intent goToMarket = null;
+		goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_AUTHOR_MARKET));
+		activity.startActivity(goToMarket);
+	}
+
 	public static void launchHomeScreen(Activity activity) {
 		Intent startMain = new Intent(Intent.ACTION_MAIN);
         startMain.addCategory(Intent.CATEGORY_HOME);

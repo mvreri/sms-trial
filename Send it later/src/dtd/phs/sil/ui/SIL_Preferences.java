@@ -29,6 +29,16 @@ public class SIL_Preferences extends PreferenceActivity {
 			}
 		});
 		
+		Preference moreAppsPref = findPreference("MORE_APPS");
+		moreAppsPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				Helpers.gotoMarketSameAuthor(SIL_Preferences.this);
+				return true;
+			}
+		});
+		
 		Preference aboutPref = findPreference("ABOUT");
 		aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 			
