@@ -41,7 +41,7 @@ import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
 import dtd.phs.sil.ui.auto_complete_contacts.IFilterListener;
-import dtd.phs.sil.ui.auto_complete_contacts.MyAdapter;
+import dtd.phs.sil.ui.auto_complete_contacts.AutoContactAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
 import dtd.phs.sil.utils.Helpers;
@@ -76,7 +76,7 @@ extends Activity
 	private FrameLayout mainFrames;
 	private ListView contactsList;
 	private EditText etContact;
-	private MyAdapter adapter;
+	private AutoContactAdapter adapter;
 	private HorizontalListView lvSelectedContacts;
 	private SelectedContactsAdapter selectedAdapter;
 	private Resources res;
@@ -365,7 +365,7 @@ extends Activity
 		contactsList = (ListView) findViewById(R.id.listAutoComplete);
 		
 		createHideSoftKeyboardModule();
-		adapter = new MyAdapter(getApplicationContext());
+		adapter = new AutoContactAdapter(getApplicationContext());
 
 		adapter.loadAllContacts();
 		contactsList.setAdapter(adapter);
