@@ -22,6 +22,12 @@ public class StringHelpers {
 		return str;
 	}
 	
+	/**
+	 * 
+	 * @param str
+	 * @param fullContact
+	 * @return true - if 
+	 */
 	static public boolean isSubStr(String str, String fullContact) {
 		int j = 0;
 		for(int i = 0 ; i < str.length() ; i++) {
@@ -36,40 +42,38 @@ public class StringHelpers {
 		}
 		return true;
 	}
-//
-//	public static boolean[][] QWERTY_Like_Arr = {
-//		{true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,true},
-//		{false,true,false,false,false,false,true,true,false,false,false,false,false,true,false,false,false,false,false,false,false,true,false,false,false,false},
-//		{false,false,true,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false},
-//		{false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,true,false,true},
-//		{false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,false,false,false},
-//		{false,false,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,false,false},
-//		{false,true,false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,true,false},
-//		{false,true,false,false,false,false,true,true,false,true,false,false,false,true,false,false,false,false,false,true,true,false,false,false,true,false},
-//		{false,false,false,false,false,false,false,false,true,true,true,true,false,false,true,false,false,false,false,false,true,false,false,false,false,false},
-//		{false,false,false,false,false,false,false,true,true,true,true,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false},
-//		{false,false,false,false,false,false,false,false,true,true,true,true,true,true,true,true,false,false,false,false,true,false,false,false,false,false},
-//		{false,false,false,false,false,false,false,false,true,false,true,true,true,false,true,true,false,false,false,false,false,false,false,false,false,false},
-//		{false,false,false,false,false,false,false,false,false,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false},
-//		{false,true,false,false,false,false,false,true,false,true,true,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false},
-//		{false,false,false,false,false,false,false,false,true,false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false},
-//		{false,false,false,false,false,false,false,false,false,false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false},
-//		{true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,false},
-//		{false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false},
-//		{true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,true,false,true},
-//		{false,false,false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,false,true,false},
-//		{false,false,false,false,false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,true,false},
-//		{false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false},
-//		{true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,false},
-//		{false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,true,false,true},
-//		{false,false,false,false,false,false,true,true,false,true,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,false},
-//		{true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,true,false,true}};
-//	public static boolean QWERT_Like(char c, char b) {
-//		if ( c == b ) return true;
-//		if ( c <= 'z' && b <= 'z' && c >='a' && b >= 'a') {
-//			return QWERTY_Like_Arr[b-'a'][c-'a'];
-//		} else {
-//			return b==c;
-//		}
-//	}
+
+	public static boolean[][] QWERTY_Like_Arr = {
+		{true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,true},
+		{false,true,false,false,false,false,true,true,false,false,false,false,false,true,false,false,false,false,false,false,false,true,false,false,false,false},
+		{false,false,true,true,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false},
+		{false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,true,false,true},
+		{false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,false,false,false},
+		{false,false,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,false,false},
+		{false,true,false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,true,false,true,false,true,false,false,true,false},
+		{false,true,false,false,false,false,true,true,false,true,false,false,false,true,false,false,false,false,false,true,true,false,false,false,true,false},
+		{false,false,false,false,false,false,false,false,true,true,true,true,false,false,true,false,false,false,false,false,true,false,false,false,false,false},
+		{false,false,false,false,false,false,false,true,true,true,true,false,true,true,false,false,false,false,false,false,true,false,false,false,true,false},
+		{false,false,false,false,false,false,false,false,true,true,true,true,true,true,true,true,false,false,false,false,true,false,false,false,false,false},
+		{false,false,false,false,false,false,false,false,true,false,true,true,true,false,true,true,false,false,false,false,false,false,false,false,false,false},
+		{false,false,false,false,false,false,false,false,false,true,true,true,true,true,false,false,false,false,false,false,false,false,false,false,false,false},
+		{false,true,false,false,false,false,false,true,false,true,true,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false},
+		{false,false,false,false,false,false,false,false,true,false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false},
+		{false,false,false,false,false,false,false,false,false,false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false},
+		{true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,false},
+		{false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,false,false,false},
+		{true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,true,false,true},
+		{false,false,false,false,false,true,true,true,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,false,true,false},
+		{false,false,false,false,false,false,false,true,true,true,true,false,false,false,false,false,false,false,false,false,true,false,false,false,true,false},
+		{false,true,true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false},
+		{true,false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,true,false,true,false,false,false,true,false,false,false},
+		{false,false,true,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,true,false,true},
+		{false,false,false,false,false,false,true,true,false,true,false,false,false,false,false,false,false,false,false,true,true,false,false,false,true,false},
+		{true,false,false,true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,true,false,false,false,false,true,false,true}};
+	public static boolean QWERT_Like(char c, char b) {
+		if ( c == b ) return true;
+		if ( c <= 'z' && b <= 'z' && c >='a' && b >= 'a') {
+			return QWERTY_Like_Arr[b-'a'][c-'a'];
+		} else return false;
+	}
 }

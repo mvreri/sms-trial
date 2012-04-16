@@ -50,7 +50,8 @@ import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage 
 extends Activity 
-implements IFilterListener {
+//implements IFilterListener 
+{
 
 	protected static final String EDIT_TYPE = "edit_type";
 	protected static final String TYPE_NEW = "type_new";
@@ -93,7 +94,7 @@ implements IFilterListener {
 	private PendingMessageItem beingEditedMessage;
 	private Button btAddContact;
 	private boolean isEditSentMessage;
-	private Handler handler = new Handler();
+//	private Handler handler = new Handler();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -364,7 +365,7 @@ implements IFilterListener {
 		contactsList = (ListView) findViewById(R.id.listAutoComplete);
 		
 		createHideSoftKeyboardModule();
-		adapter = new MyAdapter(getApplicationContext(),this);
+		adapter = new MyAdapter(getApplicationContext());
 
 		adapter.loadAllContacts();
 		contactsList.setAdapter(adapter);
@@ -530,10 +531,10 @@ implements IFilterListener {
 		}
 	}
 
-	@Override
-	public void onPublishResult(Object data) {
-		dtd.phs.sil.ui.auto_complete_contacts.ContactsList list = 
-			(dtd.phs.sil.ui.auto_complete_contacts.ContactsList) data;
-	}
+//	@Override
+//	public void onPublishResult(Object data) {
+//		dtd.phs.sil.ui.auto_complete_contacts.ContactsList list = 
+//			(dtd.phs.sil.ui.auto_complete_contacts.ContactsList) data;
+//	}
 
 }

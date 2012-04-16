@@ -25,7 +25,7 @@ public class OptionsMenu {
 		switch (item.getItemId()) {
 		case R.id.menu_preferences:
 			Intent i = new Intent(activity, SIL_Preferences.class);
-			activity.startActivity(i);
+			Helpers.enterActivity(activity, i);
 			return true;
 		case R.id.menu_exit:
 			Helpers.launchHomeScreen(activity);

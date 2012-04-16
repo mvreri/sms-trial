@@ -51,6 +51,11 @@ public class SIL_Preferences extends PreferenceActivity {
 	}
 	
 	@Override
+	public void onBackPressed() {		
+		super.onBackPressed();
+		Helpers.exitTransition(this);
+	}
+	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
 		case DIALOG_ABOUT:

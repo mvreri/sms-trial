@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
 import dtd.phs.sil.R;
-import dtd.phs.sil.utils.Logger;
 
 public class MyAdapter extends ArrayAdapter<String> {
 
@@ -20,64 +19,61 @@ public class MyAdapter extends ArrayAdapter<String> {
 	private final Object lock = new Object();
 	public class MyFilter extends Filter {
 
-		private IFilterListener listener;
+//		private IFilterListener listener;
 
-		public MyFilter(IFilterListener listener) {
-			this.listener = listener;
-		}
+//		public MyFilter(IFilterListener listener) {
+//			this.listener = listener;
+//		}
 
 		@Override
 		protected FilterResults performFiltering(CharSequence constraint) {
 			FilterResults results = new FilterResults();
 			if ( constraint == null || constraint.length() == 0) {
 				synchronized (lock) {
-					ArrayList<String> list = new ArrayList<String>();
-					results.values = list;
+					results.values = new ContactsList();
 					results.count = 0;
 				}
 			} else {
-				data = allContacts.findMatchResults(getContext(),constraint.toString());
-				results.values = mergeInfo( data );
+//				data = allContacts.findMatchResults(getContext(),constraint.toString());
+				results.values = allContacts.findMatchResults(getContext(),constraint.toString());
 				results.count = data.size();
 			}
 			return results;
 		}
 
-		private ArrayList<String> mergeInfo(ContactsList data) {
-			ArrayList<String> list = new ArrayList<String>();
-			for (ContactItem item : data) {
-				String s = MyAdapter.mergeInfo(item);
-				list.add(s);
-			}
-			return list;
-		}
+//		private ArrayList<String> mergeInfo(ContactsList data) {
+//			ArrayList<String> list = new ArrayList<String>();
+//			for (ContactItem item : data) {
+//				String s = MyAdapter.mergeInfo(item);
+//				list.add(s);
+//			}
+//			return list;
+//		}
 
 		@Override
 		protected void publishResults(CharSequence constraint,
 				FilterResults results) {
+			MyAdapter.this.data = (ContactsList) results.values;
 			MyAdapter.this.notifyDataSetChanged();
-			listener.onPublishResult(data);
-
+//			listener.onPublishResult(data);
 		}
 	}
 
 	private ContactsList data;
 	private ContactsList allContacts;
 	private MyFilter filter;
-	private IFilterListener listener;
 
-	public MyAdapter(Context context,IFilterListener listener) {
+	public MyAdapter(Context context) {
 		super(context, android.R.layout.simple_list_item_1);
 		data = new ContactsList();
 		allContacts = new ContactsList();
-		this.listener = listener;
 	}
 
-	public void printAllContacts(ContactsList allContacts) {
-		for(ContactItem contact : allContacts) {
-			Logger.logInfo(contact.getName() + " " + contact.getNumber());
-		}
-	}
+//	public void printAllContacts(ContactsList allContacts) {
+//		for(ContactItem contact : allContacts) {
+//			Logger.logInfo(contact.getName() + " " + contact.getNumber());
+//		}
+//	}
 
 	@Override
 	public int getCount() {
@@ -94,9 +90,9 @@ public class MyAdapter extends ArrayAdapter<String> {
 	}
 
 
-	private static String mergeInfo(ContactItem contactItem) {
-		return contactItem.getName() + " " + contactItem.getNumber();
-	}
+//	private static String mergeInfo(ContactItem contactItem) {
+//		return contactItem.getName() + " " + contactItem.getNumber();
+//	}
 
 	@Override
 	public long getItemId(int position) {
@@ -117,16 +113,10 @@ public class MyAdapter extends ArrayAdapter<String> {
 	@Override
 	public Filter getFilter() {
 		if ( filter == null ) {
-			filter = new MyFilter(listener);
+			filter = new MyFilter();
 		} 
 		return filter;
 	}
-
-
-
-
-
-
 
 	public void loadAllContacts() {
 		new Thread( new AutoContactLoader(getContext(),allContacts,null)).start();
