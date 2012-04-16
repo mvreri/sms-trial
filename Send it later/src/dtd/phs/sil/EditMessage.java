@@ -10,23 +10,22 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.view.Window;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.devsmart.android.ui.HorizontalListView;
 
@@ -34,20 +33,19 @@ import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.PendingMessageItem;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.ui.AlertHelpers;
+import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
 import dtd.phs.sil.ui.ChooseDateDialog;
-import dtd.phs.sil.ui.ChooseFrequencyDialog;
+import dtd.phs.sil.ui.ChooseTextsDialog;
 import dtd.phs.sil.ui.ChooseTimeDialog;
 import dtd.phs.sil.ui.OnContactItemClickDialog;
-import dtd.phs.sil.ui.AlertHelpers.AlertTypes;
+import dtd.phs.sil.ui.auto_complete_contacts.AutoContactAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
-import dtd.phs.sil.ui.auto_complete_contacts.IFilterListener;
-import dtd.phs.sil.ui.auto_complete_contacts.AutoContactAdapter;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
 import dtd.phs.sil.utils.FrequencyHelpers;
+import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
-import dtd.phs.sil.utils.FrequencyHelpers.Frequencies;
 
 public class EditMessage 
 extends Activity 
@@ -498,7 +496,7 @@ extends Activity
 				}
 			};
 		case DIALOG_FREQ:
-			return new ChooseFrequencyDialog(this,R.string.Choose_Frequency,FrequencyHelpers.FREQ_NAMES) {
+			return new ChooseTextsDialog(this,R.string.Choose_Frequency,FrequencyHelpers.FREQ_NAMES) {
 
 				@Override
 				public void onItemSelected(int postion) {
@@ -507,7 +505,7 @@ extends Activity
 				}
 			};
 		case DIALOG_ALERT:
-			return new ChooseFrequencyDialog(this,R.string.Alert_on_delivery,AlertHelpers.ALERT_STRINGS) {
+			return new ChooseTextsDialog(this,R.string.Alert_on_delivery,AlertHelpers.ALERT_STRINGS) {
 
 				@Override
 				public void onItemSelected(int position) {

@@ -240,7 +240,7 @@ public class Helpers {
 	}
 
 	public static void launchIntentCall(Activity activity, String number) {
-		Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse(number));
+		Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+number));
 		activity.startActivity(intent);
 	}
 

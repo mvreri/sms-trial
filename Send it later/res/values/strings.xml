@@ -73,4 +73,6 @@
     <string name="Contact">Contact</string>
     <string name="Share_subject">Share</string>
     <string name="Share_content">Nice SMS scheduler app: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
+    <string name="Call_now">Call now</string>
+    <string name="sms_now">Sms now</string>
 </resources>

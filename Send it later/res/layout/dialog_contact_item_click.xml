@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="36dp"
+        android:background="@drawable/date_dialog_title_bg"
+        android:gravity="center"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingLeft="3dp"
+        android:paddingRight="3dp"
+        android:text="Temp: Contact " />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#eeffffff"
+        android:orientation="vertical"
+	>
+
+        <TextView
+            android:id="@+id/tvRemove"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Remove"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvCallNow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Call_now"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:id="@+id/tvSMSNow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sms_now"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="normalTextSize">14sp</dimen>    
+    <dimen name="largerTextSize">16sp</dimen>    
+    <dimen name="largestTextSize">20sp</dimen>
     <dimen name="image_padding">3dp</dimen>
     <dimen name="smallTextSize">12sp</dimen>
     <dimen name="contactTextSize">16sp</dimen>

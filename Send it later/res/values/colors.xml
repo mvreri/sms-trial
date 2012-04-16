@@ -8,5 +8,5 @@
     <color name="blur_blue">#ff006eff</color>
     <color name="red">#ff0000</color>
     <color name="dark_red">#7c0505</color>
-    <color name="dialog_text_color">#000000</color>
+    <color name="dialog_text_color">#ff666666</color>
 </resources>
