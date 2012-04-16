@@ -15,7 +15,7 @@ import dtd.phs.sil.utils.Logger;
 
 public class UpdateLTCService extends IntentService {
 
-	private static final String UPDATE_LTC_SERVICE = "Update LastTimeContacted Service";
+	private static final String UPDATE_LTC_SERVICE = "UpdateLTCService";
 	public static final String EXTRA_NUMBER = "extra_number";
 	private static WakeLock wakelock = null;
 
@@ -29,18 +29,20 @@ public class UpdateLTCService extends IntentService {
 		if ( number != null) {
 			String contactId = getContactIdFromNumber(getApplicationContext(),number);
 			if ( contactId != null ) {
-				int countUpdated = updateLTC(getApplicationContext(), contactId,System.currentTimeMillis());
-				if (  countUpdated != 0 ) {
-					Logger.logInfo("Update contact [id: "+contactId+",number:"+number+"] SUCCESSFUL - count: " + countUpdated);
-				} else {
-					Logger.logInfo("Update contact [id: "+contactId+",number:"+number+"] FAILED");
-				}
-			} else {
-				Logger.logError("Contact ID is NULL");
+				//				int countUpdated = 
+				updateLTC(getApplicationContext(), contactId,System.currentTimeMillis());
+				//				if (  countUpdated != 0 ) {
+				//					Logger.logInfo("Update contact [id: "+contactId+",number:"+number+"] SUCCESSFUL - count: " + countUpdated);
+				//				} else {
+				//					Logger.logInfo("Update contact [id: "+contactId+",number:"+number+"] FAILED");
+				//				}
+				//			} else {
+				//				Logger.logError("Contact ID is NULL");
 			}
-		} else {
-			Logger.logError("Number is NULL");
-		}
+		} 
+		//		else {
+		//			Logger.logError("Number is NULL");
+		//		}
 
 	}
 
@@ -76,7 +78,6 @@ public class UpdateLTCService extends IntentService {
 	private int updateLTC(Context context, String contactId, long currentTimeMillis) {
 		ContentValues values = new ContentValues();
 		values.put(Contacts.LAST_TIME_CONTACTED, currentTimeMillis);
-		//TPODP: update only if > 
 		return context.getContentResolver().update(Contacts.CONTENT_URI, values, Contacts._ID+"='"+contactId+"'", null);
 	}
 
