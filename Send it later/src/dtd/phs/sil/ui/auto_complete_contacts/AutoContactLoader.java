@@ -76,20 +76,20 @@ public class AutoContactLoader implements Runnable {
 		} catch (Exception e) {
 			Logger.logInfo("Cannot set thread to this level");
 		}
-		long startingCP = System.currentTimeMillis();
+//		long startingCP = System.currentTimeMillis();
 		MyRawContacts rawContacts = getAllRawContacts();
 		MyContactData data = getAllContactsData();
 		sort(rawContacts, data);
 		joinAndFill(rawContacts, data);
-		Logger.logInfo("Done loading from content provider - spent: " + (System.currentTimeMillis()-startingCP)+"ms");
+//		Logger.logInfo("Done loading from content provider - spent: " + (System.currentTimeMillis()-startingCP)+"ms");
 
 
 		//Save results to storage
-		long startingWrite = System.currentTimeMillis();
+//		long startingWrite = System.currentTimeMillis();
 		writeToStorage();
 		cachedContacts = allContacts;
 		lastCachedTime = System.currentTimeMillis();
-		Logger.logInfo("Done write to storage- spent: " + (System.currentTimeMillis()-startingWrite)+"ms");
+//		Logger.logInfo("Done write to storage- spent: " + (System.currentTimeMillis()-startingWrite)+"ms");
 		//				Log.i(PHS_SMS,"Contacts are all loaded..." );
 	}
 

@@ -23,7 +23,7 @@ public class ContactsFilter extends Filter {
 				results.count = 0;
 			}
 		} else {
-			long beginning = System.currentTimeMillis();
+//			long beginning = System.currentTimeMillis();
 //			Logger.logInfo("Filter started !");
 			results.values = allContacts.findMatchResults(context,keyword.toString());
 //			Logger.logInfo("Filter spent: " + (System.currentTimeMillis() - beginning)+"ms");

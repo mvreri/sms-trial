@@ -24,11 +24,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import dtd.phs.sil.R;
 import dtd.phs.sil.SendSMSService;
-import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
 
 public class Helpers {
 
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 
 	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
