@@ -24,6 +24,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import dtd.phs.sil.R;
 import dtd.phs.sil.SendSMSService;
+import dtd.phs.sil.ui.auto_complete_contacts.ContactsList;
 
 public class Helpers {
 
@@ -65,7 +66,7 @@ public class Helpers {
 
 	public static String formatTime(Context context, long sentTime) {
 		Date date = new Date(sentTime);
-		
+
 		Calendar current = Calendar.getInstance();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
@@ -85,7 +86,7 @@ public class Helpers {
 			return tommorw +" "+ (new SimpleDateFormat("HH:mm").format(date));
 		}
 
-		
+
 		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy");
 		return formatter.format(date);
 	}
@@ -120,7 +121,7 @@ public class Helpers {
 		}
 		return true;
 	}
-	
+
 	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	public static void sendMessage(
@@ -182,7 +183,7 @@ public class Helpers {
 	}
 
 	public static final String APP_SIL_MARKET = "market://details?id=dtd.phs.sil";
-	
+
 	public static void gotoMarket(Activity activity) {
 		Intent goToMarket = null;
 		goToMarket = new Intent(Intent.ACTION_VIEW,Uri.parse(APP_SIL_MARKET));
@@ -198,9 +199,9 @@ public class Helpers {
 
 	public static void launchHomeScreen(Activity activity) {
 		Intent startMain = new Intent(Intent.ACTION_MAIN);
-        startMain.addCategory(Intent.CATEGORY_HOME);
-        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivity(startMain);		
+		startMain.addCategory(Intent.CATEGORY_HOME);
+		startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		activity.startActivity(startMain);		
 	}
 
 	public static void enterTransition(Activity hostedActivity) {
@@ -224,19 +225,19 @@ public class Helpers {
 	private static final String POWER_TAG = "dtd.phs.wakelock";
 	public static PowerManager.WakeLock acquireWakelock(Context context) {
 		PowerManager pm  = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-	    PowerManager.WakeLock lock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, POWER_TAG);
-	    lock.acquire();
+		PowerManager.WakeLock lock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, POWER_TAG);
+		lock.acquire();
 		return lock;
 	}
-	
+
 	public static void share(Activity activity,int subjectId, int contentId) {
-	     final Intent intent = new Intent(Intent.ACTION_SEND);
-	     Resources res = activity.getResources();
-	     intent.setType("text/plain");
-	     intent.putExtra(Intent.EXTRA_SUBJECT, res.getString(subjectId));
-	     intent.putExtra(Intent.EXTRA_TEXT, res.getString(contentId));
-	     
-	     activity.startActivity(Intent.createChooser(intent, res.getString(R.string.Share)));
+		final Intent intent = new Intent(Intent.ACTION_SEND);
+		Resources res = activity.getResources();
+		intent.setType("text/plain");
+		intent.putExtra(Intent.EXTRA_SUBJECT, res.getString(subjectId));
+		intent.putExtra(Intent.EXTRA_TEXT, res.getString(contentId));
+
+		activity.startActivity(Intent.createChooser(intent, res.getString(R.string.Share)));
 	}
 
 	public static void launchIntentCall(Activity activity, String number) {
@@ -249,6 +250,18 @@ public class Helpers {
 		smsIntent.setType("vnd.android-dir/mms-sms");
 		smsIntent.putExtra("address", number);
 		activity.startActivity(smsIntent);
+	}
+
+	public static void copyArrayList(ArrayList dest, ArrayList src) {
+		if ( src == null ) {
+			Logger.logInfo("Source array list is NULL ! Cannot be copied ");
+		} else if ( src == dest ) {
+			Logger.logInfo("Same array list, need not to be copied !");
+		} else {
+			dest.clear();
+			for(int i = 0 ; i < src.size() ; i++)
+				dest.add(src.get(i));
+		}
 	}
 
 }

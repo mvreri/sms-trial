@@ -181,7 +181,7 @@ implements IContactLoader
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		}
 
-		Logger.logInfo("Calling .addFrames()");
+//		Logger.logInfo("Calling .addFrames()");
 		displayingFrameId = FRAME_PENDING;
 	}
 

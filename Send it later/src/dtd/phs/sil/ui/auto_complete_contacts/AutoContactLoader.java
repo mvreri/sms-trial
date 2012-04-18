@@ -19,11 +19,18 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.Data;
+import dtd.phs.sil.utils.Helpers;
 import dtd.phs.sil.utils.Logger;
 
 public class AutoContactLoader implements Runnable {
 	protected static final String FILENAME = "/sdcard/temporary_contacts.txt";
 	protected static final String SEPERATOR = " /split/ ";
+	private static final long CACHED_TIME = 5*60*1000; //5 minutes
+	
+	//Cache
+	static private ContactsList cachedContacts = null;
+	static private long lastCachedTime = 0;
+
 	private ContactsList allContacts;
 	private Context context;
 	private IContactLoader listener;
@@ -34,26 +41,55 @@ public class AutoContactLoader implements Runnable {
 	}
 	@Override
 	public void run() {
+		// WHAT TO DO ?
 		// Need: all name & number : RawContacts.ACCOUNT_NAME - Data.DATA1 with Data.MIMETYPE = Phone.CONTENT_ITEM_TYPE
-		//get all raw contacts
-		//get all data
-		//sort them by raw_contact_id (RawContacts._ID , Data.RAW_CONTACT_ID
-		//join info by raw_contact_id
+		//	- get all raw contacts
+		//	- get all data
+		//	- sort them by raw_contact_id (RawContacts._ID , Data.RAW_CONTACT_ID
+		//	- join info by raw_contact_id
+		
+		//Get old result from cache if the data is not too old
+		if ( cachedContacts != null && System.currentTimeMillis() - lastCachedTime < CACHED_TIME) {
+			Helpers.copyArrayList(allContacts,cachedContacts);
+			return;
+		}
+		
 		//				Log.i(PHS_SMS,"Start loading contacts ..." );
-
 		//First, load it from private storage to increase responsiveness
+		try {
+			Thread.currentThread().setPriority(Thread.NORM_PRIORITY+1);
+		} catch (Exception e) {
+			Logger.logInfo("Cannot set thread to this level");
+		}
+//		Logger.logInfo("Beginning loading contacts ");
+//		long starting = System.currentTimeMillis();
 		if (allContacts.size() == 0) {
 			loadFromStorage();
 		}
+//		Logger.logInfo("Done loading from storage - spent: " + (System.currentTimeMillis()-starting)+"ms");
+
 
 		//Load it from content provider
+		//Lower the priority so the filter on other thread runs faster - which make better user responsiveness 
+		try {
+			Thread.currentThread().setPriority(Thread.NORM_PRIORITY-1);
+		} catch (Exception e) {
+			Logger.logInfo("Cannot set thread to this level");
+		}
+		long startingCP = System.currentTimeMillis();
 		MyRawContacts rawContacts = getAllRawContacts();
 		MyContactData data = getAllContactsData();
 		sort(rawContacts, data);
 		joinAndFill(rawContacts, data);
+		Logger.logInfo("Done loading from content provider - spent: " + (System.currentTimeMillis()-startingCP)+"ms");
+
 
 		//Save results to storage
+		long startingWrite = System.currentTimeMillis();
 		writeToStorage();
+		cachedContacts = allContacts;
+		lastCachedTime = System.currentTimeMillis();
+		Logger.logInfo("Done write to storage- spent: " + (System.currentTimeMillis()-startingWrite)+"ms");
 		//				Log.i(PHS_SMS,"Contacts are all loaded..." );
 	}
 
@@ -210,7 +246,7 @@ public class AutoContactLoader implements Runnable {
 			}
 		}
 	}
-	
+
 	public class MyRawContacts extends ArrayList<MyContactItem> {
 		private static final long serialVersionUID = -4273993522347750404L;
 
@@ -219,7 +255,7 @@ public class AutoContactLoader implements Runnable {
 		}
 
 	}
-	
+
 	public class MyContactData extends ArrayList<MyDataItem> {
 		private static final long serialVersionUID = -1144265732364365993L;
 
@@ -227,7 +263,7 @@ public class AutoContactLoader implements Runnable {
 			return this.get(dataIndex).getRawContactID();
 		}
 	}
-	
+
 	public class MyDataItem {
 		private String rawContactID;
 		private String number;
@@ -245,7 +281,7 @@ public class AutoContactLoader implements Runnable {
 			return number;
 		}
 	}
-	
+
 
 	public class MyContactItem {
 		private String id;

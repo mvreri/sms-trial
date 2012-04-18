@@ -2,6 +2,7 @@ package dtd.phs.sil.ui.auto_complete_contacts;
 
 import android.content.Context;
 import android.widget.Filter;
+import dtd.phs.sil.utils.Logger;
 
 public class ContactsFilter extends Filter {
 	private IFilterListener listener = null;
@@ -22,7 +23,10 @@ public class ContactsFilter extends Filter {
 				results.count = 0;
 			}
 		} else {
+			long beginning = System.currentTimeMillis();
+//			Logger.logInfo("Filter started !");
 			results.values = allContacts.findMatchResults(context,keyword.toString());
+//			Logger.logInfo("Filter spent: " + (System.currentTimeMillis() - beginning)+"ms");
 			results.count = ((ContactsList) (results.values)).size();
 		}
 		return results;

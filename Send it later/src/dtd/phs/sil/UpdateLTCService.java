@@ -59,12 +59,12 @@ public class UpdateLTCService extends IntentService {
 								null);
 		try {
 			if (contactLookupCursor.moveToFirst()){
-				String contactName = contactLookupCursor.getString(contactLookupCursor.getColumnIndexOrThrow(PhoneLookup.DISPLAY_NAME));
+//				String contactName = contactLookupCursor.getString(contactLookupCursor.getColumnIndexOrThrow(PhoneLookup.DISPLAY_NAME));
 				String contactId = contactLookupCursor.getString(contactLookupCursor.getColumnIndexOrThrow(PhoneLookup._ID));
-				Logger.logInfo("[ID: "+contactId+"--name:"+contactName+"--match with number:"+number);
+//				Logger.logInfo("[ID: "+contactId+"--name:"+contactName+"--match with number:"+number);
 				return contactId;
 			} else {
-				Logger.logInfo("No match ID with number: "+number );
+//				Logger.logInfo("No match ID with number: "+number );
 				return null;
 			}
 		}
