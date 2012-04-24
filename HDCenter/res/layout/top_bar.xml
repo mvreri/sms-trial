@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="54dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical" 
+>
+
+    <ImageView
+        android:id="@+id/ivHome"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/home_bt" />
+
+    <AutoCompleteTextView
+        android:id="@+id/atSearch"
+        android:layout_width="1dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/search_films_actors_directors"
+        android:inputType="textVisiblePassword" />
+
+    <ImageView
+        android:id="@+id/ivSearch"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/search_bt" />
+
+</LinearLayout>

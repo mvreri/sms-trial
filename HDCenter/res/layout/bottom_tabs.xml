@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="54dp"
+    android:background="@drawable/tab_bg"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/btTabCinema"
+        android:layout_width="1dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:src="@drawable/cinema_bg" />
+
+    <ImageView
+        android:id="@+id/btTabRecommend"
+        android:layout_width="1dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:src="@drawable/recommend_bg" />
+    <ImageView
+        android:id="@+id/btTabMore"
+        android:layout_width="1dp"
+        android:layout_height="54dp"
+        android:layout_weight="1"
+        android:paddingBottom="3dp"
+        android:paddingTop="3dp"
+        android:src="@drawable/ranking_bg" />
+    
+</LinearLayout>

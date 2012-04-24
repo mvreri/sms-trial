@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_x8"
+    android:orientation="vertical"
+    android:padding="1dp" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_rect_small" >
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="134dp"
+            android:layout_height="193dp"
+            android:padding="3dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/movie_stub" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:text="Movie Name"
+                android:textColor="@color/movie_name_color"
+                android:textSize="@dimen/title_text_size" />
+
+            <TextView
+                android:id="@+id/tvVnName"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:text="TextView"
+                android:textColor="@color/normal_text_color" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/imdb"
+                    android:textColor="@color/normal_text_color" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="7.2"
+                    android:textColor="@color/normal_text_color" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btTrailer"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1"
+                android:text="@string/watch_trailer" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/box_margin_top"
+        android:background="@drawable/rounded_rect_small"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/starring"
+            android:textColor="@color/normal_text_color"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStarring"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="TextView"
+            android:textColor="@color/normal_text_color" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="@dimen/box_margin_top"
+        android:background="@drawable/rounded_rect_small"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Description"
+            android:textColor="@color/normal_text_color" />
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="border_color">#000000</color>
+    <color name="divider_color">#feee</color>
+    <color name="movie_name_color">#ff125ab9</color>
+    <color name="normal_text_color">#ff333333</color>
+</resources>
