@@ -7,6 +7,7 @@ import hdcenter.vn.entities.MoviesList;
 import hdcenter.vn.ui.MovieAdapter;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.Logger;
+import hdcenter.vn.utils.StringHelpers;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class SearchMovies
 {
 
 	protected static final String IEXTRA_KEYWORD = "extra_keyword";
+	private static final int FIRST_PAGE = 1;
 	private MoviesList mList = new MoviesList();
 	private MovieAdapter adapter;
 	private ListView lvMovies;
@@ -97,9 +99,10 @@ public class SearchMovies
 	}
 
 	private void onClickButtonSearch() {
-		String s = atSearch.getText().toString().trim();
+		String s = StringHelpers.replaceLowerSignCharacter(getApplicationContext(), atSearch.getText().toString().trim());
+		s = s.toLowerCase();
 		if ( s.length() > 0 ) {
-			DataCenter.requestSearch(SearchMovies.this,s,0,handler);
+			DataCenter.requestSearch(SearchMovies.this,s,FIRST_PAGE,handler);
 			Helpers.hideSoftKeyboard(this,atSearch);
 		}
 	}

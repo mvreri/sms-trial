@@ -66,11 +66,8 @@ public class ImageCache {
 	static public void createCacheDir() {
 		try {
 			File file = new File(getCachedDir());
-			//			Logger.logInfo("Cache dir is being created: " + file.getAbsolutePath());
-
 			if ( ! file.exists() ) {
 				file.mkdir();
-				//				Logger.logInfo("Cache dir is created: " + file.getAbsolutePath());
 			}
 		} catch (Exception e) {
 			Logger.logError(e);
@@ -103,7 +100,7 @@ public class ImageCache {
 
 	public static void saveImage2Storage(String fullFileName, Bitmap bm) {
 		try {
-			Logger.logInfo("Trying to save to file: "+fullFileName);
+//			Logger.logInfo("Trying to save to file: "+fullFileName);
 			FileOutputStream out = new FileOutputStream(fullFileName);
 			bm.compress(Bitmap.CompressFormat.JPEG, 90, out);
 			out.close();
@@ -134,12 +131,6 @@ public class ImageCache {
 							return 0;
 						}
 					});
-
-					//					StringBuilder builder = new StringBuilder(""+files.length);
-					//					for(int i = 0 ; i < files.length ; i++) {
-					//						builder.append(","+files[i].lastModified());
-					//					}
-					//					Logger.logError("Sorted time: " + builder.toString());
 
 					for(int i = 0 ; i < files.length - (MAX_SDCARD_CACHE_FILES_COUNT/2) ; i++ ) {
 						if ( files[i].delete() ) cnt++;

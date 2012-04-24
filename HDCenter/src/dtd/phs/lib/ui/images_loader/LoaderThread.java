@@ -37,9 +37,7 @@ public class LoaderThread extends Thread {
 				return;
 			}
 			LoadingImageItem loadingItem = imagesToLoad.pop();
-			//			Logger.logInfo("Thread #" + this.getId() + ": image " + loadingItem.URL +" is to be loaded!");
 			if ( loadingItem != null ) {
-				//				Logger.logInfo("Loading item is not NULL!");
 				loadImageItem(loadingItem);
 			} else {
 				Logger.logInfo("Loading item is NULL!");
@@ -103,7 +101,7 @@ public class LoaderThread extends Thread {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					Logger.logInfo("Bitmap is POSTING on UI!");
+//					Logger.logInfo("Bitmap is POSTING on UI!");
 					iview.setImageBitmap(bm);
 					//					iview.setAnimation(occAnim);
 				} 

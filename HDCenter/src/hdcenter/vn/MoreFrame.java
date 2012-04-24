@@ -17,8 +17,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import dtd.phs.lib.ui.frames_host.FrameView;
-
-public class MoreFrame extends FrameView implements IRequestListener {
+/**
+ * 
+ * @author Pham Hung Son
+ *	This tab contains:
+ *	- Newly updated films
+ *	- Browse by genres
+ *	- Browse collections (e.g: Top 250 IMDB , 007 collection ...)
+ */
+public class MoreFrame 
+	extends FrameView 
+	implements IRequestListener {
 
 	private ListView lvMovies;
 	private Handler handler = new Handler();

@@ -1,6 +1,5 @@
 package dtd.phs.lib.ui.images_loader;
 
-import hdcenter.vn.utils.Logger;
 import android.content.Context;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -34,7 +33,7 @@ public class ImageLoader {
 	}
 
 	public ImageLoader(Context context, int movieStub, Handler handler) {
-		Logger.logInfo("ImageLoader is initilized");
+//		Logger.logInfo("ImageLoader is initilized");
 		loaderThread = new LoaderThread(context,movieStub,handler);
 		loaderThread.setPriority(Thread.NORM_PRIORITY-1); //lower than normal thread
 		loaderThread.start();

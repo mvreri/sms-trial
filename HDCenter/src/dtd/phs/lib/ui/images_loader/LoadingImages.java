@@ -23,9 +23,9 @@ public class LoadingImages extends Stack<LoadingImageItem>{
 	public synchronized boolean add(LoadingImageItem object) {
 		removeDuplicate(object);
 		boolean res = super.add(object);
-		if ( res ) 
-			Logger.logInfo("LoadingImageItem is loaded SUCCESSFULLY !");
-		else Logger.logInfo("LoadingImageItem is loaded FAILED !");
+//		if ( res ) 
+//			Logger.logInfo("LoadingImageItem is loaded SUCCESSFULLY !");
+//		else Logger.logInfo("LoadingImageItem is loaded FAILED !");
 		this.notifyAll();
 		return res;
 
