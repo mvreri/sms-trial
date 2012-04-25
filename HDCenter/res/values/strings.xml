@@ -3,12 +3,12 @@
 
     <string name="hello">Hello World, HDCenterActivity!</string>
     <string name="app_name">HDCenter</string>
-    <string name="search_films_actors_directors">Tìm phim theo tên, diễn viên ...</string>
+    <string name="search_films_actors_directors">Tìm phim theo tên, diễn viên …</string>
     <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
     <string name="imdb">IMDB:</string>
     <string name="watch_trailer">Xem giới thiệu</string>
     <string name="error_please_retry">Lỗi hệ thống, xin vui lòng thử lại sau !</string>
-    <string name="loading_please_wait">Đang tải...</string>
+    <string name="loading_please_wait">Đang tải…</string>
     <string name="starring">Diễn viên: </string>
     <string name="newly_updated">Just updated</string>
     <string name="genres">Thể loại</string>

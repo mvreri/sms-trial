@@ -12,6 +12,21 @@ public class MovieGenres extends Activity {
 	    super.onCreate(savedInstanceState);
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    setContentView(R.layout.sub_activity);
+	    bindViews();
+	}
+
+	private void bindViews() {
+		bindTopbar();
+		bindListView();
+	}
+
+	private void bindListView() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void bindTopbar() {
+		
 	}
 
 }

@@ -1,7 +1,7 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqNewMovies;
-import hdcenter.vn.ui.MoviesListView;
+import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.Topbar;
 import android.app.Activity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import android.widget.ListView;
 public class NewMovies extends Activity {
 
 	private static final int FIRST_PAGE = 1;
-	private MoviesListView list;
+	private MoviesListControl list;
 	private Topbar topbar;
 	private Handler handler = new Handler();
 
@@ -31,7 +31,7 @@ public class NewMovies extends Activity {
 	}
 
 	private void bindListView() {
-		list = new MoviesListView(this,(ListView)findViewById(R.id.lvMovies), handler);
+		list = new MoviesListControl(this,(ListView)findViewById(R.id.lvMovies), handler);
 		list.setRequest(new ReqNewMovies(FIRST_PAGE));
 		list.requestMovies();
 	}

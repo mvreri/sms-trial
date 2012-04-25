@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-public class MoviesListView 
+public class MoviesListControl 
 	implements IRequestListener
 {
 
@@ -27,7 +27,7 @@ public class MoviesListView
 	private Handler handler = null;
 	private Request request;
 
-	public MoviesListView(Activity hostedActivity, ListView listview, Handler handler) {
+	public MoviesListControl(Activity hostedActivity, ListView listview, Handler handler) {
 		this.hostedActivity = hostedActivity;
 		this.handler = handler;
 		this.listview = listview;
@@ -41,9 +41,9 @@ public class MoviesListView
 				MovieItem item = moviesList.get(position);
 				ShowMovieDetails.passedSummaryItem = item;
 				Intent i = new Intent(
-						MoviesListView.this.hostedActivity.getApplicationContext(),
+						MoviesListControl.this.hostedActivity.getApplicationContext(),
 						ShowMovieDetails.class);
-				MoviesListView.this.hostedActivity.startActivity(i);
+				MoviesListControl.this.hostedActivity.startActivity(i);
 				
 			}
 		});
