@@ -73,7 +73,7 @@ public class MovieAdapter extends BaseAdapter {
 		View v = convertView;
 		ViewHolder holder = null;
 		if ( v == null ) {
-			v = Helpers.inflate(context, R.layout.sum_movie_item);
+			v = Helpers.inflate(context, R.layout.sum_movie_item, null);
 			holder = new ViewHolder();
 
 			holder.ivAvatar = (ImageView)v.findViewById(R.id.ivAvatar);

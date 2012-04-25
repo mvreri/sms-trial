@@ -10,5 +10,8 @@
     <string name="error_please_retry">Lỗi hệ thống, xin vui lòng thử lại sau !</string>
     <string name="loading_please_wait">Đang tải...</string>
     <string name="starring">Diễn viên: </string>
+    <string name="newly_updated">Just updated</string>
+    <string name="genres">Thể loại</string>
+    <string name="collections">Tuyển tập</string>
 
 </resources>

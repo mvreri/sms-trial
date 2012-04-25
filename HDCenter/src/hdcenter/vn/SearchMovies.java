@@ -26,7 +26,7 @@ public class SearchMovies
 	implements IRequestListener
 {
 
-	protected static final String IEXTRA_KEYWORD = "extra_keyword";
+	public static final String IEXTRA_KEYWORD = "extra_keyword";
 	private static final int FIRST_PAGE = 1;
 	private MoviesList mList = new MoviesList();
 	private MovieAdapter adapter;

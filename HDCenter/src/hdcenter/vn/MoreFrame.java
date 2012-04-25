@@ -1,31 +1,130 @@
 package hdcenter.vn;
 
-import hdcenter.vn.data.DataCenter;
-import hdcenter.vn.data.IRequestListener;
-import hdcenter.vn.entities.MovieItem;
-import hdcenter.vn.entities.MoviesList;
-import hdcenter.vn.ui.MovieAdapter;
-import hdcenter.vn.utils.Logger;
+import hdcenter.vn.utils.Helpers;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 import dtd.phs.lib.ui.frames_host.FrameView;
 /**
  * 
  * @author Pham Hung Son
  *	This tab contains:
- *	- Newly updated films
- *	- Browse by genres
- *	- Browse collections (e.g: Top 250 IMDB , 007 collection ...)
+ *	- Newly updated films: class NewMovies
+ *	- Browse by genres: class MovieGenres
+ *	- Browse collections (e.g: Top 250 IMDB , 007 collection ...): class MovieCollections
+ * 	So it's a list - when user click on an item, the corresponding activity is lauched
  */
-public class MoreFrame 
+public class MoreFrame extends FrameView {
+
+
+	static final int[] ITEM_NAMES_ID = { R.string.newly_updated, R.string.genres , R.string.collections };
+	static final Class[] ACTIVITIES = { NewMovies.class, MovieGenres.class, MovieCollections.class };
+	private static final int ITEM_LAYOUT = android.R.layout.simple_list_item_1;//R.layout.more_item_layout;
+	private ListView listView;
+	private SimpleTextAdapter adapter;
+	public MoreFrame(Activity activity) {
+		super(activity);
+	}
+
+	@Override
+	public void onCreate(Context context) {
+		Helpers.inflate(getContext(), R.layout.more, this);
+		createViews();
+	}
+
+	private void createViews() {
+		listView = (ListView) findViewById(R.id.lvMovies);
+		adapter = new SimpleTextAdapter(getContext(),ITEM_LAYOUT,ITEM_NAMES_ID);
+		listView.setAdapter(adapter);
+		
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+				Helpers.enterActivity(hostedActivity,new Intent(hostedActivity,ACTIVITIES[position]));
+			}			
+		});
+	}
+	
+	public class SimpleTextAdapter extends BaseAdapter {
+
+		
+		private int itemLayout;
+		private String[] itemTexts;
+		private Context context;
+
+		public SimpleTextAdapter(Context context, int itemLayout, int[] textResources) {
+			super();
+			this.context = context;
+			this.itemLayout = itemLayout;
+			getItemTextFromResources(context, textResources);
+		}
+
+		private void getItemTextFromResources(Context context, int[] textResources) {
+			this.itemTexts = new String[textResources.length];
+			for(int i = 0 ; i < itemTexts.length ; i++) 
+				itemTexts[i] = context.getResources().getString(textResources[i]);
+		}
+
+		@Override
+		public int getCount() {
+			return itemTexts.length;
+		}
+
+		@Override
+		public Object getItem(int position) {
+			return itemTexts[position];
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			View v = convertView;
+			if ( v == null ) {
+				v = Helpers.inflate(getContext(), this.itemLayout, null);
+			}
+			TextView tv = (TextView) v.findViewById(android.R.id.text1);
+			tv.setText(itemTexts[position]);
+			return v;
+		}
+
+	}
+
+
+	@Override
+	public void onResume() {
+	}
+
+	@Override
+	public void onPause() {
+	}
+
+	@Override
+	public Dialog onCreateDialog(int id) {
+		return null;
+	}
+
+	@Override
+	public void onPrepareDialog(int id) {
+	}
+
+	@Override
+	public void onRefresh() {
+	}
+	
+}
+/*
 	extends FrameView 
 	implements IRequestListener {
 
@@ -100,3 +199,4 @@ public class MoreFrame
 
 
 }
+*/

@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
@@ -24,9 +25,9 @@ public class Helpers {
 
 	public static final boolean DEBUG_MODE = true;
 
-	public static View inflate(Context context, int layout) {
+	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		return inf.inflate(layout, null);
+		return inf.inflate(layout, parent);
 	}
 
 	public static void showOnlyView(FrameLayout mainFrames, int id) {
@@ -131,8 +132,20 @@ public class Helpers {
 		startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(startMain);		
 	}
-	
-	
 
+	public static void enterActivity(Activity fromActivity, Intent i) {
+		fromActivity.startActivity(i);
+		//TODO: enter activity animation
+	}
+
+	public static void exitActivityFrom(Activity fromActivity, Intent i) {
+		fromActivity.startActivity(i);
+		//TODO: exit activity animation		
+	}
+
+	public static void verify(boolean b, String message) {
+		if ( DEBUG_MODE )
+			assert b : message;
+	}
 
 }

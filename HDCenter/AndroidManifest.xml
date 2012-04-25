@@ -28,6 +28,9 @@
         <activity android:name="SearchMovies"></activity>
         <activity android:name="ShowMovieDetails" android:configChanges="keyboard|keyboardHidden|orientation"></activity>
         <activity android:name="com.keyes.youtube.OpenYouTubePlayerActivity"></activity>
+        <activity android:name="NewMovies"></activity>
+        <activity android:name="MovieGenres"></activity>
+        <activity android:name="MovieCollections"></activity>
     </application>
 
 </manifest>

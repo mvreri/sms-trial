@@ -29,7 +29,7 @@ implements IRequestListener
 {
 	private static final int DIALOG_WAIT = 0;
 	
-	protected static MovieItem passedSummaryItem = null;
+	public static MovieItem passedSummaryItem = null;
 	private MovieItem summItem = null;
 	private ImageView ivAvatar;
 	private TextView tvName;

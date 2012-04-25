@@ -5,6 +5,7 @@ import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.entities.MovieItem;
 import hdcenter.vn.entities.MoviesList;
 import hdcenter.vn.ui.MovieAdapter;
+import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.Logger;
 import android.app.Activity;
 import android.app.Dialog;
@@ -34,11 +35,9 @@ public class RecommendFrame
 
 	@Override
 	public void onCreate(Context context) {
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.movies_listview, this);
+		Helpers.inflate(getContext(), R.layout.movies_listview, this);
 		handler = new Handler();
 		createViews();
-		
 	}
 
 	//TODO: it doesn't work in the case there is "Load more..." button
