@@ -9,13 +9,13 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.FrameLayout.LayoutParams;
+import android.widget.ImageView;
 public abstract class FramesActivity extends Activity {
 
 	abstract protected void addFrames(ArrayList<FrameView> frames);

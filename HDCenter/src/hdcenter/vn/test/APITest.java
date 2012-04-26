@@ -3,26 +3,14 @@ package hdcenter.vn.test;
 import hdcenter.vn.R;
 import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
-import hdcenter.vn.data.requests.ReqMovieDetail;
-import hdcenter.vn.data.requests.Request;
-import hdcenter.vn.entities.MovieDetailsItem;
-import hdcenter.vn.entities.MovieItem;
 import hdcenter.vn.entities.MoviesList;
 import hdcenter.vn.ui.MovieAdapter;
 import hdcenter.vn.utils.Logger;
-
-import java.io.IOException;
-
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class APITest 
 	extends Activity

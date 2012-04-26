@@ -1,6 +1,5 @@
 package hdcenter.vn.data.requests;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;

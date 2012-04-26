@@ -1,7 +1,5 @@
 package dtd.phs.lib.ui.images_loader;
 
-import hdcenter.vn.utils.Logger;
-
 import java.util.Stack;
 
 public class LoadingImages extends Stack<LoadingImageItem>{

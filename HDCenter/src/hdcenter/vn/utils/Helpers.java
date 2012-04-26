@@ -6,7 +6,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import junit.framework.Assert;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;

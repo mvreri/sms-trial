@@ -11,11 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.concurrent.locks.Condition;
-
-import javax.crypto.spec.PSource;
-
-import junit.framework.Assert;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -74,13 +69,19 @@ public class MovieGenres
 	@Override
 	public void onRequestSuccess(Object data) {
 		HashMap<String, String> mapE2V = (HashMap<String, String>) data;		
-		genres = new ArrayList<Pair<String,String>>();
+		genres = extractGenresList(mapE2V);
+		SimpleTextAdapter adapter = new SimpleTextAdapter(getApplicationContext(), R.layout.more_item_layout, extractVNnames(genres));
+		lvGeneres.setAdapter(adapter);
+	}
+
+	private ArrayList<Pair<String,String>> extractGenresList(HashMap<String, String> mapE2V) {
+		ArrayList<Pair<String, String>> list = new ArrayList<Pair<String,String>>();
 		for(String key : mapE2V.keySet()) {
-			genres.add(new Pair<String, String>(key, mapE2V.get(key)));
+			list.add(new Pair<String, String>(key, mapE2V.get(key)));
 		}
 		
 		//Sort according to Vietnamese translation
-		Collections.sort(genres, new Comparator<Pair<String,String>>() {
+		Collections.sort(list, new Comparator<Pair<String,String>>() {
 			@Override
 			public int compare(Pair<String, String> lhs, Pair<String, String> rhs) {
 				if ( lhs.second == null) return -1;
@@ -90,8 +91,8 @@ public class MovieGenres
 				return left.compareTo(right);
 			}
 		});
-		SimpleTextAdapter adapter = new SimpleTextAdapter(getApplicationContext(), R.layout.more_item_layout, extractVNnames(genres));
-		lvGeneres.setAdapter(adapter);
+		
+		return list;
 	}
 
 	private String[] extractVNnames(ArrayList<Pair<String, String>> genres) {

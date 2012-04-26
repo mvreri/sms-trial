@@ -21,4 +21,12 @@ public class StringHelpers {
 		}
 		return str;
 	}
+
+	public static String escapeString(String resultString) {
+		String res = resultString.replaceAll("\t", "");
+//		res = res.replaceAll("\\\\", "");
+//		res = res.replaceAll("'", "");
+
+		return res;
+	}
 }

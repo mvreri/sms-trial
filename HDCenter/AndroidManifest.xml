@@ -35,6 +35,7 @@
         <activity android:name="MovieGenres"></activity>
         <activity android:name="MovieCollections"></activity>
         <activity android:name="ShowGenre"></activity>
+        <activity android:name="ShowCollection"></activity>
     </application>
 
 </manifest>
