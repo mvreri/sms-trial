@@ -2,6 +2,7 @@ package hdcenter.vn;
 
 import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
+import hdcenter.vn.ui.SimpleTextAdapter;
 import hdcenter.vn.ui.Topbar;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.StringHelpers;

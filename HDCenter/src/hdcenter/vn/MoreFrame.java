@@ -1,5 +1,6 @@
 package hdcenter.vn;
 
+import hdcenter.vn.ui.SimpleTextAdapter;
 import hdcenter.vn.utils.Helpers;
 import android.app.Activity;
 import android.app.Dialog;

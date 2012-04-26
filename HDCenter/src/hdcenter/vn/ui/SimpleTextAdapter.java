@@ -1,4 +1,4 @@
-package hdcenter.vn;
+package hdcenter.vn.ui;
 
 import hdcenter.vn.utils.Helpers;
 import android.content.Context;
