@@ -1,14 +1,21 @@
 package hdcenter.vn.data;
 
+import java.util.HashMap;
+
+import org.json.JSONException;
+
 import hdcenter.vn.data.requests.ReqMovieDetail;
 import hdcenter.vn.data.requests.ReqNewMovies;
 import hdcenter.vn.data.requests.ReqRecommendMovies;
 import hdcenter.vn.data.requests.ReqSearch;
 import hdcenter.vn.data.requests.Request;
+import hdcenter.vn.data.requests.ReqGenres;
 import android.os.Handler;
 
 
 public class DataCenter {
+
+
 
 	public static void requestRecommendMovies(int page, IRequestListener listener, Handler handler) {
 		RequestWorker.add(new ReqRecommendMovies(page),listener,handler);
@@ -32,5 +39,10 @@ public class DataCenter {
 	
 	public static void addRequest(Request request, IRequestListener listener, Handler handler) {
 		RequestWorker.add(request, listener, handler);
+	}
+
+	private static final int FIRST_PAGE = 1;
+	public static void requestGenres(IRequestListener listener, Handler handler) {
+		RequestWorker.add(new ReqGenres(FIRST_PAGE), listener, handler);
 	}
 }

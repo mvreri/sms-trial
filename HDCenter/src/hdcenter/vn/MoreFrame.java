@@ -27,7 +27,7 @@ public class MoreFrame extends FrameView {
 
 	static final int[] ITEM_NAMES_ID = { R.string.newly_updated, R.string.genres , R.string.collections };
 	static final Class[] ACTIVITIES = { NewMovies.class, MovieGenres.class, MovieCollections.class };
-	private static final int ITEM_LAYOUT = android.R.layout.simple_list_item_1;//R.layout.more_item_layout;
+	private static final int ITEM_LAYOUT = R.layout.more_item_layout;
 	private ListView listView;
 	private SimpleTextAdapter adapter;
 	public MoreFrame(Activity activity) {
@@ -53,53 +53,6 @@ public class MoreFrame extends FrameView {
 		});
 	}
 	
-	public class SimpleTextAdapter extends BaseAdapter {
-
-		
-		private int itemLayout;
-		private String[] itemTexts;
-		private Context context;
-
-		public SimpleTextAdapter(Context context, int itemLayout, int[] textResources) {
-			super();
-			this.context = context;
-			this.itemLayout = itemLayout;
-			getItemTextFromResources(context, textResources);
-		}
-
-		private void getItemTextFromResources(Context context, int[] textResources) {
-			this.itemTexts = new String[textResources.length];
-			for(int i = 0 ; i < itemTexts.length ; i++) 
-				itemTexts[i] = context.getResources().getString(textResources[i]);
-		}
-
-		@Override
-		public int getCount() {
-			return itemTexts.length;
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return itemTexts[position];
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if ( v == null ) {
-				v = Helpers.inflate(getContext(), this.itemLayout, null);
-			}
-			TextView tv = (TextView) v.findViewById(android.R.id.text1);
-			tv.setText(itemTexts[position]);
-			return v;
-		}
-
-	}
 
 
 	@Override

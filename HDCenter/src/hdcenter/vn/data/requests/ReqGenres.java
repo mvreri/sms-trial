@@ -1,23 +1,22 @@
 package hdcenter.vn.data.requests;
 
-import hdcenter.vn.data.AutoCleanThread.JobsList;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RequestGenres extends Request {
+public class ReqGenres extends Request {
 
 	private static final String API_ALL_GENRES = "genre";
 	private static final String ALL = "all";
 	private static final String PAGE = "page";
 	private static final String GENRE = "genre";
 	
-	private String page;
+	private int page;
 
-	public RequestGenres(String page) {
+	public ReqGenres(int page) {
 		super();
 		this.page = page;
 	}
@@ -30,8 +29,7 @@ public class RequestGenres extends Request {
 	@Override
 	protected void provideParameters(HashMap<String, String> parameters) {
 		parameters.put(GENRE, ALL);
-		parameters.put(PAGE, this.page);
-		
+		parameters.put(PAGE, String.valueOf(this.page));
 	}
 
 	/**
@@ -40,12 +38,12 @@ public class RequestGenres extends Request {
 	 */
 	@Override
 	protected HashMap<String, String> parseData(String resultString) throws JSONException {
-		assert false;
-		JSONArray jarray = new JSONArray(resultString);
+		JSONObject jobject = new JSONObject(resultString);
 		HashMap<String, String> mapE2V = new HashMap<String, String>();
-		for(int i = 0 ; i < jarray.length() ; i++) {
-			
-			
+		JSONArray names = jobject.names();
+		for(int i  = 0 ; i < names.length() ; i++) {
+			String key  = names.getString(i);
+			mapE2V.put(key, jobject.getString(key));
 		}
 		return mapE2V;
 	}

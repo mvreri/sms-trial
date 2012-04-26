@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import junit.framework.Assert;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +25,9 @@ import android.widget.Toast;
 
 public class Helpers {
 
-	public static final boolean DEBUG_MODE = true;
+//	public static final boolean DEBUG_MODE = true;
+	protected enum CodeModes { DEBUG,TEST,PRODUCTION };
+	protected static final CodeModes CODE_MODE = CodeModes.DEBUG; 
 
 	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -143,9 +147,10 @@ public class Helpers {
 		//TODO: exit activity animation		
 	}
 
-	public static void verify(boolean b, String message) {
-		if ( DEBUG_MODE )
-			assert b : message;
+	public static void checkCondition(boolean condition, String message) {
+		if ( CODE_MODE == CodeModes.DEBUG  )
+			Assert.assertTrue(message, condition);
 	}
+
 
 }

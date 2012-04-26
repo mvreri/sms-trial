@@ -1,5 +1,6 @@
 package hdcenter.vn.utils;
 
+import hdcenter.vn.utils.Helpers.CodeModes;
 import android.util.Log;
 
 
@@ -7,7 +8,7 @@ public class Logger {
 	
 
 	public static void logInfo(String extra) {
-		if ( Helpers.DEBUG_MODE ) {
+		if ( Helpers.CODE_MODE == CodeModes.DEBUG || Helpers.CODE_MODE == CodeModes.TEST) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
 			Log.i("[phs.vne]",extra + " == Location: " + location  );
@@ -16,16 +17,15 @@ public class Logger {
 	}
 	
 	public static void logError(String extra) {
-		if ( Helpers.DEBUG_MODE ) {
+		if ( Helpers.CODE_MODE == CodeModes.DEBUG || Helpers.CODE_MODE == CodeModes.TEST) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
 			Log.e("[phs.vne]",extra + " -- Location: " + location);
 		}
-					
 	}
 
 	private static void logError(String extra,int extraDeepInStack) {
-		if ( Helpers.DEBUG_MODE ) {
+		if ( Helpers.CODE_MODE == CodeModes.DEBUG || Helpers.CODE_MODE == CodeModes.TEST) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3+extraDeepInStack];
 			String location = extractLocation(elm);
 			Log.e("[phs.vne]",extra + " -- location: " + location);

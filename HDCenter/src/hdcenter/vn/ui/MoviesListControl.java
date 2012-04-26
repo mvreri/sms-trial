@@ -36,8 +36,8 @@ public class MoviesListControl
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 					long arg3) {
-				Helpers.verify( moviesList != null, "Movie list is NULL");
-				Helpers.verify( moviesList.size() > position, "Position: " + position + " -- mvlist size: " + moviesList.size() );
+				Helpers.checkCondition( moviesList != null, "Movie list is NULL");
+				Helpers.checkCondition( moviesList.size() > position, "Position: " + position + " -- mvlist size: " + moviesList.size() );
 				MovieItem item = moviesList.get(position);
 				ShowMovieDetails.passedSummaryItem = item;
 				Intent i = new Intent(
