@@ -94,7 +94,7 @@ public abstract class FramesActivity extends Activity {
 		//		frames.add(new SentMessageView( this,handler ));
 		for(int i = 0 ; i < frames.size() ; i++) {
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-			frames.get(i).onCreate(getApplicationContext());
+//			frames.get(i).onCreate(getApplicationContext());
 		}
 
 		Logger.logInfo("Calling .addFrames()");

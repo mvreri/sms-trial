@@ -100,6 +100,7 @@ implements IRequestListener
 	 *  
 	 */	
 	private void createFooter() {
+		Logger.logInfo("Footer is created !");
 		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext()) {
 			@Override
 			public void onLoadMoreClick() {

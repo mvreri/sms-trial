@@ -3,6 +3,7 @@ package hdcenter.vn;
 import hdcenter.vn.data.requests.ReqRecommendMovies;
 import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.utils.Helpers;
+import hdcenter.vn.utils.Logger;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -23,12 +24,12 @@ public class RecommendFrame
 
 	@Override
 	public void onCreate(Context context) {
+		Logger.logInfo("onCreate() is called !");
 		Helpers.inflate(getContext(), R.layout.movies_listview, this);
 		createViews();
-		movieList.requestFirstPage();
+		
 	}
 
-	//TODO: it doesn't work in the case there is "Load more..." button
 	@Override
 	public void onResume() {
 		
@@ -39,8 +40,10 @@ public class RecommendFrame
 	}
 
 	private void createViews() {
+		Logger.logInfo("createViews() is called !");
 		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), new Handler());
 		movieList.setRequest(new ReqRecommendMovies(FIRST_PAGE));
+		movieList.requestFirstPage();
 	}
 
 	@Override

@@ -64,13 +64,14 @@ public class LoaderThread extends Thread {
 
 	private Bitmap getBitmap(LoadingImageItem loadingItem)
 	throws MalformedURLException, IOException {
-		//		Logger.logInfo("-------------START load ["+loadingItem.URL+"]----------------------");
 		if ( loadingItem.URL == null ) return null;
 		Bitmap bm = null;
 		String hashName = loadingItem.getHashName();
 		bm = ImageCache.get(hashName);
+		
+		//if no mem cache -> try to find it in the local storage
 		if ( bm == null ) {
-			//if no mem cache -> try to find it in the local storage				
+							
 			String fullFileName = ImageCache.getFileName(hashName);
 			bm = ImageCache.loadFromStorage(fullFileName);
 			if ( bm == null ) {
@@ -78,46 +79,21 @@ public class LoaderThread extends Thread {
 				bm = Helpers.downloadBitmap(loadingItem.URL);
 				if ( bm != null ) 
 					ImageCache.saveImage2Storage(fullFileName,bm);
-			} else {
-				//				Logger.logInfo("Bitmap for: "+loadingItem.URL+" is ON_STORAGE!");
-			}
-		} else {
-			//			Logger.logInfo("Bitmap for: "+loadingItem.URL+" is CACHED !");
-		}
-		if ( bm != null ) {
+			} 
+		} 
+		if ( bm != null )
 			ImageCache.put(hashName, bm);
-		} else {
-			//			Logger.logInfo("Bitmap for: "+loadingItem.URL+" is NULL !");
-		}
-		//		Logger.logInfo("-------------END load ["+loadingItem.URL+"]----------------------");
-		//		Logger.logInfo("-----------------------------------------------------------------");
-		//		Logger.logInfo("-----------------------------------------------------------------");
 		return bm;
 	}
 
 	private void postImageOnUI(final ImageView iview, final Bitmap bm) {
-		//		Logger.logInfo("Called");
 		if ( bm != null ) {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-//					Logger.logInfo("Bitmap is POSTING on UI!");
 					iview.setImageBitmap(bm);
-					//					iview.setAnimation(occAnim);
 				} 
 			});
-//			if ( ! iview.post(new Runnable() {
-//				@Override
-//				public void run() {
-//					Logger.logInfo("Bitmap is POSTING on UI!");
-//					iview.setImageBitmap(bm);
-//					//					iview.setAnimation(occAnim);
-//				} 
-//			}) ) {
-//				Logger.logInfo("Cannot post bitmap !");
-//			} else {
-//				Logger.logInfo("bitmap POSTED !");
-//			}
 		} else {
 			Logger.logInfo("Bitmap is NULL!");
 		}

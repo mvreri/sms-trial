@@ -35,11 +35,12 @@ public class ImageCache {
 	public static void put(String hashName, Bitmap bm) {
 		synchronized (imagesCache) {
 			if ( imagesCache.size() > MAX_CACHED_IMAGES_COUNT ) {
-				Random rand = new Random(System.currentTimeMillis());
-				for(String key : imagesCache.keySet()) {
-					int kill = rand.nextInt(2);
-					if ( kill == 1) imagesCache.remove(key);
-				}
+//				Random rand = new Random(System.currentTimeMillis());
+//				for(String key : imagesCache.keySet()) {
+//					int kill = rand.nextInt(2);
+//					if ( kill == 1) imagesCache.remove(key);
+//				}
+				clear();
 			}
 			imagesCache.put(hashName, bm);
 		}
