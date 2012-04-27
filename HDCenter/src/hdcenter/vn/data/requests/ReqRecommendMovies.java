@@ -9,12 +9,10 @@ public class ReqRecommendMovies extends RequestMoviesList {
 	
 	private static final String API_RECOMMENDED = "recommend";
 	private static final String PAGE = "page";
-	private int page;
 	static HashMap<Integer, CachedObject> cache = new HashMap<Integer, CachedObject>();  
 
 	public ReqRecommendMovies(int page) {
-		super();
-		this.page = page;
+		super(page);
 	}
 
 	@Override
@@ -24,7 +22,7 @@ public class ReqRecommendMovies extends RequestMoviesList {
 
 	@Override
 	protected void provideParameters(HashMap<String, String> parameters) {
-		parameters.put(PAGE, String.valueOf(page));
+		parameters.put(PAGE, String.valueOf(getPage()));
 	}
 
 	/**
@@ -33,21 +31,22 @@ public class ReqRecommendMovies extends RequestMoviesList {
 	 */
 	@Override
 	protected Object cachedData() {
-		return cache.get(page).data;
+		return cache.get(getPage()).data;
 	}
 
 	@Override
 	protected boolean isCached() {
-		CachedObject obj = cache.get(page);
+		CachedObject obj = cache.get(getPage());
 		if ( obj == null ) return false;
 		if ( obj.isTimeOut() ) return false;
-		Logger.logInfo("Recommend page: " + page + " is cached !");
+		Logger.logInfo("Recommend page: " + getPage() + " is cached !");
 		return true;
 	}
 
 	@Override
 	protected void saveCacheData(Object data) {
-		cache.put(page, new CachedObject(data));
+		cache.put(getPage(), new CachedObject(data));
 	}
+
 
 }

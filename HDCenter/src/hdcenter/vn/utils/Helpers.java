@@ -146,9 +146,9 @@ public class Helpers {
 		//TODO: exit activity animation		
 	}
 
-	public static void checkCondition(boolean condition, String message) {
+	public static void assertCondition(boolean condition, String failedMessage) {
 		if ( CODE_MODE == CodeModes.DEBUG  )
-			Assert.assertTrue(message, condition);
+			Assert.assertTrue(failedMessage, condition);
 	}
 
 

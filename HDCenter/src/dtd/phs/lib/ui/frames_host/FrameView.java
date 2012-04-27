@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 
 public abstract class FrameView extends LinearLayout {
 
-	protected Activity hostedActivity;
+	private Activity hostedActivity;
 	
 	public FrameView(Activity activity) {
 		super(activity.getApplicationContext());
@@ -17,6 +17,10 @@ public abstract class FrameView extends LinearLayout {
 	
 	public void showDialog(int id) {
 		hostedActivity.showDialog(id);
+	}
+	
+	public Activity getHostedActivity() {
+		return hostedActivity;
 	}
 
 	abstract public void onCreate(Context context);

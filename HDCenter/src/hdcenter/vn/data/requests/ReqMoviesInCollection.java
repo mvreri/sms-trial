@@ -9,11 +9,10 @@ public class ReqMoviesInCollection extends RequestMoviesList {
 	private static final String ID = "id";
 
 	private String id;
-	private int page;
 
 	public ReqMoviesInCollection(String id, int page) {
+		super(page);
 		this.id = id;
-		this.page = page;
 	}
 
 	@Override
@@ -24,7 +23,6 @@ public class ReqMoviesInCollection extends RequestMoviesList {
 	@Override
 	protected void provideParameters(HashMap<String, String> parameters) {
 		parameters.put(ID,this.id);
-		parameters.put(PAGE, String.valueOf(this.page));
+		parameters.put(PAGE, String.valueOf(this.getPage()));
 	}
-
 }

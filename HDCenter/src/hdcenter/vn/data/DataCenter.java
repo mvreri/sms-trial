@@ -6,7 +6,7 @@ import hdcenter.vn.data.requests.ReqMovieDetail;
 import hdcenter.vn.data.requests.ReqNewMovies;
 import hdcenter.vn.data.requests.ReqRecommendMovies;
 import hdcenter.vn.data.requests.ReqSearch;
-import hdcenter.vn.data.requests.Request;
+import hdcenter.vn.data.requests.RequestMoviesList;
 import android.os.Handler;
 
 
@@ -34,7 +34,7 @@ public class DataCenter {
 		RequestWorker.add(new ReqMovieDetail(id), listener, handler);
 	}
 	
-	public static void addRequest(Request request, IRequestListener listener, Handler handler) {
+	public static void addMoviesListRequest(RequestMoviesList request, IRequestListener listener, Handler handler) {
 		RequestWorker.add(request, listener, handler);
 	}
 

@@ -7,11 +7,9 @@ public class ReqNewMovies extends RequestMoviesList {
 	private static final String PAGE = "page";
 	private static final String API_NEW = "new";
 	static HashMap<Integer, CachedObject> cache = new HashMap<Integer, CachedObject>();
-	//TODO: to be refactored
-	private int page;
 
 	public ReqNewMovies(int page) {
-		this.page = page;
+		super(page);
 	}
 
 
@@ -20,17 +18,17 @@ public class ReqNewMovies extends RequestMoviesList {
 	}
 
 	protected void provideParameters(HashMap<String, String> parameters) {		
-		parameters.put(new String(PAGE), String.valueOf(page));
+		parameters.put(new String(PAGE), String.valueOf(getPage()));
 	}
 	
 	@Override
 	protected Object cachedData() {
-		return cache.get(page).data;
+		return cache.get(this.getPage()).data;
 	}
 
 	@Override
 	protected boolean isCached() {
-		CachedObject obj = cache.get(page);
+		CachedObject obj = cache.get(this.getPage());
 		if ( obj == null ) return false;
 		if ( obj.isTimeOut() ) return false;
 		return true;
@@ -38,6 +36,7 @@ public class ReqNewMovies extends RequestMoviesList {
 
 	@Override
 	protected void saveCacheData(Object data) {
-		cache.put(page, new CachedObject(data));
+		cache.put(getPage(), new CachedObject(data));
 	}
+
 }

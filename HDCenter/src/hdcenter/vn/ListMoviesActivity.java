@@ -1,19 +1,33 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.Request;
+import hdcenter.vn.data.requests.RequestMoviesList;
 import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.Topbar;
+import hdcenter.vn.utils.Helpers;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
 import android.widget.ListView;
-
+/**
+ * 
+ * @author hungson175 
+ * <pre>
+ * This class is the base class for all activities with the following format:
+ * - Topbar (Go home - search edittext - Search button)
+ * - List of movies
+ * They are only different by 
+ *  1. The data passed in by the source activity (to implement: getInputData() )
+ *  2. Request to get the movies from the server (to implement: provideRequest() )
+ * </pre>
+ *
+ */
 public abstract class ListMoviesActivity extends Activity {
 	/**
 	 * @return request to be called on activity created 
 	 */
-	abstract protected Request provideRequest();
+	abstract protected RequestMoviesList provideRequest();
 	
 	/**
 	 * Parse the data passed by the source activity
@@ -30,6 +44,12 @@ public abstract class ListMoviesActivity extends Activity {
 	    getInputData();
 	    bindViews();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Helpers.hideSoftKeyboard(this);
+	}
 
 	private void bindViews() {
 		bindTopbar();
@@ -40,7 +60,7 @@ public abstract class ListMoviesActivity extends Activity {
 	private void bindMoviesList() {
 		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), new Handler());
 		moviesList.setRequest(provideRequest());
-		moviesList.requestMovies();
+		moviesList.requestFirstPage();
 	}
 
 	private void bindTopbar() {

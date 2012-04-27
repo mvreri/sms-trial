@@ -1,32 +1,21 @@
 package hdcenter.vn;
 
-import hdcenter.vn.data.DataCenter;
-import hdcenter.vn.data.IRequestListener;
-import hdcenter.vn.entities.MovieItem;
-import hdcenter.vn.entities.MoviesList;
-import hdcenter.vn.ui.MovieAdapter;
+import hdcenter.vn.data.requests.ReqRecommendMovies;
+import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.utils.Helpers;
-import hdcenter.vn.utils.Logger;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Handler;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import dtd.phs.lib.ui.frames_host.FrameView;
 
 public class RecommendFrame 
 	extends FrameView 
-	implements IRequestListener 
 {
 
-	private ListView lvMovies;
-	private Handler handler;
-	private MoviesList moviesList;
-	private MovieAdapter adapter;
+	private static final int FIRST_PAGE = 1;
+	private MoviesListControl movieList;
 
 	public RecommendFrame(Activity activity) {
 		super(activity);
@@ -35,14 +24,14 @@ public class RecommendFrame
 	@Override
 	public void onCreate(Context context) {
 		Helpers.inflate(getContext(), R.layout.movies_listview, this);
-		handler = new Handler();
 		createViews();
+		movieList.requestFirstPage();
 	}
 
 	//TODO: it doesn't work in the case there is "Load more..." button
 	@Override
 	public void onResume() {
-		DataCenter.requestRecommendMovies(2, this, handler);
+		
 	}
 	
 	@Override
@@ -50,16 +39,8 @@ public class RecommendFrame
 	}
 
 	private void createViews() {
-		lvMovies = (ListView) findViewById(R.id.lvMovies);
-		lvMovies.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				MovieItem item = moviesList.get(position);
-				ShowMovieDetails.passedSummaryItem = item;
-				Intent i = new Intent(getContext(),ShowMovieDetails.class);
-				hostedActivity.startActivity(i);
-			}
-		});
+		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), new Handler());
+		movieList.setRequest(new ReqRecommendMovies(FIRST_PAGE));
 	}
 
 	@Override
@@ -73,18 +54,6 @@ public class RecommendFrame
 
 	@Override
 	public void onRefresh() {
-	}
-
-	@Override
-	public void onRequestError(Exception e) {
-		Logger.logError(e);
-	}
-
-	@Override
-	public void onRequestSuccess(Object data) {
-		moviesList = (MoviesList) data;
-		adapter = new MovieAdapter(getContext(), moviesList, handler);
-		lvMovies.setAdapter(adapter);
 	}
 
 

@@ -33,6 +33,12 @@ public class MovieCollections
 	    setContentView(R.layout.sub_activity);
 	    bindViews();
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Helpers.hideSoftKeyboard(this);
+	}
 
 	private void bindViews() {
 		bindTopbar();

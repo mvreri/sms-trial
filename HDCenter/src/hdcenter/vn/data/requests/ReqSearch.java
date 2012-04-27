@@ -9,15 +9,13 @@ public class ReqSearch extends RequestMoviesList {
 	private static final String KEYWORD = "keyword";
 	private static final String PAGE = "page";
 	private String keyword;
-	private int page;
 	private static final HashMap<Integer, CachedObject> cache = new HashMap<Integer, CachedObject>();
 
 	static private Object cachedKeyword = null;
 
 	public ReqSearch(String keyword, int page) {
-		super();
+		super(page);
 		this.keyword = keyword;
-		this.page = page;
 	}
 
 	@Override
@@ -28,7 +26,7 @@ public class ReqSearch extends RequestMoviesList {
 	@Override
 	protected void provideParameters(HashMap<String, String> parameters) {
 		parameters.put(KEYWORD,this.keyword);
-		parameters.put(PAGE,String.valueOf(this.page));
+		parameters.put(PAGE,String.valueOf(getPage()));
 
 	}
 	/**
@@ -44,7 +42,7 @@ public class ReqSearch extends RequestMoviesList {
 
 			return false;
 		}
-		CachedObject obj = cache.get(page);
+		CachedObject obj = cache.get(getPage());
 		if ( obj == null ) return false;
 		if ( obj.isTimeOut() ) return false;
 		return true;
@@ -52,7 +50,7 @@ public class ReqSearch extends RequestMoviesList {
 
 	@Override
 	protected Object cachedData() {
-		return cache.get(page).data;
+		return cache.get(getPage()).data;
 	}
 
 	@Override
@@ -61,6 +59,8 @@ public class ReqSearch extends RequestMoviesList {
 			cache.clear();
 			ReqSearch.cachedKeyword = this.keyword;
 		}
-		cache.put(page,new CachedObject(data));
+		cache.put(getPage(),new CachedObject(data));
 	}
+
+
 }

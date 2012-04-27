@@ -1,7 +1,7 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqMoviesInGenre;
-import hdcenter.vn.data.requests.Request;
+import hdcenter.vn.data.requests.RequestMoviesList;
 
 public class ShowGenre extends ListMoviesActivity {
 
@@ -14,7 +14,7 @@ public class ShowGenre extends ListMoviesActivity {
 	}
 
 	@Override
-	protected Request provideRequest() {
+	protected RequestMoviesList provideRequest() {
 		return new ReqMoviesInGenre(genre,FIRST_PAGE);
 	
 	}
