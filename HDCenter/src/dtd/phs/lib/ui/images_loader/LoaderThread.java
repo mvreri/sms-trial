@@ -13,7 +13,7 @@ import android.widget.ImageView;
 
 public class LoaderThread extends Thread {
 	private LoadingImages imagesToLoad;
-	//	protected Animation occAnim;
+//	protected Animation occAnim;
 	//	private Bitmap stubBimap;
 	private Handler handler;
 
@@ -22,9 +22,9 @@ public class LoaderThread extends Thread {
 		ImageCache.createCacheDir();
 		this.handler = handler;
 		//		createStubBitmap(context,stubId);
-		//		this.occAnim = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//		this.occAnim = AnimationUtils.loadAnimation(context, R.anim.anim_alpha_occ);
 	}
-
+	//
 	//	private void createStubBitmap(Context context, int stubId) {
 	//		stubBimap = BitmapFactory.decodeResource(context.getResources(),stubId);
 	//	}
@@ -50,7 +50,6 @@ public class LoaderThread extends Thread {
 		try {
 			//			postImageOnUI(iview, stubBimap);
 			Bitmap bm = getBitmap(loadingItem);
-			//			Logger.logInfo("Called");
 			postImageOnUI(iview, bm);
 		} catch (MalformedURLException e) {
 			Logger.logError(e);
@@ -63,15 +62,15 @@ public class LoaderThread extends Thread {
 	}
 
 	private Bitmap getBitmap(LoadingImageItem loadingItem)
-	throws MalformedURLException, IOException {
+			throws MalformedURLException, IOException {
 		if ( loadingItem.URL == null ) return null;
 		Bitmap bm = null;
 		String hashName = loadingItem.getHashName();
 		bm = ImageCache.get(hashName);
-		
+
 		//if no mem cache -> try to find it in the local storage
 		if ( bm == null ) {
-							
+
 			String fullFileName = ImageCache.getFileName(hashName);
 			bm = ImageCache.loadFromStorage(fullFileName);
 			if ( bm == null ) {
@@ -91,6 +90,7 @@ public class LoaderThread extends Thread {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
+//					iview.startAnimation(occAnim);
 					iview.setImageBitmap(bm);
 				} 
 			});

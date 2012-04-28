@@ -5,6 +5,8 @@ import hdcenter.vn.entities.MovieItem;
 import hdcenter.vn.entities.MoviesList;
 import hdcenter.vn.utils.Helpers;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +24,14 @@ public class MovieAdapter extends BaseAdapter {
 	private MoviesList mList;
 
 	private ImageLoader imageLoader;
+
+	private Bitmap stubBitmap = null;
+
 	
 	public MovieAdapter(Context context, MoviesList list, Handler handler) {
 		super();
 		this.context = context;
 		this.mList = list;
-		
-		//TODO: how to stop loading ?
 		this.imageLoader = ImageLoader.getInstance(context,R.drawable.movie_stub, handler);
 	}
 
@@ -65,9 +68,6 @@ public class MovieAdapter extends BaseAdapter {
 
 	}
 	
-	//TODO: refactor this thing !
-	//- Input: item layout id, array={ivAvatar,tvName,tvVnName,tvIMDB}
-	//- 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
@@ -86,13 +86,20 @@ public class MovieAdapter extends BaseAdapter {
 			holder = (ViewHolder) v.getTag();
 		}
 		
-		MovieItem movie = mList.get(position);		
+		MovieItem movie = mList.get(position);
+		holder.ivAvatar.setImageBitmap(getStubImage());
 		imageLoader.loadImage(movie.getImageURL(),holder.ivAvatar);
 		holder.tvName.setText(movie.getName());
 		holder.tvVnName.setText(movie.getVnName());
 		holder.tvRating.setText(movie.getRating());
-		
 		return v;
 		
+	}
+
+	private Bitmap getStubImage() {
+		if ( stubBitmap == null) {
+			stubBitmap = BitmapFactory.decodeResource(context.getResources(),R.drawable.movie_stub);
+		}
+		return stubBitmap;
 	}
 }

@@ -80,9 +80,9 @@ implements IRequestListener
 			tvName.setText(summItem.getName());
 			tvVnName.setText(summItem.getVnName());
 			tvRating.setText(summItem.getRating());
-			Logger.logInfo("Summary item: " + summItem.toString());
+//			Logger.logInfo("Summary item: " + summItem.toString());
 		} else {
-			Logger.logInfo("Summary item is NULL !");
+			Logger.logError("Summary item is NULL !");
 		}
 	}
 

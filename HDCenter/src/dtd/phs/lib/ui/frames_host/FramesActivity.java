@@ -90,11 +90,8 @@ public abstract class FramesActivity extends Activity {
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
 		frames = new ArrayList<FrameView>();
 		addFrames(frames);
-		//		frames.add(new PendingMessageView(this,handler));
-		//		frames.add(new SentMessageView( this,handler ));
 		for(int i = 0 ; i < frames.size() ; i++) {
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-//			frames.get(i).onCreate(getApplicationContext());
 		}
 
 		Logger.logInfo("Calling .addFrames()");
@@ -111,9 +108,6 @@ public abstract class FramesActivity extends Activity {
 			ImageView view = (ImageView) findViewById(buttonIds[i]);
 			tabButtons.add(view);
 		}
-		//		tabButtons.add((ImageView) findViewById(R.id.bt_tab_pending));
-		//		tabButtons.add((ImageView) findViewById(R.id.bt_tab_sent));
-
 		for(int i = 0 ; i < tabButtons.size() ; i++) {
 			final int id = i;
 			tabButtons.get(i).setOnClickListener(new OnClickListener() {
@@ -151,10 +145,8 @@ public abstract class FramesActivity extends Activity {
 		for(int i =  0 ; i < frames.size() ; i++) {
 			ImageView imageView = tabButtons.get(i);
 			if ( i == id )
-				//				imageView.setImageResource(HIGHLIGHT_TAB_RES[i]);
 				imageView.setImageResource(highlightTabResource(i));
 			else 
-				//				imageView.setImageResource(NORMAL_TAB_RES[i]);
 				imageView.setImageResource(normalTabResource(i));
 		}
 	}

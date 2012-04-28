@@ -10,7 +10,6 @@ import java.io.FileOutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -81,7 +80,7 @@ public class ImageCache {
 			is = new FileInputStream(fullFileName);
 			return BitmapFactory.decodeStream(is);
 		} catch (FileNotFoundException e) {
-			Logger.logError(e);
+			Logger.logInfo("Image cache file not found");
 			return null;
 		}
 

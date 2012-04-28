@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.util.Pair;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -23,6 +25,7 @@ implements IRequestListener
 
 
 
+	private static final int DELAY_LOAD_MORE = 500;
 	private Activity hostedActivity;
 	private ListView listview;
 	protected MoviesList moviesList = null;
@@ -33,6 +36,7 @@ implements IRequestListener
 	protected boolean loadingData = false;
 	protected int currentPage = 0;
 	private int totalPage = -1;
+	protected boolean hasData;
 
 	public MoviesListControl(Activity hostedActivity, ListView listview, Handler handler) {
 		this.hostedActivity = hostedActivity;
@@ -51,6 +55,21 @@ implements IRequestListener
 		this.listview = listview;
 		setOnItemClickListener();
 		createFooter();
+		this.hasData = false;
+		this.listview.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if ( hasData && !loadingData && firstVisibleItem + visibleItemCount >= totalItemCount) {
+					onLoadMore();
+				}
+			}
+		});
 	}
 
 	private void setOnItemClickListener() {
@@ -100,25 +119,31 @@ implements IRequestListener
 	 *  
 	 */	
 	private void createFooter() {
-		Logger.logInfo("Footer is created !");
+//		Logger.logInfo("Footer is created !");
 		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext()) {
 			@Override
 			public void onLoadMoreClick() {
-				if ( isLastPage() ) {
-					footer.disable();
-				} else {
-					if ( ! loadingData ) {
-						markLoadingData();
-						requestNextPage();
-					} else {
-						Helpers.assertCondition(false, "This button shouldn't be clickable now !");
-					}
-				}
+				onLoadMore();
 			}
-
-
 		};
 		this.listview.addFooterView(footer);
+	}
+
+	private void onLoadMore() {
+//		Logger.logInfo("On load more is called ... ");
+		if ( isLastPage() ) {
+//			Logger.logInfo("Last page reach !");
+			footer.disable();
+		} else {
+			if ( ! loadingData ) {
+//				Logger.logInfo("Begin loading next page");
+				markLoadingData();
+				requestNextPage();
+			} else {
+//				Logger.logInfo("Begin loading next page");
+				Helpers.assertCondition(false, "This button shouldn't be clickable now !");
+			}
+		}
 	}
 
 
@@ -137,20 +162,31 @@ implements IRequestListener
 		Helpers.assertCondition( currentPage <= totalPage , "Surpassed last page !");
 		return currentPage >= totalPage;
 	}
-	
-//	The result is returned as pair(totalPage,moviesList)
-//		- adapter should be initialized & set to listview before (note: after footer)
-//		- the moviesList should always be added, not new !
+
+	//	The result is returned as pair(totalPage,moviesList)
+	//		- adapter should be initialized & set to listview before (note: after footer)
+	//		- the moviesList should always be added, not new !
 	@Override
 	public void onRequestSuccess(Object data) {
+		this.hasData = true;
 		Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
 		this.totalPage = pair.first;
 		moviesList.append(pair.second);
-		adapter.notifyDataSetChanged();
-		unmarkLoadingData();
-//		moviesList = (MoviesList) data;
-//		adapter = new MovieAdapter(hostedActivity.getApplicationContext(), moviesList, handler);
-//		listview.setAdapter(adapter);
+		Helpers.startAfter(DELAY_LOAD_MORE, new Runnable() {
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						adapter.notifyDataSetChanged();
+						unmarkLoadingData();
+					}
+				});
+			}
+		});
+		//		moviesList = (MoviesList) data;
+		//		adapter = new MovieAdapter(hostedActivity.getApplicationContext(), moviesList, handler);
+		//		listview.setAdapter(adapter);
 	}
 
 	@Override
@@ -176,7 +212,7 @@ implements IRequestListener
 	}
 
 	private void requestCurrentPage() {
-		
+
 		request.setPage(currentPage);
 		DataCenter.addMoviesListRequest(request, this, handler);
 	}

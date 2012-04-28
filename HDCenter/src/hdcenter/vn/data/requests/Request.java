@@ -1,7 +1,6 @@
 package hdcenter.vn.data.requests;
 
 import hdcenter.vn.utils.Helpers;
-import hdcenter.vn.utils.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public abstract class Request {
 		builder.append(paraString);
 		builder.append("&code=" + genValidateCode(paraString));
 		String url = "http://"+builder.toString();
-		Logger.logInfo("Full URL: " + url);
+//		Logger.logInfo("Full URL: " + url);
 		return url;
 	}
 
@@ -34,18 +33,6 @@ public abstract class Request {
 	private String genValidateCode(String paraString) {
 		return Helpers.MD5(ADDITIONAL_KEY+paraString);
 	}
-
-	//	protected String genValidateCode(HashMap<String, String> parameters) {
-	//		ArrayList<String> keySet = new ArrayList<String>(parameters.keySet());
-	//		Collections.sort(keySet);
-	//		StringBuilder builder = new StringBuilder(ADDITIONAL_KEY);
-	//		for(String key : keySet) {
-	//			builder.append(key+"="+parameters.get(key));
-	//		}
-	//		String s = builder.toString();
-	//		Logger.logInfo("Raw validate code: " + s);
-	//		return Helpers.MD5(s);
-	//	}
 
 	protected String getResultString() throws IOException {
 		HashMap<String, String> parameters = createParameter();
@@ -72,12 +59,18 @@ public abstract class Request {
 		}
 	}
 	
-	//To be ovewritten if cache is required
+	/**
+	 * To be ovewritten if cache is required
+	 * @return cache data
+	 */
 	protected Object cachedData() {
 		return null;
 	}
 	
-	//To be ovewritten if cache is required	
+	/**
+	 * To be ovewritten if cache is required	
+	 * @return true - if the data is cached, false - other wise 
+	 */
 	protected boolean isCached() {
 		return false;
 	}

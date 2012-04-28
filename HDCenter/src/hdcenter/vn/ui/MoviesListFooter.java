@@ -20,10 +20,12 @@ implements OnClickListener
 	private static final int LOAD_MORE_FRAME = 0;
 	private static final int WAITING_FRAME = 1;
 	private View loadmore;
+	private FrameLayout mainFrames;
 
 	public MoviesListFooter(Context context) {
 		super(context);
 		Helpers.inflate(getContext(), R.layout.footer, this);
+		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
 		bindViews();
 	}
 
@@ -34,10 +36,11 @@ implements OnClickListener
 
 
 	private void showOnlyView(int id) {
-		for(int i = 0 ; i < this.getChildCount() ; i++) {
+		for(int i = 0 ; i < mainFrames.getChildCount() ; i++) {
+			View child = mainFrames.getChildAt(i);
 			if ( i == id)
-				this.getChildAt(i).setVisibility(View.VISIBLE);
-			else this.getChildAt(i).setVisibility(View.INVISIBLE);
+				child.setVisibility(View.VISIBLE);
+			else child.setVisibility(View.INVISIBLE);
 		}
 	}
 	

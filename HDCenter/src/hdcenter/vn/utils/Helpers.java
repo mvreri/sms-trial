@@ -26,7 +26,7 @@ public class Helpers {
 
 //	public static final boolean DEBUG_MODE = true;
 	protected enum CodeModes { DEBUG,TEST,PRODUCTION };
-	protected static final CodeModes CODE_MODE = CodeModes.DEBUG; 
+	protected static final CodeModes CODE_MODE = CodeModes.TEST; 
 
 	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
