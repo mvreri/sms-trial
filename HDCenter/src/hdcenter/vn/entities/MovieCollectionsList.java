@@ -16,4 +16,12 @@ public class MovieCollectionsList extends ArrayList<CollectionItem> {
 		}
 		return names;
 	}
+
+	public String getImageURL(int position) {
+		return this.get(position).getImageURL();
+	}
+
+	public String getName(int position) {
+		return this.get(position).getVname();
+	}
 }

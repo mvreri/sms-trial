@@ -16,5 +16,7 @@
     <string name="loadmore">Xem thêm …</string>
     <string name="director">Đạo diễn:</string>
     <string name="year">Year:</string>
+    <string name="recommend_movies">Phim hay:</string>
+    <string name="new_movies">Phim mới</string>
 
 </resources>

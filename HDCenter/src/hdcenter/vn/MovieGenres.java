@@ -62,6 +62,7 @@ public class MovieGenres
 				String genreCode = genres.get(position).first;
 				Intent i = new Intent(getApplicationContext(),ShowGenre.class);
 				i.putExtra(ShowGenre.EXTRA_GENRE,genreCode);
+				i.putExtra(ShowGenre.EXTRA_NAME, genres.get(position).second);
 				Helpers.enterActivity(MovieGenres.this, i);
 			}
 		});

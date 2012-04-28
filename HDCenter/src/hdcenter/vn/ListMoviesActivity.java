@@ -33,6 +33,11 @@ public abstract class ListMoviesActivity extends Activity {
 	 */
 	abstract protected void getInputData();
 	
+	/**
+	 * @return title for the movie list 
+	 */
+	abstract protected String getListTitle();
+	
 	protected MoviesListControl moviesList;
 	
 	@Override
@@ -57,7 +62,7 @@ public abstract class ListMoviesActivity extends Activity {
 	}
 
 	private void bindMoviesList() {
-		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), new Handler());
+		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), getListTitle(), new Handler());
 		moviesList.setRequest(provideRequest());
 		moviesList.requestFirstPage();
 	}

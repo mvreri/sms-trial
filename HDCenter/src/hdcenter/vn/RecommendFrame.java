@@ -40,7 +40,8 @@ public class RecommendFrame
 
 	private void createViews() {
 //		Logger.logInfo("createViews() is called !");
-		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), new Handler());
+		String title = getResources().getString(R.string.recommend_movies);
+		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, new Handler());
 		movieList.setRequest(new ReqRecommendMovies(FIRST_PAGE));
 		movieList.requestFirstPage();
 	}

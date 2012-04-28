@@ -18,6 +18,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MoviesListControl 
 implements IRequestListener
@@ -35,14 +36,16 @@ implements IRequestListener
 	protected int currentPage = 0;
 	private int totalPage = -1;
 	protected boolean hasData;
+	private String title;
 
-	public MoviesListControl(Activity hostedActivity, ListView listview, Handler handler) {
+	public MoviesListControl(Activity hostedActivity, ListView listview, String title, Handler handler) {
 		this.hostedActivity = hostedActivity;
 		this.handler = handler;
+		this.title = title;
 		initListview(listview);
 		initAdapter();
 	}
-	
+
 	public void reset() {
 		initAdapter();
 		currentPage = 0;
@@ -63,6 +66,7 @@ implements IRequestListener
 	private void initListview(ListView listview) {
 		this.listview = listview;
 		setOnItemClickListener();
+		createHeader();
 		createFooter();
 		this.hasData = false;
 		this.listview.setOnScrollListener(new OnScrollListener() {
@@ -79,6 +83,14 @@ implements IRequestListener
 				}
 			}
 		});
+	}
+
+	private void createHeader() {
+		if ( this.title != null ) {
+			TextView tv = new TextView(hostedActivity.getApplicationContext());
+			tv.setText(this.title);
+			listview.addHeaderView(tv);
+		}
 	}
 
 	private void setOnItemClickListener() {
@@ -108,7 +120,7 @@ implements IRequestListener
 	 * Pseudo code:
 	 * 	When the footer is clicked:
 	 * 	If last page already
-	 * 		"Blur" the Footer
+	 * 		Hide the footer
 	 * 	ElseIf
 	 * 		mark: loadingMore = true
 	 * 		show waiting footer
@@ -128,28 +140,25 @@ implements IRequestListener
 	 *  
 	 */	
 	private void createFooter() {
-//		Logger.logInfo("Footer is created !");
-		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext()) {
-			@Override
-			public void onLoadMoreClick() {
-				onLoadMore();
-			}
-		};
+		//		Logger.logInfo("Footer is created !");
+		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext());
+		//		{
+		//			@Override
+		//			public void onLoadMoreClick() {
+		////				onLoadMore();
+		//			}
+		//		};
 		this.listview.addFooterView(footer);
 	}
 
 	private void onLoadMore() {
-//		Logger.logInfo("On load more is called ... ");
 		if ( isLastPage() ) {
-//			Logger.logInfo("Last page reach !");
 			footer.disable();
 		} else {
 			if ( ! loadingData ) {
-//				Logger.logInfo("Begin loading next page");
 				markLoadingData();
 				requestNextPage();
 			} else {
-//				Logger.logInfo("Begin loading next page");
 				Helpers.assertCondition(false, "This button shouldn't be clickable now !");
 			}
 		}
@@ -178,6 +187,7 @@ implements IRequestListener
 	@Override
 	public void onRequestSuccess(Object data) {
 		this.hasData = true;
+		@SuppressWarnings("unchecked")
 		Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
 		this.totalPage = pair.first;
 		moviesList.append(pair.second);
@@ -193,9 +203,6 @@ implements IRequestListener
 				});
 			}
 		});
-		//		moviesList = (MoviesList) data;
-		//		adapter = new MovieAdapter(hostedActivity.getApplicationContext(), moviesList, handler);
-		//		listview.setAdapter(adapter);
 	}
 
 	@Override

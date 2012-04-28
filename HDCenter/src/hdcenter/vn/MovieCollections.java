@@ -3,7 +3,6 @@ package hdcenter.vn;
 import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.entities.MovieCollectionsList;
-import hdcenter.vn.ui.SimpleTextAdapter;
 import hdcenter.vn.ui.Topbar;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.Logger;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 public class MovieCollections 
@@ -53,6 +53,7 @@ public class MovieCollections
 				String id = collections.getId(position);
 				Intent i = new Intent(getApplicationContext(),ShowCollection.class);
 				i.putExtra(ShowCollection.EXTRA_ID, id);
+				i.putExtra(ShowCollection.EXTRA_NAME, collections.getName(position));
 				Helpers.enterActivity(MovieCollections.this, i);
 			}
 		});
@@ -66,7 +67,7 @@ public class MovieCollections
 	@Override
 	public void onRequestSuccess(Object data) {
 		collections = (MovieCollectionsList) data;
-		SimpleTextAdapter adapter = new SimpleTextAdapter(getApplicationContext(), R.layout.more_item_layout, collections.getNames());
+		BaseAdapter adapter = new CollectionsAdapter(getApplicationContext(),collections, new Handler());
 		lvCollections.setAdapter(adapter);
 	}
 

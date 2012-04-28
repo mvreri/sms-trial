@@ -49,7 +49,7 @@ public class SearchMovies extends Activity
 	}
 
 	private void bindListview() {
-		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), handler);
+		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), null, handler);
 	}
 
 	private void bindTopbar() {

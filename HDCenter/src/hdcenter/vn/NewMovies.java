@@ -13,5 +13,9 @@ public class NewMovies extends ListMoviesActivity {
 	protected void getInputData() {
 		// no input data
 	}
+	@Override
+	protected String getListTitle() {
+		return getResources().getString(R.string.new_movies);
+	}
 
 }
