@@ -44,6 +44,10 @@ implements IRequestListener
 	private MovieDetailsItem movieDetails;
 	private OnTrailerClickListener onTrailerButtonClickListener;
 
+//	private TextView tvYear;
+
+	private TextView tvDirector;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,22 +69,23 @@ implements IRequestListener
 		tvName = (TextView) findViewById(R.id.tvName);
 		tvVnName = (TextView) findViewById(R.id.tvVnName);
 		tvRating = (TextView) findViewById(R.id.tvRating);
+//		tvYear = (TextView) findViewById(R.id.tvYear);
+		tvDirector = (TextView) findViewById(R.id.tvDirector);
 		
 		btTrailer = (Button) findViewById(R.id.btTrailer);
 		onTrailerButtonClickListener = new OnTrailerClickListener();
 		btTrailer.setOnClickListener(onTrailerButtonClickListener);
 				
 		tvStarring = (TextView) findViewById(R.id.tvStarring);
+		
 		tvDescription = (TextView) findViewById(R.id.tvDescription);
 	}
 
 	private void preloadSummaryInformation() {
 		if ( this.summItem != null ) {
-//			imageLoader.loadImage(summItem.getImageURL(), ivAvatar);
 			tvName.setText(summItem.getName());
 			tvVnName.setText(summItem.getVnName());
 			tvRating.setText(summItem.getRating());
-//			Logger.logInfo("Summary item: " + summItem.toString());
 		} else {
 			Logger.logError("Summary item is NULL !");
 		}
@@ -131,8 +136,12 @@ implements IRequestListener
 		movieDetails = (MovieDetailsItem)data;
 		Logger.logInfo("Movie details:"+movieDetails.toString());
 		imageLoader.loadImage(movieDetails.getImageURL(), ivAvatar);
+		tvVnName.setText(movieDetails.getVnName() + " (" + movieDetails.getYear() + ")");
+//		tvYear.setText(movieDetails.getYear());
+		tvDirector.setText(movieDetails.getDirector());
 		tvStarring.setText(movieDetails.getStarrings());
 		tvDescription.setText(movieDetails.getDescription());
+	
 		
 		onTrailerButtonClickListener.setVideoId(movieDetails.getYoutubeId());
 	}

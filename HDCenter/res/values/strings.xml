@@ -14,5 +14,7 @@
     <string name="genres">Thể loại</string>
     <string name="collections">Tuyển tập</string>
     <string name="loadmore">Xem thêm …</string>
+    <string name="director">Đạo diễn:</string>
+    <string name="year">Year:</string>
 
 </resources>

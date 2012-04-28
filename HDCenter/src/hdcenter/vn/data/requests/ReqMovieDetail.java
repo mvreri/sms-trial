@@ -26,7 +26,6 @@ public class ReqMovieDetail extends Request{
 
 	@Override
 	protected MovieDetailsItem parseData(String resultString) throws JSONException {
-		//TODO: test with No result {}
 		JSONObject jobject = new JSONObject(resultString);
 		return MovieDetailsItem.createInstance(jobject);
 	}

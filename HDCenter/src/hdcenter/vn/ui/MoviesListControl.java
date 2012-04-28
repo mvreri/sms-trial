@@ -23,8 +23,6 @@ public class MoviesListControl
 implements IRequestListener
 {
 
-
-
 	private static final int DELAY_LOAD_MORE = 500;
 	private Activity hostedActivity;
 	private ListView listview;
@@ -43,6 +41,17 @@ implements IRequestListener
 		this.handler = handler;
 		initListview(listview);
 		initAdapter();
+	}
+	
+	public void reset() {
+		initAdapter();
+		currentPage = 0;
+		totalPage = -1;
+		hasData = false;
+		loadingData = false;
+		if ( footer != null ) {
+			footer.enable();
+		}
 	}
 
 	private void initAdapter() {
@@ -216,5 +225,7 @@ implements IRequestListener
 		request.setPage(currentPage);
 		DataCenter.addMoviesListRequest(request, this, handler);
 	}
+
+
 
 }

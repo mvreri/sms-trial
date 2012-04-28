@@ -36,8 +36,7 @@ public class Topbar {
 		ivHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent i = new Intent(hostedActivity.getApplicationContext(),HDCenterActivity.class);
-				Helpers.exitActivityFrom(hostedActivity,i);
+				Helpers.gotoMainActivity(hostedActivity);
 			}
 		});
 	}
@@ -62,5 +61,8 @@ public class Topbar {
 			hostedActivity.startActivity(i);
 		}
 	}
-
+	
+	public void setOnClickButtonSearch(View.OnClickListener listener) {
+		ivSearch.setOnClickListener(listener);
+	}
 }

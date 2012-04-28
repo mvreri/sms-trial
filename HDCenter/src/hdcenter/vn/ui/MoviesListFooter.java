@@ -62,5 +62,9 @@ implements OnClickListener
 	public void disable() {
 		this.setVisibility(View.GONE);
 	}
+	
+	public void enable() {
+		this.setVisibility(View.VISIBLE);
+	}
 
 }

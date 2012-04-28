@@ -1,5 +1,7 @@
 package hdcenter.vn.utils;
 
+import hdcenter.vn.HDCenterActivity;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,6 +10,7 @@ import java.net.URL;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -149,6 +152,11 @@ public class Helpers {
 	public static void assertCondition(boolean condition, String failedMessage) {
 		if ( CODE_MODE == CodeModes.DEBUG  )
 			Assert.assertTrue(failedMessage, condition);
+	}
+	
+	public static void gotoMainActivity(Activity hostedActivity) {
+		Intent i = new Intent(hostedActivity.getApplicationContext(),HDCenterActivity.class);
+		Helpers.exitActivityFrom(hostedActivity,i);
 	}
 
 

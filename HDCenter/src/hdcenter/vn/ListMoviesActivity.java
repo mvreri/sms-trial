@@ -1,6 +1,5 @@
 package hdcenter.vn;
 
-import hdcenter.vn.data.requests.Request;
 import hdcenter.vn.data.requests.RequestMoviesList;
 import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.Topbar;

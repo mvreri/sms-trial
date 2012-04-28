@@ -31,8 +31,8 @@
                 android:id="@+id/tvName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
                 android:ellipsize="end"
+                android:maxLines="2"
                 android:text="Movie Name"
                 android:textColor="@color/movie_name_color"
                 android:textSize="@dimen/title_text_size" />
@@ -67,46 +67,103 @@
                     android:textColor="@color/normal_text_color" />
             </LinearLayout>
 
+            <!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/year"
+                    android:textColor="@color/normal_text_color" />
+
+                <TextView
+                    android:id="@+id/tvYear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="2011"
+                    android:textColor="@color/normal_text_color" />
+            </LinearLayout> 
+            -->
+
             <Button
                 android:id="@+id/btTrailer"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:text="@string/watch_trailer" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/box_margin_top"
         android:background="@drawable/rounded_rect_small"
+        android:orientation="vertical"
         android:padding="5dp" >
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/starring"
-            android:textColor="@color/normal_text_color"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvStarring"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="TextView"
-            android:textColor="@color/normal_text_color" />
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/starring"
+                android:textColor="@color/normal_text_color"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvStarring"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="3dp"
+                android:text="TextView"
+                android:textColor="@color/normal_text_color" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/director"
+                android:textColor="@color/normal_text_color"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDirector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingLeft="3dp"
+                android:text="TextView"
+                android:textColor="@color/normal_text_color" />
+        </LinearLayout>
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="1dp"
         android:layout_marginTop="@dimen/box_margin_top"
+        android:layout_weight="1"
         android:background="@drawable/rounded_rect_small"
         android:orientation="vertical"
         android:padding="5dp" >
