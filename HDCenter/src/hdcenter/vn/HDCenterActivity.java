@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import dtd.phs.lib.ui.frames_host.FrameView;
@@ -31,7 +33,7 @@ public class HDCenterActivity extends FramesActivity {
 		super.onCreate(savedInstanceState);
 		createSearchModules();
 	}
-	
+
 	@Override
 	protected void onResume() {	
 		super.onResume();
@@ -42,28 +44,42 @@ public class HDCenterActivity extends FramesActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-	
+
+
+	private void launchSearch() {
+		String s = atSearch.getText().toString().trim();
+		if ( s.length() != 0 ) {
+			Intent i = new Intent(getApplicationContext(),SearchMovies.class);
+			i.putExtra(SearchMovies.IEXTRA_KEYWORD, s);
+			Helpers.enterActivity(HDCenterActivity.this, i);
+		}
+	}
 	private void createSearchModules() {
 		atSearch = (AutoCompleteTextView) findViewById(R.id.atSearch);
+		atSearch.setOnKeyListener(new OnKeyListener() {
+
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+						(keyCode == KeyEvent.KEYCODE_ENTER)) {
+					launchSearch();
+					return true;
+				}
+				return false;
+			}
+
+		});
 		ivSearch = (ImageView) findViewById(R.id.ivSearch);
 		ivSearch.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				try {
-					String s = atSearch.getText().toString().trim();
-					if ( s.length() != 0 ) {
-						Intent i = new Intent(getApplicationContext(),SearchMovies.class);
-						i.putExtra(SearchMovies.IEXTRA_KEYWORD, s);
-						startActivity(i);
-					}
-				} catch (Exception e) {
-
-				}
+				launchSearch();
 
 			}
+
+
 		});
-		
+
 		ivHome = (ImageView) findViewById(R.id.ivHome);
 		ivHome.setOnClickListener(new OnClickListener() {
 			@Override

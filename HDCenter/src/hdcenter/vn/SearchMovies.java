@@ -7,8 +7,10 @@ import hdcenter.vn.utils.StringHelpers;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
@@ -53,7 +55,20 @@ public class SearchMovies extends Activity
 	}
 
 	private void bindTopbar() {
-		atSearch = (AutoCompleteTextView) findViewById(R.id.atSearch);
+		atSearch = (AutoCompleteTextView) findViewById(R.id.atSearch);		
+		atSearch.setOnKeyListener(new OnKeyListener() {
+
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+						(keyCode == KeyEvent.KEYCODE_ENTER)) {
+					searchCurrentKeyword();
+					return true;
+				}
+				return false;
+			}
+
+		});
+		
 		btHome = findViewById(R.id.ivHome);
 		btHome.setOnClickListener(new OnClickListener() {
 			@Override
@@ -68,7 +83,7 @@ public class SearchMovies extends Activity
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						onClickButtonSearch();
+						searchCurrentKeyword();
 					}
 				});
 
@@ -82,48 +97,11 @@ public class SearchMovies extends Activity
 		keyword = getIntent().getStringExtra(IEXTRA_KEYWORD);
 		if (keyword != null) {
 			atSearch.setText(keyword.trim());
-			onClickButtonSearch();
+			searchCurrentKeyword();
 		}
 	}
-	//
-	//	private void createViews() {
-	//		lvMovies = (ListView) findViewById(R.id.lvMovies);
-	//		lvMovies.setOnItemClickListener(new OnItemClickListener() {
-	//			@Override
-	//			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-	//				MovieItem item = mList.get(position);
-	//				ShowMovieDetails.passedSummaryItem = item;
-	//				Intent i = new Intent(getApplicationContext(),ShowMovieDetails.class);
-	//				startActivity(i);
-	//			}
-	//		});		
-	//	    createHomeButton();
-	//	    createSearchModule();
-	//	}
 
-	//	private void createHomeButton() {
-	//		ivHome = (ImageView) findViewById(R.id.ivHome);
-	//	    ivHome.setOnClickListener(new OnClickListener() {
-	//			@Override
-	//			public void onClick(View v) {
-	//				Intent i = new Intent(getApplicationContext(),HDCenterActivity.class);
-	//				startActivity(i);
-	//			}
-	//		});
-	//	}
-
-	//	private void createSearchModule() {
-	//		atSearch = (AutoCompleteTextView) findViewById(R.id.atSearch);
-	//	    ivSearch = (ImageView) findViewById(R.id.ivSearch);
-	//	    ivSearch.setOnClickListener(new OnClickListener() {
-	//			@Override
-	//			public void onClick(View v) {
-	//				onClickButtonSearch();
-	//			}
-	//		});
-	//	}
-
-	private void onClickButtonSearch() {
+	private void searchCurrentKeyword() {
 		String s = StringHelpers.replaceLowerSignCharacter(getApplicationContext(), atSearch.getText().toString().trim());
 		s = s.toLowerCase();
 		if ( s.length() > 0 ) {
@@ -134,16 +112,9 @@ public class SearchMovies extends Activity
 		}
 	}
 
-	//	@Override
-	//	public void onRequestError(Exception e) {
-	//		Logger.logError(e);
-	//	}
-	//
-	//	@Override
-	//	public void onRequestSuccess(Object data) {
-	//		mList = (MoviesList) data;
-	//		adapter = new MovieAdapter(getApplicationContext(), mList, handler);
-	//		lvMovies.setAdapter(adapter);
-	//	}
-
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Helpers.exitTransition(this);
+	}
 }
