@@ -5,4 +5,5 @@
     <color name="movie_name_color">#ff125ab9</color>
     <color name="normal_text_color">#ff333333</color>
     <color name="blur_blue">#ff006eff</color>
+    <color name="title_color">#ff000000</color>
 </resources>

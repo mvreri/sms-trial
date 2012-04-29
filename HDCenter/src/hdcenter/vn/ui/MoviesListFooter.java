@@ -13,26 +13,17 @@ import android.widget.FrameLayout;
  */
 public class MoviesListFooter
 extends FrameLayout 
-//implements OnClickListener 
 {
 
 	private static final int LOAD_MORE_FRAME = 0;
 	private static final int WAITING_FRAME = 1;
-//	private View loadmore;
 	private FrameLayout mainFrames;
 
 	public MoviesListFooter(Context context) {
 		super(context);
 		Helpers.inflate(getContext(), R.layout.footer, this);
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
-		bindViews();
 	}
-
-	private void bindViews() {
-//		loadmore = this.findViewById(R.id.loadmore);
-//		loadmore.setOnClickListener(this);
-	}
-
 
 	private void showOnlyView(int id) {
 		for(int i = 0 ; i < mainFrames.getChildCount() ; i++) {
@@ -51,12 +42,6 @@ extends FrameLayout
 		showOnlyView(WAITING_FRAME);
 	}
 
-//	@Override
-//	public void onClick(View v) {
-//		onLoadMoreClick();
-//	}
-
-//	abstract public void onLoadMoreClick();
 
 	public void disable() {
 		this.setVisibility(View.GONE);

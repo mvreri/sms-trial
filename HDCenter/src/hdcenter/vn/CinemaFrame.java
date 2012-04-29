@@ -1,12 +1,19 @@
 package hdcenter.vn;
 
+import hdcenter.vn.data.requests.ReqCinemaMovies;
+import hdcenter.vn.ui.MoviesListControl;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
+import android.widget.ListView;
 import dtd.phs.lib.ui.frames_host.FrameView;
 
 public class CinemaFrame extends FrameView {
+
+	private static final int FIRST_PAGE = 1;
+	private MoviesListControl moviesList;
 
 	public CinemaFrame(Activity activity) {
 		super(activity);
@@ -15,13 +22,15 @@ public class CinemaFrame extends FrameView {
 	@Override
 	public void onCreate(Context context) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		inflater.inflate(R.layout.cinema, this);
+		inflater.inflate(R.layout.movies_listview, this);
 		createViews();
 	}
 
 	private void createViews() {
-		// TODO Auto-generated method stub
-		
+		String title = getResources().getString(R.string.cinema_movies);
+		moviesList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, new Handler());
+		moviesList.setRequest(new ReqCinemaMovies(FIRST_PAGE));
+		moviesList.requestFirstPage();
 	}
 
 	@Override

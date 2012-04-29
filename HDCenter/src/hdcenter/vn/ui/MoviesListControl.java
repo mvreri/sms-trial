@@ -1,5 +1,6 @@
 package hdcenter.vn.ui;
 
+import hdcenter.vn.R;
 import hdcenter.vn.ShowMovieDetails;
 import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
@@ -32,29 +33,30 @@ implements IRequestListener
 	private Handler handler = null;
 	private RequestMoviesList request;
 	private MoviesListFooter footer;
-	protected boolean loadingData = false;
-	protected int currentPage = 0;
-	private int totalPage = -1;
+	protected boolean loadingData;
+	protected int currentPage;
+	private int totalPage;
 	protected boolean hasData;
 	private String title;
 
 	public MoviesListControl(Activity hostedActivity, ListView listview, String title, Handler handler) {
 		this.hostedActivity = hostedActivity;
 		this.handler = handler;
-		this.title = title;
+//		this.title = title;
+		this.title = null;
 		initListview(listview);
-		initAdapter();
+		resetData();
 	}
 
-	public void reset() {
-		initAdapter();
+	public void resetData() {
 		currentPage = 0;
-		totalPage = -1;
+		totalPage = 1;
 		hasData = false;
 		loadingData = false;
 		if ( footer != null ) {
 			footer.enable();
 		}
+		initAdapter();
 	}
 
 	private void initAdapter() {
@@ -87,7 +89,7 @@ implements IRequestListener
 
 	private void createHeader() {
 		if ( this.title != null ) {
-			TextView tv = new TextView(hostedActivity.getApplicationContext());
+			TextView tv = (TextView) Helpers.inflate(hostedActivity, R.layout.movies_list_header, null);
 			tv.setText(this.title);
 			listview.addHeaderView(tv);
 		}
@@ -97,8 +99,14 @@ implements IRequestListener
 		this.listview.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+			public void onItemClick(AdapterView<?> arg0, View arg1, int rawPosition,
 					long arg3) {
+				int position = rawPosition - listview.getHeaderViewsCount();
+				if ( title != null ) {
+					Helpers.assertCondition(listview.getHeaderViewsCount() == 1, "Header count is: " + listview.getHeaderViewsCount() + " - it should be 1");
+				} else {
+					Helpers.assertCondition(listview.getHeaderViewsCount() == 0, "Header count is: " + listview.getHeaderViewsCount() + " - it should be 0");
+				}
 				Helpers.assertCondition( moviesList != null, "Movie list is NULL");
 				Helpers.assertCondition( moviesList.size() > position, "Position: " + position + " -- mvlist size: " + moviesList.size() );
 				MovieItem item = moviesList.get(position);
@@ -140,14 +148,7 @@ implements IRequestListener
 	 *  
 	 */	
 	private void createFooter() {
-		//		Logger.logInfo("Footer is created !");
 		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext());
-		//		{
-		//			@Override
-		//			public void onLoadMoreClick() {
-		////				onLoadMore();
-		//			}
-		//		};
 		this.listview.addFooterView(footer);
 	}
 
@@ -177,7 +178,14 @@ implements IRequestListener
 
 
 	protected boolean isLastPage() {
-		Helpers.assertCondition( currentPage <= totalPage , "Surpassed last page !");
+		/**
+		 * PROGRAMMING NOTES (just for me)
+		 * The assert is failed when a searching with no results returned - 
+		 * It's nobody fault, it's just the inconsistent between PHP & Java (indexing: 1 & indexing: 0 ) 
+		 * 	-> different logic thinking between coders (about index & totalpage)
+		 * This is the first time I've observed something like this
+		 */
+		//Helpers.assertCondition( currentPage <= totalPage , "Surpassed last page: currentPage: " + currentPage + " -- lastpage: " + totalPage);
 		return currentPage >= totalPage;
 	}
 
@@ -187,8 +195,10 @@ implements IRequestListener
 	@Override
 	public void onRequestSuccess(Object data) {
 		this.hasData = true;
+		
 		@SuppressWarnings("unchecked")
 		Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
+		
 		this.totalPage = pair.first;
 		moviesList.append(pair.second);
 		Helpers.startAfter(DELAY_LOAD_MORE, new Runnable() {

@@ -2,6 +2,7 @@ package hdcenter.vn.data.requests;
 
 import hdcenter.vn.entities.MovieItem;
 import hdcenter.vn.entities.MoviesList;
+import hdcenter.vn.utils.Logger;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,19 +29,26 @@ public abstract class RequestMoviesList extends Request {
 		if ( total != 0) {
 			JSONArray jarray = jobject.getJSONArray(RESULT);
 			for(int i = 0; i < jarray.length() ; i++) {
-				MovieItem item  = MovieItem.createFromJSONObject(jarray.getJSONObject(i));
-				list.add(item);
+				try {
+					MovieItem item  = MovieItem.createFromJSONObject(jarray.getJSONObject(i));
+					list.add(item);
+				} catch (JSONException e) {
+					if ( i == jarray.length()-1) {
+						Logger.logError("Server error: _,_ after last array element");
+						break;
+					} else throw e;
+				}
 			}
 		}
 		return new Pair<Integer,MoviesList>(total,list);
 	}
-	
+
 	public void setPage(int page) {
 		this.page = page;
 	}
-	
+
 	public int getPage() {
 		return page;
 	}
-	
+
 }

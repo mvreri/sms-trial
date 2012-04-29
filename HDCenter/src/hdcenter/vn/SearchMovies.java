@@ -127,7 +127,7 @@ public class SearchMovies extends Activity
 		String s = StringHelpers.replaceLowerSignCharacter(getApplicationContext(), atSearch.getText().toString().trim());
 		s = s.toLowerCase();
 		if ( s.length() > 0 ) {
-			moviesList.reset(); 
+			moviesList.resetData(); 
 			moviesList.setRequest(new ReqSearch(s, FIRST_PAGE));
 			moviesList.requestFirstPage();
 			Helpers.hideSoftKeyboard(this,atSearch);
