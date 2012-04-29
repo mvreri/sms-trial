@@ -3,14 +3,14 @@
 
     <string name="hello">Hello World, HDCenterActivity!</string>
     <string name="app_name">HDCenter</string>
-    <string name="search_films_actors_directors">Tìm phim theo tên, diễn viên …</string>
+    <string name="search_films_actors_directors">Tìm phim …</string>
     <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
     <string name="imdb">IMDB:</string>
     <string name="watch_trailer">Xem giới thiệu</string>
     <string name="error_please_retry">Lỗi hệ thống, xin vui lòng thử lại sau !</string>
     <string name="loading_please_wait">Đang tải…</string>
     <string name="starring">Diễn viên: </string>
-    <string name="newly_updated">Just updated</string>
+    <string name="newly_updated">Mới cập nhật</string>
     <string name="genres">Thể loại</string>
     <string name="collections">Tuyển tập</string>
     <string name="loadmore">Xem thêm …</string>
@@ -19,5 +19,7 @@
     <string name="recommend_movies">Phim hay</string>
     <string name="new_movies">Phim mới</string>
     <string name="cinema_movies">Phim rạp</string>
+    <string name="summary">Tóm tắt:</string>
+    <string name="no_trailer">Không tìm được trailer</string>
 
 </resources>

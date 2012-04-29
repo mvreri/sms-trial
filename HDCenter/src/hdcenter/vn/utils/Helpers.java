@@ -1,6 +1,7 @@
 package hdcenter.vn.utils;
 
 import hdcenter.vn.HDCenterActivity;
+import hdcenter.vn.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +11,6 @@ import java.net.URL;
 import junit.framework.Assert;
 import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -139,14 +139,22 @@ public class Helpers {
 		activity.startActivity(startMain);		
 	}
 
-	public static void enterActivity(Activity fromActivity, Intent i) {
-		fromActivity.startActivity(i);
-		//TODO: enter activity animation
+	public static void enterTransition(Activity hostedActivity) {
+		hostedActivity.overridePendingTransition(R.anim.zoom_out_haft_one,R.anim.zoom_out_one_2);		
 	}
 
-	public static void exitActivityFrom(Activity fromActivity, Intent i) {
-		fromActivity.startActivity(i);
-		//TODO: exit activity animation		
+	public static void exitTransition(Activity hostedActivity) {
+		hostedActivity.overridePendingTransition(R.anim.zoom_in_2o,R.anim.zoom_in_oh);		
+	}
+
+	public static void enterActivity(Activity hostedActivity, Intent i) {
+		hostedActivity.startActivity(i);
+		Helpers.enterTransition(hostedActivity);
+	}
+
+	public static void exitActivity(Activity hostedActivity, Intent i) {
+		hostedActivity.startActivity(i);
+		Helpers.exitTransition(hostedActivity);
 	}
 
 	public static void assertCondition(boolean condition, String failedMessage) {
@@ -156,8 +164,14 @@ public class Helpers {
 	
 	public static void gotoMainActivity(Activity hostedActivity) {
 		Intent i = new Intent(hostedActivity.getApplicationContext(),HDCenterActivity.class);
-		Helpers.exitActivityFrom(hostedActivity,i);
+		Helpers.exitActivity(hostedActivity,i);
 	}
 
+	public static void toast(Context applicationContext, int messageId) {
+		Toast.makeText(applicationContext, messageId, Toast.LENGTH_LONG).show();
+	}
 
+	public static void toast(Context applicationContext, String message) {
+		Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show();
+	}
 }

@@ -39,6 +39,8 @@ public class PreferenceHelpers {
 	private static final String PREF_COUNT_SUCC_SENT = "PREF_COUNT_SUCC_SENT";
 	private static final String PREF_FIRST_TIME = "PREF_FIRST_TIME";
 	private static final String PREF_LAST_CLEAN_UP_SD = "PREF_LAST_CLEAN_UP_SD_CARD";
+	private static final String PREF_LAST_FRAME = "PREF_LAST_SELECTED_FRAME";
+	
 	public static int getSuccessSentMessagesCount(Context context) {
 		String str = getPreference(context, PREF_COUNT_SUCC_SENT);
 		try {
@@ -85,6 +87,22 @@ public class PreferenceHelpers {
 
 	public static void setLastCleanupTime(Context context, long time) {
 		setPreference(context, PREF_LAST_CLEAN_UP_SD, String.valueOf(time));
+	}
+
+	public static void saveLastDisplayedFrame(Context context, int id) {
+		setPreference(context, PREF_LAST_FRAME, ""+id);
+	}
+
+	/**
+	 * @return last frame if exists , -1 otherwise
+	 */
+	public static int getLastDisplayedFrame(Context context) {
+		String ret = getPreference(context, PREF_LAST_FRAME);
+		try {
+			return Integer.parseInt(ret);
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 	
 }

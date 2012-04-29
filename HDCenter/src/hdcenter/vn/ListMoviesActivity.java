@@ -71,5 +71,11 @@ public abstract class ListMoviesActivity extends Activity {
 		new Topbar(this, findViewById(R.id.topbar));
 	}
 	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		Helpers.exitTransition(this);
+	}
+	
 	
 }

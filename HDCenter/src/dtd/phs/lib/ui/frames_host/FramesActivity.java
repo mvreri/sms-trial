@@ -1,7 +1,7 @@
 package dtd.phs.lib.ui.frames_host;
 
 import hdcenter.vn.R;
-import hdcenter.vn.utils.Logger;
+import hdcenter.vn.utils.PreferenceHelpers;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import android.widget.ImageView;
 public abstract class FramesActivity extends Activity {
 
 	abstract protected void addFrames(ArrayList<FrameView> frames);
-	abstract protected int getDefaultFrame();	
+	abstract protected int getDefaultFrame();		
 	protected abstract int normalTabResource(int i);
 	protected abstract int highlightTabResource(int i);
 	abstract protected int[] provideTabIds();
@@ -93,9 +93,8 @@ public abstract class FramesActivity extends Activity {
 		for(int i = 0 ; i < frames.size() ; i++) {
 			mainFrames.addView( frames.get(i), new FrameLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		}
-
-		Logger.logInfo("Calling .addFrames()");
-		displayingFrameId = getDefaultFrame();
+//		Logger.logInfo("Calling .addFrames()");
+		displayingFrameId = getLastDisplayedFrame();
 		
 	}
 
@@ -123,7 +122,9 @@ public abstract class FramesActivity extends Activity {
 
 
 
+	//TODO: reread the class & reconsider the name of this method
 	private void showOnlyView(int id) {
+		saveLastDisplayedFrame(id);
 		highlightTab(id);
 		int previousDisplaying = displayingFrameId;
 		for(int i = 0 ; i < frames.size() ; i++) {
@@ -140,6 +141,18 @@ public abstract class FramesActivity extends Activity {
 		frames.get(id).onResume();
 		
 	}
+
+	private void saveLastDisplayedFrame(int id) {
+		PreferenceHelpers.saveLastDisplayedFrame(getApplicationContext(),id);
+	}
+	
+	private int getLastDisplayedFrame() {
+		int last = PreferenceHelpers.getLastDisplayedFrame(getApplicationContext());
+		if ( last == -1 ) return getDefaultFrame();
+		return last;
+	}
+	
+	
 
 	private void highlightTab(int id) {
 		for(int i =  0 ; i < frames.size() ; i++) {

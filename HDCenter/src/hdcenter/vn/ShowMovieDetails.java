@@ -18,9 +18,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.keyes.youtube.OpenYouTubePlayerActivity;
-
 import dtd.phs.lib.ui.images_loader.ImageLoader;
 
 public class ShowMovieDetails 
@@ -52,7 +49,7 @@ implements IRequestListener
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Logger.logInfo("Called");
+//		Logger.logInfo("Called");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.movie_details);
 		imageLoader = ImageLoader.getInstance(this,R.drawable.movie_stub, handler);
@@ -99,7 +96,6 @@ implements IRequestListener
 	@Override
 	protected void onResume() {
 		super.onResume();
-		Logger.logInfo("Called");
 		try {
 			id = summItem.getId();
 			DataCenter.requestMovieDetails(this,id,handler);
@@ -111,14 +107,18 @@ implements IRequestListener
 	@Override
 	protected void onPause() {		
 		super.onPause();
-		Logger.logInfo("Called");
 		imageLoader.clear();
 	}
 	
 	@Override
 	protected void onStop() {
 		super.onStop();
-		Logger.logInfo("Called");
+	}
+	
+	@Override
+	public void onBackPressed() {	
+		super.onBackPressed();
+		Helpers.exitTransition(this);
 	}
 
 	private void showErrorToast(Exception e) {
@@ -134,7 +134,7 @@ implements IRequestListener
 	@Override
 	public void onRequestSuccess(Object data) {
 		movieDetails = (MovieDetailsItem)data;
-		Logger.logInfo("Movie details:"+movieDetails.toString());
+//		Logger.logInfo("Movie details:"+movieDetails.toString());
 		imageLoader.loadImage(movieDetails.getImageURL(), ivAvatar);
 		tvVnName.setText(movieDetails.getVnName() + " (" + movieDetails.getYear() + ")");
 //		tvYear.setText(movieDetails.getYear());
@@ -171,21 +171,23 @@ implements IRequestListener
 		@Override
 		public void onClick(View v) {
 			if(id == null || id.trim().equals("")){
-				//TODO: do something here -> hide this button before user clicks it !
+				Helpers.toast(getApplicationContext(),R.string.no_trailer);
 				return;
 			}
-//			showDialog(DIALOG_WAIT);
-			Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+id), ShowMovieDetails.this, OpenYouTubePlayerActivity.class);
-			startActivity(lVideoIntent);
+			
+			//Use Youtube app
+			startActivity(
+					new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+id)));
+
+			
+//			Intent lVideoIntent = new Intent(null, Uri.parse("ytv://"+id), ShowMovieDetails.this, OpenYouTubePlayerActivity.class);
+//			startActivity(lVideoIntent);
 			
 			//Use default video player
-			
 //			ProcessYoutubeIdTask task = new ProcessYoutubeIdTask(ShowMovieDetails.this,DIALOG_WAIT);
 //			task.execute(id);
 			
-			//Use Youtube app
-//			startActivity(
-//					new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v="+id)));
+
 		}
 
 	}

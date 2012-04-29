@@ -42,7 +42,7 @@ implements IRequestListener
 	public MoviesListControl(Activity hostedActivity, ListView listview, String title, Handler handler) {
 		this.hostedActivity = hostedActivity;
 		this.handler = handler;
-//		this.title = title;
+		//		this.title = title;
 		this.title = null;
 		initListview(listview);
 		resetData();
@@ -55,6 +55,8 @@ implements IRequestListener
 		loadingData = false;
 		if ( footer != null ) {
 			footer.enable();
+		} else {
+			createFooter();
 		}
 		initAdapter();
 	}
@@ -102,11 +104,6 @@ implements IRequestListener
 			public void onItemClick(AdapterView<?> arg0, View arg1, int rawPosition,
 					long arg3) {
 				int position = rawPosition - listview.getHeaderViewsCount();
-				if ( title != null ) {
-					Helpers.assertCondition(listview.getHeaderViewsCount() == 1, "Header count is: " + listview.getHeaderViewsCount() + " - it should be 1");
-				} else {
-					Helpers.assertCondition(listview.getHeaderViewsCount() == 0, "Header count is: " + listview.getHeaderViewsCount() + " - it should be 0");
-				}
 				Helpers.assertCondition( moviesList != null, "Movie list is NULL");
 				Helpers.assertCondition( moviesList.size() > position, "Position: " + position + " -- mvlist size: " + moviesList.size() );
 				MovieItem item = moviesList.get(position);
@@ -114,8 +111,7 @@ implements IRequestListener
 				Intent i = new Intent(
 						MoviesListControl.this.hostedActivity.getApplicationContext(),
 						ShowMovieDetails.class);
-				MoviesListControl.this.hostedActivity.startActivity(i);
-
+				Helpers.enterActivity(hostedActivity, i);
 			}
 		});
 	}
@@ -154,7 +150,15 @@ implements IRequestListener
 
 	private void onLoadMore() {
 		if ( isLastPage() ) {
-			footer.disable();
+			if ( footer != null) {
+				footer.disable();
+				if ( listview.removeFooterView(footer) ) {
+					Logger.logInfo("Footer is removed !");
+				} else {
+					Logger.logInfo("Footer is NOT removed !");
+				}
+				footer = null;
+			}
 		} else {
 			if ( ! loadingData ) {
 				markLoadingData();
@@ -195,10 +199,10 @@ implements IRequestListener
 	@Override
 	public void onRequestSuccess(Object data) {
 		this.hasData = true;
-		
+
 		@SuppressWarnings("unchecked")
 		Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
-		
+
 		this.totalPage = pair.first;
 		moviesList.append(pair.second);
 		Helpers.startAfter(DELAY_LOAD_MORE, new Runnable() {

@@ -86,10 +86,6 @@ public class HDCenterActivity extends FramesActivity {
 		frames.add(new MoreFrame(this));
 	}
 
-	@Override
-	protected int getDefaultFrame() {
-		return FRAME_CINEMA;
-	}
 
 	@Override
 	protected int highlightTabResource(int i) {
@@ -104,6 +100,11 @@ public class HDCenterActivity extends FramesActivity {
 	@Override
 	protected int[] provideTabIds() {
 		return new int[] {R.id.btTabCinema,R.id.btTabRecommend,R.id.btTabMore};
+	}
+
+	@Override
+	protected int getDefaultFrame() {
+		return FRAME_CINEMA;
 	}
 
 
