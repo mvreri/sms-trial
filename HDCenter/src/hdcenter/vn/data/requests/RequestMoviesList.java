@@ -10,15 +10,13 @@ import org.json.JSONObject;
 
 import android.util.Pair;
 
-public abstract class RequestMoviesList extends Request {
+public abstract class RequestMoviesList extends PaggableRequest {
 
 	private static final String TOTAL = "total";
 	private static final String RESULT = "result";
 
-	private int page;
 	public RequestMoviesList(int page) {
-		super();
-		this.page = page;
+		super(page);
 	}
 
 	@Override
@@ -42,14 +40,6 @@ public abstract class RequestMoviesList extends Request {
 			}
 		}
 		return new Pair<Integer,MoviesList>(total,list);
-	}
-
-	public void setPage(int page) {
-		this.page = page;
-	}
-
-	public int getPage() {
-		return page;
 	}
 
 }

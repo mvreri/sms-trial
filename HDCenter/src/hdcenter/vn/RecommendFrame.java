@@ -1,7 +1,8 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqRecommendMovies;
-import hdcenter.vn.ui.MoviesListControl;
+import hdcenter.vn.ui.AutoMoviesListControl;
+import hdcenter.vn.ui.EndlessListControl;
 import hdcenter.vn.utils.Helpers;
 import android.app.Activity;
 import android.app.Dialog;
@@ -15,7 +16,7 @@ public class RecommendFrame
 {
 
 	private static final int FIRST_PAGE = 1;
-	private MoviesListControl movieList;
+	private EndlessListControl movieList;
 	private Handler handler = null;
 
 	public RecommendFrame(Activity activity) {
@@ -42,7 +43,7 @@ public class RecommendFrame
 	private void createViews() {
 		String title = getResources().getString(R.string.recommend_movies);
 		
-		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, handler);
+		movieList = new AutoMoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, handler);
 		movieList.setRequest(new ReqRecommendMovies(FIRST_PAGE));
 		movieList.requestFirstPage();
 	}

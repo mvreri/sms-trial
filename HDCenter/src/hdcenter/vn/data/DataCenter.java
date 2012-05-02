@@ -1,5 +1,6 @@
 package hdcenter.vn.data;
 
+import hdcenter.vn.data.requests.PaggableRequest;
 import hdcenter.vn.data.requests.ReqCollections;
 import hdcenter.vn.data.requests.ReqGenres;
 import hdcenter.vn.data.requests.ReqMovieDetail;
@@ -46,5 +47,9 @@ public class DataCenter {
 
 	public static void requestCollections(IRequestListener listener, Handler handler) {
 		RequestWorker.add(new ReqCollections(), listener, handler);
+	}
+
+	public static void addPaggableRequest(PaggableRequest request, IRequestListener listener, Handler handler) {
+		RequestWorker.add(request, listener, handler);
 	}
 }

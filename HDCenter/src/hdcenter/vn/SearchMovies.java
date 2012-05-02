@@ -1,7 +1,8 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqSearch;
-import hdcenter.vn.ui.MoviesListControl;
+import hdcenter.vn.ui.AutoMoviesListControl;
+import hdcenter.vn.ui.EndlessListControl;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.StringHelpers;
 import android.app.Activity;
@@ -30,7 +31,7 @@ public class SearchMovies extends Activity
 	private static final int FIRST_PAGE = 1;
 	protected Handler handler = new Handler();
 	private String keyword;
-	private MoviesListControl moviesList = null;
+	private EndlessListControl moviesList = null;
 	private AutoCompleteTextView atSearch;
 	private View btHome;
 	private View btSearch;
@@ -51,7 +52,7 @@ public class SearchMovies extends Activity
 	}
 
 	private void bindListview() {
-		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), null, handler);
+		moviesList = new AutoMoviesListControl(this, (ListView) findViewById(R.id.lvMovies), null, handler);
 	}
 
 	private void bindTopbar() {
