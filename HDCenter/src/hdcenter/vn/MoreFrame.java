@@ -24,7 +24,7 @@ public class MoreFrame extends FrameView {
 
 
 	static final int[] ITEM_NAMES_ID = { R.string.newly_updated, R.string.genres , R.string.collections };
-	static final Class[] ACTIVITIES = { NewMovies.class, MovieGenres.class, MovieCollections.class };
+	static final Class<?>[] ACTIVITIES = { NewMovies.class, MovieGenres.class, MovieCollections.class };
 	private static final int ITEM_LAYOUT = R.layout.more_item_layout;
 	private ListView listView;
 	private SimpleTextAdapter adapter;

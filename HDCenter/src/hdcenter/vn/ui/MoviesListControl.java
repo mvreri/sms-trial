@@ -41,6 +41,7 @@ implements IRequestListener
 
 	public MoviesListControl(Activity hostedActivity, ListView listview, String title, Handler handler) {
 		this.hostedActivity = hostedActivity;
+		Helpers.assertCondition(handler != null, "");
 		this.handler = handler;
 		//		this.title = title;
 		this.title = null;
@@ -201,22 +202,30 @@ implements IRequestListener
 		this.hasData = true;
 
 		@SuppressWarnings("unchecked")
-		Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
-
+		final Pair<Integer,MoviesList> pair = (Pair<Integer, MoviesList>) data;
 		this.totalPage = pair.first;
-		moviesList.append(pair.second);
-		Helpers.startAfter(DELAY_LOAD_MORE, new Runnable() {
+		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						adapter.notifyDataSetChanged();
-						unmarkLoadingData();
-					}
-				});
+				
+//				DEBUG_CODE
+//				final long handlerThreadId = Thread.currentThread().getId();
+//				hostedActivity.runOnUiThread(new Runnable() {
+//					@Override
+//					public void run() {
+//						Logger.logInfo("Run thread Assertion");
+//						long uiThreadId = Thread.currentThread().getId();
+//						Helpers.assertCondition(uiThreadId == handlerThreadId, "Post change from wrong thread: UI-thread: " + uiThreadId + " --- posted from thread: " + handlerThreadId );
+//					}
+//				});
+//				//END DEBUG CODES
+				moviesList.append(pair.second);		
+				adapter.notifyDataSetChanged();
+				unmarkLoadingData();
 			}
-		});
+		},DELAY_LOAD_MORE);
+
+
 	}
 
 	@Override

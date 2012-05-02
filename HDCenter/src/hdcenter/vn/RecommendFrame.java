@@ -16,6 +16,7 @@ public class RecommendFrame
 
 	private static final int FIRST_PAGE = 1;
 	private MoviesListControl movieList;
+	private Handler handler = null;
 
 	public RecommendFrame(Activity activity) {
 		super(activity);
@@ -23,7 +24,7 @@ public class RecommendFrame
 
 	@Override
 	public void onCreate(Context context) {
-//		Logger.logInfo("onCreate() is called !");
+		handler = new Handler();
 		Helpers.inflate(getContext(), R.layout.movies_listview, this);
 		createViews();
 		
@@ -39,9 +40,9 @@ public class RecommendFrame
 	}
 
 	private void createViews() {
-//		Logger.logInfo("createViews() is called !");
 		String title = getResources().getString(R.string.recommend_movies);
-		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, new Handler());
+		
+		movieList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, handler);
 		movieList.setRequest(new ReqRecommendMovies(FIRST_PAGE));
 		movieList.requestFirstPage();
 	}

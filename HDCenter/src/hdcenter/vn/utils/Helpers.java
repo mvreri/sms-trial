@@ -49,22 +49,6 @@ public class Helpers {
 		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, i, r.getDisplayMetrics());
 	}
 
-	public static void startAfter(final int waitingTime,final Runnable runner) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					synchronized (this) {
-						this.wait(waitingTime);
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				runner.run();
-			}
-		}).start();
-	}
-
 	public static void hideSoftKeyboard(Activity act, View view) {
 		InputMethodManager imm = (InputMethodManager) act.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(view.getApplicationWindowToken(), 0);

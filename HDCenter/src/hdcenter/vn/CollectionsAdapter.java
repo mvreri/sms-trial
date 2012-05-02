@@ -1,9 +1,5 @@
 package hdcenter.vn;
 
-import javax.crypto.spec.IvParameterSpec;
-
-import dtd.phs.lib.ui.images_loader.ImageLoader;
-import hdcenter.vn.CollectionsAdapter.Holder;
 import hdcenter.vn.entities.MovieCollectionsList;
 import hdcenter.vn.utils.Helpers;
 import android.content.Context;
@@ -13,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import dtd.phs.lib.ui.images_loader.ImageLoader;
 
 public class CollectionsAdapter extends BaseAdapter {
 

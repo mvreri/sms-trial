@@ -75,6 +75,9 @@ public abstract class Request {
 		return false;
 	}
 	
+	/**
+	 * To be ovewritten if cache is required 
+	 */	
 	protected void saveCacheData(Object data) {
 		//do nothing - to be overwritten 
 	}

@@ -5,6 +5,7 @@ import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.ui.SimpleTextAdapter;
 import hdcenter.vn.ui.Topbar;
 import hdcenter.vn.utils.Helpers;
+import hdcenter.vn.utils.Logger;
 import hdcenter.vn.utils.StringHelpers;
 
 import java.util.ArrayList;
@@ -24,12 +25,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class MovieGenres 
-	extends Activity 
-	implements IRequestListener 
+extends Activity 
+implements IRequestListener 
 {
 
-	private static final int ITEM_LAYOUT = R.layout.more_item_layout;
-	
 	private ListView lvGeneres;
 	private Handler handler = new Handler();
 	private ArrayList<Pair<String, String>> genres;
@@ -37,12 +36,12 @@ public class MovieGenres
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    requestWindowFeature(Window.FEATURE_NO_TITLE);
-	    setContentView(R.layout.sub_activity);
-	    bindViews();
+		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.sub_activity);
+		bindViews();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -75,7 +74,9 @@ public class MovieGenres
 
 	@Override
 	public void onRequestSuccess(Object data) {
-		HashMap<String, String> mapE2V = (HashMap<String, String>) data;		
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> mapE2V = (HashMap<String, String>) data;
+		
 		genres = extractGenresList(mapE2V);
 		SimpleTextAdapter adapter = new SimpleTextAdapter(getApplicationContext(), R.layout.more_item_layout, extractVNnames(genres));
 		lvGeneres.setAdapter(adapter);
@@ -86,7 +87,7 @@ public class MovieGenres
 		for(String key : mapE2V.keySet()) {
 			list.add(new Pair<String, String>(key, mapE2V.get(key)));
 		}
-		
+
 		//Sort according to Vietnamese translation
 		Collections.sort(list, new Comparator<Pair<String,String>>() {
 			@Override
@@ -98,7 +99,7 @@ public class MovieGenres
 				return left.compareTo(right);
 			}
 		});
-		
+
 		return list;
 	}
 
@@ -112,8 +113,7 @@ public class MovieGenres
 
 	@Override
 	public void onRequestError(Exception e) {
-		// TODO Auto-generated method stub
-		
+		Logger.logError(e);
 	}
 
 }
