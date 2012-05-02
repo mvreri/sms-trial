@@ -1,10 +1,15 @@
 package hdcenter.vn.data.requests;
 
+import hdcenter.vn.utils.Logger;
+import hdcenter.vn.utils.PreferenceHelpers;
+
 import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.content.Context;
 
 public class ReqGenres extends Request {
 
@@ -12,12 +17,14 @@ public class ReqGenres extends Request {
 	private static final String ALL = "all";
 	private static final String PAGE = "page";
 	private static final String GENRE = "genre";
-	
-	private int page;
 
-	public ReqGenres(int page) {
+	private int page;
+	private Context context;
+
+	public ReqGenres(Context context, int page) {
 		super();
 		this.page = page;
+		this.context = context;
 	}
 
 	@Override
@@ -46,5 +53,38 @@ public class ReqGenres extends Request {
 		}
 		return mapE2V;
 	}
+
+
+	@Override
+	protected boolean isCached() {
+		return PreferenceHelpers.isGenresCached(context);
+	}
+
+	/**
+	 * Programming notes:
+	 * All these cache methods hurt encapsulation: they all know about implementation details of class Request !
+	 * One can say that is the general problem of inheritance - but this one hurts more than normal inheritance
+	 */
+	@Override
+	protected Object cachedData() {
+		String resultString = PreferenceHelpers.getCachedGenres(context);
+		try {
+			return parseData(resultString);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	protected void saveCacheData(Object data) {
+		if ( data == null || ! (data instanceof HashMap)) {
+			Logger.logError("Invalid return data");
+			return;
+		}
+		@SuppressWarnings("unchecked")
+		HashMap<String, String> mapE2V = (HashMap<String, String>) data;
+		PreferenceHelpers.cacheGenres(context,mapE2V);
+	}
+
 
 }

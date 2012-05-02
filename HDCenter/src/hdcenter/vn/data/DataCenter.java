@@ -7,6 +7,7 @@ import hdcenter.vn.data.requests.ReqNewMovies;
 import hdcenter.vn.data.requests.ReqRecommendMovies;
 import hdcenter.vn.data.requests.ReqSearch;
 import hdcenter.vn.data.requests.RequestMoviesList;
+import android.content.Context;
 import android.os.Handler;
 
 
@@ -39,8 +40,8 @@ public class DataCenter {
 	}
 
 	private static final int FIRST_PAGE = 1;
-	public static void requestGenres(IRequestListener listener, Handler handler) {
-		RequestWorker.add(new ReqGenres(FIRST_PAGE), listener, handler);
+	public static void requestGenres(Context context, IRequestListener listener, Handler handler) {
+		RequestWorker.add(new ReqGenres(context, FIRST_PAGE), listener, handler);
 	}
 
 	public static void requestCollections(IRequestListener listener, Handler handler) {

@@ -65,7 +65,7 @@ implements IRequestListener
 				Helpers.enterActivity(MovieGenres.this, i);
 			}
 		});
-		DataCenter.requestGenres(this,handler);
+		DataCenter.requestGenres(this.getApplicationContext(),this,handler);
 	}
 
 	private void bindTopbar() {

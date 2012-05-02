@@ -1,5 +1,9 @@
 package hdcenter.vn.utils;
 
+import java.util.HashMap;
+
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -8,7 +12,7 @@ public class PreferenceHelpers {
 
 	public static void setPreference(Context context,String prefName, String data) {
 		Logger.logInfo("Pref: " + prefName + " is set to: " + (data == null ? "NULL":data) );
-		
+
 		SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = settings.edit();
 		editor.putString(prefName, data);
@@ -21,17 +25,17 @@ public class PreferenceHelpers {
 		return prefData;        
 	}
 
-	
+
 	private static final Object FALSE_VALUE = "false";
 	private static final String PREF_ON_RATE_LINK_CLICKED = "PREF_ON_RATE_LINK_CLICKED";
-	
+
 	public static boolean clickedOnRateLink(Context context) {
 		String str = getPreference(context, PREF_ON_RATE_LINK_CLICKED);
 		if ( str == null || str.equals(FALSE_VALUE)) {
 			return false;
 		} else return true;
 	}
-	
+
 	public static void markOnRateLinkClicked(Context context) {
 		setPreference(context, PREF_ON_RATE_LINK_CLICKED, String.valueOf(true));
 	}
@@ -40,7 +44,9 @@ public class PreferenceHelpers {
 	private static final String PREF_FIRST_TIME = "PREF_FIRST_TIME";
 	private static final String PREF_LAST_CLEAN_UP_SD = "PREF_LAST_CLEAN_UP_SD_CARD";
 	private static final String PREF_LAST_FRAME = "PREF_LAST_SELECTED_FRAME";
-	
+	private static final String PREF_CACHED_GENRES = "PREF_CACHED_GENRES";
+	private static final long GENRES_CACHE_THRESHOLD = 3*24*60*60*1000; //3 days
+
 	public static int getSuccessSentMessagesCount(Context context) {
 		String str = getPreference(context, PREF_COUNT_SUCC_SENT);
 		try {
@@ -50,7 +56,7 @@ public class PreferenceHelpers {
 			return 0;
 		}
 	}
-	
+
 	public static void increaseSuccMessagesCount(Context context) {
 		int count = getSuccessSentMessagesCount(context);
 		count++;
@@ -66,7 +72,7 @@ public class PreferenceHelpers {
 		if ( firstTime == null ) {
 			return true;
 		} else return false;
-		
+
 	}
 
 	public static void disableFirstTimeRunning(Context context) {
@@ -82,7 +88,7 @@ public class PreferenceHelpers {
 		} else {
 			return Long.parseLong(lastTime);
 		}
-		
+
 	}
 
 	public static void setLastCleanupTime(Context context, long time) {
@@ -104,5 +110,43 @@ public class PreferenceHelpers {
 			return -1;
 		}
 	}
-	
+
+
+	public static void cacheGenres(Context context,HashMap<String, String> mapE2V) {
+		try {
+			JSONObject obj = new JSONObject(mapE2V);
+			setPreference(context, PREF_CACHED_GENRES,""+System.currentTimeMillis()+" "+obj.toString() );
+		} catch (Exception e) {
+			Logger.logError(e);
+		}
+	}
+
+	public static boolean isGenresCached(Context context) {
+		String result = getPreference(context, PREF_CACHED_GENRES);
+		if ( result == null) return false;
+		int index = result.indexOf(' ');
+		if ( index == -1) return false;
+		long cachedTime = 0;
+		try {
+			cachedTime = Long.parseLong(result.substring(0, index));
+		} catch (Exception e) {
+			Logger.logError(e);
+			return false;
+		}
+		
+		if ( System.currentTimeMillis() - cachedTime > GENRES_CACHE_THRESHOLD) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+
+	public static String getCachedGenres(Context context) {
+		String result = getPreference(context, PREF_CACHED_GENRES);
+		int index = result.indexOf(' ');
+		String data = result.substring(index+1);
+		return data;
+	}
+
 }

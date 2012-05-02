@@ -33,6 +33,7 @@ public abstract class RequestMoviesList extends Request {
 					MovieItem item  = MovieItem.createFromJSONObject(jarray.getJSONObject(i));
 					list.add(item);
 				} catch (JSONException e) {
+					//TODO: remove this code - this is the server error
 					if ( i == jarray.length()-1) {
 						Logger.logError("Server error: _,_ after last array element");
 						break;
