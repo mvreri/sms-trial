@@ -5,8 +5,8 @@ import hdcenter.vn.data.requests.RequestMoviesList;
 
 public class ShowCollection extends ListMoviesActivity {
 
-	protected static final String EXTRA_ID = "extra_id";
-	protected static final String EXTRA_NAME = "extra_name";
+	public static final String EXTRA_ID = "extra_id";
+	public static final String EXTRA_NAME = "extra_name";
 	private static final int FIRST_PAGE = 1;
 	
 	private String id;

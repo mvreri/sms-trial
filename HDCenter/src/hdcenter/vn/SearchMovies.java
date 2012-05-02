@@ -1,7 +1,7 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqSearch;
-import hdcenter.vn.ui.AutoMoviesListControl;
+import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.EndlessListControl;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.StringHelpers;
@@ -52,7 +52,7 @@ public class SearchMovies extends Activity
 	}
 
 	private void bindListview() {
-		moviesList = new AutoMoviesListControl(this, (ListView) findViewById(R.id.lvMovies), null, handler);
+		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), null, handler);
 	}
 
 	private void bindTopbar() {

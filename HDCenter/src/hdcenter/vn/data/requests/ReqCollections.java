@@ -9,7 +9,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ReqCollections extends Request {
+import android.util.Pair;
+
+public class ReqCollections extends PaggableRequest {
+
+
 
 	private static final int FIRST_PAGE = 1;
 	private static final String PAGE = "page";
@@ -19,6 +23,11 @@ public class ReqCollections extends Request {
 	private static final String TOTAL = "total";
 	private static final String RESULT = "result";
 
+	public ReqCollections(int page) {
+		super(page);
+		// TODO Auto-generated constructor stub
+	}
+	
 	@Override
 	protected String provideAPIName() {
 		return API_COLLECTION;
@@ -26,12 +35,12 @@ public class ReqCollections extends Request {
 
 	@Override
 	protected void provideParameters(HashMap<String, String> parameters) {
-		parameters.put(PAGE, String.valueOf(FIRST_PAGE));
+		parameters.put(PAGE, String.valueOf(getPage()));
 		parameters.put(ID, ALL);
 	}
 
 	@Override
-	protected MovieCollectionsList parseData(String resultString) throws JSONException {
+	protected Pair<Integer, MovieCollectionsList> parseData(String resultString) throws JSONException {
 		MovieCollectionsList list = new MovieCollectionsList();
 		JSONObject object = new JSONObject(resultString);
 		int total = object.getInt(TOTAL);
@@ -42,7 +51,7 @@ public class ReqCollections extends Request {
 				list.add(item);
 			}			
 		}
-		return list;
+		return new Pair<Integer,MovieCollectionsList>(total,list);
 	}
 
 }

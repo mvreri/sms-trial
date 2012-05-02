@@ -13,9 +13,9 @@ import android.os.Handler;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
-public class AutoMoviesListControl extends EndlessListControl {
+public class MoviesListControl extends EndlessListControl {
 
-	public AutoMoviesListControl(Activity hostedActivity, ListView listview,String title, Handler handler) {
+	public MoviesListControl(Activity hostedActivity, ListView listview,String title, Handler handler) {
 		super(hostedActivity, listview, title, handler);
 	}
 

@@ -1,7 +1,7 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.RequestMoviesList;
-import hdcenter.vn.ui.AutoMoviesListControl;
+import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.EndlessListControl;
 import hdcenter.vn.ui.Topbar;
 import hdcenter.vn.utils.Helpers;
@@ -63,7 +63,7 @@ public abstract class ListMoviesActivity extends Activity {
 	}
 
 	private void bindMoviesList() {
-		moviesList = new AutoMoviesListControl(this, (ListView) findViewById(R.id.lvMovies), getListTitle(), new Handler());
+		moviesList = new MoviesListControl(this, (ListView) findViewById(R.id.lvMovies), getListTitle(), new Handler());
 		moviesList.setRequest(provideRequest());
 		moviesList.requestFirstPage();
 	}

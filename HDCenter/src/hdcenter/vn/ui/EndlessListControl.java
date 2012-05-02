@@ -230,7 +230,7 @@ implements IRequestListener
 		Logger.logError(e);
 	}
 
-	public void setRequest(RequestMoviesList request) {
+	public void setRequest(PaggableRequest request) {
 		this.request = request;
 	}
 
