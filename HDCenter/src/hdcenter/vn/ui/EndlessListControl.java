@@ -26,15 +26,16 @@ public abstract class EndlessListControl
 implements IRequestListener
 {
 
-	
+
 	abstract protected BaseAdapter createAdapter(Activity hostedActivity,ArrayList<?> itemsList, Handler handler);
+	
 	/*
 	 * Provide the empty list of items - 
 	 * this should be done because the endlesslistview need the empty data at first, 
 	 * and load more & more data later on to add to the first empty set
 	 */
 	abstract protected ArrayList<?> provideEmptyData();
-	
+
 	abstract protected void appendItems(ArrayList<?> itemsList, ArrayList<?> additionalData);
 
 
@@ -75,10 +76,8 @@ implements IRequestListener
 		initAdapter();
 	}
 
-	 // TODO: this should be refactored
 	private void initAdapter() {
 		itemsList = provideEmptyData();
-//		adapter = new MovieAdapter(hostedActivity, itemsList, handler);
 		adapter = createAdapter( hostedActivity, itemsList, handler );
 		listview.setAdapter(adapter);
 	}
@@ -97,17 +96,15 @@ implements IRequestListener
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
-				
+
 				if ( hasData && !loadingData && firstVisibleItem + visibleItemCount >= totalItemCount) {
-					Helpers.assertCondition(footer != null, "");
 					onLoadMore();
 				}
 			}
 		});
 	}
 
-	//Checked
-	private void createHeader() {
+													private void createHeader() {
 		if ( this.title != null ) {
 			TextView tv = (TextView) Helpers.inflate(hostedActivity, R.layout.movies_list_header, null);
 			tv.setText(this.title);
@@ -115,7 +112,6 @@ implements IRequestListener
 		}
 	}
 
-	// TODO: this should be refactored
 	private void setOnItemClickListener() {
 		this.listview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -125,20 +121,14 @@ implements IRequestListener
 				int position = rawPosition - listview.getHeaderViewsCount();
 				Helpers.assertCondition( itemsList != null, "Movie list is NULL");
 				Helpers.assertCondition( itemsList.size() > position, "Position: " + position + " -- mvlist size: " + itemsList.size() );
-
 				Object item = itemsList.get(position);
 				onListItemClick(position,item);
-//				ShowMovieDetails.passedSummaryItem = item;
-//				Intent i = new Intent(
-//						MoviesListControl.this.hostedActivity.getApplicationContext(),
-//						ShowMovieDetails.class);
-//				Helpers.enterActivity(hostedActivity, i);
 			}
 
 
 		});
 	}
-	
+
 	abstract public void onListItemClick(int position, Object item);
 
 
@@ -167,18 +157,19 @@ implements IRequestListener
 	 *  - Be careful with case: last page = first page
 	 *  
 	 */	
-	//Checked
 	private void createFooter() {
+		Logger.logInfo("Footer is created");
 		this.footer = new ListFooter(hostedActivity.getApplicationContext());
 		this.listview.addFooterView(footer);
 	}
 
-	//Checked
 	private void onLoadMore() {
-		if ( isLastPage() && footer != null) {
-			footer.disable();
-			listview.removeFooterView(footer);
-			footer = null;
+		if ( isLastPage() ) {
+			if ( footer != null) {
+				footer.disable();
+				listview.removeFooterView(footer);
+				footer = null;
+			}
 		} else {
 			if ( ! loadingData ) {
 				markLoadingData();
@@ -189,19 +180,16 @@ implements IRequestListener
 		}
 	}
 
-	//Checked
 	private void markLoadingData() {
 		loadingData = true;
 		footer.showWaiting();
 	}
 
-	//Checked
 	private void unmarkLoadingData() {
 		loadingData = false;
 		footer.showLoadMore();
 	}
 
-	//Checked
 	protected boolean isLastPage() {
 		/**
 		 * CODER'S NOTES (just for me)
@@ -214,13 +202,9 @@ implements IRequestListener
 		return currentPage >= totalPage;
 	}
 
-	//TODO: refactor
-	//	The result is returned as pair(totalPage,moviesList)
-	//		- adapter should be initialized & set to listview before (note: after footer)
-	//		- the moviesList should always be added, not new !
 	@Override
 	public void onRequestSuccess(Object data) {
-		this.hasData = true;
+
 
 		@SuppressWarnings("unchecked")
 		final Pair<Integer,ArrayList<?>> pair = (Pair<Integer, ArrayList<?>>) data;
@@ -228,8 +212,8 @@ implements IRequestListener
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
+				EndlessListControl.this.hasData = true;
 				appendItems(itemsList,pair.second);
-//				itemsList.append(pair.second);		
 				adapter.notifyDataSetChanged();
 				unmarkLoadingData();
 			}
@@ -240,38 +224,33 @@ implements IRequestListener
 
 
 
-	//Checked
 	@Override
 	public void onRequestError(Exception e) {
 		unmarkLoadingData();
 		Logger.logError(e);
 	}
 
-	//Checked
 	public void setRequest(RequestMoviesList request) {
 		this.request = request;
 	}
 
-	//Checked
 	public void requestFirstPage() {
 		markLoadingData();
 		currentPage = 1;
 		requestCurrentPage();
 	}
 
-	//Checked
 	protected void requestNextPage() {
 		currentPage++;
 		Helpers.assertCondition(currentPage <= totalPage, "Surpassed last page !");
 		requestCurrentPage();
 	}
 
-	//Fixed
 	private void requestCurrentPage() {
 		request.setPage(currentPage);
 		DataCenter.addPaggableRequest(request,this, handler);
 	}
-	
+
 	public Activity getHostedActivity() {
 		return hostedActivity;
 	}
