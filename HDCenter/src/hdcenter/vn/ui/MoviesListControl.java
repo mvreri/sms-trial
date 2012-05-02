@@ -46,10 +46,10 @@ implements IRequestListener
 		//		this.title = title;
 		this.title = null;
 		initListview(listview);
-		resetData();
+		reset();
 	}
 
-	public void resetData() {
+	public void reset() {
 		currentPage = 0;
 		totalPage = 1;
 		hasData = false;
@@ -75,7 +75,6 @@ implements IRequestListener
 		createFooter();
 		this.hasData = false;
 		this.listview.setOnScrollListener(new OnScrollListener() {
-
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 			}
@@ -137,7 +136,7 @@ implements IRequestListener
 	 * 		show clickable footer
 	 * 	EndIf
 	 * 
-	 * -> Notes:
+	 * -> Coder's notes:
 	 * 	- Total page should be returned, not only the moviesList
 	 * 	- Don't create new adapter everytime the result returns, just add data
 	 *  - Pay attention 3 cases: first page, (2,3,4....), last page
@@ -150,22 +149,16 @@ implements IRequestListener
 	}
 
 	private void onLoadMore() {
-		if ( isLastPage() ) {
-			if ( footer != null) {
-				footer.disable();
-				if ( listview.removeFooterView(footer) ) {
-					Logger.logInfo("Footer is removed !");
-				} else {
-					Logger.logInfo("Footer is NOT removed !");
-				}
-				footer = null;
-			}
+		if ( isLastPage() && footer != null) {
+			footer.disable();
+			listview.removeFooterView(footer);
+			footer = null;
 		} else {
 			if ( ! loadingData ) {
 				markLoadingData();
 				requestNextPage();
 			} else {
-				Helpers.assertCondition(false, "This button shouldn't be clickable now !");
+				Logger.logError("This shouldn't be called now !");
 			}
 		}
 	}
@@ -184,7 +177,7 @@ implements IRequestListener
 
 	protected boolean isLastPage() {
 		/**
-		 * PROGRAMMING NOTES (just for me)
+		 * CODER'S NOTES (just for me)
 		 * The assert is failed when a searching with no results returned - 
 		 * It's nobody fault, it's just the inconsistent between PHP & Java (indexing: 1 & indexing: 0 ) 
 		 * 	-> different logic thinking between coders (about index & totalpage)
@@ -207,18 +200,6 @@ implements IRequestListener
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				
-//				DEBUG_CODE
-//				final long handlerThreadId = Thread.currentThread().getId();
-//				hostedActivity.runOnUiThread(new Runnable() {
-//					@Override
-//					public void run() {
-//						Logger.logInfo("Run thread Assertion");
-//						long uiThreadId = Thread.currentThread().getId();
-//						Helpers.assertCondition(uiThreadId == handlerThreadId, "Post change from wrong thread: UI-thread: " + uiThreadId + " --- posted from thread: " + handlerThreadId );
-//					}
-//				});
-//				//END DEBUG CODES
 				moviesList.append(pair.second);		
 				adapter.notifyDataSetChanged();
 				unmarkLoadingData();
@@ -251,7 +232,6 @@ implements IRequestListener
 	}
 
 	private void requestCurrentPage() {
-
 		request.setPage(currentPage);
 		DataCenter.addMoviesListRequest(request, this, handler);
 	}
