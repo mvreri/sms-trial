@@ -29,10 +29,10 @@ implements IRequestListener
 	private Activity hostedActivity;
 	private ListView listview;
 	protected MoviesList moviesList = null;
-	private MovieAdapter adapter = null;
+	private MovieAdapter adapter = null; // TODO: baseAdapter
 	private Handler handler = null;
-	private RequestMoviesList request;
-	private MoviesListFooter footer;
+	private RequestMoviesList request; //TODO: Request
+	private ListFooter footer;
 	protected boolean loadingData;
 	protected int currentPage;
 	private int totalPage;
@@ -144,7 +144,7 @@ implements IRequestListener
 	 *  
 	 */	
 	private void createFooter() {
-		this.footer = new MoviesListFooter(hostedActivity.getApplicationContext());
+		this.footer = new ListFooter(hostedActivity.getApplicationContext());
 		this.listview.addFooterView(footer);
 	}
 

@@ -11,7 +11,7 @@ import android.widget.FrameLayout;
  * @author hungson175
  *	This class provides only the methods to hide/show views - nothing more
  */
-public class MoviesListFooter
+public class ListFooter
 extends FrameLayout 
 {
 
@@ -19,7 +19,7 @@ extends FrameLayout
 	private static final int WAITING_FRAME = 1;
 	private FrameLayout mainFrames;
 
-	public MoviesListFooter(Context context) {
+	public ListFooter(Context context) {
 		super(context);
 		Helpers.inflate(getContext(), R.layout.footer, this);
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
