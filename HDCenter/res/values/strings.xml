@@ -21,5 +21,7 @@
     <string name="cinema_movies">Phim rạp</string>
     <string name="summary">Tóm tắt:</string>
     <string name="no_trailer">Không tìm được trailer</string>
+    <string name="description">Tóm tắt</string>
+    <string name="calendars">Lịch chiếu</string>
 
 </resources>

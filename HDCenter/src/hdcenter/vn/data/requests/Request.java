@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 import org.json.JSONException;
 
-public abstract class Request {
+public abstract class Request implements IRequest {
 	private static final String BASE_URL = "phim.hdcenter.vn/api/";
 
 	abstract protected String provideAPIName();

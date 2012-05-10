@@ -1,5 +1,6 @@
 package hdcenter.vn.data;
 
+import hdcenter.vn.data.requests.IRequest;
 import hdcenter.vn.data.requests.Request;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class RequestWorker {
 	private volatile static AutoCleanThread workerThread = null;
 
 	public static void add(
-			final Request request,
+			final IRequest request,
 			final IRequestListener listener,
 			final Handler handler) {
 		getWorkerThread().addJob(new Runnable() {
@@ -27,25 +28,29 @@ public class RequestWorker {
 							listener.onRequestSuccess(data);
 						}
 					});
-					
-				} catch (IOException e) {
+
+				} catch (final Exception e) {
 					handler.post(new Runnable() {
 						@Override
 						public void run() {
-							listener.onRequestError( new ConnectionException());
+							listener.onRequestError(parseException(request,e));
 						}
 					});
-				} catch (JSONException e) {
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							listener.onRequestError( new FalseReturnDataException());
-						}
-					});
-					
 				}
 			}
 		});
+	}
+	
+	private static Exception parseException(IRequest request, Exception e) {
+		Exception res = e;
+		if (request instanceof Request) {
+			if ( e instanceof IOException) {
+				res = new ConnectionException();
+			} else if (e instanceof JSONException) {
+				res = new FalseReturnDataException();
+			}								
+		}  
+		return res;
 	}
 
 	private static  AutoCleanThread getWorkerThread() {

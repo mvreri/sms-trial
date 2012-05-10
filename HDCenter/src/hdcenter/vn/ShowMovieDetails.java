@@ -4,6 +4,7 @@ import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.entities.MovieDetailsItem;
 import hdcenter.vn.entities.MovieItem;
+import hdcenter.vn.ui.SecondaryFrame;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.Logger;
 import android.app.Activity;
@@ -16,7 +17,9 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import dtd.phs.lib.ui.images_loader.ImageLoader;
 
@@ -25,6 +28,8 @@ extends Activity
 implements IRequestListener 
 {
 	private static final int DIALOG_WAIT = 0;
+
+	private static final String DEFAULT_CINEMA_ID = "1001";
 	
 	public static MovieItem passedSummaryItem = null;
 	private MovieItem summItem = null;
@@ -34,22 +39,20 @@ implements IRequestListener
 	private TextView tvRating;
 	private Button btTrailer;
 	private TextView tvStarring;
-	private TextView tvDescription;
 	private ImageLoader imageLoader;
 	private String id;
 	private Handler handler = new Handler();
 	private MovieDetailsItem movieDetails;
 	private OnTrailerClickListener onTrailerButtonClickListener;
 
-//	private TextView tvYear;
-
 	private TextView tvDirector;
+
+	private SecondaryFrame secondaryFrames;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		Logger.logInfo("Called");
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.movie_details);
 		imageLoader = ImageLoader.getInstance(this,R.drawable.movie_stub, handler);
@@ -66,7 +69,6 @@ implements IRequestListener
 		tvName = (TextView) findViewById(R.id.tvName);
 		tvVnName = (TextView) findViewById(R.id.tvVnName);
 		tvRating = (TextView) findViewById(R.id.tvRating);
-//		tvYear = (TextView) findViewById(R.id.tvYear);
 		tvDirector = (TextView) findViewById(R.id.tvDirector);
 		
 		btTrailer = (Button) findViewById(R.id.btTrailer);
@@ -75,7 +77,8 @@ implements IRequestListener
 				
 		tvStarring = (TextView) findViewById(R.id.tvStarring);
 		
-		tvDescription = (TextView) findViewById(R.id.tvDescription);
+//		tvDescription = (TextView) findViewById(R.id.tvDescription);
+		secondaryFrames = new SecondaryFrame((LinearLayout) findViewById(R.id.int_tab_host), handler);
 	}
 
 	private void preloadSummaryInformation() {
@@ -134,19 +137,22 @@ implements IRequestListener
 	@Override
 	public void onRequestSuccess(Object data) {
 		movieDetails = (MovieDetailsItem)data;
-//		Logger.logInfo("Movie details:"+movieDetails.toString());
 		imageLoader.loadImage(movieDetails.getImageURL(), ivAvatar);
 		tvVnName.setText(movieDetails.getVnName() + " (" + movieDetails.getYear() + ")");
-//		tvYear.setText(movieDetails.getYear());
 		tvDirector.setText(movieDetails.getDirector());
 		tvStarring.setText(movieDetails.getStarrings());
-		tvDescription.setText(movieDetails.getDescription());
-	
+		
+		secondaryFrames.setDescription(movieDetails.getDescription());
+		secondaryFrames.requestCalendar(lastChoosenCinema(),movieDetails.getMovieCalendarId());
 		
 		onTrailerButtonClickListener.setVideoId(movieDetails.getYoutubeId());
 	}
 
 	
+	private String lastChoosenCinema() {
+		return DEFAULT_CINEMA_ID;
+	}
+
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {

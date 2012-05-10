@@ -52,4 +52,8 @@ public class DataCenter {
 	public static void addPaggableRequest(PaggableRequest request, IRequestListener listener, Handler handler) {
 		RequestWorker.add(request, listener, handler);
 	}
+
+	public static void requestMovieCalendar(String cinemaId, String movieId, IRequestListener listener, Handler handler) {
+		RequestWorker.add(new ReqMovieCalendars(cinemaId,movieId), listener, handler);
+	}
 }

@@ -19,7 +19,7 @@ public class MegastarParser implements CalendarParser {
 	private String movieId;
 	private String cinemaId;
 
-	public MegastarParser(String movieId, String cinemaId) {
+	public MegastarParser(String cinemaId, String movieId) {
 		this.movieId = movieId;
 		this.cinemaId = cinemaId;
 	}

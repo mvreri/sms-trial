@@ -176,7 +176,7 @@
         android:orientation="vertical"
         android:padding="5dp" >
 
-        <LinearLayout
+	<!--         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
@@ -195,7 +195,13 @@
                 android:text="Description"
                 android:textColor="@color/normal_text_color"
                 android:textSize="@dimen/normal_text_size" />
-        </LinearLayout>
+        </LinearLayout> -->
+		<include
+		    android:id="@+id/int_tab_host"
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"
+		    layout="@layout/frames_desc_cal"
+		    />
     </ScrollView>
 
 </LinearLayout>

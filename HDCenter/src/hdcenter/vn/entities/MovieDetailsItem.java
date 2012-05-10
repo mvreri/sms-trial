@@ -84,4 +84,9 @@ public class MovieDetailsItem {
 		return getData(VN_NAME);
 	}
 
+	//TODO: later
+	public String getMovieCalendarId() {
+		return "The+Avengers";
+	}
+
 }
