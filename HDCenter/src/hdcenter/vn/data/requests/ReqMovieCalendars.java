@@ -1,6 +1,5 @@
-package hdcenter.vn.data;
+package hdcenter.vn.data.requests;
 
-import hdcenter.vn.data.requests.IRequest;
 import hdcenter.vn.movie_calendars.CalendarParser;
 import hdcenter.vn.movie_calendars.CalendarsList;
 import hdcenter.vn.movie_calendars.MegastarParser;
