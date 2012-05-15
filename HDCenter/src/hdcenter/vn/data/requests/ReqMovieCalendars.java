@@ -8,7 +8,7 @@ public class ReqMovieCalendars implements IRequest {
 
 	private String cinemaId;
 	private String movieId;
-	
+
 	public ReqMovieCalendars(String cinemaId, String movieId) {
 		this.cinemaId = cinemaId;
 		this.movieId = movieId;
@@ -16,9 +16,20 @@ public class ReqMovieCalendars implements IRequest {
 
 	@Override
 	public Object requestData() throws Exception {
+		CalendarsList calendars = cachedCalendars();
+		if ( calendars != null ) return calendars;
 		CalendarParser parser = new MegastarParser(cinemaId,movieId);
-		CalendarsList calendars = parser.parse();
+		calendars = parser.parse();
 		return calendars;
+	}
+
+	/**
+	 * 
+	 * @return calendars if cached, null otherwise
+	 */
+	private CalendarsList cachedCalendars() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
