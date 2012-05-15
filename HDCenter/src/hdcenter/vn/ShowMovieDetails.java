@@ -31,6 +31,9 @@ implements IRequestListener
 
 	private static final String DEFAULT_CINEMA_ID = "1001";
 	
+	public static final String EXTRA_MODE = "extra_mode";
+	public static final String MODE_DETAILS = "mode_detail";
+	
 	public static MovieItem passedSummaryItem = null;
 	private MovieItem summItem = null;
 	private ImageView ivAvatar;
@@ -49,6 +52,9 @@ implements IRequestListener
 
 	private SecondaryFrame secondaryFrames;
 
+
+	private boolean isCinemaMovie;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +62,7 @@ implements IRequestListener
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.movie_details);
 		imageLoader = ImageLoader.getInstance(this,R.drawable.movie_stub, handler);
-		getSummaryItem();
+		extractInput();
 		createViews();
 		preloadSummaryInformation();
 
@@ -79,6 +85,7 @@ implements IRequestListener
 		
 //		tvDescription = (TextView) findViewById(R.id.tvDescription);
 		secondaryFrames = new SecondaryFrame((LinearLayout) findViewById(R.id.int_tab_host), handler);
+		if ( ! isCinemaMovie ) secondaryFrames.displayOnlyDescription();
 	}
 
 	private void preloadSummaryInformation() {
@@ -91,9 +98,13 @@ implements IRequestListener
 		}
 	}
 
-	private void getSummaryItem() {
-		this.summItem = passedSummaryItem;
+	private void extractInput() {
+		this.summItem = passedSummaryItem;		
 		passedSummaryItem = null;
+		Intent src = getIntent();
+		if ( src.getStringExtra(EXTRA_MODE) != null ) {
+			this.isCinemaMovie = true;
+		} else this.isCinemaMovie = false;
 	}
 
 	@Override
@@ -143,7 +154,8 @@ implements IRequestListener
 		tvStarring.setText(movieDetails.getStarrings());
 		
 		secondaryFrames.setDescription(movieDetails.getDescription());
-		secondaryFrames.requestCalendar(lastChoosenCinema(),movieDetails.getMovieCalendarId());
+		if ( isCinemaMovie )
+			secondaryFrames.requestCalendar(lastChoosenCinema(),movieDetails.getMovieCalendarId());
 		
 		onTrailerButtonClickListener.setVideoId(movieDetails.getYoutubeId());
 	}

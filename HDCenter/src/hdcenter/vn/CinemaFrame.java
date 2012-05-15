@@ -1,6 +1,7 @@
 package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqCinemaMovies;
+import hdcenter.vn.ui.CinemaMovieListControl;
 import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.EndlessListControl;
 import android.app.Activity;
@@ -29,7 +30,7 @@ public class CinemaFrame extends FrameView {
 
 	private void createViews() {
 		String title = getResources().getString(R.string.cinema_movies);
-		moviesList = new MoviesListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, new Handler());
+		moviesList = new CinemaMovieListControl(getHostedActivity(), (ListView) findViewById(R.id.lvMovies), title, new Handler());
 		moviesList.setRequest(new ReqCinemaMovies(FIRST_PAGE));
 		moviesList.requestFirstPage();
 	}

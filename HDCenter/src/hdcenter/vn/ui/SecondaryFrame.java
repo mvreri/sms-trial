@@ -133,5 +133,9 @@ public class SecondaryFrame implements IRequestListener {
 	public void onRequestError(Exception e) {
 		Logger.logError(e);
 	}
+	
+	public void displayOnlyDescription() {
+		tabs[FRAME_CALENDAR].setVisibility(View.GONE);
+	}
 
 }

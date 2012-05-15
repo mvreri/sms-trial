@@ -45,8 +45,16 @@ public class MoviesListControl extends EndlessListControl {
 		Intent i = new Intent(
 				hostedActivity.getApplicationContext(),
 				ShowMovieDetails.class);
+		addExtra(i);
 		Helpers.enterActivity(hostedActivity, i);
 
+	}
+
+	/** 
+	 * This method is to be overwritten when extra paremeter needed for the intent, which launches ShowMovieDetails activity
+	 * @param i Intent i will be passed to ShowMovieDetails 
+	 */
+	public void addExtra(Intent i) {
 	}
 
 

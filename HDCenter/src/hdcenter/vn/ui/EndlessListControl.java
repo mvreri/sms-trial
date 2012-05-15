@@ -28,7 +28,7 @@ implements IRequestListener
 
 
 	abstract protected BaseAdapter createAdapter(Activity hostedActivity,ArrayList<?> itemsList, Handler handler);
-	
+
 	/*
 	 * Provide the empty list of items - 
 	 * this should be done because the endlesslistview need the empty data at first, 
@@ -104,7 +104,7 @@ implements IRequestListener
 		});
 	}
 
-													private void createHeader() {
+	private void createHeader() {
 		if ( this.title != null ) {
 			TextView tv = (TextView) Helpers.inflate(hostedActivity, R.layout.movies_list_header, null);
 			tv.setText(this.title);

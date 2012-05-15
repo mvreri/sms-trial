@@ -1,7 +1,6 @@
 package hdcenter.vn.ui;
 
 import hdcenter.vn.CollectionsAdapter;
-import hdcenter.vn.MovieCollections;
 import hdcenter.vn.ShowCollection;
 import hdcenter.vn.entities.CollectionItem;
 import hdcenter.vn.entities.MovieCollectionsList;
