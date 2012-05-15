@@ -5,6 +5,9 @@ import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.movie_calendars.CalendarsList;
 import hdcenter.vn.utils.Logger;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,13 +26,15 @@ public class SecondaryFrame implements IRequestListener {
 	private FrameLayout frames;
 	private TextView tvDescription;
 	private ViewGroup root;
-	private View[] tabs;
+	private TextView[] tabs;
 	private LinearLayout calendarFrame;
 	private Handler handler;
 	private CalendarsList calendars;
+	private Context context;
 
 	public SecondaryFrame(ViewGroup layout, Handler handler) {
 		this.root = layout;
+		this.context = layout.getContext();
 		this.handler = handler;
 		bindViews();
 		initTabs();
@@ -43,9 +48,9 @@ public class SecondaryFrame implements IRequestListener {
 	}
 
 	private void initTabs() {
-		this.tabs = new View[frames.getChildCount()];
-		this.tabs[FRAME_DESCRIPTION] = findViewById(R.id.tab_desc);
-		this.tabs[FRAME_CALENDAR] = findViewById(R.id.tab_calendar);
+		this.tabs = new TextView[frames.getChildCount()];
+		this.tabs[FRAME_DESCRIPTION] = (TextView) findViewById(R.id.tab_desc);
+		this.tabs[FRAME_CALENDAR] = (TextView) findViewById(R.id.tab_calendar);
 		
 		for(int i = 0 ; i < frames.getChildCount() ; i++) {
 			final int index = i;
@@ -77,10 +82,17 @@ public class SecondaryFrame implements IRequestListener {
 
 	//TODO: nicer !
 	private void highlightTab(int index) {
+		Resources res = context.getResources();
 		for(int i = 0 ; i < frames.getChildCount() ; i++) {
 			if ( i != index ) {
 				tabs[i].setBackgroundColor(FADE_BG);
-			} else tabs[i].setBackgroundColor(HIGH_LIGHT_BG);
+				tabs[i].setTextColor(res.getColor(R.color.gray));
+				tabs[i].setTextAppearance(context, R.style.normalText);
+			} else {
+				tabs[i].setBackgroundResource(R.drawable.tab_button_hil);
+				tabs[i].setTextColor(res.getColor(R.color.black));
+				tabs[i].setTextAppearance(context, R.style.boldText);
+			}
 		}
 	}
 
