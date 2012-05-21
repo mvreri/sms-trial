@@ -86,7 +86,7 @@ public class MovieDetailsItem {
 
 	//TODO: later
 	public String getMovieCalendarId() {
-		return "The+Avengers";
+		return "Danh+Cho+Thang+Sau";
 	}
 
 }

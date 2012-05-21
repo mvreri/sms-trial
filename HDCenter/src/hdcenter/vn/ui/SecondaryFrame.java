@@ -21,8 +21,7 @@ public class SecondaryFrame implements IRequestListener {
 
 	protected static final int FRAME_DESCRIPTION = 0;
 	protected static final int FRAME_CALENDAR = 1;
-	private static final int FADE_BG = 0xff000000;
-	private static final int HIGH_LIGHT_BG = 0xffffffff;
+	private static final int FADE_BG = 0x00000000;
 	private FrameLayout frames;
 	private TextView tvDescription;
 	private ViewGroup root;

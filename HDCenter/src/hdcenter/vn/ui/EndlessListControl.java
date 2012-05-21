@@ -4,7 +4,6 @@ import hdcenter.vn.R;
 import hdcenter.vn.data.DataCenter;
 import hdcenter.vn.data.IRequestListener;
 import hdcenter.vn.data.requests.PaggableRequest;
-import hdcenter.vn.data.requests.RequestMoviesList;
 import hdcenter.vn.utils.Helpers;
 import hdcenter.vn.utils.Logger;
 

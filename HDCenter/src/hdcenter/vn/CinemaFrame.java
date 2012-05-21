@@ -2,7 +2,6 @@ package hdcenter.vn;
 
 import hdcenter.vn.data.requests.ReqCinemaMovies;
 import hdcenter.vn.ui.CinemaMovieListControl;
-import hdcenter.vn.ui.MoviesListControl;
 import hdcenter.vn.ui.EndlessListControl;
 import android.app.Activity;
 import android.app.Dialog;
