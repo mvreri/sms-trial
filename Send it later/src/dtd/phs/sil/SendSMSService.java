@@ -99,6 +99,7 @@ public class SendSMSService extends Service {
 			Helpers.sendMessage(getApplicationContext(), number,smsContent, new I_SMSListener() {
 				@Override
 				public void onSentSuccess() {
+					hasDeliveredMessage = true;
 					//Nothing
 				}
 				
@@ -107,16 +108,16 @@ public class SendSMSService extends Service {
 					errorOcc = true;
 				}
 				
-				@Override
-				public void onMessageDeliveryFailed() {
-					errorOcc = true;
-				}
-				
-				@Override
-				public void onMessageDelivered() {
-					//Nothing
-					hasDeliveredMessage = true;
-				}
+//				@Override
+//				public void onMessageDeliveryFailed() {
+//					errorOcc = true;
+//				}
+//				
+//				@Override
+//				public void onMessageDelivered() {
+//					//Nothing
+//					hasDeliveredMessage = true;
+//				}
 			});
 		}
 	}
@@ -128,7 +129,7 @@ public class SendSMSService extends Service {
 		String title = null;
 		String text = null;
 		if ( ! errorOcc ) {
-			text = res.getString(R.string.Delivered_to) + " " + messageItem.getContact();
+			text = res.getString(R.string.Sent_to) + " " + messageItem.getContact();
 			title = res.getString(R.string.successful_sent_notification_title);
 			PreferenceHelpers.increaseSuccMessagesCount(getApplicationContext());
 		} else {

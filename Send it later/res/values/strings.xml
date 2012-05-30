@@ -33,10 +33,10 @@
     <string name="message_removed_failed">Message removed failed</string>
     <string name="successful_sent_notification_title">Message sent successful</string>
     <string name="failed_sent_notification_title">Failed to send message</string>
-    <string name="Delivered_to">Delivered: </string>
     <string name="Please_enter_a_phone_number">Please enter a phone number</string>
     <string name="Preferences">Preferences</string>
     <string name="Exit">Exit</string>
+    <string name="Sent_to">Sent:</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
     <string name="Max_sent_item">Auto clean sent messages</string>
     <string name="Max_sent_item_summary">Keep only latest messages</string>

@@ -226,17 +226,6 @@ extends Activity
 				if ( Helpers.isPhoneNumber(str)) {
 					str = Helpers.parsePhoneNumber(str);
 					ContactItem item = new ContactItem(str, str, System.currentTimeMillis());
-//					Helpers.startAfter(300, new Runnable() {
-//						@Override
-//						public void run() {
-//							btAddContact.post(new Runnable() {
-//								@Override
-//								public void run() {
-//									btAddContact.setVisibility(View.GONE);							
-//								}
-//							});
-//						}
-//					});
 					onContactAdded(item);
 				} else {
 					btAddContact.post(new Runnable() {
@@ -422,16 +411,7 @@ extends Activity
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {}
 			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,int after) {
-//				if ( s.length() == 0 ) 
-//					handler.post(new Runnable() {
-//						
-//						@Override
-//						public void run() {
-//							btAddContact.setVisibility(View.VISIBLE);
-//						}
-//					});
-			}
+			public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
 			@Override
 			public void afterTextChanged(Editable s) {
 				String text = s.toString();
@@ -550,11 +530,5 @@ extends Activity
 			break;
 		}
 	}
-
-//	@Override
-//	public void onPublishResult(Object data) {
-//		dtd.phs.sil.ui.auto_complete_contacts.ContactsList list = 
-//			(dtd.phs.sil.ui.auto_complete_contacts.ContactsList) data;
-//	}
 
 }

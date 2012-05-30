@@ -46,7 +46,7 @@ public class SentMessageItem extends MessageItem {
 		String status = "";
 		Resources res = context.getResources();
 		if ( isDelivered() ) {
-			status += res.getString(R.string.Delivered_to)+" ";
+			status += res.getString(R.string.Sent_to)+" ";
 		} else status += res.getString(R.string.Sent_failed_short)+" ";
 		status += Helpers.formatTime(context,getSentTime()); 
 		return status;

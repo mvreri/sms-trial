@@ -4,7 +4,7 @@ public interface I_SMSListener {
 
 	void onSentFailed(int errorCode);
 	void onSentSuccess();
-	void onMessageDelivered();
-	void onMessageDeliveryFailed();
+//	void onMessageDelivered();
+//	void onMessageDeliveryFailed();
 
 }

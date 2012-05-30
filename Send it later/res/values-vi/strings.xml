@@ -33,7 +33,7 @@
     <string name="message_removed_failed">Tin nhắn chưa được xóa</string>
     <string name="successful_sent_notification_title">Tin nhắn đã gửi thành công</string>
     <string name="failed_sent_notification_title">Tin nhắn chưa được gửi</string>
-    <string name="Delivered_to">Đã gửi: </string>
+    <string name="Sent_to">Đã gửi:</string>
     <string name="Please_enter_a_phone_number">Làm ơn nhập số điện thoại đúng</string>
     <string name="Preferences">Tùy chọn</string>
     <string name="Exit">Thoát</string>
@@ -71,7 +71,7 @@
     <string name="Contact">Liên hệ</string>
     <string name="Share_subject">Chia sẻ</string>
     <string name="Share_content">Android app dat lich SMS: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
-        <string name="Call_now">Gọi trực tiếp</string>
+    <string name="Call_now">Gọi trực tiếp</string>
     <string name="sms_now">SMS trực tiếp</string>
-    
+
 </resources>

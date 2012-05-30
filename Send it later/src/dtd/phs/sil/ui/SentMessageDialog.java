@@ -34,7 +34,7 @@ public class SentMessageDialog extends Dialog{
 
 	private SentMessageItem message;
 
-	private SentMessageView sentFrame;
+//	private SentMessageView sentFrame;
 
 	protected Activity hostedActivity;
 
@@ -60,20 +60,6 @@ public class SentMessageDialog extends Dialog{
 	private void initViews() {
 		tvTitle = (TextView) findViewById(R.id.tvTitle);
 
-		//		tvRemove = (TextView) findViewById(R.id.textview01);
-		//		tvRemove.setText(resources.getString(R.string.Remove));
-		//		tvRemove.setOnClickListener(new View.OnClickListener() {
-		//			@Override
-		//			public void onClick(View v) {
-		//				if ( message != null ) {
-		//					DataCenter.removeSentItem(getContext(), message.getId());
-		//					sentFrame.onRefresh();
-		//					cancel();
-		//				}
-		//			}
-		//		});
-
-
 		tvResend = (TextView) findViewById(R.id.textview02);
 		tvResend.setText(resources.getString(R.string.Resend_now));
 		tvResend.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +78,7 @@ public class SentMessageDialog extends Dialog{
 
 									@Override
 									public void onSentSuccess() {
-										//Nothing
+										hasDeliveredMessage = true;
 									}
 
 									@Override
@@ -100,16 +86,16 @@ public class SentMessageDialog extends Dialog{
 										errorOcc = true;
 									}
 
-									@Override
-									public void onMessageDeliveryFailed() {
-										errorOcc = true;
-										//TODO: test 2 case : cannot sent And cannot delivered (turn off each phone)
-									}
-
-									@Override
-									public void onMessageDelivered() {
-										hasDeliveredMessage = true;
-									}
+//									@Override
+//									public void onMessageDeliveryFailed() {
+//										errorOcc = true;
+//										//TODO: test 2 case : cannot sent And cannot delivered (turn off each phone)
+//									}
+//
+//									@Override
+//									public void onMessageDelivered() {
+//										hasDeliveredMessage = true;
+//									}
 								});
 				}
 				cancel();
@@ -135,7 +121,7 @@ public class SentMessageDialog extends Dialog{
 
 	private void init(SentMessageView sentFrame) {
 		this.resources = getContext().getResources();
-		this.sentFrame = sentFrame;
+//		this.sentFrame = sentFrame;
 	}
 
 	public void setTitle(String title) {

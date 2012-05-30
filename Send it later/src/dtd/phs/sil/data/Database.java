@@ -205,6 +205,12 @@ public class Database {
 
 
 	private static final long CONFLICT_INCREASE_MILLIS = 20 * 1000;
+	
+	/**
+	 * 
+	 * @param context
+	 * @param rowId the id of the newly added message
+	 */
 	public static void checkConflict(Context context, long rowId) {
 		PendingMessagesList messages = Database.getPendingMessages(context);
 		PendingMessagesList.sortByNextOccurence(messages); //decr order
@@ -216,19 +222,19 @@ public class Database {
 					toCheckItem = item;
 					if ( i < messages.size() - 1 ) {
 						while ( Math.abs(item.getNextTimeMillis() - messages.get(i+1).getNextTimeMillis()) < CONFLICT_INCREASE_MILLIS) {
-							Logger.logInfo("Plus 20 seconds");
+//							Logger.logInfo("Plus 20 seconds");
 							Calendar startDateTime = item.getStartDateTime();
 							startDateTime.add(Calendar.MILLISECOND, (int)CONFLICT_INCREASE_MILLIS);
 							item.setStartDateTime(startDateTime);
 						}
 					}
 					if ( i > 0) {
-						long later = messages.get(i-1).getNextTimeMillis();
-						long current = item.getNextTimeMillis();
-						long diff = later - current;
-						Logger.logInfo("Later: " + later +  " -- current: " + current + " -- with difference: " + diff);
+//						long later = messages.get(i-1).getNextTimeMillis();
+//						long current = item.getNextTimeMillis();
+//						long diff = later - current;
+//						Logger.logInfo("Later: " + later +  " -- current: " + current + " -- with difference: " + diff);
 						while ( Math.abs(messages.get(i-1).getNextTimeMillis() - item.getNextTimeMillis()) < CONFLICT_INCREASE_MILLIS) {
-							Logger.logInfo("Plus 20 seconds");
+//							Logger.logInfo("Plus 20 seconds");
 							Calendar startDateTime = item.getStartDateTime();
 							startDateTime.add(Calendar.MILLISECOND, (int)CONFLICT_INCREASE_MILLIS);
 							item.setStartDateTime(startDateTime);
