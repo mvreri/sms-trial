@@ -63,8 +63,6 @@ extends Activity
 
 	protected static final int FRAME_FILL_INFO = 0;
 	protected static final int FRAME_CONTACTS_LIST = 1;
-//	private static final long DELTA_TIME = 59*1000; 
-
 
 	//Set passedMessage = null -> Add new message , otherwise: edit
 	public static PendingMessageItem passedMessage = null;

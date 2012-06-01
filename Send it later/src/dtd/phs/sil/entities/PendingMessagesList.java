@@ -20,6 +20,7 @@ public class PendingMessagesList
 			@Override
 			public int compare(PendingMessageItem lhs, PendingMessageItem rhs) {
 				long left = lhs.getNextTimeMillis();
+				//TODO code review : mysterious number -1 !
 				if ( left == -1) return 1;
 				long right = rhs.getNextTimeMillis();
 				if ( right == -1) return -1;

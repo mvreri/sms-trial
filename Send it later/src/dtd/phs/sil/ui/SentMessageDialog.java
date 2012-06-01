@@ -26,15 +26,11 @@ public class SentMessageDialog extends Dialog{
 
 	private Resources resources;
 
-	//	private TextView tvRemove;
-
 	private TextView tvResend;
 
 	private TextView tvEdit;
 
 	private SentMessageItem message;
-
-//	private SentMessageView sentFrame;
 
 	protected Activity hostedActivity;
 
@@ -86,20 +82,10 @@ public class SentMessageDialog extends Dialog{
 										errorOcc = true;
 									}
 
-//									@Override
-//									public void onMessageDeliveryFailed() {
-//										errorOcc = true;
-//										//TODO: test 2 case : cannot sent And cannot delivered (turn off each phone)
-//									}
-//
-//									@Override
-//									public void onMessageDelivered() {
-//										hasDeliveredMessage = true;
-//									}
 								});
 				}
 				cancel();
-				Helpers.startAfter(SendSMSService.WAITING_DELIVERY_REPORT_TIME, new RunAfterSendingFinish());
+				Helpers.startAfter(SendSMSService.WAITING_SENT_REPORT_TIME, new RunAfterSendingFinish());
 			}
 		});
 
@@ -121,7 +107,6 @@ public class SentMessageDialog extends Dialog{
 
 	private void init(SentMessageView sentFrame) {
 		this.resources = getContext().getResources();
-//		this.sentFrame = sentFrame;
 	}
 
 	public void setTitle(String title) {

@@ -121,7 +121,6 @@ public class Helpers {
 		return true;
 	}
 
-//	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
 	private static final String SENT = "dtd.phs.sil.send_message.sent";
 	public static void sendMessage(
 			Context context,
@@ -130,9 +129,7 @@ public class Helpers {
 			final I_SMSListener listener) {
 		SmsManager sms = SmsManager.getDefault();
 		PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
-//		PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
 
-		//Note: Be careful : listener.onNormalMessageSendSuccess() called 2 times (1 sent, 1 delivered)
 		context.registerReceiver(new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -147,27 +144,12 @@ public class Helpers {
 			}
 		},new IntentFilter(SENT));
 
-//		context.registerReceiver(new BroadcastReceiver() {
-//			@Override
-//			public void onReceive(Context context, Intent intent) {
-//				switch (getResultCode()) {
-//				case Activity.RESULT_OK:
-//					listener.onMessageDelivered();
-//					break;
-//				case Activity.RESULT_CANCELED:
-//					listener.onMessageDeliveryFailed();
-//					break;
-//				}
-//			}
-//		},new IntentFilter(DELIVERED));
 
 		try {
 			ArrayList<String> parts = sms.divideMessage(content);
 			ArrayList<PendingIntent> sendPIs = new ArrayList<PendingIntent>();	
-//			ArrayList<PendingIntent> deliveryPIs = new ArrayList<PendingIntent>();
 			for(int i = 0 ; i < parts.size() ; i++) {
 				sendPIs.add(sentPI);
-//				deliveryPIs.add(deliveredPI);
 			}
 			sms.sendMultipartTextMessage(receiverNumber, null, parts,sendPIs,null);
 		} catch (Exception e) {

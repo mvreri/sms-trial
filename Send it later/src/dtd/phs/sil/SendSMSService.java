@@ -1,9 +1,9 @@
 package dtd.phs.sil;
 
+import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -20,21 +20,20 @@ import dtd.phs.sil.utils.I_SMSListener;
 import dtd.phs.sil.utils.Logger;
 import dtd.phs.sil.utils.PreferenceHelpers;
 
-public class SendSMSService extends Service {
+public class SendSMSService extends IntentService {
 
-//	private static final String DELIVERED = "dtd.phs.sil.send_message.delivered";
-//	private static final String SENT = "dtd.phs.sil.send_message.sent";
-	public static final int WAITING_DELIVERY_REPORT_TIME = 45*1000;
-	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
-	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
-	private static final int START_REMIND_RATING_COUNT = 5;
-	private static final int PERIOD_REMINDER_RATING = 3;
+	private static final String SEND_SMS_SERVICE = "dtd.phs.SEND_SMS_SERVICE";
 
-	private static WakeLock wakeLock = null;
-	protected boolean errorOcc;
-	protected PendingMessageItem messageItem = null;
-	public boolean hasDeliveredMessage;
+	public SendSMSService() {
+		super(SEND_SMS_SERVICE);
+	}
 
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		Logger.logInfo("Service onCreate() is called");
+	}
+	
 	@Override
 	public IBinder onBind(Intent intent) {
 		return null;
@@ -42,54 +41,75 @@ public class SendSMSService extends Service {
 
 	@Override
 	public int onStartCommand(final Intent intent, int flags, int startId) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				long rowid = intent.getLongExtra(AlarmReceiver.PENDING_MESSAGE_ID, -1);
-				if ( rowid != -1) {
-					messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
-					if ( messageItem != null ) {
-						sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
-						Helpers.startAfter(WAITING_DELIVERY_REPORT_TIME,new RunAfterSendingFinish());
-					}
-				} else {
-					wakeLock.release();
-					setWakeLock(null);
-				}
-				stopSelf();
-			}
-		}).start();
-
-		return Service.START_STICKY;
+		Logger.logInfo("OnStartCommand is called");
+		return super.onStartCommand(intent, flags, startId);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		removeWakelock();
+		Logger.logInfo("Sending service is destroyed !");
+	}
 
-	public class RunAfterSendingFinish implements Runnable {
-
-		@Override
-		public void run() {
-			if ( errorOcc || ! hasDeliveredMessage ) {
-				Logger.logInfo("Save failed message is progressing ... ");
-				DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
-			} else {
-				Logger.logInfo("Save successful message is progressing ... ");
-				DataCenter.saveSentMessage(getApplicationContext(),messageItem);
-
-			}
-			if ( messageItem.getFreq() == Frequencies.ONCE ) {
-				DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
-			}
-			AlarmHelpers.refreshAlarm(getApplicationContext());
-			fireNotification(errorOcc || !hasDeliveredMessage);
-			Helpers.broadcastDatabaseChanged(getApplicationContext());
-
-			if (wakeLock != null) {
-				wakeLock.release();			
-				setWakeLock(null);
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		Logger.logInfo("Service intent: OnHandle is called !");
+		long rowid = intent.getLongExtra(AlarmReceiver.PENDING_MESSAGE_ID, -1);
+		if ( rowid != -1) {
+			messageItem = DataCenter.getPendingMessageWithId(getApplicationContext(),rowid);
+			if ( messageItem != null ) {
+				sendMessages(messageItem.getPhoneNumbers(),messageItem.getContent());
+				setThreadToSleep(WAITING_SENT_REPORT_TIME);
+				runAfterSendingFinish();
 			}
 		}
-
 	}
+
+
+	private void setThreadToSleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			Logger.logError(e);
+		}
+	}
+
+	public static final int WAITING_SENT_REPORT_TIME = 15*1000;
+	private static final int NOTIFICATION_ICON = R.drawable.message_desat;
+	public static final String ACTION_MESSAGE_SENT = "dtd.phs.sil.message_sent";
+	private static final int START_REMIND_RATING_COUNT = 5;
+	private static final int PERIOD_REMINDER_RATING = 3;
+	private static WakeLock wakeLock = null;
+	protected boolean errorOcc;
+	protected PendingMessageItem messageItem = null;
+	public boolean hasDeliveredMessage;
+
+
+	private void removeWakelock() {
+		if ( SendSMSService.wakeLock != null ) 
+				wakeLock.release();
+		wakeLock = null;
+	}
+
+
+	private void runAfterSendingFinish() {
+		if ( errorOcc || ! hasDeliveredMessage ) {
+			Logger.logInfo("Save failed message is progressing ... ");
+			DataCenter.saveFailedMessage(getApplicationContext(), messageItem);
+		} else {
+			Logger.logInfo("Save successful message is progressing ... ");
+			DataCenter.saveSentMessage(getApplicationContext(),messageItem);
+
+		}
+		if ( messageItem.getFreq() == Frequencies.ONCE ) {
+			DataCenter.removePendingItem( getApplicationContext(),messageItem.getId() );
+		}
+		AlarmHelpers.refreshAlarm(getApplicationContext());
+		fireNotification(errorOcc || !hasDeliveredMessage);
+		Helpers.broadcastDatabaseChanged(getApplicationContext());
+	}
+
 
 
 	protected void sendMessages(String[] phoneNumbers, String smsContent) {
@@ -100,24 +120,13 @@ public class SendSMSService extends Service {
 				@Override
 				public void onSentSuccess() {
 					hasDeliveredMessage = true;
-					//Nothing
 				}
-				
+
 				@Override
 				public void onSentFailed(int errorCode) {
 					errorOcc = true;
 				}
-				
-//				@Override
-//				public void onMessageDeliveryFailed() {
-//					errorOcc = true;
-//				}
-//				
-//				@Override
-//				public void onMessageDelivered() {
-//					//Nothing
-//					hasDeliveredMessage = true;
-//				}
+
 			});
 		}
 	}
@@ -158,11 +167,6 @@ public class SendSMSService extends Service {
 
 		CharSequence contentTitle = notificationTitle;
 		CharSequence contentText =  notificationText;
-
-
-		//		Intent notificationIntent = new Intent(Intent.ACTION_MAIN);
-		//		notificationIntent.addCategory(Intent.CATEGORY_DEFAULT);
-		//		notificationIntent.setType("vnd.android-dir/mms-sms");
 
 		Intent notificationIntent = new Intent(context, MainActivity.class);
 		notificationIntent.putExtra(MainActivity.EXTRA_SELECTED_FRAME, MainActivity.FRAME_SENT);
@@ -206,75 +210,13 @@ public class SendSMSService extends Service {
 		return notification;
 	}
 
-//	public void sendMessage(String receiverNumber, String content) {
-//		SmsManager sms = SmsManager.getDefault();
-//		Context context = getApplicationContext();
-//		PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
-//		PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
-//
-//		//Note: Be careful : listener.onNormalMessageSendSuccess() called 2 times (1 sent, 1 delivered)
-//		context.registerReceiver(new BroadcastReceiver() {
-//			@Override
-//			public void onReceive(Context context, Intent intent) {
-//				switch (getResultCode()) {
-//				case Activity.RESULT_OK:
-//					toast("Sent");
-//					return;
-//				case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-//					toast("Generic error");
-//					errorOcc = true;
-//					break;
-//				case SmsManager.RESULT_ERROR_NO_SERVICE:
-//					toast("No service");
-//					errorOcc = true;
-//					break;
-//				case SmsManager.RESULT_ERROR_NULL_PDU:
-//					toast("Null pdu");
-//					errorOcc = true;
-//					break;
-//				case SmsManager.RESULT_ERROR_RADIO_OFF:
-//					toast("Radio off");
-//					errorOcc = true;
-//					break;
-//				}
-//
-//			}
-//		},new IntentFilter(SENT));
-//
-//		context.registerReceiver(new BroadcastReceiver() {
-//			@Override
-//			public void onReceive(Context context, Intent intent) {
-//				switch (getResultCode()) {
-//				case Activity.RESULT_OK:
-//					toast("Delivered");
-//					break;
-//				case Activity.RESULT_CANCELED:
-//					toast("NOT delivered");
-//					errorOcc = true;
-//					break;
-//				}
-//			}
-//		},new IntentFilter(DELIVERED));
-//
-//		try {
-//			ArrayList<String> parts = sms.divideMessage(content);
-//			ArrayList<PendingIntent> sendPIs = new ArrayList<PendingIntent>();	
-//			ArrayList<PendingIntent> deliveryPIs = new ArrayList<PendingIntent>();
-//			for(int i = 0 ; i < parts.size() ; i++) {
-//				sendPIs.add(sentPI);
-//				deliveryPIs.add(deliveredPI);
-//			}
-//			sms.sendMultipartTextMessage(receiverNumber, null, parts,sendPIs,deliveryPIs);
-//		} catch (Exception e) {
-//			Logger.logError(e);
-//		}
-//	}
-//	protected void toast(String string) {
-////		Logger.logInfo(string);
-//	}
-
-	public static void setWakeLock(WakeLock lock) {
-		SendSMSService.wakeLock = lock;
+	public static void acquireWakelock(Context context) {
+		if ( SendSMSService.wakeLock == null) {
+			Logger.logInfo("Wakelock is acquired !");
+			SendSMSService.wakeLock = Helpers.acquireWakelock(context);
+		} else {
+			Logger.logInfo("Lock already existed !");
+		}
 	}
 
 }

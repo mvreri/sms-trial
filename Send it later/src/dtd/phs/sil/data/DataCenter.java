@@ -23,7 +23,6 @@ public class DataCenter {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				//TODO: load the pending messages from private database
 				try {
 					PendingMessagesList list = Database.loadPendingMessages(context);
 					loader.onGetDataSuccess(list);
@@ -74,18 +73,6 @@ public class DataCenter {
 	public static void saveSentMessage(final Context context,final PendingMessageItem message) {
 		Database.saveSentMessage(context, message, true);
 		asyncSaveToContentProvider(context, message);
-//		
-//		new Thread(new Runnable() {
-//			@Override
-//			public void run() {
-//				Logger.logInfo("Start save message to content provider ...");
-//				try {
-//					saveToSMSProvider(context,messageItem);
-//				} catch (Exception e) {
-//					Logger.logError(e);
-//				}
-//			}
-//		}).start();
 	}
 
 	public static void saveSentMessage(

@@ -32,15 +32,7 @@ public class SentMessageItem extends MessageItem {
 		}
 		return contact;
 	}
-//
-//	public String getStatus() {
-//		String status = "";
-//		if ( isDelivered() ) {
-//			status += "Delivered: ";
-//		} else status += "Sent failed: ";
-//		status += Helpers.formatTime(getSentTime()); 
-//		return status;
-//	}
+
 	
 	public String getStatus(Context context) {
 		String status = "";

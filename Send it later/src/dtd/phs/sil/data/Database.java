@@ -204,7 +204,7 @@ public class Database {
 	}
 
 
-	private static final long CONFLICT_INCREASE_MILLIS = 20 * 1000;
+	private static final long CONFLICT_INCREASE_MILLIS = 30 * 1000;
 	
 	/**
 	 * 
