@@ -1,7 +1,6 @@
 package dtd.phs.sil.ui;
 
 import android.app.Activity;
-import android.widget.TextView;
 import dtd.phs.sil.R;
 import dtd.phs.sil.ui.auto_complete_contacts.ContactItem;
 import dtd.phs.sil.ui.auto_complete_contacts.SelectedContactsAdapter;
