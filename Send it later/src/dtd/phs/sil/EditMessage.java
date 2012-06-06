@@ -174,11 +174,13 @@ extends Activity
 		btOk.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if ( isValidMessage() ) {
+				if ( ! isValidMessage() ) {
+					showInvalidMessageToast();
+				} else if ( ! isValidTime() ) {
+					showInvalidTimeToast();
+				} else {
 					DataCenter.savePendingMessageItem(getApplicationContext(),createPendingMessage());
 					onBackPressed();
-				} else {
-					showInvalidMessageToast();
 				}
 			}
 		});
@@ -211,6 +213,19 @@ extends Activity
 		});
 
 
+	}
+
+	protected void showInvalidTimeToast() {
+		Toast.makeText(getApplicationContext(), R.string.Invalid_time_warning, Toast.LENGTH_LONG).show();
+	}
+
+	protected boolean isValidTime() {
+		long timeInMillis = selectedCalendar.getTimeInMillis();
+		Frequencies freq = frequency;
+		if ( freq == Frequencies.ONCE && timeInMillis <= System.currentTimeMillis() ) {
+			return false;
+		}
+		return true;
 	}
 
 	private void createButtonAddContact() {

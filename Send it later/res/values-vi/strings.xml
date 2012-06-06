@@ -73,5 +73,5 @@
     <string name="Share_content">Android app dat lich SMS: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
     <string name="Call_now">Gọi trực tiếp</string>
     <string name="sms_now">SMS trực tiếp</string>
-
+	<string name="Invalid_time_warning">Vui lòng chọn lại thời gian gửi SMS</string>
 </resources>

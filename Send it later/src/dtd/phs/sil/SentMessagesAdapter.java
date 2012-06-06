@@ -3,12 +3,12 @@ package dtd.phs.sil;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import dtd.phs.sil.data.DataCenter;
 import dtd.phs.sil.entities.MessageItem;
 import dtd.phs.sil.entities.SentMessageItem;
 import dtd.phs.sil.entities.SentMessagesList;
 import dtd.phs.sil.ui.OnListItemTouchListener;
+import dtd.phs.sil.utils.Logger;
 
 public abstract class SentMessagesAdapter extends MessageAdapter {
 
@@ -35,7 +35,7 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
 					makeButtonDispear(delete, position);			
-					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
+//					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
 				} else {
 					displayingDeleteButton.set(position, true);
 					delete.startAnimation(occAnim);
@@ -54,7 +54,7 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 				View delete = view.findViewById(R.id.btDelete);
 				if ( delete.getVisibility() == View.VISIBLE) {
 					makeButtonDispear(delete,position);
-					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
+//					updateMessageDeliveredIcon(view.findViewById(R.id.ivFailed), (SentMessageItem) messages.get(position));
 				} else {
 					onItemClick(view,position);
 				}
@@ -67,20 +67,32 @@ public abstract class SentMessagesAdapter extends MessageAdapter {
 		holder.contact.setText(message.getContact());
 		holder.content.setText(message.getContent());
 		updateDeleteButton(holder.delete, position, message);
-		holder.status.setText(((SentMessageItem)message).getStatus(context));
-		updateMessageDeliveredIcon(holder.failedIcon, (SentMessageItem)message);
+		updateStatus(holder, message);
+//		updateMessageDeliveredIcon(holder.failedIcon, (SentMessageItem)message);
 	}
 
-	
-	private void updateMessageDeliveredIcon(View failedIcon,
-			SentMessageItem message) {
-		if ( ! message.isDelivered() ) {
-			failedIcon.setVisibility(View.VISIBLE );
-		} else failedIcon.setVisibility(View.INVISIBLE );
+	private void updateStatus(ViewHolder holder, final MessageItem message) {
+		SentMessageItem item = (SentMessageItem)message;
+		if ( item.isSent() ) {
+			Logger.logInfo("Set status to RED");
+			holder.status.setTextColor(context.getResources().getColor(R.color.mainTextColor));
+			
+		} else {
+			Logger.logInfo("Set status to NORMAL");
+			holder.status.setTextColor(context.getResources().getColor(R.color.red));
+		}
+		holder.status.setText(item.getStatus(context));
 	}
+
+//	private void updateMessageDeliveredIcon(View failedIcon,
+//			SentMessageItem message) {
+//		if ( ! message.isSent() ) {
+//			failedIcon.setVisibility(View.VISIBLE );
+//		} else failedIcon.setVisibility(View.INVISIBLE );
+//	}
 
 	protected void createHolder(View v, ViewHolder holder) {
 		super.createHolder(v,holder);
-		holder.failedIcon = (ImageView) v.findViewById(R.id.ivFailed);
+//		holder.failedIcon = (ImageView) v.findViewById(R.id.ivFailed);
 	}
 }

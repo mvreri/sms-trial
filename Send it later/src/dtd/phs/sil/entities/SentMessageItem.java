@@ -3,20 +3,21 @@ package dtd.phs.sil.entities;
 import android.content.Context;
 import android.content.res.Resources;
 import dtd.phs.sil.R;
+import dtd.phs.sil.MessageAdapter.ViewHolder;
 import dtd.phs.sil.utils.Helpers;
 
 public class SentMessageItem extends MessageItem {
 
 	
-	boolean isDelivered = false;
+	boolean isSent = false;
 	private long sentTime;
 	private long pendingId;
 	
-	public boolean isDelivered() {
-		return isDelivered;
+	public boolean isSent() {
+		return isSent;
 	}
-	public void setDelivered(boolean isDelivered) {
-		this.isDelivered = isDelivered;
+	public void setSentStatus(boolean isSent) {
+		this.isSent = isSent;
 	}
 
 	public String getContact() {
@@ -37,7 +38,7 @@ public class SentMessageItem extends MessageItem {
 	public String getStatus(Context context) {
 		String status = "";
 		Resources res = context.getResources();
-		if ( isDelivered() ) {
+		if ( isSent() ) {
 			status += res.getString(R.string.Sent_to)+" ";
 		} else status += res.getString(R.string.Sent_failed_short)+" ";
 		status += Helpers.formatTime(context,getSentTime()); 
@@ -69,7 +70,7 @@ public class SentMessageItem extends MessageItem {
 		sentMessage.setNames(names);
 		sentMessage.setPhoneNumbers(numbers);
 		sentMessage.setContent(content);
-		sentMessage.setDelivered(isDelivered);
+		sentMessage.setSentStatus(isDelivered);
 		sentMessage.setSentTime(sentTime);
 		sentMessage.setPendingId(pending_id);
 	

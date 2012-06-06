@@ -92,50 +92,25 @@ abstract public class MessageAdapter extends BaseAdapter {
 
 	protected void updateDeleteButton(Button delete, int position, MessageItem message) {
 		if ( displayingDeleteButton.get(position) ) {
-//			Logger.logInfo("useAnimationOnDeleteButton: " + useAnimationOnDeleteButton);
-//			if (useAnimationOnDeleteButton) {
-//				makeButtonOccur(position, delete);
-//			} else 
 			delete.setVisibility(View.VISIBLE);
 		} else {
-//			Logger.logInfo("useAnimationOnDeleteButton: " + useAnimationOnDeleteButton);
-//			if ( useAnimationOnDeleteButton ) {
-//				makeButtonDispear(delete, position);
-//			} else 
 				delete.setVisibility(View.GONE);
 		}
 		delete.setOnClickListener(new OnDeleteButtonClickListener(message));
 	}
 
 	public void displayAllDeleteButton() {
-//		useAnimationOnDeleteButton = true;
 		for(int i = 0 ; i < displayingDeleteButton.size() ; i++)
 			displayingDeleteButton.set(i, true);
 		
 		notifyDataSetChanged();
-//		Helpers.startAfter(500, new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				useAnimationOnDeleteButton = false;
-//			}
-//		});		
 	}
 
 	public void clearAllDeleteButton() {
-//		useAnimationOnDeleteButton = true;
 		for(int i = 0 ; i < displayingDeleteButton.size() ; i++)
 			displayingDeleteButton.set(i, false);
 
 		notifyDataSetChanged();
-//		Helpers.startAfter(500, new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				useAnimationOnDeleteButton = false;
-//			}
-//		});
-		
 	}
 
 	@Override
@@ -173,7 +148,7 @@ abstract public class MessageAdapter extends BaseAdapter {
 		public TextView content;
 		public TextView status;
 		public Button delete;
-		public ImageView failedIcon;
+//		public ImageView failedIcon;
 
 	}
 	

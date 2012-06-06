@@ -1,6 +1,7 @@
 package dtd.phs.sil;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.View;
 import android.view.ViewGroup;
 import dtd.phs.sil.data.DataCenter;
@@ -72,10 +73,16 @@ public abstract class PendingMessageAdapter extends MessageAdapter {
 
 	private void updateNext(ViewHolder holder, PendingMessageItem message) {
 		String next = context.getResources().getString(R.string.next);
+		Resources res = context.getResources();
 		String nextTime = message.getNextTime(context);
-		if ( nextTime == null) 
+		if ( nextTime == null) {
 			nextTime = next + ": " + context.getResources().getString(R.string.Never);
-		else nextTime = next +": "+ nextTime;
+			holder.status.setTextColor(res.getColor(R.color.red));
+		}
+		else {
+			nextTime = next +": "+ nextTime;
+			holder.status.setTextColor(res.getColor(R.color.mainTextColor));
+		}
 		holder.status.setText(nextTime);
 	}
 

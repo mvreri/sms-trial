@@ -45,7 +45,7 @@ public class TableSentMessages {
 			SentMessageItem message, 
 			boolean isDelivered) {
 		message.setSentTime(System.currentTimeMillis());
-		message.setDelivered(isDelivered);
+		message.setSentStatus(isDelivered);
 		saveSentMessage(database, message);
 	}
 
@@ -54,7 +54,7 @@ public class TableSentMessages {
 			SQLiteDatabase database,
 			SentMessageItem sentMessage) {
 		int status = FAILED;
-		if ( sentMessage.isDelivered() ) {
+		if ( sentMessage.isSent() ) {
 			status = DELIVERED;
 		}
 

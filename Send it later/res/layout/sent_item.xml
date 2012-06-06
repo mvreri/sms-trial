@@ -54,6 +54,7 @@
             	android:layout_height="24dp"
             	android:src="@drawable/small_failed"
             	android:layout_gravity="center_vertical"
+            	android:visibility="invisible"
             />
 	        <Button
 	        	android:id="@+id/btDelete"
