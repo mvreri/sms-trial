@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 public class MyUtils {
-	enum CodeModes {DEV,TEST,PRODUCT};
-	static private final CodeModes CURRENT_CODE_MODE = CodeModes.DEV;
+	public enum CodeModes {DEV,TEST,PRODUCT};
+	static public final CodeModes CURRENT_CODE_MODE = CodeModes.DEV;
 	private static final String TAG = "PHS_MEDIA_SERVER";
 	public static void assertTrue(boolean b) {
 		if (CURRENT_CODE_MODE == CodeModes.DEV )
@@ -38,6 +38,11 @@ public class MyUtils {
 		}
 		
 	}
+	
+	public static void logError(Exception e) {
+		logError(e.getClass().toString() + ":" + e.getMessage());
+	}
+
 	private static String extractLocation(StackTraceElement elm) {
 		return elm.getClassName()+"."+elm.getMethodName()+" at line: " + elm.getLineNumber();
 	}

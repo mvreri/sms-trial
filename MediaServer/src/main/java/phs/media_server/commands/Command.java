@@ -1,6 +1,8 @@
 package phs.media_server.commands;
 
 import phs.media_server.IMediaServer;
+import phs.media_server.MyUtils;
+import phs.media_server.MyUtils.CodeModes;
 
 
 public abstract class Command {
@@ -12,8 +14,21 @@ public abstract class Command {
 	public Command(String paraStr) {
 		if ( paraStr != null )
 			parameters = paraStr.split(SEPERATOR);
+		if ( MyUtils.CURRENT_CODE_MODE == CodeModes.DEV) showDebugInfo();
 	}
-	
+
+	private void showDebugInfo() {
+		String ctorInfo = this.getClass().getName();
+		String addInfo = " empty ";
+		if ( parameters != null) {
+			addInfo = " -- with parameters: ";
+			for(int i = 0 ; i < parameters.length ; i++) {
+				addInfo += parameters[i] + "###";
+			}
+		}
+		MyUtils.logInfo("The class: " + ctorInfo + " is being created "+ addInfo);
+	}
+
 	/**
 	 * 
 	 * @param i 
@@ -28,11 +43,11 @@ public abstract class Command {
 	}
 
 	public abstract void process(IMediaServer mediaServer);
-	
+
 	protected void setRespone(String respone) {
 		this.respone = respone;
 	}
-	
+
 	public String getRespone() {
 		return this.respone;
 	}

@@ -1,5 +1,7 @@
 package phs.media_server.commands;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import phs.media_server.MyUtils;
@@ -7,18 +9,61 @@ import phs.media_server.MyUtils;
 
 public class CommandFactory {
 
-	public enum CommandType {
-		SETUP,START,PAUSE,RESUME,SEEK_TO,STOP
-	}
-	private static HashMap<String,CommandType> mapStr2Type = new HashMap<String, CommandType>();
+	//	public enum CommandType {
+	//		SETUP,START,PAUSE,RESUME,SEEK_TO,STOP
+	//	}
+
+	//Mapping the 
+	private static HashMap<String,Class<?>> mapStr2Type = new HashMap<String, Class<?>>();
 	static {
-		mapStr2Type.put("setup", CommandType.SETUP);
-		mapStr2Type.put("start", CommandType.START);
-		mapStr2Type.put("pause", CommandType.PAUSE);
-		mapStr2Type.put("resume", CommandType.RESUME);
-		mapStr2Type.put("seekto", CommandType.SEEK_TO);
-		mapStr2Type.put("stop", CommandType.STOP);
-		
+		//		mapStr2Type.put("setup", CommandType.SETUP);
+		mapStr2Type.put("setup", SetupCommand.class);
+
+		//		mapStr2Type.put("start", CommandType.START);
+		mapStr2Type.put("start", StartCommand.class);
+
+		//		mapStr2Type.put("pause", CommandType.PAUSE);
+		mapStr2Type.put("pause", PauseCommand.class);
+
+		//		mapStr2Type.put("resume", CommandType.RESUME);
+		mapStr2Type.put("resume", ResumeCommand.class);
+
+		//		mapStr2Type.put("seekto", CommandType.SEEK_TO);
+		mapStr2Type.put("seekto", SeekToCommand.class);
+
+		//		mapStr2Type.put("stop", CommandType.STOP);
+		mapStr2Type.put("stop", StopCommand.class);
+	}
+
+	private static Command newCommand(Class<?> commandClass, String tail) {
+		if ( commandClass == null) {
+			MyUtils.logError("No accordingly type !");
+			return null;
+		}
+		try {
+			Constructor ctor = commandClass.getConstructor(String.class);
+			return (Command) ctor.newInstance(tail);
+		} catch (Exception e) {
+			MyUtils.logError(e);
+			return null;
+		}
+		//		switch (commandType) {
+		//		case PAUSE:
+		//			return new PauseCommand(tail);
+		//		case RESUME:
+		//			return new ResumeCommand(tail);
+		//		case SEEK_TO:
+		//			return new SeekToCommand(tail);
+		//		case SETUP:
+		//			return new SetupCommand(tail);
+		//		case START:
+		//			return new StartCommand(tail);
+		//		case STOP:
+		//			return new StopCommand(tail);
+		//		default:
+		//			MyUtils.assertTrue(false);
+		//			return null;
+		//		}		
 	}
 
 	public static Command createCommand(String requestString) {
@@ -33,33 +78,10 @@ public class CommandFactory {
 			header = requestString.substring(0, sepPos);
 			tail = requestString.substring(sepPos + Command.SEPERATOR.length() );
 		}
+		MyUtils.logInfo(mapStr2Type.get(header.toLowerCase()).getName() +" is to be created !");
 		return newCommand(mapStr2Type.get(header.toLowerCase()),tail);
 	}
 
-	//Developer note: this could be done shorter using reflection, but don't do that, it make reading code painfully 
-	private static Command newCommand(CommandType commandType, String tail) {
-		if ( commandType == null) {
-			MyUtils.logError("No accordingly type !");
-			return null;
-		}
-		switch (commandType) {
-		case PAUSE:
-			return new PauseCommand(tail);
-		case RESUME:
-			return new ResumeCommand(tail);
-		case SEEK_TO:
-			return new SeekToCommand(tail);
-		case SETUP:
-			return new SetupCommand(tail);
-		case START:
-			return new StartCommand(tail);
-		case STOP:
-			return new StopCommand(tail);
-		default:
-			MyUtils.assertTrue(false);
-			return null;
-		}
 
-	}
 
 }
