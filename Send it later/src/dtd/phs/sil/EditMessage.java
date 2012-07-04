@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -27,6 +28,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devsmart.android.StringUtils;
+import com.devsmart.android.Utils;
 import com.devsmart.android.ui.HorizontalListView;
 
 import dtd.phs.sil.data.DataCenter;
@@ -523,7 +526,7 @@ extends Activity
 		int d = calendar.get(Calendar.DATE);
 		int h = calendar.get(Calendar.HOUR_OF_DAY);
 		int min = calendar.get(Calendar.MINUTE);
-		tvDate.setText(new SimpleDateFormat("EEEE - MMMM.dd, yyyy").format(new Date(y-1900,m,d)));
+		tvDate.setText(Helpers.formatDate(y,m,d));
 		tvTime.setText(new SimpleDateFormat("HH:mm").format(new Time(h, min, 0))); 
 	}
 

@@ -1,8 +1,6 @@
 package dtd.phs.sil.ui;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.WheelView;
@@ -15,11 +13,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import dtd.phs.sil.R;
+import dtd.phs.sil.utils.Helpers;
 
 public abstract class ChooseDateDialog extends Dialog {
 
@@ -151,7 +150,7 @@ public abstract class ChooseDateDialog extends Dialog {
 		int y = selectedCalendar.get(Calendar.YEAR);
 		int m = selectedCalendar.get(Calendar.MONTH);
 		int d = selectedCalendar.get(Calendar.DATE);
-		tvSelectedDate.setText( new SimpleDateFormat("EEEE - MMMM.dd, yyyy").format(new Date(y-1900,m,d)));
+		tvSelectedDate.setText(Helpers.formatDate(y, m, d));
 	}
 
 	private void updateCalendarFromViews() {

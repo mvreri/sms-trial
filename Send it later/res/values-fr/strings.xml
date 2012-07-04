@@ -3,8 +3,8 @@
     <string name="app_name">Send it later</string>
     <string name="please_wait">Veuillez patienter</string>
     <string name="pending_messages">Messages en attente</string>
-    <string name="next">Pour</string>
-    <string name="sent">Envoyé le</string>
+    <string name="next">Pour\ </string>
+    <string name="sent">Messages envoyés</string>
     <string name="Date">Date :</string>
     
     <string name="Ok">Ok</string>
@@ -22,7 +22,7 @@
     <string name="Choose_Frequency">Choisir la fréquence</string>
     <string name="Add">Ajouter</string>
     <string name="Save">Enregistrer</string>
-    <string name="Rate_Application">Evaler Send it later sur Google Play</string>
+    <string name="Rate_Application">Evaler Send it later…</string>
     <string name="Invalid_message_warning">Message invalide : Veuillez remplir tous les champs</string>
     <string name="message_removed_success">Message supprimé !</string>
     <string name="remove_item">Supprimer le message</string>
@@ -38,7 +38,7 @@
     <string name="Exit">Sortie</string>
     <string name="Sent_to">Envoyé :</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
-    <string name="Max_sent_item">Suppression anciens messages</string>
+    <string name="Max_sent_item">Suppression anciens SMS</string>
     <string name="Max_sent_item_summary">Conserver seulement les derniers messages</string>
     <string name="Max_sent_item_dialog_title">Garder les derniers</string>
     
@@ -72,7 +72,7 @@
     <string name="Share">Partager</string>
     <string name="Contact">Contact</string>
     <string name="Share_subject">Partager</string>
-    <string name="Share_content">Super app de programmation de SMS : https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
+    <string name="Share_content">Regarde ce super planificateur de SMS avec sa superbe interface : https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
     <string name="Call_now">Appeler maintenant</string>
     <string name="sms_now">SMS maintenant</string>
     <string name="Invalid_time_warning">Date et heure invalides, veuillez modifier</string>

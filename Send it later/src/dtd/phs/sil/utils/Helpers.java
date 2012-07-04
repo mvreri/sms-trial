@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -27,7 +28,7 @@ import dtd.phs.sil.SendSMSService;
 
 public class Helpers {
 
-	public static final boolean DEBUG_MODE = false;
+	public static final boolean DEBUG_MODE = true;
 
 	public static View inflate(Context context, int layout, ViewGroup parent) {
 		LayoutInflater inf = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -86,8 +87,9 @@ public class Helpers {
 		}
 
 
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy");
-		return formatter.format(date);
+//		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy");
+//		return formatter.format(date);
+		return formatDate(date);
 	}
 
 	private static boolean equalsDate(Calendar cal, Calendar current) {
@@ -247,4 +249,46 @@ public class Helpers {
 		}
 	}
 
+	public static String formatDate(int y, int m, int d) {
+		return formatDate(new Date(y-1900,m,d));
+	}
+	
+	public static String formatDate(Date date) {
+		String pattern = createDatePattern(); 
+		String displayDate = new SimpleDateFormat(pattern).format(date);
+		return wordsCapitalize(displayDate);
+	}
+
+	private static String createDatePattern() {
+		String lang = Locale.getDefault().getISO3Language();
+		Logger.logInfo(lang);
+		//default date pattern: English style
+		String pattern = "EEEE - MMMM.dd, yyyy"; 
+		if ( lang.toLowerCase().equals("fra")) {
+			pattern = "EEEE - dd MMMM, yyyy";
+		} else if ( lang.toLowerCase().equals("vie")) {
+			pattern = "EEEE - dd MMMM, yyyy";
+		}
+		return pattern;
+	}
+
+	private static String wordsCapitalize(String sentence) {
+		StringBuilder builder = new StringBuilder();
+		String[] words = sentence.split(" ");
+		for(int i = 0 ; i< words.length ; i++) {
+			words[i] = capitalizeFirstChar(words[i]);
+			builder.append(words[i]);
+			if ( i < words.length - 1) builder.append(" ");
+		}
+		return builder.toString();
+	}
+
+	private static String capitalizeFirstChar(String word) {
+		if ( word == null) return null;
+		if ( word.length() == 1 ) return word.toLowerCase();
+		return ""+(Character.toUpperCase(word.charAt(0))) + word.substring(1);
+	}
+
+	
+	
 }

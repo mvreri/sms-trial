@@ -65,7 +65,6 @@ public class PendingMessageItem extends MessageItem {
 		Calendar next = FrequencyHelpers.getNextCalendar(startDateTime, getFreq());
 		if ( next != null)
 			return Helpers.formatTime(context, next.getTimeInMillis());
-//		new SimpleDateFormat("HH:mm EE - MMMM.dd, yyyy  ").format(new Date(next.getTimeInMillis()));
 		else return null;
 	}
 	
