@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btPlay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/btTest"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Test" />
+
+    <Button
+        android:id="@+id/btAll"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="All by myself" />
+    <!--
+	<EditText
+	    android:id="@+id/subIP"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="78"
+	    />
+	<EditText
+	    android:id="@+id/port"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="5544"
+	    />
+	<EditText
+	    android:id="@+id/id"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="stream"
+	    />
+    -->
+
+</LinearLayout>

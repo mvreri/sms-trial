@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <SurfaceView
+        android:id="@+id/surface_view"
+        android:layout_width="960px"
+        android:layout_height="540px" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btPause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pause     " />
+
+        <Button
+            android:id="@+id/btStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop    " />
+
+        <Button
+            android:id="@+id/btForward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Forward 0.1" />
+
+        <Button
+            android:id="@+id/btBackward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Backward 0.1" />
+    </LinearLayout>
+
+</LinearLayout>
