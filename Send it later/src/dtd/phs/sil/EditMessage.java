@@ -489,7 +489,7 @@ extends Activity
 				}
 			};
 		case DIALOG_FREQ:
-			return new ChooseTextsDialog(this,R.string.Choose_Frequency,FrequencyHelpers.FREQ_NAMES) {
+			return new ChooseTextsDialog(this,R.string.Choose_Frequency,FrequencyHelpers.getFrequencyNames()) {
 
 				@Override
 				public void onItemSelected(int postion) {

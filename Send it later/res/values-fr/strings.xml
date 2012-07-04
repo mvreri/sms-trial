@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Send it later</string>
+    <string name="please_wait">Veuillez patienter</string>
+    <string name="pending_messages">Messages en attente</string>
+    <string name="next">Pour</string>
+    <string name="sent">Envoyé le</string>
+    <string name="Date">Date :</string>
+    
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Annuler</string>
+    <string name="Hour">Heure</string>
+    <string name="Minute">Minute</string>
+    <string name="To">À :</string>
+    <string name="Time">Heure :</string>
+    <string name="Done">Retour</string>
+    <string name="Never">Jamais</string>
+    <string name="Frequency">Fréquence : </string>
+    <string name="Alert_on_delivery">Notification d\'envoi :</string>
+    <string name="Words">Caractères / SMS</string>
+    <string name="Message">Message</string>
+    <string name="Choose_Frequency">Choisir la fréquence</string>
+    <string name="Add">Ajouter</string>
+    <string name="Save">Enregistrer</string>
+    <string name="Rate_Application">Evaler Send it later sur Google Play</string>
+    <string name="Invalid_message_warning">Message invalide : Veuillez remplir tous les champs</string>
+    <string name="message_removed_success">Message supprimé !</string>
+    <string name="remove_item">Supprimer le message</string>
+    <string name="confirm_delete_item">Voulez-vous supprimer ce message ?</string>
+    <string name="Yes">Oui</string>
+    <string name="No">Non</string>
+    <string name="Delete">Supprimer</string>
+    <string name="message_removed_failed">Suppression échouée !</string>
+    <string name="successful_sent_notification_title">Message envoyé</string>
+    <string name="failed_sent_notification_title">Echec de l\'envoi du message</string>
+    <string name="Please_enter_a_phone_number">Veuillez entrer un numéro de téléphone</string>
+    <string name="Preferences">Préférences</string>
+    <string name="Exit">Sortie</string>
+    <string name="Sent_to">Envoyé :</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">Suppression anciens messages</string>
+    <string name="Max_sent_item_summary">Conserver seulement les derniers messages</string>
+    <string name="Max_sent_item_dialog_title">Garder les derniers</string>
+    
+    
+    <string name="about_us">À propos</string>
+    <string name="sil_version">Send it later, version </string>
+    <string name="feel_free">Codes gratuits :</string>
+    <string name="or_send_email">Email : &lt;a href=&quot;mailto:sphamhung@yahoo.com&quot;&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
+    <string name="Close">Fermer</string>
+    <string name="Sent_failed">Envoi échoué à : </string>
+    <string name="Sent_failed_short">Echec : </string>
+    <string name="google_code">&lt;a href=&quot;https://sms-trial.googlecode.com/svn/&quot;&gt; Google Code &lt;/a&gt;</string>
+    <string name="Rate_App">Evaluer l\'application</string>
+    <string name="Rate">Evaluer</string>
+    <string name="https_sms_trial_googlecode_com_svn_">https://sms-trial.googlecode.com/svn/</string>
+    <string name="Please_support_us">Merci de nous soutenir en évaluant cette application sur Google Play !</string>
+    <string name="Remove">Supprimer</string>
+    <string name="Resend_now">Renvoyer maintenant</string>
+    <string name="Edit">Gérer</string>
+    <string name="Message_is_sent_sucessfully">Message envoyé</string>
+    <string name="Message_resend_later">Envoi échoué, veuillez recommencer plus tard</string>
+    <string name="Sending_please_wait">Message en cours d\'envoi, veuillez patienter…</string>
+    <string name="Today_at">Aujourd\'hui, à</string>
+    <string name="Tomorrow_at">Demain, à</string>
+    <string name="Yesterday_at">Hier, à</string>
+    <string name="First_time_running">Premier lancement</string>
+    <string name="please_wait_while_loading_contact">Chargement des contacts…</string>
+    <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
+    <string name="Enter_message_here">Ecrivez votre message ici…</string>
+    <string name="more_apps">Plus d\'apps…</string>
+    <string name="Share">Partager</string>
+    <string name="Contact">Contact</string>
+    <string name="Share_subject">Partager</string>
+    <string name="Share_content">Super app de programmation de SMS : https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
+    <string name="Call_now">Appeler maintenant</string>
+    <string name="sms_now">SMS maintenant</string>
+    <string name="Invalid_time_warning">Date et heure invalides, veuillez modifier</string>
+</resources>

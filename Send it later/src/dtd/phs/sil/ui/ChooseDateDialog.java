@@ -29,10 +29,12 @@ public abstract class ChooseDateDialog extends Dialog {
 	private WheelView yearWheel;
 	private WheelView dayWheel;
 	private OnWheelChangedListener listener;
-	String MONTHS[] = new String[] {
-			"Jan.", "Feb.", "Mar.", "Apr.", 
-			"May","Jun.", "Jul.", "Aug.", 
-			"Sep.", "Oct.","Nov.", "Dec."};
+//	String MONTHS[] = new String[] {
+//			"Jan.", "Feb.", "Mar.", "Apr.", 
+//			"May","Jun.", "Jul.", "Aug.", 
+//			"Sep.", "Oct.","Nov.", "Dec."};
+	String MONTHS[] = null;
+
 	private Calendar selectedCalendar;
 	private Calendar currentTimeDate;
 	private TextView tvSelectedDate;
@@ -43,6 +45,7 @@ public abstract class ChooseDateDialog extends Dialog {
 
 	public ChooseDateDialog(Context context) {
 		super( context );
+		MONTHS = context.getResources().getStringArray(R.array.months);
 		currentTimeDate = Calendar.getInstance();
 	}
 

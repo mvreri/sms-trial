@@ -33,16 +33,18 @@ public class FrequencyHelpers {
 		//		Frequencies.EV_30,Frequencies.EV_HOUR,Frequencies.EV_2_HOURS,Frequencies.EV_12_HOURS
 		//	};
 
-		static public String[] FREQ_NAMES = {
-			"Once","Daily","Weekly","Monthly","Yearly",
-			"Weekday (Mon.-Fri.)","Weekend (Sat. Sun.)"
-		};
+//		static public String[] FREQ_NAMES = {
+//			"Once","Daily","Weekly","Monthly","Yearly",
+//			"Weekday (Mon.-Fri.)","Weekend (Sat. Sun.)"
+//		};
+
+		static private String[] FREQ_NAMES = null;
 		//	,"Every 5 minutes",
 		//		"Every 15 minutes","Every 30 minutes","Every hour","Every 2 hours","Every 12 hours"};
 
 		static public final HashMap<Frequencies, String> mapFreq2Str = new HashMap<Frequencies, String>();
-		static {
-			initMap();
+//		static {
+//			initMap();
 //			mapFreq2Str.put(Frequencies.ONCE, FREQ_NAMES[0]);
 //			mapFreq2Str.put(Frequencies.DAILY, FREQ_NAMES[1]);
 //			mapFreq2Str.put(Frequencies.WEEKLY, FREQ_NAMES[2]);
@@ -57,7 +59,7 @@ public class FrequencyHelpers {
 			//		mapFreq2Str.put(Frequencies.EV_HOUR, "Every hour");
 			//		mapFreq2Str.put(Frequencies.EV_2_HOURS, "Every 2 hours");
 			//		mapFreq2Str.put(Frequencies.EV_12_HOURS, "Every 12 hours");
-		}
+//		}
 
 		private static void initMap() {
 			mapFreq2Str.clear();
@@ -196,5 +198,9 @@ public class FrequencyHelpers {
 			for(int i = 0 ; i < FREQUENCIES.length ; i++)
 				if ( FREQUENCIES[i] == freq) return i;
 			return -1;
+		}
+
+		public static String[] getFrequencyNames() {
+			return FREQ_NAMES;
 		}
 }	
