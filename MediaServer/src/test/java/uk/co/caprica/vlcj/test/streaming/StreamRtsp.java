@@ -38,7 +38,7 @@ public class StreamRtsp extends VlcjTest {
 
 	private static final String ID = "stream";
 	private static final String IP_ADDR = "127.0.0.1";
-	private static final int PORT = 8554;
+	private static final int PORT = 5544;
 
 	public static void main(String[] args) throws Exception {
 		//    if(args.length != 1) {

@@ -9,26 +9,15 @@ public abstract class Command {
 	static final String SEPERATOR = "###";
 	public static final String RESPONE_SUCCESS = "Success";
 	public static final String RESPONE_FAILED = "Failed";
+	
 	private String[] parameters = null;
 	protected String respone = null;
+	
 	public Command(String paraStr) {
 		if ( paraStr != null )
 			parameters = paraStr.split(SEPERATOR);
 		if ( MyUtils.CURRENT_CODE_MODE == CodeModes.DEV) showDebugInfo();
 	}
-
-	private void showDebugInfo() {
-		String ctorInfo = this.getClass().getName();
-		String addInfo = " empty ";
-		if ( parameters != null) {
-			addInfo = " -- with parameters: ";
-			for(int i = 0 ; i < parameters.length ; i++) {
-				addInfo += parameters[i] + "###";
-			}
-		}
-		MyUtils.logInfo("The class: " + ctorInfo + " is being created "+ addInfo);
-	}
-
 	/**
 	 * 
 	 * @param i 
@@ -51,4 +40,21 @@ public abstract class Command {
 	public String getRespone() {
 		return this.respone;
 	}
+
+	/**
+	 * Only use by debug mode
+	 */
+	private void showDebugInfo() {
+		String ctorInfo = this.getClass().getName();
+		String addInfo = " empty ";
+		if ( parameters != null) {
+			addInfo = " -- with parameters: ";
+			for(int i = 0 ; i < parameters.length ; i++) {
+				addInfo += parameters[i] + "###";
+			}
+		}
+		MyUtils.logInfo("The class: " + ctorInfo + " is being created "+ addInfo);
+	}
+
+
 }

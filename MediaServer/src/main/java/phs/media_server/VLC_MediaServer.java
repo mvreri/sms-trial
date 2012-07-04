@@ -47,7 +47,6 @@ public class VLC_MediaServer implements IMediaServer {
 	 * @return the path to VLC folder
 	 */	
 	private String getVLCPath() {
-		//TODO: automatic scan for the path of VLC
 		return VLC_APP_PATH;
 	}
 
@@ -111,11 +110,13 @@ public class VLC_MediaServer implements IMediaServer {
 	}
 
 	@Override
-	public int resume() {
+	public int resume(float percent) {
 		if ( currentState == PlayerStates.PAUSED) {
+			if ( percent >= 0 && percent <= 1 ) 
+				mediaPlayer.setPosition(percent);
 			mediaPlayer.pause();
 			currentState = PlayerStates.STREAMING;
-			return CODE_INVALID_STATE;
+			return CODE_SUCCESS;
 		} return CODE_INVALID_STATE;
 	}
 

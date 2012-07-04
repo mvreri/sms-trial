@@ -30,9 +30,9 @@ import phs.media_server.commands.CommandFactory;
  *	  * Request: Pause
  *	  * Respone: Success - Failed  </br>
  *
- *	 + RESUME(): resume the streaming video</br>
+ *	 + RESUME(float percent): resume the streaming video from the percent position</br>
  *	  * Request: Resume
- *	  * Respone: Success - Failed </br>
+ *	  * Respone: Success###0.3 - Failed </br>
  *
  *	 + SEEK_TO(float percent): with percent in the range [0,1]
  *	  * Request: SeekTo###[percent] , e.g: SeekTo##0.3
@@ -82,6 +82,7 @@ public class VideoServer {
 				mediaServer = new VLC_MediaServer();
 				while (! Thread.interrupted()) {
 					String requestString = inputStream.readLine();
+					//TODO: should the command be queued here ? Or it is queued already ?
 					Command command = CommandFactory.createCommand(requestString);
 					if ( command != null) {
 						command.process(mediaServer);

@@ -1,7 +1,7 @@
 package phs.media_server;
 
 /**
- * @author Pham Hung Son  </br>
+ * @author Pham Hung Son - Developer note: </br>
  *	This interface "wraps" around the core streaming module,
  *	because the streaming library is not reliable, so it will be changed 
  *	in the future. This wrapper is used to anticipate that change 
@@ -43,13 +43,16 @@ public interface IMediaServer {
 	public int pause();
 	
 	/**
-	 * Resume the streaming video
-	 * This operation is only supported if the player is in "Paused" state 
+	 * Resume the streaming video at position "percent" </br>
+	 * This operation is only supported if the player is in "Paused" state  </br>
+	 * @param percent 
+	 * 	the position that the video should be resumed from, 
+	 * 	if percent < 0 or percent > 1: resumed from the "paused" position </br>
 	 * @return error code: </br>
 	 * 	- 0: successfully started </br>
 	 *  - 1: called on illegal state </br>
 	 */
-	public int resume();
+	public int resume(float percent);
 	
 	/**
 	 * Set the video position accordingly
