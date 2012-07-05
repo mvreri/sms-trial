@@ -12,20 +12,24 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
         <activity
-            android:name=".SimpleVideoPlayerActivity"
-            android:label="@string/app_name" ><intent-filter>
+            android:name="phs.test.video_player.SimpleVideoPlayerActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
-        <activity android:name="VideoViewDemo" >
+        <activity android:name="phs.test.video_player.VideoViewDemo" >
         </activity>
         <activity
             android:name="phs.test.video_player.MediaPlayer_Video"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
+        <activity android:name="TestAct">
+            
+            </activity>
     </application>
 
 </manifest>

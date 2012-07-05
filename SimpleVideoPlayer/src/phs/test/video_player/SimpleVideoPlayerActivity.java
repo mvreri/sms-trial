@@ -73,7 +73,6 @@ public class SimpleVideoPlayerActivity extends Activity implements IMediaServerL
 			public void onClick(View v) {
 				Intent intent= new Intent(SimpleVideoPlayerActivity.this,MediaPlayer_Video.class);
 				startActivity(intent);
-				
 			}
 		});
 
@@ -98,7 +97,7 @@ public class SimpleVideoPlayerActivity extends Activity implements IMediaServerL
 			Logger.logInfo("Setup server successfully !");
 			url = SERVER_URL + ":" + this.streamingPort + "/" + this.streamId;
 			Logger.logInfo("Streaming URL: " +url);
-			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+			Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));			
 			startActivity(intent);
 		} else {
 			Logger.logInfo("Cannot start the server !");
@@ -119,7 +118,7 @@ public class SimpleVideoPlayerActivity extends Activity implements IMediaServerL
 
 
 
-	public void onSeekRespone(int errorCode) {
+	public void onSeekResponse(int errorCode) {
 		// TODO Auto-generated method stub
 
 	}
@@ -136,5 +135,12 @@ public class SimpleVideoPlayerActivity extends Activity implements IMediaServerL
 	public void onElseRespone(int errorCode) {
 		// TODO Auto-generated method stub
 
+	}
+
+
+
+	public void onGetDurationResponse(int errorCode, int duration) {
+		// TODO Auto-generated method stub
+		
 	}
 }

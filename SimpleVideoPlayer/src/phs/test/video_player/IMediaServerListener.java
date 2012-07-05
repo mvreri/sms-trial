@@ -5,9 +5,11 @@ public interface IMediaServerListener {
 	public void onStartRespone(int errorCode);
 	public void onPauseRespone(int errorCode);
 	public void onResumeRespone(int errorCode);
-	public void onSeekRespone(int errorCode);
+	public void onSeekResponse(int errorCode);
 	public void onStopRespone(int errorCode);
+	public void onGetDurationResponse(int errorCode,int duration);
 	
 	//Consider later
 	public void onElseRespone(int errorCode);
+	
 }

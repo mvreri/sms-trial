@@ -11,7 +11,7 @@ public class Logger {
 
 	}
 
-	private static final String SIL_LOG_TAG = "SIL_TAG";
+	private static final String SIL_LOG_TAG = "WIRELESS_VIDEO";
 
 	public static void logInfo(String extra) {
 		if ( Helpers.DEBUG_MODE ) {

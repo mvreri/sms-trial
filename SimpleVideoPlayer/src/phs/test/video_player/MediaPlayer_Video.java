@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class MediaPlayer_Video extends Activity 
 implements 
@@ -39,7 +40,7 @@ OnPreparedListener, OnCompletionListener, Callback
 	//	private static final String URL = "rtsp://v3.cache7.c.youtube.com/CjcLENy73wIaLgk6Cp64LnijDRMYDSANFEIJbXYtZ29vZ2xlSARSBnZpZGVvc2Dz7bCYxt2UlU8M/0/0/0/video.3gp";
 	//	private static final String URL = "rtsp://masds03.htc.com.tw/h264/H264_15f_256k_AAC_112k_5KF_qvga.3gp";
 	private static final String TAG = "PHS_TEST";
-	private static final String REMOTE_VIDEO_PATH = "D:\\Movies\\720p.mp4";
+	private static final String REMOTE_VIDEO_PATH = "D:\\Movies\\SNSD720.mp4";
 	private MediaPlayer player;
 	private SurfaceView surfaceView;
 	private Display currentDisplay;
@@ -52,6 +53,7 @@ OnPreparedListener, OnCompletionListener, Callback
 	private View btBackward;
 	private RemoteController controller;
 	protected boolean isPlaying;
+	protected int duration;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -70,7 +72,7 @@ OnPreparedListener, OnCompletionListener, Callback
 				controller.setup(REMOTE_VIDEO_PATH);
 			}
 		}, 300);
-		
+
 	}
 
 	@Override
@@ -83,7 +85,7 @@ OnPreparedListener, OnCompletionListener, Callback
 
 	public class ControlListener implements IMediaServerListener {
 
-		
+
 
 		public void onSetupRespone(int errorCode, String streamPort,
 				String streamId) {
@@ -135,21 +137,34 @@ OnPreparedListener, OnCompletionListener, Callback
 			}
 		}
 
-		public void onSeekRespone(int errorCode) {
+		public void onSeekResponse(int errorCode) {
 			// TODO Auto-generated method stub
 
 		}
 
 		public void onStopRespone(int errorCode) {
-			player.stop();
-			player.release();
-			player = null;
-			finish();
+			Logger.logInfo("STOPPED");
+			if ( player != null) {
+				player.stop();
+				player.release();
+				player = null;
+				finish();
+			}
+
 		}
 
 		public void onElseRespone(int errorCode) {
 			// TODO Auto-generated method stub
 
+		}
+
+		public void onGetDurationResponse(int errorCode, final int duration) {
+			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+				MediaPlayer_Video.this.duration = duration;
+				Logger.logInfo("Duration: " + duration);
+			} else {
+				Logger.logInfo("Duration: error !");
+			}
 		}
 
 	}
@@ -186,14 +201,21 @@ OnPreparedListener, OnCompletionListener, Callback
 		btForward = findViewById(R.id.btForward);
 		btForward.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				controller.forward((float) 0.1);
+				int currentPosition = player.getCurrentPosition();
+				if ( duration != 0 ) {
+					float current = (((float)currentPosition) / duration);
+					Logger.logInfo("Current: " + current);
+					float next =  current + (float)0.3;
+					Logger.logInfo("Next: " + next);
+					if ( next > 1 ) next = 0.99f;
+					controller.seekTo(next);
+				}
 			}
 		});
 
 		btBackward = findViewById(R.id.btBackward);
 		btBackward.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				controller.backward((float) 0.1);
 			}
 		});
 
@@ -252,6 +274,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		//		adjustScreen(mp);
 		mp.start();
 		isPlaying = true;
+		controller.getDuration();
 	}
 
 	private void adjustScreen(MediaPlayer mp) {

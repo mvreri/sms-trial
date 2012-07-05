@@ -17,13 +17,17 @@ public class RemoteController {
 	private static final int SERVER_PORT = 16326;
 	public static final String TAG = "Test_video_server";
 	static final String SEPERATOR = "###";
-	static final int RET_CODE_SUCCESS = 0;
-	private static final int RET_CODE_FAILED = 1;
 
-	//Respone - read the doc for server to assign the following constants
+	//Response code for the listener of this controller
+	static final int RET_CODE_SUCCESS = 0;
+	static final int RET_CODE_FAILED = 1;
+	static final int RET_CODE_TIMEOUT = 2;
+
+	//Response - read the doc for server to assign the following constants
 	public static final String RESPONE_SUCCESS = "Success";
 	public static final String RESPONE_FAILED = "Failed";
 	protected static final int TIME_OUT = 10000;
+
 
 
 	private Socket socket;
@@ -116,8 +120,11 @@ public class RemoteController {
 					socket.setSoTimeout(TIME_OUT);
 					String readLine = inputStream.readLine();
 					processStartRespone(readLine);
-				} catch (IOException e) {
+				} catch (SocketException e) {
 					Logger.logError(e);
+					listener.onStartRespone(RET_CODE_TIMEOUT);
+				} catch (IOException e) {
+					Logger.logError(e);					
 				}
 			}
 		}).start();
@@ -125,7 +132,7 @@ public class RemoteController {
 
 	protected void processStartRespone(String readLine) {
 		Logger.logInfo("Start respone: " + readLine);
-		if (readLine.equals(RESPONE_SUCCESS)) {
+		if (readLine.startsWith(RESPONE_SUCCESS)) {
 			listener.onStartRespone(RET_CODE_SUCCESS);
 		} else listener.onStartRespone(RET_CODE_FAILED);
 	}
@@ -138,6 +145,9 @@ public class RemoteController {
 					socket.setSoTimeout(TIME_OUT);
 					String readLine = inputStream.readLine();
 					processStopRespone(readLine);
+				} catch (SocketException e) {
+					Logger.logError(e);
+					listener.onStopRespone(RET_CODE_TIMEOUT);
 				} catch (IOException e) {
 					Logger.logError(e);
 				}
@@ -177,6 +187,9 @@ public class RemoteController {
 					socket.setSoTimeout(TIME_OUT);
 					String readLine = inputStream.readLine();
 					processPauseRespone(readLine);
+				} catch (SocketException e) {
+					Logger.logError(e);
+					listener.onPauseRespone(RET_CODE_TIMEOUT);
 				} catch (IOException e) {
 					Logger.logError(e);
 				}
@@ -200,6 +213,9 @@ public class RemoteController {
 					socket.setSoTimeout(TIME_OUT);
 					String readLine = inputStream.readLine();
 					processResumeRespone(readLine);
+				} catch (SocketException e) {
+					Logger.logError(e);
+					listener.onResumeRespone(RET_CODE_TIMEOUT);
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -216,14 +232,59 @@ public class RemoteController {
 		}
 	}
 
-	public void forward(float d) {
-		// TODO Auto-generated method stub
-
+	public void getDuration() {
+		outputStream.println("GetDuration");
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					socket.setSoTimeout(TIME_OUT);
+					String readLine = inputStream.readLine();
+					processGetDurationResponse(readLine);
+				} catch (SocketException e) {
+					listener.onGetDurationResponse(RET_CODE_FAILED,0);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+		
 	}
 
-	public void backward(float d) {
-		// TODO Auto-generated method stub
+	protected void processGetDurationResponse(String readLine) {
+		if (readLine.startsWith(RESPONE_SUCCESS)) {
+			String[] words = readLine.split(SEPERATOR);
+			listener.onGetDurationResponse(RET_CODE_SUCCESS, Integer.parseInt(words[1]));
+		} else {
+			listener.onGetDurationResponse(RET_CODE_FAILED, 0);
+		}
+			
+	}
 
+	public void seekTo(float next) {
+		String command = "SeekTo###"+next;
+		Logger.logInfo("Send command: " + command);
+		outputStream.println(command);
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					socket.setSoTimeout(TIME_OUT);
+					String readLine = inputStream.readLine();
+					processSeekResponse(readLine);
+				} catch (SocketException e) {
+					listener.onSeekResponse(RET_CODE_FAILED);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
+	}
+
+	protected void processSeekResponse(String readLine) {
+		if ( readLine.startsWith(RESPONE_SUCCESS)) {
+			listener.onSeekResponse(RET_CODE_SUCCESS);
+		} else {
+			listener.onSeekResponse(RET_CODE_FAILED);
+		}
 	}
 
 }
