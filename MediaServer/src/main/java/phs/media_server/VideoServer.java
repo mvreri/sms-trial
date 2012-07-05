@@ -29,25 +29,31 @@ import sun.misc.Cleaner;
  *
  *	 + START(): start the streaming server </br>
  *	  * Request: Start
- *	  * Respone: Success - Failed </br>
+ *	  * Respone: 
+ *			Success </br> 
+ *			Failed </br>
  *
  *	 + PAUSE(): pause the streaming video</br>
  *	  * Request: Pause
  *	  * Respone: Success - Failed  </br>
  *
  *	 + RESUME(float percent): resume the streaming video from the percent position</br>
- *	  * Request: Resume
+ *	  * Request: Resume </br>
  *	  * Respone: Success###0.3 - Failed </br>
  *
- *	 + SEEK_TO(float percent): with percent in the range [0,1]
- *	  * Request: SeekTo###[percent] , e.g: SeekTo##0.3
- *	  * Respone: Success - Failed 
+ *	 + SEEK_TO(float percent): with percent in the range [0,1] </br>
+ *	  * Request: SeekTo###[percent] , e.g: SeekTo##0.3 </br>
+ *	  * Respone: Success - Failed  </br>
  *
- *	 + STOP(): stop the streaming server (This message server still running !)
- *	  * Request: Stop
- *	  * Respone: Success - Failed 
- *
- *	 + Anything else: respone "Unknown command"
+ *	 + STOP(): stop the streaming server (This message server still running !) </br>
+ *	  * Request: Stop </br>
+ *	  * Response: Success - Failed </br> </br>
+ *	 + GET_DURATION(): get video duration (can only be called after video already playing) 
+ *	  * Request: GetDuration
+ *	  * Response: 
+ *			Success###int duration
+ *			Failed  
+ *	 + Anything else: respone "Unknown command" </br>
  *		
  */
 public class VideoServer {
@@ -83,12 +89,13 @@ public class VideoServer {
 			initResources();
 			try {
 				serverSocket = new ServerSocket(MESSAGE_PORT);
-				MyUtils.logInfo("Waiting for client to connect ...");
 				clientSocket = serverSocket.accept();
 				MyUtils.logInfo("Client connected: " + clientSocket.getInetAddress().getHostName());
+
 				inputStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				outputStream = new PrintWriter(clientSocket.getOutputStream(),true);
 				mediaServer = new VLC_MediaServer();
+
 				while (! Thread.interrupted()) {
 					MyUtils.logInfo("Main LOOP ....");
 					String requestString = inputStream.readLine();
@@ -96,7 +103,6 @@ public class VideoServer {
 						//TODO: should the command be queued here ? Or it is queued already ?
 						Command command = CommandFactory.createCommand(requestString);
 						if ( command != null) {
-							MyUtils.logInfo("Command is being processed ...");
 							command.process(mediaServer);
 							MyUtils.logInfo("Respone:" + command.getRespone());
 							outputStream.println(command.getRespone());
@@ -104,6 +110,9 @@ public class VideoServer {
 							outputStream.println(UNKNOWN_COMMAND);
 						}
 						command = null;
+					} else {
+						MyUtils.logInfo("Received null string !");
+						break;
 					}
 				}
 			} catch (IOException e) {
@@ -122,16 +131,29 @@ public class VideoServer {
 		}
 
 		private void releaseResources() {
+			outputStream.close();
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				MyUtils.logError(e);
+			}
+
 			try {
 				if (serverSocket != null) serverSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				MyUtils.logError(e);
 			}
+
 			try {
 				if (clientSocket != null) clientSocket.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				MyUtils.logError(e);
 			}
+			inputStream = null;
+			outputStream = null;
+			clientSocket = null;
+			serverSocket = null;
+			
 		}
 	}
 

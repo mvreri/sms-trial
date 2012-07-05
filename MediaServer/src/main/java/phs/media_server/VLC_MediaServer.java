@@ -1,7 +1,10 @@
 package phs.media_server;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
+import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -22,6 +25,7 @@ public class VLC_MediaServer implements IMediaServer {
 	private HeadlessMediaPlayer mediaPlayer;
 	private PlayerStates currentState = PlayerStates.ZERO;
 	private int serverPort;
+	private MediaPlayerFactory mpFactory;
 
 	@Override
 	public int setup(String fullFilePath) {
@@ -51,8 +55,8 @@ public class VLC_MediaServer implements IMediaServer {
 	@Override
 	public int start() {
 		if ( currentState == PlayerStates.INITILIZED ) {
-			MediaPlayerFactory fact = new MediaPlayerFactory();
-			mediaPlayer = fact.newMediaPlayer();
+			mpFactory = new MediaPlayerFactory();
+			mediaPlayer = mpFactory.newMediaPlayer();
 			mediaPlayer.playMedia(
 					this.filePath, 
 					createBaseURL(getServerPort(),getStreamId()),
@@ -76,6 +80,11 @@ public class VLC_MediaServer implements IMediaServer {
 	public int getServerPort() {
 		return serverPort;
 	}
+	
+	@Override
+	public int getDuration() {
+		return (int) mediaPlayer.getLength();
+	}
 
 	private static String createBaseURL(int serverPort, String id) {
 		StringBuilder sb = new StringBuilder(60);
@@ -92,7 +101,11 @@ public class VLC_MediaServer implements IMediaServer {
 	public int stop() {
 		if ( currentState != PlayerStates.ZERO) {
 			mediaPlayer.stop();
+			mediaPlayer.release();			
+			mpFactory.release();
 			mediaPlayer = null;
+			mpFactory.release();
+			mpFactory = null;
 			currentState = PlayerStates.ZERO;
 			return CODE_SUCCESS;
 		} else return CODE_INVALID_STATE;
@@ -126,6 +139,7 @@ public class VLC_MediaServer implements IMediaServer {
 				&& percent >= 0 && percent <= 1
 			)
 		{
+			MyUtils.logInfo("Processing seekto " + percent);
 			mediaPlayer.setPosition(percent);
 			return CODE_SUCCESS; 
 		} else return CODE_INVALID_STATE;

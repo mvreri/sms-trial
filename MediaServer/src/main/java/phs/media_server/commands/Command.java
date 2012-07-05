@@ -45,6 +45,7 @@ public abstract class Command {
 	 * Only use by debug mode
 	 */
 	private void showDebugInfo() {
+		MyUtils.logInfo("--------------------------");
 		String ctorInfo = this.getClass().getName();
 		String addInfo = " empty ";
 		if ( parameters != null) {

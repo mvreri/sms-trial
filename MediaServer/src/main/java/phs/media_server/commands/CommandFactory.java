@@ -16,23 +16,13 @@ public class CommandFactory {
 	//Mapping the 
 	private static HashMap<String,Class<?>> mapStr2Type = new HashMap<String, Class<?>>();
 	static {
-		//		mapStr2Type.put("setup", CommandType.SETUP);
 		mapStr2Type.put("setup", SetupCommand.class);
-
-		//		mapStr2Type.put("start", CommandType.START);
 		mapStr2Type.put("start", StartCommand.class);
-
-		//		mapStr2Type.put("pause", CommandType.PAUSE);
 		mapStr2Type.put("pause", PauseCommand.class);
-
-		//		mapStr2Type.put("resume", CommandType.RESUME);
 		mapStr2Type.put("resume", ResumeCommand.class);
-
-		//		mapStr2Type.put("seekto", CommandType.SEEK_TO);
 		mapStr2Type.put("seekto", SeekToCommand.class);
-
-		//		mapStr2Type.put("stop", CommandType.STOP);
 		mapStr2Type.put("stop", StopCommand.class);
+		mapStr2Type.put("getduration", GetDurationCommand.class);
 	}
 
 	private static Command newCommand(Class<?> commandClass, String tail) {

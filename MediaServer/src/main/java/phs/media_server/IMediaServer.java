@@ -76,4 +76,10 @@ public interface IMediaServer {
 	 * @return current streaming id
 	 */
 	public String getStreamId();
+
+	/**
+	 * This method should only be called AFTER the video playing, else it will return 0
+	 * @return current video item duration
+	 */
+	int getDuration();
 }
