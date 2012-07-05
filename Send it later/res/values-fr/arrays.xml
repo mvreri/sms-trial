@@ -12,7 +12,7 @@
         <item>Tous les messages</item>
     </string-array>
     <string-array name="frequencies">
-        <item>Une fois</item>
+        <item>Une seule fois</item>
         <item>Tous les jours</item>
         <item>Toutes les semaines</item>
         <item>Tous les mois</item>
