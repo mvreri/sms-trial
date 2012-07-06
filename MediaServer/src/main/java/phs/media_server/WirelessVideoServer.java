@@ -39,7 +39,7 @@ import phs.media_server.commands.CommandFactory;
  *
  *	 + RESUME(float percent): resume the streaming video from the percent position</br>
  *	  * Request: Resume </br>
- *	  * Respone: Resume###Success###0.3 - Resume###Failed </br>
+ *	  * Respone: Resume###Success - Resume###Failed </br>
  *
  *	 + SEEK_TO(float percent): with percent in the range [0,1] </br>
  *	  * Request: SeekTo###[percent] , e.g: SeekTo##0.3 </br>

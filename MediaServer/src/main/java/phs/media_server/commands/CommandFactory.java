@@ -1,17 +1,12 @@
 package phs.media_server.commands;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import phs.media_server.Logger;
 
 
 public class CommandFactory {
-
-	//	public enum CommandType {
-	//		SETUP,START,PAUSE,RESUME,SEEK_TO,STOP
-	//	}
 
 	//Mapping the 
 	private static HashMap<String,Class<?>> mapStr2Type = new HashMap<String, Class<?>>();

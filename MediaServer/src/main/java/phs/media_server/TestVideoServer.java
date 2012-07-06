@@ -3,7 +3,7 @@ package phs.media_server;
 public class TestVideoServer {
 	
 	private static final int MIN_IN_MILLIS = 60*1000;
-	protected static final long WAIT_BEFORE_DIE = 30* MIN_IN_MILLIS;
+	protected static final long WAIT_BEFORE_DIE = 120* MIN_IN_MILLIS;
 	private static WirelessVideoServer server;
 
 	public static void main(String[] args) throws InterruptedException {
