@@ -9,6 +9,8 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import phs.test.video_player.requests.RequestFactory;
+import phs.test.video_player.requests.RequestProcessor;
 import android.util.Log;
 
 //TODO: refactor !
@@ -32,9 +34,10 @@ public class RemoteController {
 
 
 	private Socket socket;
-	private BufferedReader inputStream;
-	private PrintWriter outputStream;
+//	private BufferedReader inputStream;
+//	private PrintWriter outputStream;
 	private IMediaServerListener listener;
+	private RequestProcessor requestWorker;
 
 	public RemoteController(IMediaServerListener listener) {
 		this.listener = listener;
@@ -44,17 +47,15 @@ public class RemoteController {
 	private void createCommunicator() {
 		try {
 			socket = new Socket(getServerAddress(),SERVER_PORT);
-			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			outputStream = new PrintWriter(socket.getOutputStream(),true);
+			requestWorker = new RequestProcessor(socket);
+//			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//			outputStream = new PrintWriter(socket.getOutputStream(),true);			
 		} catch (IOException e) {
-			logException(e);
+			Logger.logError(e);
 		}
 
 	}
 
-	private void logException(IOException e) {
-		Log.i(TAG,e.getClass().toString() + " : " + e.getMessage());
-	}
 
 	private InetAddress getServerAddress() {
 		try {
@@ -67,29 +68,30 @@ public class RemoteController {
 
 	//TODO: Draft version, need to be designed again
 	public void setup(String remoteVideoPath) {
-		try {
-			outputStream.println(createSetupRequest(remoteVideoPath));
-			Logger.logInfo("OutputStream ");
-		} catch (Exception e) {
-			Logger.logError(e);
-		}
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					Logger.logInfo("Start listening for SETUP response ...");
-					//TODO: It could be the case that this respone is not setup respone -> fix it
-					String line = inputStream.readLine();
-
-					Logger.logInfo("Server responsed SETUP...");
-					processSetupRespone(line);
-				} catch (SocketException e) {
-					Logger.logError(e);
-				} catch (IOException e) {
-					Logger.logError(e);
-				}
-			}
-		}).start();
+		requestWorker.addRequest(RequestFactory.createRequest("setup",remoteVideoPath));
+//		try {
+//			outputStream.println(createSetupRequest(remoteVideoPath));
+//			Logger.logInfo("OutputStream ");
+//		} catch (Exception e) {
+//			Logger.logError(e);
+//		}
+//		new Thread(new Runnable() {
+//			public void run() {
+//				try {
+//					socket.setSoTimeout(TIME_OUT);
+//					Logger.logInfo("Start listening for SETUP response ...");
+//					//TODO: It could be the case that this respone is not setup respone -> fix it
+//					String line = inputStream.readLine();
+//
+//					Logger.logInfo("Server responsed SETUP...");
+//					processSetupRespone(line);
+//				} catch (SocketException e) {
+//					Logger.logError(e);
+//				} catch (IOException e) {
+//					Logger.logError(e);
+//				}
+//			}
+//		}).start();
 	}
 
 	private String createSetupRequest(String remoteVideoPath) {
@@ -174,13 +176,13 @@ public class RemoteController {
 		try {
 			inputStream.close();			
 		} catch (IOException e) {
-			logException(e);
+			Logger.logError(e);
 		}
 		outputStream.close();
 		try {
 			socket.close();
 		} catch (IOException e) {
-			logException(e);
+			Logger.logError(e);
 		}
 	}
 
