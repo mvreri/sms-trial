@@ -253,7 +253,7 @@ public class RemoteController {
 				} catch (SocketException e) {
 					listener.onGetDurationResponse(RET_CODE_FAILED,0);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.logError(e);
 				}
 			}
 		}).start();
@@ -283,7 +283,7 @@ public class RemoteController {
 				} catch (SocketException e) {
 					listener.onSeekResponse(RET_CODE_FAILED);
 				} catch (IOException e) {
-					e.printStackTrace();
+					Logger.logError(e);
 				}
 			}
 		}).start();
