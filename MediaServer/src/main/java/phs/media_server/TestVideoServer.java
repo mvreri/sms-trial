@@ -4,11 +4,11 @@ public class TestVideoServer {
 	
 	private static final int MIN_IN_MILLIS = 60*1000;
 	protected static final long WAIT_BEFORE_DIE = 30* MIN_IN_MILLIS;
-	private static VideoServer server;
+	private static WirelessVideoServer server;
 
 	public static void main(String[] args) throws InterruptedException {
-		server = new VideoServer();
-		if ( server.startService() == VideoServer.ERR_CODE_SUCCESS ) {
+		server = new WirelessVideoServer();
+		if ( server.startService() == WirelessVideoServer.START_SUCCESS ) {
 			System.out.println("Video server started ....");
 			Thread wait = new Thread(new Runnable() {
 				

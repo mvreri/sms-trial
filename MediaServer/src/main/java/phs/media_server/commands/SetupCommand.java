@@ -12,8 +12,8 @@ public class SetupCommand extends Command {
 
 	private String filePath;
 
-	public SetupCommand(String paraStr) {
-		super(paraStr);
+	public SetupCommand(String name,String paraStr) {
+		super(name,paraStr);
 		parseFilePath();
 	}
 

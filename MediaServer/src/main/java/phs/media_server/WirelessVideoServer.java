@@ -6,26 +6,68 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 
 import phs.media_server.commands.Command;
 import phs.media_server.commands.CommandFactory;
-
-public class NewVideoServer {
-
-
-
+/**
+ * @author Pham Hung Son
+ *	This class is the message server: it serves as communicator between server & clients 
+ *	Note that, the streaming server uses another port </br>
+ *	- It opens a socket on the server, listens to clients. </br>
+ *	- When a client connects: </br>
+ *	 + Create a session to handle that client
+ *	 + The session will handle communication between the client & media server </br>
+ *
+ *	- Type of requests (all requests/responses are case insensitive): </br> 
+ *	 + SETUP(Full_file_path): Prepare to stream the local file</br>
+ * 	  - Request: Setup###[file_path] , e.g: Setup###D:\Movies\720p.mp4 </br>
+ * 	  - Respone: A string with this format </br>
+ *			[Setup###Success###int STREAM_SERVER_PORT###String STREAM_ID] </br>
+ *			[Setup###Failed]</br>
+ *
+ *	 + START(): start the streaming server </br>
+ *	  * Request: Start
+ *	  * Respone: 
+ *			Start###Success </br> 
+ *			Start###Failed </br>
+ *
+ *	 + PAUSE(): pause the streaming video</br>
+ *	  * Request: Pause
+ *	  * Respone: Pause###Success - Pause###Failed  </br>
+ *
+ *	 + RESUME(float percent): resume the streaming video from the percent position</br>
+ *	  * Request: Resume </br>
+ *	  * Respone: Resume###Success###0.3 - Resume###Failed </br>
+ *
+ *	 + SEEK_TO(float percent): with percent in the range [0,1] </br>
+ *	  * Request: SeekTo###[percent] , e.g: SeekTo##0.3 </br>
+ *	  * Respone: SeekTo###Success - SeekTo###Failed  </br>
+ *
+ *	 + STOP(): stop the streaming server (This message server still running !) </br>
+ *	  * Request: Stop </br>
+ *	  * Response: Stop###Success - Setup###Failed </br> </br>
+ *	 + GET_DURATION(): get video duration (can only be called after video already playing) 
+ *	  * Request: GetDuration
+ *	  * Response: 
+ *			GetDuration###Success###int duration
+ *			GetDuration###Failed  
+ *	 + Anything else: respone "Unknown command" </br>
+ *		
+ */
+public class WirelessVideoServer {
 
 	private static final int SERVER_PORT = 16326;
 
 	//Return codes for startService()
-	private static final int START_SUCCESS = 0;
-	private static final int ERR_SOCK_OPEN_FAILED = 1;
+	static final int START_SUCCESS = 0;
+	public static final int ERR_SOCK_OPEN_FAILED = 1;
 
 	private ServerSocket serverSocket;
 	private SessionHandler sessionHandler;
 
-	public NewVideoServer(Object listener) {}
+	public WirelessVideoServer() {}
 
 	/**
 	 * 
@@ -45,16 +87,21 @@ public class NewVideoServer {
 		}
 	}
 
-	public void stopService() throws IOException {
+	public void stopService() {
 		sessionHandler.interrupt();
-		serverSocket.close();
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+			Logger.logInfo("Cannot stop the server !");
+			Logger.logError(e);
+		}
 	}
 
 	public class SessionHandler extends Thread {
 		private ArrayList<MediaSession> runningSessions = null;
 
 		public SessionHandler() {
-			this.runningSessions = new ArrayList<NewVideoServer.MediaSession>();
+			this.runningSessions = new ArrayList<WirelessVideoServer.MediaSession>();
 		}
 
 		@Override
@@ -67,6 +114,9 @@ public class NewVideoServer {
 						MediaSession session = new MediaSession(clientSocket);
 						session.start();
 						runningSessions .add(session);
+					} catch (SocketException e) {
+						Logger.logError(e);
+						Logger.logInfo("SecurityException : may be server is closing ...");
 					} catch (IOException e) {
 						Logger.logError(e);
 					}
@@ -153,6 +203,8 @@ public class NewVideoServer {
 			inputStream = null;
 			outputStream = null;
 			clientSocket = null;
+			mediaServer.stop();
+			mediaServer = null;
 		}		
 	}
 

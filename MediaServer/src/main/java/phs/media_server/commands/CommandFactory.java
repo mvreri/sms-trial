@@ -25,35 +25,19 @@ public class CommandFactory {
 		mapStr2Type.put("getduration", GetDurationCommand.class);
 	}
 
-	private static Command newCommand(Class<?> commandClass, String tail) {
+	private static Command newCommand(String header, String tail) {
+		Class<?> commandClass = mapStr2Type.get(header);
 		if ( commandClass == null) {
 			Logger.logError("No accordingly type !");
 			return null;
 		}
 		try {
-			Constructor ctor = commandClass.getConstructor(String.class);
-			return (Command) ctor.newInstance(tail);
+			Constructor<?> ctor = commandClass.getConstructor(String.class,String.class);
+			return (Command) ctor.newInstance(header,tail);
 		} catch (Exception e) {
 			Logger.logError(e);
 			return null;
 		}
-		//		switch (commandType) {
-		//		case PAUSE:
-		//			return new PauseCommand(tail);
-		//		case RESUME:
-		//			return new ResumeCommand(tail);
-		//		case SEEK_TO:
-		//			return new SeekToCommand(tail);
-		//		case SETUP:
-		//			return new SetupCommand(tail);
-		//		case START:
-		//			return new StartCommand(tail);
-		//		case STOP:
-		//			return new StopCommand(tail);
-		//		default:
-		//			MyUtils.assertTrue(false);
-		//			return null;
-		//		}		
 	}
 
 	public static Command createCommand(String requestString) {
@@ -69,7 +53,7 @@ public class CommandFactory {
 			tail = requestString.substring(sepPos + Command.SEPERATOR.length() );
 		}
 		Logger.logInfo(mapStr2Type.get(header.toLowerCase()).getName() +" is to be created !");
-		return newCommand(mapStr2Type.get(header.toLowerCase()),tail);
+		return newCommand(header.toLowerCase(),tail);
 	}
 
 

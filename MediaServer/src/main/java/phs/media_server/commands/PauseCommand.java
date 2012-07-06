@@ -4,8 +4,8 @@ import phs.media_server.IMediaServer;
 
 public class PauseCommand extends Command {
 
-	public PauseCommand(String paraStr) {
-		super(paraStr);
+	public PauseCommand(String name,String paraStr) {
+		super(name,paraStr);
 	}
 
 	@Override

@@ -4,8 +4,8 @@ import phs.media_server.IMediaServer;
 
 public class StopCommand extends Command {
 
-	public StopCommand(String paraStr) {
-		super(paraStr);
+	public StopCommand(String name,String paraStr) {
+		super(name,paraStr);
 	}
 
 	@Override

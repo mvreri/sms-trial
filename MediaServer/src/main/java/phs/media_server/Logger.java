@@ -6,13 +6,23 @@ import java.net.ServerSocket;
 import junit.framework.Assert;
 
 public class Logger {
+
+	/**
+	 * Code modes:
+	 * 	- DEV: enable assert to crash app when something goes wrong, enable logs
+	 * 	- TEST: disable assert, enable logs
+	 * 	- PRODUCT: disable assert & logs
+	 */
 	public enum CodeModes {DEV,TEST,PRODUCT};
-	static public final CodeModes CURRENT_CODE_MODE = CodeModes.DEV;
+	static public final CodeModes CurrentCodeMode = CodeModes.DEV;
+	
+	
 	private static final String TAG = "PHS_MEDIA_SERVER";
+	
 	public static void verifyTrue(boolean b) {
-		if (CURRENT_CODE_MODE == CodeModes.DEV )
+		if (CurrentCodeMode == CodeModes.DEV )
 			Assert.assertTrue(b);
-		else if ( CURRENT_CODE_MODE == CodeModes.TEST ) {
+		else if ( CurrentCodeMode == CodeModes.TEST ) {
 			logMessage("Assert false");
 		}
 	}
@@ -25,7 +35,7 @@ public class Logger {
 	}
 
 	private static void logMessage(String message) {
-		if ( CURRENT_CODE_MODE != CodeModes.PRODUCT) {
+		if ( CurrentCodeMode != CodeModes.PRODUCT) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
 			System.out.println(TAG+": " + message + " == Location: " + location );
@@ -33,7 +43,7 @@ public class Logger {
 	}
 
 	public static void logError(String message) {
-		if ( CURRENT_CODE_MODE != CodeModes.PRODUCT) {
+		if ( CurrentCodeMode != CodeModes.PRODUCT) {
 			StackTraceElement elm = Thread.currentThread().getStackTrace()[3];
 			String location = extractLocation(elm);
 			System.err.println(TAG+": " + message + " == Location: " + location );

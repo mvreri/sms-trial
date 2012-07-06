@@ -6,8 +6,8 @@ public class SeekToCommand extends Command {
 
 	private float percent;
 
-	public SeekToCommand(String paraStr) {
-		super(paraStr);
+	public SeekToCommand(String name,String paraStr) {
+		super(name,paraStr);
 		parsePercent();
 	}
 

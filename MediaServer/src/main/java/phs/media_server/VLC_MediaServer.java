@@ -1,10 +1,7 @@
 package phs.media_server;
 
 import uk.co.caprica.vlcj.binding.LibVlc;
-import uk.co.caprica.vlcj.player.MediaPlayer;
-import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
-import uk.co.caprica.vlcj.player.VideoMetaData;
 import uk.co.caprica.vlcj.player.headless.HeadlessMediaPlayer;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -15,7 +12,9 @@ public class VLC_MediaServer implements IMediaServer {
 
 	public enum PlayerStates { ZERO,INITILIZED,STREAMING,PAUSED };
 
+	//TODO: auto search for VLC path
 	private static final String VLC_APP_PATH = "c:/Program Files/VideoLAN/VLC/";
+	
 	private static final int CODE_SUCCESS = 0;
 	private static final int CODE_INVALID_STATE = 1;
 
@@ -101,11 +100,13 @@ public class VLC_MediaServer implements IMediaServer {
 	public int stop() {
 		if ( currentState != PlayerStates.ZERO) {
 			mediaPlayer.stop();
+			
 			mediaPlayer.release();			
-			mpFactory.release();
 			mediaPlayer = null;
+			
 			mpFactory.release();
 			mpFactory = null;
+			
 			currentState = PlayerStates.ZERO;
 			return CODE_SUCCESS;
 		} else return CODE_INVALID_STATE;
@@ -144,5 +145,4 @@ public class VLC_MediaServer implements IMediaServer {
 			return CODE_SUCCESS; 
 		} else return CODE_INVALID_STATE;
 	}
-
 }

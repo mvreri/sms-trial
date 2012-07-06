@@ -4,8 +4,8 @@ import phs.media_server.IMediaServer;
 
 public class GetDurationCommand extends Command {
 
-	public GetDurationCommand(String paraStr) {
-		super(paraStr);
+	public GetDurationCommand(String name,String paraStr) {
+		super(name,paraStr);
 	}
 
 	@Override

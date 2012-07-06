@@ -4,8 +4,8 @@ import phs.media_server.IMediaServer;
 
 public class StartCommand extends Command {
 
-	public StartCommand(String paraStr) {
-		super(paraStr);
+	public StartCommand(String name,String paraStr) {
+		super(name,paraStr);
 	}
 
 	@Override

@@ -13,11 +13,13 @@ public abstract class Command {
 	
 	private String[] parameters = null;
 	protected String respone = null;
+	private String name;
 	
-	public Command(String paraStr) {
+	public Command(String name,String paraStr) {
+		this.name = name;
 		if ( paraStr != null )
 			parameters = paraStr.split(SEPERATOR);
-		if ( Logger.CURRENT_CODE_MODE == CodeModes.DEV) showDebugInfo();
+		if ( Logger.CurrentCodeMode == CodeModes.DEV) showDebugInfo();
 	}
 	/**
 	 * 
@@ -39,7 +41,7 @@ public abstract class Command {
 	}
 
 	public String getRespone() {
-		return this.respone;
+		return name+SEPERATOR+this.respone;
 	}
 
 	/**
@@ -48,7 +50,7 @@ public abstract class Command {
 	private void showDebugInfo() {
 		Logger.logInfo("--------------------------");
 		String ctorInfo = this.getClass().getName();
-		String addInfo = " empty ";
+		String addInfo = ": no parameters";
 		if ( parameters != null) {
 			addInfo = " -- with parameters: ";
 			for(int i = 0 ; i < parameters.length ; i++) {
