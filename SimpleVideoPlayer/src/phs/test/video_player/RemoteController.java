@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 
 import android.util.Log;
 
+//TODO: refactor !
 public class RemoteController {
 
 	private static final String SERVER_IP = "192.168.17.78";
@@ -24,8 +25,8 @@ public class RemoteController {
 	static final int RET_CODE_TIMEOUT = 2;
 
 	//Response - read the doc for server to assign the following constants
-	public static final String RESPONE_SUCCESS = "Success";
-	public static final String RESPONE_FAILED = "Failed";
+	public static final String RESPONE_SUCCESS = "success";
+	public static final String RESPONE_FAILED = "failed";
 	protected static final int TIME_OUT = 10000;
 
 
@@ -64,7 +65,7 @@ public class RemoteController {
 	}
 
 
-	//Draft version, need to be designed again
+	//TODO: Draft version, need to be designed again
 	public void setup(String remoteVideoPath) {
 		try {
 			outputStream.println(createSetupRequest(remoteVideoPath));
@@ -77,7 +78,7 @@ public class RemoteController {
 				try {
 					socket.setSoTimeout(TIME_OUT);
 					Logger.logInfo("Start listening for SETUP response ...");
-					//					String line = Utils.blockReadline(inputStream);
+					//TODO: It could be the case that this respone is not setup respone -> fix it
 					String line = inputStream.readLine();
 
 					Logger.logInfo("Server responsed SETUP...");
@@ -99,10 +100,10 @@ public class RemoteController {
 		if ( line != null ) {
 			Logger.logInfo("Setup respone: " + line);
 			String[] words = line.split(SEPERATOR);
-			if ( words.length == 1) {
-				listener.onSetupRespone(RET_CODE_FAILED, null, null);
-			} else if ( words.length == 3 && words[0].equals(RESPONE_SUCCESS)){ 
-				listener.onSetupRespone(RET_CODE_SUCCESS, words[1].trim(), words[2].trim());
+			if ( words.length == 4
+					&& words[0].toLowerCase().equals("setup")
+					&& words[1].toLowerCase().equals(RESPONE_SUCCESS)){ 
+				listener.onSetupRespone(RET_CODE_SUCCESS, words[2].trim(), words[3].trim());
 			} else {
 				Logger.logError("Impossible");
 				listener.onSetupRespone(RET_CODE_FAILED, null, null);
@@ -132,7 +133,11 @@ public class RemoteController {
 
 	protected void processStartRespone(String readLine) {
 		Logger.logInfo("Start respone: " + readLine);
-		if (readLine.startsWith(RESPONE_SUCCESS)) {
+		String[] words = readLine.split(SEPERATOR);
+		if ( words.length == 2 
+				&& words[0].toLowerCase().equals("start")
+				&& words[1].toLowerCase().equals(RESPONE_SUCCESS)
+				) {
 			listener.onStartRespone(RET_CODE_SUCCESS);
 		} else listener.onStartRespone(RET_CODE_FAILED);
 	}
@@ -159,7 +164,8 @@ public class RemoteController {
 
 	protected void processStopRespone(String readLine) {
 		Logger.logInfo("Stop respone: " + readLine);
-		if (readLine.equals(RESPONE_SUCCESS)) {
+		String[] words = readLine.split(SEPERATOR);
+		if (words.length==2 && words[0].toLowerCase().equals("stop") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
 			listener.onStopRespone(RET_CODE_SUCCESS);
 		} else listener.onStopRespone(RET_CODE_FAILED);
 	}
@@ -198,13 +204,14 @@ public class RemoteController {
 	}
 
 	protected void processPauseRespone(String readLine) {
-		if ( readLine.equals(RESPONE_SUCCESS)) {
+		String[] words = readLine.split(SEPERATOR);
+		if (words.length==2 && words[0].toLowerCase().equals("pause") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
 			listener.onPauseRespone(RET_CODE_SUCCESS);
 		} else {
 			listener.onPauseRespone(RET_CODE_FAILED);
 		}
 	}
-	
+
 	public void resume(float percent) {
 		outputStream.println("Resume###"+percent);
 		new Thread(new Runnable() {
@@ -219,13 +226,14 @@ public class RemoteController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				
+
 			}
 		}).start();
 	}
 
 	protected void processResumeRespone(String readLine) {
-		if (readLine.startsWith(RESPONE_SUCCESS)) {
+		String[] words = readLine.split(SEPERATOR);
+		if (words.length==2 && words[0].toLowerCase().equals("resume") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
 			listener.onResumeRespone(RET_CODE_SUCCESS);
 		} else {
 			listener.onResumeRespone(RET_CODE_FAILED);
@@ -247,17 +255,17 @@ public class RemoteController {
 				}
 			}
 		}).start();
-		
+
 	}
 
 	protected void processGetDurationResponse(String readLine) {
-		if (readLine.startsWith(RESPONE_SUCCESS)) {
-			String[] words = readLine.split(SEPERATOR);
-			listener.onGetDurationResponse(RET_CODE_SUCCESS, Integer.parseInt(words[1]));
+		String[] words = readLine.split(SEPERATOR);
+		if (words.length==2 && words[0].toLowerCase().equals("getduration") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
+			listener.onGetDurationResponse(RET_CODE_SUCCESS, Integer.parseInt(words[2]));
 		} else {
 			listener.onGetDurationResponse(RET_CODE_FAILED, 0);
 		}
-			
+
 	}
 
 	public void seekTo(float next) {
@@ -280,7 +288,8 @@ public class RemoteController {
 	}
 
 	protected void processSeekResponse(String readLine) {
-		if ( readLine.startsWith(RESPONE_SUCCESS)) {
+		String[] words = readLine.split(SEPERATOR);
+		if (words.length==2 && words[0].toLowerCase().equals("seekto") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
 			listener.onSeekResponse(RET_CODE_SUCCESS);
 		} else {
 			listener.onSeekResponse(RET_CODE_FAILED);

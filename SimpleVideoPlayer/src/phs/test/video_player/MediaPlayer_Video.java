@@ -3,8 +3,8 @@ package phs.test.video_player;
 import java.io.IOException;
 
 import viettel.sonph5.test.R;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
@@ -22,8 +22,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class MediaPlayer_Video extends Activity 
 implements 
@@ -35,31 +35,33 @@ OnPreparedListener, OnCompletionListener, Callback
 
 
 	private static final String STREAMING_SERVER_URL = "rtsp://192.168.17.78";
-	//	private static final String URL = "rtsp://192.168.17.78:5544/stream";
-	//	private static final String URL = "rtsp://192.168.17.78:80/720p.mp4";
-	//	private static final String URL = "rtsp://v3.cache7.c.youtube.com/CjcLENy73wIaLgk6Cp64LnijDRMYDSANFEIJbXYtZ29vZ2xlSARSBnZpZGVvc2Dz7bCYxt2UlU8M/0/0/0/video.3gp";
-	//	private static final String URL = "rtsp://masds03.htc.com.tw/h264/H264_15f_256k_AAC_112k_5KF_qvga.3gp";
 	private static final String TAG = "PHS_TEST";
-	private static final String REMOTE_VIDEO_PATH = "D:\\Movies\\SNSD720.mp4";
+
+	
+	protected static final String EXTRA_WIDTH = "extra_width";
+	protected static final String EXTRA_HEIGHT = "extra_height";
+	protected static final String EXTRA_MOVIE_PATH = "extra_movie_path";
+	
 	private MediaPlayer player;
 	private SurfaceView surfaceView;
 	private Display currentDisplay;
-	private int videoWidth;
-	private int videoHeight;
 	private Button btPause;
-	private View btStart;
 	private View btStop;
-	private View btForward;
-	private View btBackward;
 	private RemoteController controller;
 	protected boolean isPlaying;
 	protected int duration;
+	private View bt2Q;
+
+	private int availWidth;
+	private int availHeight;
+	protected String remoteVideoPath;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.media_player);
+		getInputValues();
 		createSurface();
 		createButtons();
 	}
@@ -69,7 +71,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		super.onResume();
 		btPause.postDelayed(new Runnable() {
 			public void run() {
-				controller.setup(REMOTE_VIDEO_PATH);
+				controller.setup(remoteVideoPath);
 			}
 		}, 300);
 
@@ -138,7 +140,6 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onSeekResponse(int errorCode) {
-			// TODO Auto-generated method stub
 
 		}
 
@@ -190,32 +191,15 @@ OnPreparedListener, OnCompletionListener, Callback
 
 		btStop = findViewById(R.id.btStop);
 		btStop.setOnClickListener(new OnClickListener() {
-
 			public void onClick(View v) {
-				//stop & kill
 				controller.stop();
 			}
 		});
-
-
-		btForward = findViewById(R.id.btForward);
-		btForward.setOnClickListener(new OnClickListener() {
+		
+		bt2Q = findViewById(R.id.bt2Q);
+		bt2Q.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				int currentPosition = player.getCurrentPosition();
-				if ( duration != 0 ) {
-					float current = (((float)currentPosition) / duration);
-					Logger.logInfo("Current: " + current);
-					float next =  current + (float)0.3;
-					Logger.logInfo("Next: " + next);
-					if ( next > 1 ) next = 0.99f;
-					controller.seekTo(next);
-				}
-			}
-		});
-
-		btBackward = findViewById(R.id.btBackward);
-		btBackward.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
+				controller.seekTo(0.50f);
 			}
 		});
 
@@ -226,6 +210,13 @@ OnPreparedListener, OnCompletionListener, Callback
 		SurfaceHolder holder = surfaceView.getHolder();
 		holder.addCallback(this);
 		onSurfaceCreated(holder);
+	}
+
+	private void getInputValues() {
+		Intent srcIntent = getIntent();
+		this.availWidth = srcIntent.getIntExtra(EXTRA_WIDTH, 640);
+		this.availHeight = srcIntent.getIntExtra(EXTRA_HEIGHT, 360);
+		this.remoteVideoPath = srcIntent.getStringExtra(EXTRA_MOVIE_PATH);
 	}
 
 	private void onSurfaceCreated(SurfaceHolder holder) {
@@ -271,18 +262,19 @@ OnPreparedListener, OnCompletionListener, Callback
 
 	public void onPrepared(MediaPlayer mp) {
 		Log.i(TAG,"Player is ready");
-		//		adjustScreen(mp);
+		adjustScreen(mp);
 		mp.start();
 		isPlaying = true;
 		controller.getDuration();
 	}
 
 	private void adjustScreen(MediaPlayer mp) {
-		videoWidth = mp.getVideoWidth();
-		videoHeight = mp.getVideoHeight();
-		if ( videoHeight > currentDisplay.getHeight() || videoWidth > currentDisplay.getWidth()) {
-			float hr = ((float) videoHeight) /  (float) currentDisplay.getHeight();
-			float wr = ((float) videoWidth) /  (float) currentDisplay.getWidth();
+		int videoWidth = mp.getVideoWidth();
+		int videoHeight = mp.getVideoHeight();
+		Logger.logInfo("Avail height: " + availHeight + " -- Avail width: " + availWidth);
+		if ( videoHeight > availHeight || videoWidth > availWidth) {
+			float hr = ((float) videoHeight) /  (float) availHeight;
+			float wr = ((float) videoWidth) /  (float) availWidth;
 			float ratio = wr;
 			if ( hr > wr) {
 				ratio = hr;
@@ -294,7 +286,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 		Log.i(TAG,"Video (HxW): " + videoHeight + " x " + videoWidth);
 
-		surfaceView.setLayoutParams(new LinearLayout.LayoutParams(videoWidth, videoHeight));
+		surfaceView.setLayoutParams(new FrameLayout.LayoutParams(videoWidth, videoHeight));
 	}
 
 	public void onBufferingUpdate(MediaPlayer mp, int percent) {
