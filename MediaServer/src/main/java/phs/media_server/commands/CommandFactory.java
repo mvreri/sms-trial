@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import phs.media_server.MyUtils;
+import phs.media_server.Logger;
 
 
 public class CommandFactory {
@@ -27,14 +27,14 @@ public class CommandFactory {
 
 	private static Command newCommand(Class<?> commandClass, String tail) {
 		if ( commandClass == null) {
-			MyUtils.logError("No accordingly type !");
+			Logger.logError("No accordingly type !");
 			return null;
 		}
 		try {
 			Constructor ctor = commandClass.getConstructor(String.class);
 			return (Command) ctor.newInstance(tail);
 		} catch (Exception e) {
-			MyUtils.logError(e);
+			Logger.logError(e);
 			return null;
 		}
 		//		switch (commandType) {
@@ -57,7 +57,7 @@ public class CommandFactory {
 	}
 
 	public static Command createCommand(String requestString) {
-		MyUtils.verifyTrue(requestString != null);
+		Logger.verifyTrue(requestString != null);
 		int sepPos = requestString.indexOf(Command.SEPERATOR);
 		String header = null;
 		String tail = null;
@@ -68,7 +68,7 @@ public class CommandFactory {
 			header = requestString.substring(0, sepPos);
 			tail = requestString.substring(sepPos + Command.SEPERATOR.length() );
 		}
-		MyUtils.logInfo(mapStr2Type.get(header.toLowerCase()).getName() +" is to be created !");
+		Logger.logInfo(mapStr2Type.get(header.toLowerCase()).getName() +" is to be created !");
 		return newCommand(mapStr2Type.get(header.toLowerCase()),tail);
 	}
 

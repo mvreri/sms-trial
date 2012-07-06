@@ -26,7 +26,7 @@ public class MediaPlayerListener implements MediaPlayerEventListener {
 
 	@Override
 	public void playing(MediaPlayer mediaPlayer) {
-		MyUtils.logInfo("Media length(Playing): " + mediaPlayer.getLength());
+		Logger.logInfo("Media length(Playing): " + mediaPlayer.getLength());
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class MediaPlayerListener implements MediaPlayerEventListener {
 	@Override
 	public void metaDataAvailable(MediaPlayer mediaPlayer,
 			VideoMetaData videoMetaData) {
-		MyUtils.logInfo("Media length(Metadata): " + mediaPlayer.getLength());
+		Logger.logInfo("Media length(Metadata): " + mediaPlayer.getLength());
 	}
 
 }

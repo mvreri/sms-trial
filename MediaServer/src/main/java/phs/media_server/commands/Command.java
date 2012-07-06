@@ -1,14 +1,15 @@
 package phs.media_server.commands;
 
 import phs.media_server.IMediaServer;
-import phs.media_server.MyUtils;
-import phs.media_server.MyUtils.CodeModes;
+import phs.media_server.Logger;
+import phs.media_server.Logger.CodeModes;
 
 
 public abstract class Command {
 	static final String SEPERATOR = "###";
 	public static final String RESPONE_SUCCESS = "Success";
 	public static final String RESPONE_FAILED = "Failed";
+	public static final String UNKNOWN_COMMAND = "Unknown command";
 	
 	private String[] parameters = null;
 	protected String respone = null;
@@ -16,7 +17,7 @@ public abstract class Command {
 	public Command(String paraStr) {
 		if ( paraStr != null )
 			parameters = paraStr.split(SEPERATOR);
-		if ( MyUtils.CURRENT_CODE_MODE == CodeModes.DEV) showDebugInfo();
+		if ( Logger.CURRENT_CODE_MODE == CodeModes.DEV) showDebugInfo();
 	}
 	/**
 	 * 
@@ -45,7 +46,7 @@ public abstract class Command {
 	 * Only use by debug mode
 	 */
 	private void showDebugInfo() {
-		MyUtils.logInfo("--------------------------");
+		Logger.logInfo("--------------------------");
 		String ctorInfo = this.getClass().getName();
 		String addInfo = " empty ";
 		if ( parameters != null) {
@@ -54,7 +55,7 @@ public abstract class Command {
 				addInfo += parameters[i] + "###";
 			}
 		}
-		MyUtils.logInfo("The class: " + ctorInfo + " is being created "+ addInfo);
+		Logger.logInfo("The class: " + ctorInfo + " is being created "+ addInfo);
 	}
 
 

@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 
 import junit.framework.Assert;
 
-public class MyUtils {
+public class Logger {
 	public enum CodeModes {DEV,TEST,PRODUCT};
 	static public final CodeModes CURRENT_CODE_MODE = CodeModes.DEV;
 	private static final String TAG = "PHS_MEDIA_SERVER";
@@ -62,7 +62,7 @@ public class MyUtils {
 				serverSocket.close();
 				return port;
 			} catch (IOException e) {
-				MyUtils.logInfo("Port " + port + " is reserved !");
+				Logger.logInfo("Port " + port + " is reserved !");
 			}
 		}
 		return -1;

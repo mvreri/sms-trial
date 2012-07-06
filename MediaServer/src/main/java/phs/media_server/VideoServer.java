@@ -62,7 +62,7 @@ public class VideoServer {
 
 	//TODO: what if port reserved ?
 	public static final int MESSAGE_PORT = 16326;
-	public static final String UNKNOWN_COMMAND = "Unknown command";
+
 
 	private WorkerThread workerThread;
 
@@ -90,28 +90,28 @@ public class VideoServer {
 			try {
 				serverSocket = new ServerSocket(MESSAGE_PORT);
 				clientSocket = serverSocket.accept();
-				MyUtils.logInfo("Client connected: " + clientSocket.getInetAddress().getHostName());
+				Logger.logInfo("Client connected: " + clientSocket.getInetAddress().getHostName());
 
 				inputStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				outputStream = new PrintWriter(clientSocket.getOutputStream(),true);
 				mediaServer = new VLC_MediaServer();
 
 				while (! Thread.interrupted()) {
-					MyUtils.logInfo("Main LOOP ....");
+					Logger.logInfo("Main LOOP ....");
 					String requestString = inputStream.readLine();
 					if ( requestString != null) {
 						//TODO: should the command be queued here ? Or it is queued already ?
 						Command command = CommandFactory.createCommand(requestString);
 						if ( command != null) {
 							command.process(mediaServer);
-							MyUtils.logInfo("Respone:" + command.getRespone());
+							Logger.logInfo("Respone:" + command.getRespone());
 							outputStream.println(command.getRespone());
 						}  else {
-							outputStream.println(UNKNOWN_COMMAND);
+							outputStream.println(Command.UNKNOWN_COMMAND);
 						}
 						command = null;
 					} else {
-						MyUtils.logInfo("Received null string !");
+						Logger.logInfo("Received null string !");
 						break;
 					}
 				}
@@ -135,19 +135,19 @@ public class VideoServer {
 			try {
 				inputStream.close();
 			} catch (IOException e) {
-				MyUtils.logError(e);
+				Logger.logError(e);
 			}
 
 			try {
 				if (serverSocket != null) serverSocket.close();
 			} catch (IOException e) {
-				MyUtils.logError(e);
+				Logger.logError(e);
 			}
 
 			try {
 				if (clientSocket != null) clientSocket.close();
 			} catch (IOException e) {
-				MyUtils.logError(e);
+				Logger.logError(e);
 			}
 			inputStream = null;
 			outputStream = null;

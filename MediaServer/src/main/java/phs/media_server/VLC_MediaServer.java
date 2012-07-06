@@ -33,7 +33,7 @@ public class VLC_MediaServer implements IMediaServer {
 			loadVLCLib();
 			this.filePath = fullFilePath;
 			currentState = PlayerStates.INITILIZED;
-			this.serverPort = MyUtils.findFreePort();
+			this.serverPort = Logger.findFreePort();
 			return CODE_SUCCESS;
 		} else return CODE_INVALID_STATE;
 	}
@@ -139,7 +139,7 @@ public class VLC_MediaServer implements IMediaServer {
 				&& percent >= 0 && percent <= 1
 			)
 		{
-			MyUtils.logInfo("Processing seekto " + percent);
+			Logger.logInfo("Processing seekto " + percent);
 			mediaPlayer.setPosition(percent);
 			return CODE_SUCCESS; 
 		} else return CODE_INVALID_STATE;
