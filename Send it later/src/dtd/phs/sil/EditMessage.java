@@ -4,8 +4,6 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,8 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.devsmart.android.StringUtils;
-import com.devsmart.android.Utils;
 import com.devsmart.android.ui.HorizontalListView;
 
 import dtd.phs.sil.data.DataCenter;
@@ -98,6 +94,7 @@ extends Activity
 	private boolean isEditSentMessage;
 	protected OnContactItemClickDialog dialogItemClick;
 //	private Handler handler = new Handler();
+	private Button btAttach;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -214,8 +211,6 @@ extends Activity
 				onBackPressed();
 			}
 		});
-
-
 	}
 
 	protected void showInvalidTimeToast() {

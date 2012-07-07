@@ -9,10 +9,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp" 
+        android:paddingBottom="3dp"
         android:paddingLeft="3dp"
-   >
+        android:paddingTop="3dp" >
 
         <EditText
             android:id="@+id/etTo"
@@ -24,11 +23,11 @@
 
         <Button
             android:id="@+id/btAddContact"
+            style="@style/button_style"
             android:layout_width="86dp"
             android:layout_height="wrap_content"
-            android:text="@string/Add"
-            style="@style/button_style"
             android:layout_marginLeft="3dp"
+            android:text="@string/Add"
             android:visibility="visible" />
     </LinearLayout>
 
@@ -59,8 +58,10 @@
 
                 <TextView
                     android:id="@+id/tvCountWords"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="@dimen/text_left_padding"
                     android:text="@string/Message"
                     android:textColor="@color/edit_message_text_color" />
@@ -113,8 +114,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:divider="#eee"
-            android:dividerHeight="0.3dp"
-		/>
+            android:dividerHeight="0.3dp" />
     </FrameLayout>
 
     <LinearLayout

@@ -76,4 +76,5 @@
     <string name="Call_now">Call now</string>
     <string name="sms_now">Sms now</string>
     <string name="Invalid_time_warning">Invalid time, please select a later date/time</string>
+    <string name="Insert">Insert</string>
 </resources>

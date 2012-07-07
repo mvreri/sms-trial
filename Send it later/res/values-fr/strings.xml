@@ -76,4 +76,5 @@
     <string name="Call_now">Appeler maintenant</string>
     <string name="sms_now">SMS maintenant</string>
     <string name="Invalid_time_warning">Date et heure invalides, veuillez modifier</string>
+    <string name="Insert">Insérer</string>
 </resources>
