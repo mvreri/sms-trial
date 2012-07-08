@@ -5,12 +5,6 @@ import android.util.Log;
 
 public class Logger {
 	
-
-	public class Helpers {
-		public static final boolean DEBUG_MODE = true;
-
-	}
-
 	private static final String SIL_LOG_TAG = "WIRELESS_VIDEO";
 
 	public static void logInfo(String extra) {

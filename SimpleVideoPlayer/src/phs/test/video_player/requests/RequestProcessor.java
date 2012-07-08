@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Stack;
 
+import phs.test.video_player.IMediaServerListener;
 import phs.test.video_player.Logger;
 
 /** 
@@ -20,6 +22,7 @@ public class RequestProcessor {
 
 
 
+	public static final int TIME_OUT = 10000;
 	private Socket socket;
 	private BufferedReader inputStream;
 	private PrintWriter outputStream;
@@ -53,49 +56,62 @@ public class RequestProcessor {
 	}
 
 	public void addRequest(Request request) {
-		workerThread.addJob(request);
+		workerThread.addRequest(request);
 	}
 
-	
+
 	public class WorkerThread extends Thread {
 
-		public class Joblist extends Stack<Request> {
+		public class RequestsList extends Stack<Request> {
 			private static final long serialVersionUID = 9148286267976806447L;
-			public void addJob(Request request) {
-				synchronized (this) {
-					this.clear();
-					super.add(request);
-					this.notify();
-				}
+			public synchronized void addJob(Request request) {
+				this.clear();
+				super.add(request);
+				this.notify();
 			}
 
-			public Request getJob() {
-				synchronized (this) {
-					try {
-						if ( this.empty() ) this.wait();
-						return this.pop();
-					} catch (InterruptedException e) {
-						return null;
-					}
+			synchronized public Request getRequest() {
+				try {
+					if ( this.empty() ) this.wait();
+					return this.pop();
+				} catch (InterruptedException e) {
+					return null;
 				}
+
 			}
 
 		}
-		Joblist jobs = null;
+
+		RequestsList jobs = null;
 		public WorkerThread() {
-			jobs = new Joblist();
+			jobs = new RequestsList();
 		}
 
-		public void addJob(Request request) {
+		public void addRequest(Request request) {
 			jobs.addJob(request);
 		}
 
 		@Override
 		public void run() {
 			while ( ! Thread.interrupted()) {
-				Request request = jobs.getJob();
+				Request request = jobs.getRequest();
+
+				//The thread is interrupted
 				if ( request == null ) break;
-				request.process();
+				
+				outputStream.println(request.reqString());
+				try {
+					socket.setSoTimeout(TIME_OUT);
+					String reply = inputStream.readLine();
+					request.processRespone(reply);
+				} catch (SocketException e) {
+					Logger.logError(e);
+					request.responseTimeout();
+				}
+				catch (IOException e) {
+					Logger.logError(e);
+					request.responseReplyException();
+				}
 			}
 		}
 

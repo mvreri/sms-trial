@@ -9,8 +9,10 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
+import phs.test.video_player.requests.Request;
 import phs.test.video_player.requests.RequestFactory;
 import phs.test.video_player.requests.RequestProcessor;
+import android.location.Address;
 import android.util.Log;
 
 //TODO: refactor !
@@ -19,23 +21,8 @@ public class RemoteController {
 	private static final String SERVER_IP = "192.168.17.78";
 	private static final int SERVER_PORT = 16326;
 	public static final String TAG = "Test_video_server";
-	static final String SEPERATOR = "###";
-
-	//Response code for the listener of this controller
-	static final int RET_CODE_SUCCESS = 0;
-	static final int RET_CODE_FAILED = 1;
-	static final int RET_CODE_TIMEOUT = 2;
-
-	//Response - read the doc for server to assign the following constants
-	public static final String RESPONE_SUCCESS = "success";
-	public static final String RESPONE_FAILED = "failed";
-	protected static final int TIME_OUT = 10000;
-
-
 
 	private Socket socket;
-//	private BufferedReader inputStream;
-//	private PrintWriter outputStream;
 	private IMediaServerListener listener;
 	private RequestProcessor requestWorker;
 
@@ -48,8 +35,6 @@ public class RemoteController {
 		try {
 			socket = new Socket(getServerAddress(),SERVER_PORT);
 			requestWorker = new RequestProcessor(socket);
-//			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//			outputStream = new PrintWriter(socket.getOutputStream(),true);			
 		} catch (IOException e) {
 			Logger.logError(e);
 		}
@@ -66,102 +51,24 @@ public class RemoteController {
 	}
 
 
-	//TODO: Draft version, need to be designed again
 	public void setup(String remoteVideoPath) {
-		requestWorker.addRequest(RequestFactory.createRequest("setup",remoteVideoPath));
-//		try {
-//			outputStream.println(createSetupRequest(remoteVideoPath));
-//			Logger.logInfo("OutputStream ");
-//		} catch (Exception e) {
-//			Logger.logError(e);
-//		}
-//		new Thread(new Runnable() {
-//			public void run() {
-//				try {
-//					socket.setSoTimeout(TIME_OUT);
-//					Logger.logInfo("Start listening for SETUP response ...");
-//					//TODO: It could be the case that this respone is not setup respone -> fix it
-//					String line = inputStream.readLine();
-//
-//					Logger.logInfo("Server responsed SETUP...");
-//					processSetupRespone(line);
-//				} catch (SocketException e) {
-//					Logger.logError(e);
-//				} catch (IOException e) {
-//					Logger.logError(e);
-//				}
-//			}
-//		}).start();
+		Request request = RequestFactory.createRequest("setup",remoteVideoPath,listener);
+		requestWorker.addRequest(request);
 	}
 
-	private String createSetupRequest(String remoteVideoPath) {
-		return "Setup###"+remoteVideoPath;
-	}
 
-	protected void processSetupRespone(String line) {
-		if ( line != null ) {
-			Logger.logInfo("Setup respone: " + line);
-			String[] words = line.split(SEPERATOR);
-			if ( words.length == 4
-					&& words[0].toLowerCase().equals("setup")
-					&& words[1].toLowerCase().equals(RESPONE_SUCCESS)){ 
-				listener.onSetupRespone(RET_CODE_SUCCESS, words[2].trim(), words[3].trim());
-			} else {
-				Logger.logError("Impossible");
-				listener.onSetupRespone(RET_CODE_FAILED, null, null);
-			}
-
-		} else Logger.logInfo("Setup respone: NULL" );
-	}
-
-	//Should be worker thread and ....
 	public void start() {
-		outputStream.println("Start");
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processStartRespone(readLine);
-				} catch (SocketException e) {
-					Logger.logError(e);
-					listener.onStartRespone(RET_CODE_TIMEOUT);
-				} catch (IOException e) {
-					Logger.logError(e);					
-				}
-			}
-		}).start();
+		Request request = RequestFactory.createRequest("start", null, listener);
+		requestWorker.addRequest(request);
 	}
 
-	protected void processStartRespone(String readLine) {
-		Logger.logInfo("Start respone: " + readLine);
-		String[] words = readLine.split(SEPERATOR);
-		if ( words.length == 2 
-				&& words[0].toLowerCase().equals("start")
-				&& words[1].toLowerCase().equals(RESPONE_SUCCESS)
-				) {
-			listener.onStartRespone(RET_CODE_SUCCESS);
-		} else listener.onStartRespone(RET_CODE_FAILED);
-	}
 
 	public void stop() {
-		outputStream.println("Stop");
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processStopRespone(readLine);
-				} catch (SocketException e) {
-					Logger.logError(e);
-					listener.onStopRespone(RET_CODE_TIMEOUT);
-				} catch (IOException e) {
-					Logger.logError(e);
-				}
-				releaseResources();
-			}
-		}).start();
-
+		Request request = RequestFactory.createRequest("stop", null, listener);
+		requestWorker.addRequest(request);
+		asdsaf();
+		//TODO: releaseResources();
+	
 	}
 
 	protected void processStopRespone(String readLine) {

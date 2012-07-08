@@ -3,6 +3,7 @@ package phs.test.video_player.requests;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
+import phs.test.video_player.IMediaServerListener;
 import phs.test.video_player.Logger;
 
 public class RequestFactory {
@@ -18,15 +19,15 @@ public class RequestFactory {
 		mapStr2Type.put("getduration", GetDurationRequest.class);
 	}
 
-	public static Request createRequest(String requestType, String parameters) {
+	public static Request createRequest(String requestType, String parameters, IMediaServerListener listener) {
 		
 		Class<?> requestClass = mapStr2Type.get(requestType);
 		if ( requestClass == null) {
 			Logger.logError("No according type !");
 		}
 		try {
-			Constructor<?> ctor = requestClass.getConstructor(String.class,String.class);
-			return (Request) ctor.newInstance(requestType,parameters);
+			Constructor<?> ctor = requestClass.getConstructor(String.class,String.class, IMediaServerListener.class);
+			return (Request) ctor.newInstance(requestType,parameters, listener);
 		} catch (Exception e) {
 			return null;
 		}
