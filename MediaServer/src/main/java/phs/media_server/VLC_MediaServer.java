@@ -14,7 +14,7 @@ public class VLC_MediaServer implements IMediaServer {
 
 	//TODO: auto search for VLC path
 	private static final String VLC_APP_PATH = "c:/Program Files/VideoLAN/VLC/";
-	
+
 	private static final int CODE_SUCCESS = 0;
 	private static final int CODE_INVALID_STATE = 1;
 
@@ -79,7 +79,7 @@ public class VLC_MediaServer implements IMediaServer {
 	public int getServerPort() {
 		return serverPort;
 	}
-	
+
 	@Override
 	public int getDuration() {
 		return (int) mediaPlayer.getLength();
@@ -99,14 +99,17 @@ public class VLC_MediaServer implements IMediaServer {
 	@Override
 	public int stop() {
 		if ( currentState != PlayerStates.ZERO) {
-			mediaPlayer.stop();
-			
-			mediaPlayer.release();			
-			mediaPlayer = null;
-			
-			mpFactory.release();
-			mpFactory = null;
-			
+			if ( mediaPlayer != null) {
+				mediaPlayer.stop();
+				mediaPlayer.release();			
+				mediaPlayer = null;
+			}
+
+			if ( mpFactory != null ) {
+				mpFactory.release();
+				mpFactory = null;
+			}
+
 			currentState = PlayerStates.ZERO;
 			return CODE_SUCCESS;
 		} else return CODE_INVALID_STATE;
@@ -138,7 +141,7 @@ public class VLC_MediaServer implements IMediaServer {
 				currentState == PlayerStates.PAUSED 
 				|| currentState == PlayerStates.STREAMING
 				&& percent >= 0 && percent <= 1
-			)
+				)
 		{
 			Logger.logInfo("Processing seekto " + percent);
 			mediaPlayer.setPosition(percent);

@@ -37,7 +37,7 @@ import phs.media_server.commands.CommandFactory;
  *	  * Request: Pause
  *	  * Respone: Pause###Success - Pause###Failed  </br>
  *
- *	 + RESUME(float percent): resume the streaming video from the percent position</br>
+ *	 + RESUME(): resume the streaming video from the percent position</br>
  *	  * Request: Resume </br>
  *	  * Respone: Resume###Success - Resume###Failed </br>
  *
@@ -48,6 +48,7 @@ import phs.media_server.commands.CommandFactory;
  *	 + STOP(): stop the streaming server (This message server still running !) </br>
  *	  * Request: Stop </br>
  *	  * Response: Stop###Success - Setup###Failed </br> </br>
+ *
  *	 + GET_DURATION(): get video duration (can only be called after video already playing) 
  *	  * Request: GetDuration
  *	  * Response: 

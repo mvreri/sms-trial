@@ -47,7 +47,6 @@ public class CommandFactory {
 			header = requestString.substring(0, sepPos);
 			tail = requestString.substring(sepPos + Command.SEPERATOR.length() );
 		}
-		Logger.logInfo(mapStr2Type.get(header.toLowerCase()).getName() +" is to be created !");
 		return newCommand(header.toLowerCase(),tail);
 	}
 

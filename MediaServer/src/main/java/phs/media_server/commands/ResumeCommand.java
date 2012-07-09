@@ -8,12 +8,6 @@ public class ResumeCommand extends Command {
 
 	public ResumeCommand(String name,String paraStr) {
 		super(name,paraStr);
-		parsePercent();
-	}
-
-	private void parsePercent() {
-		String para = getRawParameter(0);
-		this.percent = Float.parseFloat(para);
 	}
 
 	@Override
