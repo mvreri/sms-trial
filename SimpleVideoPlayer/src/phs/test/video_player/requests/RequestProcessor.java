@@ -8,14 +8,13 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Stack;
 
-import phs.test.video_player.IMediaServerListener;
 import phs.test.video_player.Logger;
 
 /** 
  * @author Administrator
  *	This class process the request to sent to WirelessVideoServer.
  *	When too many requests are queued on to be processed,
- *	they will be discarded, only the latest one is kept.s 
+ *	they will be discarded, only the latest one is kept.
  *
  */
 public class RequestProcessor {
@@ -40,6 +39,9 @@ public class RequestProcessor {
 		}
 	}
 
+	/**
+	 * Release resources
+	 */
 	public void stop() {
 		try {
 			inputStream.close();			

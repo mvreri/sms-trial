@@ -1,21 +1,14 @@
 package phs.test.video_player;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 
 import phs.test.video_player.requests.Request;
 import phs.test.video_player.requests.RequestFactory;
 import phs.test.video_player.requests.RequestProcessor;
-import android.location.Address;
-import android.util.Log;
 
-//TODO: refactor !
 public class RemoteController {
 
 	private static final String SERVER_IP = "192.168.17.78";
@@ -24,7 +17,7 @@ public class RemoteController {
 
 	private Socket socket;
 	private IMediaServerListener listener;
-	private RequestProcessor requestWorker;
+	private RequestProcessor requestProcessor;
 
 	public RemoteController(IMediaServerListener listener) {
 		this.listener = listener;
@@ -34,13 +27,12 @@ public class RemoteController {
 	private void createCommunicator() {
 		try {
 			socket = new Socket(getServerAddress(),SERVER_PORT);
-			requestWorker = new RequestProcessor(socket);
+			requestProcessor = new RequestProcessor(socket);
 		} catch (IOException e) {
 			Logger.logError(e);
 		}
 
 	}
-
 
 	private InetAddress getServerAddress() {
 		try {
@@ -53,156 +45,50 @@ public class RemoteController {
 
 	public void setup(String remoteVideoPath) {
 		Request request = RequestFactory.createRequest("setup",remoteVideoPath,listener);
-		requestWorker.addRequest(request);
+		requestProcessor.addRequest(request);
 	}
 
 
 	public void start() {
 		Request request = RequestFactory.createRequest("start", null, listener);
-		requestWorker.addRequest(request);
+		requestProcessor.addRequest(request);
 	}
 
 
 	public void stop() {
 		Request request = RequestFactory.createRequest("stop", null, listener);
-		requestWorker.addRequest(request);
-		asdsaf();
-		//TODO: releaseResources();
-	
-	}
-
-	protected void processStopRespone(String readLine) {
-		Logger.logInfo("Stop respone: " + readLine);
-		String[] words = readLine.split(SEPERATOR);
-		if (words.length==2 && words[0].toLowerCase().equals("stop") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
-			listener.onStopRespone(RET_CODE_SUCCESS);
-		} else listener.onStopRespone(RET_CODE_FAILED);
-	}
-
-	private void releaseResources() {
-		try {
-			inputStream.close();			
-		} catch (IOException e) {
-			Logger.logError(e);
-		}
-		outputStream.close();
-		try {
-			socket.close();
-		} catch (IOException e) {
-			Logger.logError(e);
-		}
+		requestProcessor.addRequest(request);		
 	}
 
 
 	public void pause() {
-		outputStream.println("Pause");
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processPauseRespone(readLine);
-				} catch (SocketException e) {
-					Logger.logError(e);
-					listener.onPauseRespone(RET_CODE_TIMEOUT);
-				} catch (IOException e) {
-					Logger.logError(e);
-				}
-			}
-		}).start();		
-	}
-
-	protected void processPauseRespone(String readLine) {
-		String[] words = readLine.split(SEPERATOR);
-		if (words.length==2 && words[0].toLowerCase().equals("pause") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
-			listener.onPauseRespone(RET_CODE_SUCCESS);
-		} else {
-			listener.onPauseRespone(RET_CODE_FAILED);
-		}
+		Request request = RequestFactory.createRequest("pause", null, listener);
+		requestProcessor.addRequest(request);
 	}
 
 	public void resume(float percent) {
-		outputStream.println("Resume###"+percent);
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processResumeRespone(readLine);
-				} catch (SocketException e) {
-					Logger.logError(e);
-					listener.onResumeRespone(RET_CODE_TIMEOUT);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-			}
-		}).start();
+		Request request = RequestFactory.createRequest("resume", null, listener);
+		requestProcessor.addRequest(request);
 	}
-
-	protected void processResumeRespone(String readLine) {
-		String[] words = readLine.split(SEPERATOR);
-		if (words.length==2 && words[0].toLowerCase().equals("resume") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
-			listener.onResumeRespone(RET_CODE_SUCCESS);
-		} else {
-			listener.onResumeRespone(RET_CODE_FAILED);
-		}
-	}
-
-	public void getDuration() {
-		outputStream.println("GetDuration");
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processGetDurationResponse(readLine);
-				} catch (SocketException e) {
-					listener.onGetDurationResponse(RET_CODE_FAILED,0);
-				} catch (IOException e) {
-					Logger.logError(e);
-				}
-			}
-		}).start();
-
-	}
-
-	protected void processGetDurationResponse(String readLine) {
-		String[] words = readLine.split(SEPERATOR);
-		if (words.length==2 && words[0].toLowerCase().equals("getduration") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
-			listener.onGetDurationResponse(RET_CODE_SUCCESS, Integer.parseInt(words[2]));
-		} else {
-			listener.onGetDurationResponse(RET_CODE_FAILED, 0);
-		}
-
-	}
-
+	
 	public void seekTo(float next) {
-		String command = "SeekTo###"+next;
-		Logger.logInfo("Send command: " + command);
-		outputStream.println(command);
-		new Thread(new Runnable() {
-			public void run() {
-				try {
-					socket.setSoTimeout(TIME_OUT);
-					String readLine = inputStream.readLine();
-					processSeekResponse(readLine);
-				} catch (SocketException e) {
-					listener.onSeekResponse(RET_CODE_FAILED);
-				} catch (IOException e) {
-					Logger.logError(e);
-				}
-			}
-		}).start();
+		Request request = RequestFactory.createRequest("seekto", String.valueOf(next), listener);
+		requestProcessor.addRequest(request);
+	}
+	
+	public void getDuration() {
+		Request request = RequestFactory.createRequest("getduration", null, listener);
+		requestProcessor.addRequest(request);
 	}
 
-	protected void processSeekResponse(String readLine) {
-		String[] words = readLine.split(SEPERATOR);
-		if (words.length==2 && words[0].toLowerCase().equals("seekto") && words[1].toLowerCase().equals(RESPONE_SUCCESS)) {
-			listener.onSeekResponse(RET_CODE_SUCCESS);
-		} else {
-			listener.onSeekResponse(RET_CODE_FAILED);
-		}
+	/**
+	 * Release resources, this method must be called when media application want to close the session !
+	 */
+	public void destroy() {
+		requestProcessor.stop();
 	}
+
+
+
 
 }

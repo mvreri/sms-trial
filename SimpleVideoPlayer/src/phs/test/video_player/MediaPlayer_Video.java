@@ -2,6 +2,8 @@ package phs.test.video_player;
 
 import java.io.IOException;
 
+import phs.test.video_player.requests.Request;
+
 import viettel.sonph5.test.R;
 import android.app.Activity;
 import android.content.Intent;
@@ -37,11 +39,11 @@ OnPreparedListener, OnCompletionListener, Callback
 	private static final String STREAMING_SERVER_URL = "rtsp://192.168.17.78";
 	private static final String TAG = "PHS_TEST";
 
-	
+
 	protected static final String EXTRA_WIDTH = "extra_width";
 	protected static final String EXTRA_HEIGHT = "extra_height";
 	protected static final String EXTRA_MOVIE_PATH = "extra_movie_path";
-	
+
 	private MediaPlayer player;
 	private SurfaceView surfaceView;
 	private Display currentDisplay;
@@ -91,7 +93,7 @@ OnPreparedListener, OnCompletionListener, Callback
 
 		public void onSetupRespone(int errorCode, String streamPort,
 				String streamId) {
-			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+			if ( errorCode == Request.RET_CODE_SUCCESS) {
 				try {
 					player.setDataSource(STREAMING_SERVER_URL+":"+streamPort+"/"+streamId);
 				} catch (IllegalArgumentException e) {
@@ -111,7 +113,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onStartRespone(int errorCode) {
-			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+			if ( errorCode == Request.RET_CODE_SUCCESS) {
 				player.prepareAsync();
 			} else {
 				Logger.logInfo("Cannot start the media server ");
@@ -119,7 +121,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onPauseRespone(int errorCode) {
-			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+			if ( errorCode == Request.RET_CODE_SUCCESS) {
 				Logger.logInfo("Media server is paused !");
 			} else {
 				Logger.logInfo("Cannot pause the media server ");
@@ -127,7 +129,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onResumeRespone(int errorCode) {
-			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+			if ( errorCode == Request.RET_CODE_SUCCESS) {
 				isPlaying = true;
 				btPause.post(new Runnable() {
 					public void run() {
@@ -145,6 +147,7 @@ OnPreparedListener, OnCompletionListener, Callback
 
 		public void onStopRespone(int errorCode) {
 			Logger.logInfo("STOPPED");
+			controller.destroy();
 			if ( player != null) {
 				player.stop();
 				player.release();
@@ -160,7 +163,7 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onGetDurationResponse(int errorCode, final int duration) {
-			if ( errorCode == RemoteController.RET_CODE_SUCCESS) {
+			if ( errorCode == Request.RET_CODE_SUCCESS) {
 				MediaPlayer_Video.this.duration = duration;
 				Logger.logInfo("Duration: " + duration);
 			} else {
@@ -195,7 +198,7 @@ OnPreparedListener, OnCompletionListener, Callback
 				controller.stop();
 			}
 		});
-		
+
 		bt2Q = findViewById(R.id.bt2Q);
 		bt2Q.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

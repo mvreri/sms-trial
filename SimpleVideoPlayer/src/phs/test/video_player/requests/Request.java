@@ -12,7 +12,7 @@ public abstract class Request {
 	public static final String RESPONE_FAILED = "failed";
 
 	//Return code for the listener
-	static final int RET_CODE_SUCCESS = 0;
+	public static final int RET_CODE_SUCCESS = 0;
 	static final int RET_CODE_FAILED = 1;
 	static final int RET_CODE_TIMEOUT = 2;
 
@@ -33,6 +33,9 @@ public abstract class Request {
 		return rawParameters[i];
 	}
 	
+	protected boolean isSuccess(String[] words) {
+		return words[0].toLowerCase().equals("pause") && words[1].toLowerCase().equals(RESPONE_SUCCESS);
+	}
 	
 	public String reqString() {
 		return this.requestName + buildParameters();

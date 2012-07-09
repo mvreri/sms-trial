@@ -6,6 +6,15 @@ import java.util.HashMap;
 import phs.test.video_player.IMediaServerListener;
 import phs.test.video_player.Logger;
 
+/**
+ * 
+ * @author Pham Hung Son
+ * TODO: 
+ * 	- refactor the requests
+ * 	- Goal: refactor & work as usual , 
+ * 	- DO NOT change the flow now ! But after the refactoring 
+ * 	
+ */
 public class RequestFactory {
 
 	private static HashMap<String, Class<?>> mapStr2Type = new HashMap<String, Class<?>>();

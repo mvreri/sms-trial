@@ -16,14 +16,11 @@ public class SetupRequest extends Request {
 		if ( line != null) {
 			Logger.logInfo("Setup respone: " + line);
 			String[] words = line.split(SEPERATOR);
-			if ( words.length == 4
-					&& words[0].toLowerCase().equals("setup")
-					&& words[1].toLowerCase().equals(RESPONE_SUCCESS)){ 
+			if ( words.length == 4 && isSuccess(words)){ 
 				listener.onSetupRespone(RET_CODE_SUCCESS, words[2].trim(), words[3].trim());
 			} else {
 				listener.onSetupRespone(RET_CODE_FAILED, null, null);
 			}
-
 		} else {
 			Logger.logInfo("Setup response: NULL ");
 		}
