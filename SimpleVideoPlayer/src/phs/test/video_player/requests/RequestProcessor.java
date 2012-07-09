@@ -4,14 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Stack;
 
 import phs.test.video_player.Logger;
 
 /** 
- * @author Administrator
+ * @author Pham Hung Son
  *	This class process the request to sent to WirelessVideoServer.
  *	When too many requests are queued on to be processed,
  *	they will be discarded, only the latest one is kept.
@@ -19,7 +21,8 @@ import phs.test.video_player.Logger;
  */
 public class RequestProcessor {
 
-
+	private static final String SERVER_IP = "192.168.17.78";
+	private static final int SERVER_PORT = 16326;
 
 	public static final int TIME_OUT = 10000;
 	private Socket socket;
@@ -27,9 +30,9 @@ public class RequestProcessor {
 	private PrintWriter outputStream;
 	private WorkerThread workerThread;
 
-	public RequestProcessor(Socket socket) {
+	public RequestProcessor() throws IOException {
+		this.socket = new Socket(getServerAddress(),SERVER_PORT);
 		try {
-			this.socket = socket;
 			inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			outputStream = new PrintWriter(socket.getOutputStream(),true);
 			workerThread = new WorkerThread();
@@ -38,6 +41,16 @@ public class RequestProcessor {
 			Logger.logError(e);
 		}
 	}
+	
+
+	private InetAddress getServerAddress() {
+		try {
+			return InetAddress.getByName(SERVER_IP);
+		} catch (UnknownHostException e) {
+			return null;
+		}
+	}
+
 
 	/**
 	 * Release resources

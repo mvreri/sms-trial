@@ -1,9 +1,6 @@
 package phs.test.video_player;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 import phs.test.video_player.requests.Request;
 import phs.test.video_player.requests.RequestFactory;
@@ -11,11 +8,6 @@ import phs.test.video_player.requests.RequestProcessor;
 
 public class RemoteController {
 
-	private static final String SERVER_IP = "192.168.17.78";
-	private static final int SERVER_PORT = 16326;
-	public static final String TAG = "Test_video_server";
-
-	private Socket socket;
 	private IMediaServerListener listener;
 	private RequestProcessor requestProcessor;
 
@@ -26,20 +18,10 @@ public class RemoteController {
 
 	private void createCommunicator() {
 		try {
-			socket = new Socket(getServerAddress(),SERVER_PORT);
-			requestProcessor = new RequestProcessor(socket);
+			requestProcessor = new RequestProcessor();
 		} catch (IOException e) {
 			Logger.logError(e);
-		}
-
-	}
-
-	private InetAddress getServerAddress() {
-		try {
-			return InetAddress.getByName(SERVER_IP);
-		} catch (UnknownHostException e) {
-			return null;
-		}
+		} 
 	}
 
 

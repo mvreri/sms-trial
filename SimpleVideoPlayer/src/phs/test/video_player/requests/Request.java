@@ -13,8 +13,8 @@ public abstract class Request {
 
 	//Return code for the listener
 	public static final int RET_CODE_SUCCESS = 0;
-	static final int RET_CODE_FAILED = 1;
-	static final int RET_CODE_TIMEOUT = 2;
+	public static final int RET_CODE_FAILED = 1;
+	public static final int RET_CODE_TIMEOUT = 2;
 
 	protected String requestName;
 	private String[] rawParameters = null;

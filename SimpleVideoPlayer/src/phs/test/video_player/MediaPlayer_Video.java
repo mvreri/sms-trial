@@ -3,21 +3,15 @@ package phs.test.video_player;
 import java.io.IOException;
 
 import phs.test.video_player.requests.Request;
-
 import viettel.sonph5.test.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
-import android.media.MediaPlayer.OnErrorListener;
-import android.media.MediaPlayer.OnInfoListener;
 import android.media.MediaPlayer.OnPreparedListener;
-import android.media.MediaPlayer.OnVideoSizeChangedListener;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -25,17 +19,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 public class MediaPlayer_Video extends Activity 
-implements 
-OnInfoListener, OnErrorListener, 
-OnVideoSizeChangedListener, 
-OnBufferingUpdateListener, 
-OnPreparedListener, OnCompletionListener, Callback 
+implements OnPreparedListener, OnCompletionListener,  Callback 
 {
-
-
 	private static final String STREAMING_SERVER_URL = "rtsp://192.168.17.78";
 	private static final String TAG = "PHS_TEST";
 
@@ -46,7 +33,7 @@ OnPreparedListener, OnCompletionListener, Callback
 
 	private MediaPlayer player;
 	private SurfaceView surfaceView;
-	private Display currentDisplay;
+	//	private Display currentDisplay;
 	private Button btPause;
 	private View btStop;
 	private RemoteController controller;
@@ -142,24 +129,25 @@ OnPreparedListener, OnCompletionListener, Callback
 		}
 
 		public void onSeekResponse(int errorCode) {
-
+			switch (errorCode) {
+			case Request.RET_CODE_SUCCESS:
+				Logger.logInfo("Seek success !");
+				break;
+			case Request.RET_CODE_FAILED:
+				Logger.logInfo("Seek failed!");
+				break;
+			case Request.RET_CODE_TIMEOUT:
+				Logger.logInfo("Timeout !");
+				break;
+			}
 		}
 
 		public void onStopRespone(int errorCode) {
 			Logger.logInfo("STOPPED");
-			controller.destroy();
-			if ( player != null) {
-				player.stop();
-				player.release();
-				player = null;
-				finish();
-			}
-
+			destroyPlayer(player);
 		}
 
 		public void onElseRespone(int errorCode) {
-			// TODO Auto-generated method stub
-
 		}
 
 		public void onGetDurationResponse(int errorCode, final int duration) {
@@ -223,17 +211,13 @@ OnPreparedListener, OnCompletionListener, Callback
 	}
 
 	private void onSurfaceCreated(SurfaceHolder holder) {
-		currentDisplay = getWindowManager().getDefaultDisplay();
+		//		currentDisplay = getWindowManager().getDefaultDisplay();
 		setupPlayer();
 	}
 
 	private void setupPlayer() {
 		player = new MediaPlayer();
 		player.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		player.setOnInfoListener(this);
-		player.setOnErrorListener(this);
-		player.setOnVideoSizeChangedListener(this);
-		player.setOnBufferingUpdateListener(this);
 		player.setScreenOnWhilePlaying(true);
 		player.setOnPreparedListener(this);
 		player.setOnCompletionListener(this);
@@ -241,27 +225,31 @@ OnPreparedListener, OnCompletionListener, Callback
 
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
-			int height) {
-		Log.i(TAG,"Surface changed");
-	}
+			int height) {}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		Log.i(TAG,"Surface created");
 		player.setDisplay(holder);
-
-
 	}
 
-	public void surfaceDestroyed(SurfaceHolder holder) {
-		Log.i(TAG,"Surface destroyed");
-	}
+	public void surfaceDestroyed(SurfaceHolder holder) {}
 
 
 	public void onCompletion(MediaPlayer mp) {
 		Log.i(TAG,"Playback is finished");
-		mp.release();
-		mp = null;
+		destroyPlayer(mp);
 	}
+
+	private void destroyPlayer(MediaPlayer player) {
+		if ( player != null) {
+			player.stop();
+			player.release();
+			player = null;
+			finish();
+		}
+		controller.destroy();
+	}
+
+
 
 	public void onPrepared(MediaPlayer mp) {
 		Log.i(TAG,"Player is ready");
@@ -275,56 +263,16 @@ OnPreparedListener, OnCompletionListener, Callback
 		int videoWidth = mp.getVideoWidth();
 		int videoHeight = mp.getVideoHeight();
 		Logger.logInfo("Avail height: " + availHeight + " -- Avail width: " + availWidth);
-		if ( videoHeight > availHeight || videoWidth > availWidth) {
-			float hr = ((float) videoHeight) /  (float) availHeight;
-			float wr = ((float) videoWidth) /  (float) availWidth;
-			float ratio = wr;
-			if ( hr > wr) {
-				ratio = hr;
-			} 
-			if ( ratio > 1) {
-				videoHeight = (int) Math.ceil(((float) videoHeight) / ratio );
-				videoWidth = (int) Math.ceil(((float) videoWidth) / ratio );
-			}
-		}
+		float hr = ((float) videoHeight) /  (float) availHeight;
+		float wr = ((float) videoWidth) /  (float) availWidth;
+		float ratio = wr;
+		if ( hr > wr) {
+			ratio = hr;
+		} 
+		videoHeight = (int) Math.ceil(((float) videoHeight) / ratio );
+		videoWidth = (int) Math.ceil(((float) videoWidth) / ratio );
 		Log.i(TAG,"Video (HxW): " + videoHeight + " x " + videoWidth);
 
 		surfaceView.setLayoutParams(new FrameLayout.LayoutParams(videoWidth, videoHeight));
 	}
-
-	public void onBufferingUpdate(MediaPlayer mp, int percent) {
-		Log.i(TAG,"Buffering updated!");		
-	}
-
-	public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-		Log.i(TAG,"Video size changed!");		
-	}
-
-	public boolean onError(MediaPlayer mp, int what, int extra) {
-		if ( what == MediaPlayer.MEDIA_ERROR_SERVER_DIED) {
-			Log.i(TAG,"Error: server died!");
-		} else if ( what == MediaPlayer.MEDIA_ERROR_UNKNOWN) { 
-			Log.i(TAG,"Error: unknown");
-		}		
-		return false;
-	}
-
-	public boolean onInfo(MediaPlayer mp, int what, int extra) {
-		if ( what == MediaPlayer.MEDIA_INFO_BAD_INTERLEAVING) {
-			Log.i(TAG,"Player Info: Bad interleaving !");
-		} else if ( what == MediaPlayer.MEDIA_INFO_NOT_SEEKABLE) { 
-			Log.i(TAG,"Player Info: Not seekable!");
-		} else if ( what == MediaPlayer.MEDIA_INFO_VIDEO_TRACK_LAGGING) { 
-			Log.i(TAG,"Player Info: Track lagging");
-		} else if ( what == MediaPlayer.MEDIA_INFO_UNKNOWN) { 
-			Log.i(TAG,"Player error: unknown");
-		} else if ( what == MediaPlayer.MEDIA_INFO_METADATA_UPDATE) {
-			Log.i(TAG,"Player Info: metadata updated");
-		} else {
-			Log.i(TAG,"Player Info: out of error def range");
-		}
-		return false;
-	}
-
-
 }

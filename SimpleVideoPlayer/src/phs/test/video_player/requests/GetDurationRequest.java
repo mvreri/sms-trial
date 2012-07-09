@@ -11,7 +11,7 @@ public class GetDurationRequest extends Request {
 	@Override
 	public void processRespone(String reply) {
 		String[] words = reply.split(SEPERATOR);
-		if (words.length==2 && isSuccess(words)) {
+		if (words.length==3 && isSuccess(words)) {
 			listener.onGetDurationResponse(RET_CODE_SUCCESS, Integer.parseInt(words[2]));
 		} else {
 			listener.onGetDurationResponse(RET_CODE_FAILED, 0);
