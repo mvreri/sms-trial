@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 public class TestVideoPlayer extends Activity {
 	//	protected static final String REMOTE_SERVER_VIDEO_PATH = "D:\\Movies\\Teri_Ore_mkv_aac.mkv";

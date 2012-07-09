@@ -19,7 +19,6 @@ package phs.test.video_player;
 import viettel.sonph5.test.R;
 import android.app.Activity;
 import android.media.MediaPlayer;
-import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.os.Bundle;
