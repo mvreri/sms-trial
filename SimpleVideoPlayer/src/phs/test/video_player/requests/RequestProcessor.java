@@ -101,11 +101,14 @@ public class RequestProcessor {
 				//The thread is interrupted
 				if ( request == null ) break;
 				
+				Logger.logInfo("Sending request: " + request.reqString());
 				outputStream.println(request.reqString());
 				try {
 					socket.setSoTimeout(TIME_OUT);
 					String reply = inputStream.readLine();
-					request.processRespone(reply);
+					if (reply != null)
+						request.processRespone(reply);
+					else request.responseReplyException();
 				} catch (SocketException e) {
 					Logger.logError(e);
 					request.responseTimeout();

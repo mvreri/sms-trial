@@ -34,7 +34,7 @@ public abstract class Request {
 	}
 	
 	protected boolean isSuccess(String[] words) {
-		return words[0].toLowerCase().equals("pause") && words[1].toLowerCase().equals(RESPONE_SUCCESS);
+		return words[0].toLowerCase().equals(this.requestName) && words[1].toLowerCase().equals(RESPONE_SUCCESS);
 	}
 	
 	public String reqString() {
@@ -57,12 +57,13 @@ public abstract class Request {
 		if ( rawParameters != null) {
 			StringBuilder builder = new StringBuilder();
 			for(int i = 0 ; i < rawParameters.length ; i++) {
+				builder.append(SEPERATOR);
 				builder.append(getRawParameter(i));
-				if ( i < rawParameters.length - 1 ) builder.append(SEPERATOR);
 			}
 			return builder.toString();
 		} else return "";
 	}
+
 	
 
 	
