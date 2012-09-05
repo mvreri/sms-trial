@@ -41,6 +41,8 @@ public class LoaderThread extends Thread {
 				loadImageItem(loadingItem);
 			} else {
 				Logger.logInfo("Loading item is NULL!");
+				Logger.logInfo("Loader thread is finished ");
+				return;
 			}
 		}
 	}
