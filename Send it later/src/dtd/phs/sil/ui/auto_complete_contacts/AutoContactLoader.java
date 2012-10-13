@@ -180,19 +180,12 @@ public class AutoContactLoader implements Runnable {
 		});
 	}
 
-	//Data.DATA1 with Data.MIMETYPE = Phone.CONTENT_ITEM_TYPE
 	private MyContactData getAllContactsData() {
 		Cursor cursor = null;
 		try {
 			MyContactData data = new MyContactData();
 			cursor = getContext().getContentResolver().query(ContactsContract.Data.CONTENT_URI, null, null, null, Data.CONTACT_ID + " asc");
 			if ( cursor.moveToFirst()) {
-				//						String[] columnNames = cursor.getColumnNames();
-				//						String aaa = "";
-				//						for(int i = 0; i < columnNames.length ; i++) {
-				//							aaa += columnNames[i]+"//";
-				//						}
-				//						Log.i(PHS_SMS,aaa);
 				do {
 					String type = cursor.getString(cursor.getColumnIndex(Data.MIMETYPE));
 					if ( type.equals(Phone.CONTENT_ITEM_TYPE)) {

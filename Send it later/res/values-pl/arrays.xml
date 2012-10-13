@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 wiadomości</item>
+        <item>10 wiadomości</item>
+        <item>Wszystkie wiadomości</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Raz</item>
+        <item>Codziennie</item>
+        <item>Cotygodniowo</item>
+        <item>Comiesięcznie</item>
+        <item>Corocznie</item>
+        <item>Dni robocze (Pn.-Pt.)</item>
+        <item>Weekend (So.-Niedz.)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Ciche</item>
+        <item>Wibracją</item>
+        <item>Dźwiękiem</item>
+        <item>Dźwiękiem i wibracją</item>
+    </string-array>
+    <string-array name="months">
+        <item>St.</item>
+        <item>Lt.</item>
+        <item>Mrz.</item>
+        <item>Kw.</item>
+        <item>Mj.</item>
+        <item>Czrw.</item>
+        <item>Lp.</item>
+        <item>Sp.</item>
+        <item>Wrz.</item>
+        <item>Prn.</item>
+        <item>Lst.</item>
+        <item>Gr.</item>
+    </string-array>
+
+</resources>
