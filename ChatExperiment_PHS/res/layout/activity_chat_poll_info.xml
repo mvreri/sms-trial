@@ -1,0 +1,56 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    >
+
+    <TextView
+        android:id="@+id/tvRate"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rates"
+	/>
+    
+    <TextView
+        android:id="@+id/tvStart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/startBattery"
+	/>
+    
+    <TextView
+        android:id="@+id/tvEnd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/endBattery"
+	/>
+    
+    <TextView
+        android:id="@+id/tvDuration"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/duration"
+	/>
+    
+    <Button
+        android:id="@+id/btLog"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Log" 
+        />
+
+    <Button
+        android:id="@+id/btStart"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start" 
+        />
+
+    <Button
+        android:id="@+id/btEnd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/end" 
+        />
+</LinearLayout>
