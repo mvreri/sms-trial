@@ -11,5 +11,7 @@
     <string name="Log">Log</string>
     <string name="start">Start meter</string>
     <string name="end">End meter</string>
+    <string name="processing_pls_end_before_start">Logging is started already - Please end before start the new one</string>
+    <string name="no_active_process_cannot_end">No active process !</string>
 
 </resources>

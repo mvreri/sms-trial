@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".ChatPollInfo"
+            android:name=".BatteryMeter"
             android:label="@string/title_activity_chat_poll_info" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
