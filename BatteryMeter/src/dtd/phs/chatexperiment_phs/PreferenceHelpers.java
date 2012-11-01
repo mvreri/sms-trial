@@ -60,6 +60,7 @@ public class PreferenceHelpers {
 	private static final String PREF_IS_IN_PROGRESS = "pref_in_progress";
 	private static final String PREF_START_TIME = "pref_start_time";
 	private static final String PREF_BATTERY_LEVEL = "pref_battery_level";
+
 	public static void setInProgress(Context applicationContext, boolean b) {
 		String value = b ? TRUE : FALSE;
 		setPreference(applicationContext, PREF_IS_IN_PROGRESS, value);
@@ -102,14 +103,33 @@ public class PreferenceHelpers {
 		}
 	}
 
-	public static void setEndTime(Context applicationContext,
-			long currentTimeMillis) {
-		aqdasd;
+	private static final String PREF_END_TIME = "PREF_END_TIME";
+	public static void setEndTime(Context applicationContext,long currentTimeMillis) {
+		setPreference(applicationContext, PREF_END_TIME, ""+currentTimeMillis);
 	}
 
+	public static long getEndTime(Context applicationContext,long defaultValue) {
+		String str = getPreference(applicationContext, PREF_END_TIME);
+		try {
+			return Long.parseLong(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	private static final String PREF_END_BATTERY = "PREF_END_BATTERY";
 	public static void setEndBattery(Context applicationContext,
 			int currentBatteryLevel) {
-		adsad;
+		setPreference(applicationContext, PREF_END_BATTERY, ""+currentBatteryLevel);
+	}
+
+	public static int getEndBattery(Context applicationContext, int defaultValue) {
+		String str = getPreference(applicationContext, PREF_END_BATTERY);
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 }

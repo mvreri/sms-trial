@@ -3,7 +3,10 @@ package dtd.phs.chatexperiment_phs;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -24,6 +27,15 @@ public class ShowLog extends Activity {
 		
 		adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, meterInfo );
 		listview.setAdapter(adapter);
+		btSummary.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent act = new Intent(ShowLog.this, BatteryMeter.class);
+				startActivity(act);
+				finish();
+			}
+		});
 	}
 	
 	@Override

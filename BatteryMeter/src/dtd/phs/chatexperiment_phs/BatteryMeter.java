@@ -1,6 +1,9 @@
 package dtd.phs.chatexperiment_phs;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,7 +14,7 @@ import android.widget.Toast;
 
 public class BatteryMeter extends Activity implements OnClickListener {
 
-    private static final int DIALOG_CF_START = 0;
+	private static final long REPEAT_INTERVAL = 15*1000;
 	private TextView tvRate;
 	private TextView tvStart;
 	private TextView tvEnd;
@@ -103,22 +106,26 @@ public class BatteryMeter extends Activity implements OnClickListener {
 		BatteryStatusTable.clearAllData(getApplicationContext());
 		PreferenceHelpers.setInProgress(getApplicationContext(),true);
 		PreferenceHelpers.setStartTime(getApplicationContext(),System.currentTimeMillis());
-		PreferenceHelpers.setStartBattery(getApplicationContext(),getCurrentBatteryLevel());
+		PreferenceHelpers.setStartBattery(getApplicationContext(),Helpers.getCurrentBatteryLevel(this));
 		startTimerLog();
 	}
 
 	private void startTimerLog() {
-		asdasd;
+		PendingIntent pi = getPendingIntent();
+		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), REPEAT_INTERVAL, pi);
+	}
+
+	protected PendingIntent getPendingIntent() {
+		Intent intent = new Intent(this,TimerAlarm.class);
+		return PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 	}
 
 	private void stopTimerLog() {
-		adsd;
-		
+		AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		am.cancel(getPendingIntent());
 	}
 	
-	private int getCurrentBatteryLevel() {
-		adasds;
-	}
 
 	/**
 	 * Database : nothing 
@@ -132,13 +139,18 @@ public class BatteryMeter extends Activity implements OnClickListener {
     private void endMonitor() {
     	PreferenceHelpers.setInProgress(getApplicationContext(), false);
     	PreferenceHelpers.setEndTime(getApplicationContext(), System.currentTimeMillis());
-    	PreferenceHelpers.setEndBattery(getApplicationContext(), getCurrentBatteryLevel());
+    	PreferenceHelpers.setEndBattery(getApplicationContext(), Helpers.getCurrentBatteryLevel(this));
     	stopTimerLog();
     	refreshUI();
 	}
     
 	private void refreshUI() {
-		adsad;
+		tvRate.setText("Rates: xxx s /request" );
+		tvStart.setText("Battery (START): " + PreferenceHelpers.getStartBattery(getApplicationContext(),0) + "%");
+		tvEnd.setText("Battery (END): " + PreferenceHelpers.getEndBattery(getApplication(), 0) +"%");
+		long startTime = PreferenceHelpers.getStartTime(getApplicationContext(), 0);
+		long endTime = PreferenceHelpers.getEndTime(getApplication(), 0);
+		tvDuration.setText("From " + Helpers.formatToTime(startTime) + " to " +  Helpers.formatToTime(endTime) + " - duration: "  + ((endTime-startTime)/(60*1000)) + " minutes");
 	}
 
 

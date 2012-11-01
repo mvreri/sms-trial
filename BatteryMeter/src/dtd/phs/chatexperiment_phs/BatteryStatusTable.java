@@ -121,8 +121,21 @@ public class BatteryStatusTable {
 		}
 	}
 
-	public static void clearAllData(Context applicationContext) {
-		asdsad;
+	public static int clearAllData(Context context) {
+		BatteryStatusTable tbl = new BatteryStatusTable(context);
+		tbl.open();
+		try {
+			return tbl.clearData();
+		} catch (Exception e) {
+			Logger.logError(e);
+			return 0;
+		} finally {
+			try { tbl.close(); } catch (Exception e) {}
+		}		
+	}
+
+	private int clearData() {
+		return database.delete(TBL_NAME, null, null);
 	}
 	 
 }
