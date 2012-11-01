@@ -8,6 +8,7 @@ public class TimerAlarm extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
+//		Logger.logInfo("Timer fired !");
 		SaveDataService.startWakeLock(context);
 		Intent service = new Intent(context, SaveDataService.class);
 		context.startService(service);

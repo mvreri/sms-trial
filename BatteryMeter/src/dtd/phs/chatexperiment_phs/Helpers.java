@@ -22,7 +22,7 @@ public class Helpers {
 		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, 0);
 		int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, 1);
 		int percent = (level * 100 ) / scale;
-		Logger.logInfo("Level: " + level + " -- scale: " + scale  + " -- Percent: " + percent);
+//		Logger.logInfo("Level: " + level + " -- scale: " + scale  + " -- Percent: " + percent);
 		return percent;
 	}
 

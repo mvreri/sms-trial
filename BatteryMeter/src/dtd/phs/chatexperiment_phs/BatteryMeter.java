@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 public class BatteryMeter extends Activity implements OnClickListener {
 
-	private static final long REPEAT_INTERVAL = 15*1000;
+	private static final long REPEAT_INTERVAL = 5*60*1000; //5 minutes
 	private TextView tvRate;
 	private TextView tvStart;
 	private TextView tvEnd;

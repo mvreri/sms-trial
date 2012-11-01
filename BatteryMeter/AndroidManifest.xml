@@ -23,6 +23,7 @@
         </activity>
         <receiver android:name="TimerAlarm"></receiver>
         <activity android:name="ShowLog"></activity>
+        <service android:name="SaveDataService"></service>
     </application>
 
 </manifest>
