@@ -22,7 +22,7 @@
     </string-array>
     <string-array name="alerts">
         <item>Silent</item>
-        <item>Vibrant</item>
+        <item>Vibrate</item>
         <item>Play sound</item>
         <item>Both vibrant n sound</item>
     </string-array>

@@ -16,14 +16,14 @@
     <string name="Done">Gotowe</string>
     <string name="Never">Nigdy</string>
     <string name="Frequency">Częstotliwość: </string>
-    <string name="Alert_on_delivery">Powiadomienie o dostarczeniu:</string>
+    <string name="Alert_on_delivery">Powiadomienie:</string>
     <string name="Words">Znaków / Wiadomości</string>
     <string name="Message">Treść</string>
-    <string name="Choose_Frequency">Wybierz częstotliwość</string>
+    <string name="Choose_Frequency">Częstotliwość</string>
     <string name="Add">Dodaj</string>
     <string name="Save">Zapisz</string>
     <string name="Rate_Application">Oceń aplikację</string>
-    <string name="Invalid_message_warning">Nieprawidłowa wiadomość: Proszę uzupełnić adresatów / treść wiadomości</string>
+    <string name="Invalid_message_warning">Nieprawidłowe dane: proszę uzupełnić adresatów / treść wiadomości</string>
     <string name="message_removed_success">Wiadomość usunięta pomyślnie</string>
     <string name="remove_item">Usuń wiadomość</string>
     <string name="confirm_delete_item">Czy na pewno chcesz usunąć tę wiadomość?</string>
@@ -37,14 +37,14 @@
     <string name="Preferences">Ustawienia</string>
     <string name="Exit">Wyjście</string>
     <string name="Sent_to">Wysłano:</string>
-    <string name="PREF_MAX_SENT_ITEM">Preferowana maksymalna ilość</string>
-    <string name="Max_sent_item">Automatycznie czyść wysłane wiadomości</string>
-    <string name="Max_sent_item_summary">Pozostaw jedynie ostatnie wiadomości</string>
-    <string name="Max_sent_item_dialog_title">Pozostaw ostatnie</string>
-    <string name="about_us">O nas</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">Czyszczenie wysłanych</string>
+    <string name="Max_sent_item_summary">Pozostaw</string>
+    <string name="Max_sent_item_dialog_title">Pozostaw</string>
+    <string name="about_us">O autorze</string>
     <string name="sil_version">Wyślij później, wersja </string>
-    <string name="feel_free">Darmowe kody na:</string>
-    <string name="or_send_email">E-Mail: &lt;a href="mailto:sphamhung@yahoo.com">sphamhung@yahoo.com&lt;/a></string>
+    <string name="feel_free">Darmowe kody źródłowe na:</string>
+    <string name="or_send_email">Kontakt: &lt;a href="mailto:sphamhung@yahoo.com">sphamhung@yahoo.com&lt;/a></string>
     <string name="Close">Zamknij</string>
     <string name="Sent_failed">Nie wysłano do: </string>
     <string name="Sent_failed_short">Błąd: </string>
@@ -65,15 +65,15 @@
     <string name="First_time_running">Przy pierwszym uruchomieniu</string>
     <string name="please_wait_while_loading_contact">Ładuję kontakty…</string>
     <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđąćęłńśźż</string>
-    <string name="Enter_message_here">Wpisz wiadomość tutaj…</string>
-    <string name="more_apps">Więcej aplikacji…</string>
+    <string name="Enter_message_here">Uzupełnij wiadomość</string>
+    <string name="more_apps">Pozostałe aplikacje autora</string>
     <string name="Share">Udostępnij</string>
     <string name="Contact">Kontakt</string>
     <string name="Share_subject">Udostępniam Ci aplikację</string>
     <string name="Share_content">Wspaniała aplikacja do planowania wysyłania wiadomości. Dzięki niej nie musisz już kontaktować się w nocy, budząc swoich znajomych. Nie zapomnisz również o wysłaniu życzeń. Pobierz tutaj: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
     <string name="Call_now">Zadzwoń teraz</string>
     <string name="sms_now">Wyślij wiadomość teraz</string>
-    <string name="Invalid_time_warning">Niepoprawny czas, proszę wybrać późniejszą datę / godzinę</string>
+    <string name="Invalid_time_warning">Nieprawidłowy termin: proszę wybrać późniejszą datę / czas</string>
     <string name="Insert">Wstaw</string>
 
 </resources>

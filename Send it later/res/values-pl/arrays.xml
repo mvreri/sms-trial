@@ -7,9 +7,9 @@
         <item>100</item>
     </string-array>
     <string-array name="max_sent_number_str">
-        <item>5 wiadomości</item>
-        <item>10 wiadomości</item>
-        <item>Wszystkie wiadomości</item>
+        <item>ostatnie 5 wiadomości</item>
+        <item>ostatnie 10 wiadomości</item>
+        <item>wszystkie wiadomości</item>
     </string-array>
     <string-array name="frequencies">
         <item>Raz</item>
@@ -17,11 +17,11 @@
         <item>Cotygodniowo</item>
         <item>Comiesięcznie</item>
         <item>Corocznie</item>
-        <item>Dni robocze (Pn.-Pt.)</item>
+        <item>Dni robocze (Pn. - Pt.)</item>
         <item>Weekend (So.-Niedz.)</item>
     </string-array>
     <string-array name="alerts">
-        <item>Ciche</item>
+        <item>Brak</item>
         <item>Wibracją</item>
         <item>Dźwiękiem</item>
         <item>Dźwiękiem i wibracją</item>
