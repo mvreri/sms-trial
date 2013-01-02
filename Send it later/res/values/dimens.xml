@@ -10,4 +10,12 @@
     <dimen name="edit_options_text_size">16sp</dimen>
     <dimen name="button_side_padding">10dp</dimen>
     
+    <!-- New UI -->
+    <dimen name="topbar_height">52dp</dimen>
+    <dimen name="topbar_bottom_divider">1dp</dimen>
+    <dimen name="topbar_bottom_highlight">4dp</dimen>
+    <dimen name="standard_spacing">8dp</dimen>
+    <dimen name="icon_dim">32dp</dimen>
+    <dimen name="topbar_text">18sp</dimen>
+    
 </resources>

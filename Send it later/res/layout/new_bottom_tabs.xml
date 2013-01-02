@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="@dimen/topbar_height"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="0dp" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:padding="@dimen/standard_spacing" 
+            >
+            <ImageView
+                android:layout_width="@dimen/icon_dim"
+                android:layout_height="@dimen/icon_dim"
+                android:src="@drawable/ic_launcher"
+                android:scaleType="fitCenter"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pending_messages"
+                android:textColor="@color/topbar_text"
+                android:textSize="@dimen/topbar_text"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/standard_spacing" 
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/topbar_bottom_highlight"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/topbar_bottom_divider"
+            android:layout_weight="1"
+            android:background="@color/topbar_bottom_divider" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/topbar_bottom_highlight"
+            android:layout_weight="1"
+            android:background="@color/topbar_bottom_divider" />
+    </LinearLayout>
+
+</LinearLayout>

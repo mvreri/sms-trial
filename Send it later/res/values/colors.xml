@@ -9,4 +9,8 @@
     <color name="red">#ffff0000</color>
     <color name="dark_red">#7c0505</color>
     <color name="dialog_text_color">#ff666666</color>
+    
+    <!-- New UI -->
+    <color name="topbar_bottom_divider">#33b5e5</color>
+    <color name="topbar_text">#3d3d3d</color>
 </resources>
