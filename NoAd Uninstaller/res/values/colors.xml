@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="app_name">#666666</color>
+    <color name="app_names_div">#FFD1D1D1</color>
+    <color name="even_item_bg">#F1F1F1</color>
+    <color name="odd_item_bg">#FFFFFF</color>
+    <color name="main_bg">#5F5F5F</color>
 </resources>

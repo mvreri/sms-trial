@@ -3,7 +3,8 @@
     <dimen name="app_icon">32dp</dimen>
     <dimen name="app_item_height">48dp</dimen>
     <dimen name="std_xpad">8dp</dimen>
-    <dimen name="list_div_height">1px</dimen>
+    <dimen name="list_div_height">0px</dimen>
     <dimen name="std_pad">8dp</dimen>
-    <dimen name="fs_app_name">18sp</dimen>
+    <dimen name="fs_app_name">16dp</dimen>
+    <dimen name="check_box">24dp</dimen>
 </resources>

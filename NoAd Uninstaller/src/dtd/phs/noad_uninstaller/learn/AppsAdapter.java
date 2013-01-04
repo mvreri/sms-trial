@@ -1,5 +1,6 @@
 package dtd.phs.noad_uninstaller.learn;
 
+import java.util.Arrays;
 import java.util.List;
 
 import android.content.Context;
@@ -13,13 +14,20 @@ import dtd.phs.noad_uninstaller.R;
 
 public class AppsAdapter extends BaseAdapter {
 
-	private static final int GREY = 0xfff2f2f2;
+	private static final int GREY = 0xfff1f1f1;
 	private List<PHS_AppInfo> apps;
 	private Context context;
+	private int evenBg;
+	private int oddBg;
+	private boolean[] selected;
 
 	public AppsAdapter(Context context, List<PHS_AppInfo> appsInfo) {
 		this.apps = appsInfo;
 		this.context = context;
+		this.evenBg = context.getResources().getColor(R.color.even_item_bg);
+		this.oddBg = context.getResources().getColor(R.color.odd_item_bg);
+		selected = new boolean[apps.size()];
+		Arrays.fill(selected, false);
 	}
 
 	@Override
@@ -46,8 +54,18 @@ public class AppsAdapter extends BaseAdapter {
 		ImageView icon = (ImageView) v.findViewById(R.id.icon);
 		icon.setImageDrawable(getItem(position).getIcon());
 		if ( position % 2 == 0 ) 
-			v.setBackgroundColor(GREY);
+			v.setBackgroundColor(evenBg);
+		else v.setBackgroundColor(oddBg);
+		ImageView checkBox = (ImageView) v.findViewById(R.id.checkBox);
+		if ( selected[position]) 
+			checkBox.setImageResource(R.drawable.check_box_on);
+		else checkBox.setImageResource(R.drawable.check_box_off);
 		return v;
+	}
+
+	public void changeSelectedState(int position) {
+		selected[position] = ! selected[position];
+		notifyDataSetChanged();
 	}
 
 }
