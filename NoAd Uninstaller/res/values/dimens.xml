@@ -7,4 +7,10 @@
     <dimen name="std_pad">8dp</dimen>
     <dimen name="fs_app_name">16dp</dimen>
     <dimen name="check_box">24dp</dimen>
+    <dimen name="bt_height">48dp</dimen>
+    <dimen name="std_margin">8dp</dimen>
+    <dimen name="min_loading_page_height">72dp</dimen>
+    <dimen name="bottom_layout_height">52dp</dimen>
+    <dimen name="dialog_button_padding">2dp</dimen>
+    <dimen name="auto_item_height">36dp</dimen>
 </resources>

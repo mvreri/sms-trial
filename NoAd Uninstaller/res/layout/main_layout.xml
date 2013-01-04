@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/std_pad"
+    android:orientation="vertical" >
+    <AutoCompleteTextView
+        android:id="@+id/atSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/std_margin"
+        android:completionThreshold="3"
+        />
+    <FrameLayout
+        android:id="@+id/main_frames"
+        android:layout_width="fill_parent" 
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+        <include
+            layout="@layout/loading_page"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
+        <include
+            android:id="@+id/list_apps"
+            layout="@layout/list_apps"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            />
+    </FrameLayout>
+	<Button
+	    android:id="@+id/btUninstall"
+	    android:layout_width="fill_parent"
+	    android:layout_height="@dimen/bt_height"
+	    android:text="@string/Uninstall_selected"
+	/>
+</LinearLayout>

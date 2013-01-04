@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 import dtd.phs.noad_uninstaller.R;
 
@@ -38,10 +39,11 @@ public class GetAppsList extends Activity {
 			@Override
 			public void onClick(View v) {
 				long startTime = System.currentTimeMillis();
-				List<PHS_AppInfo> appsInfo = getAppsInfo(getApplicationContext());
+				ArrayList<PHS_AppInfo> appsInfo = Helpers.getAppsInfo(getApplicationContext());
 				Logger.logInfo("Cout apps: " + appsInfo.size());
-				adapter = new AppsAdapter(getApplicationContext(),appsInfo);
+				adapter = new AppsAdapter(getApplicationContext());				
 				listview.setAdapter(adapter);
+				adapter.setData(appsInfo);
 				long endTime = System.currentTimeMillis();
 				long dur = endTime - startTime;
 				Logger.logInfo("Loading time: " + dur);
@@ -56,26 +58,6 @@ public class GetAppsList extends Activity {
 		});
 	}
 	
-	protected void uninstall(PHS_AppInfo app) {
-		String packageName = app.getPackageName();
-		Uri packageURI = Uri.parse("package:"+packageName);
-		Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-		startActivity(uninstallIntent);
-	}
 
-	private List<PHS_AppInfo> getAppsInfo(Context context) {
-		PackageManager packageManager = context.getPackageManager();
-		List<ApplicationInfo> installedApplications = 
-		   packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-		ArrayList<PHS_AppInfo> apps = new ArrayList<PHS_AppInfo>();
-		for (ApplicationInfo appInfo : installedApplications)
-		{
-			int flags = appInfo.flags;
-			if ( ( flags & ApplicationInfo.FLAG_SYSTEM ) == 0)
-				apps.add(new PHS_AppInfo(appInfo.packageName, appInfo.loadLabel(packageManager).toString(), appInfo.loadIcon(packageManager)));
-		} 
 
-		return apps;
-
-	}
 }

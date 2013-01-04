@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/min_loading_page_height"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Small"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/tvLoadingInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/std_margin"
+        android:gravity="center"
+        android:text="@string/please_wait"
+        android:textColor="@color/app_name" />
+
+</LinearLayout>

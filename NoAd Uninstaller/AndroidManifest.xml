@@ -13,13 +13,13 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainUninstaller"
-            android:label="@string/title_activity_main_uninstaller" >
-        </activity>
-        <activity android:name=".learn.GetAppsList"><intent-filter>
+            android:label="@string/title_activity_main_uninstaller" ><intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+            </intent-filter>
+        </activity>
+        <activity android:name=".learn.GetAppsList"></activity>
     </application>
 
 </manifest>

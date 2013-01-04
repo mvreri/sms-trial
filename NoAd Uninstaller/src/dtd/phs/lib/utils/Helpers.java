@@ -8,14 +8,21 @@ import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
+
+import dtd.phs.noad_uninstaller.learn.PHS_AppInfo;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,4 +147,27 @@ public class Helpers {
 		}
 	}
 
+
+	public static ArrayList<PHS_AppInfo> getAppsInfo(Context context) {
+		PackageManager packageManager = context.getPackageManager();
+		List<ApplicationInfo> installedApplications = 
+		   packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+		ArrayList<PHS_AppInfo> apps = new ArrayList<PHS_AppInfo>();
+		for (ApplicationInfo appInfo : installedApplications)
+		{
+			int flags = appInfo.flags;
+			if ( ( flags & ApplicationInfo.FLAG_SYSTEM ) == 0)
+				apps.add(new PHS_AppInfo(appInfo.packageName, appInfo.loadLabel(packageManager).toString(), appInfo.loadIcon(packageManager)));
+		} 
+
+		return apps;
+
+	}
+	
+	public static void uninstall(Activity act, PHS_AppInfo app) {
+		String packageName = app.getPackageName();
+		Uri packageURI = Uri.parse("package:"+packageName);
+		Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+		act.startActivity(uninstallIntent);
+	}
 }
