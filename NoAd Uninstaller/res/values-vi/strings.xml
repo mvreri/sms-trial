@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">NoAd Uninstaller</string>  
+    <string name="Uninstall_selected">Gỡ ứng dụng được chọn</string>
+    <string name="please_wait">Vui lòng đợi</string>
+    <string name="Search_app">Tìm ứng dụng…</string>
+
+</resources>
