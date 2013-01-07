@@ -3,7 +3,6 @@
     <string name="app_name">NoAd Uninstaller</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main_uninstaller">MainUninstaller</string>
     <string name="Refresh">Refresh</string>
     <string name="Uninstall_selected">Uninstall selected</string>
     <string name="please_wait">Please wait…</string>
