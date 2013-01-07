@@ -9,7 +9,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/std_margin"
-        android:completionThreshold="3"
+        android:completionThreshold="1"
+        android:hint="@string/Search_app"
+        android:background="@drawable/edit_text_bg"
         />
     <FrameLayout
         android:id="@+id/main_frames"
@@ -34,5 +36,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="@dimen/bt_height"
 	    android:text="@string/Uninstall_selected"
+	    android:layout_marginTop="@dimen/std_margin"
+	    android:background="@drawable/button_bg"
 	/>
 </LinearLayout>

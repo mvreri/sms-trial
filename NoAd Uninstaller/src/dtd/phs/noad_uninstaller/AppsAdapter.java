@@ -1,4 +1,4 @@
-package dtd.phs.noad_uninstaller.learn;
+package dtd.phs.noad_uninstaller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,15 +17,15 @@ public class AppsAdapter extends BaseAdapter {
 
 	private List<PHS_AppInfo> apps;
 	private Context context;
-	private int evenBg;
-	private int oddBg;
+//	private int evenBg;
+//	private int oddBg;
 	private boolean[] selected;
 
 	public AppsAdapter(Context context) {
 		this.apps = new ArrayList<PHS_AppInfo>();
 		this.context = context;
-		this.evenBg = context.getResources().getColor(R.color.even_item_bg);
-		this.oddBg = context.getResources().getColor(R.color.odd_item_bg);
+//		this.evenBg = context.getResources().getColor(R.color.even_item_bg);
+//		this.oddBg = context.getResources().getColor(R.color.odd_item_bg);
 		selected = new boolean[apps.size()];
 		Arrays.fill(selected, false);
 	}
@@ -60,9 +60,11 @@ public class AppsAdapter extends BaseAdapter {
 		name.setText(getItem(position).getAppName());
 		ImageView icon = (ImageView) v.findViewById(R.id.icon);
 		icon.setImageDrawable(getItem(position).getIcon());
+		
 		if ( position % 2 == 0 ) 
-			v.setBackgroundColor(evenBg);
-		else v.setBackgroundColor(oddBg);
+			v.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.even_item_bg));
+		else v.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.odd_item_bg));
+		
 		ImageView checkBox = (ImageView) v.findViewById(R.id.checkBox);
 		if ( selected[position]) 
 			checkBox.setImageResource(R.drawable.check_box_on);

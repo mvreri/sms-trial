@@ -9,10 +9,9 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
-
-import dtd.phs.noad_uninstaller.learn.PHS_AppInfo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -31,6 +30,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import dtd.phs.noad_uninstaller.PHS_AppInfo;
 
 public class Helpers {
 
@@ -160,6 +160,7 @@ public class Helpers {
 				apps.add(new PHS_AppInfo(appInfo.packageName, appInfo.loadLabel(packageManager).toString(), appInfo.loadIcon(packageManager)));
 		} 
 
+		Collections.sort(apps,new PHS_AppInfo.AppComparator());
 		return apps;
 
 	}
