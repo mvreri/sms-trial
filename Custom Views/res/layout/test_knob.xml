@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.android.customviews"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_bg"
@@ -18,7 +20,8 @@
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:padding="0dp"
-            android:background="@color/main_bg" 
+            android:background="@color/main_bg"
+            custom:maxLevel="20"
             >
         </com.example.android.customviews.vol_button.KnobController>
     </LinearLayout>

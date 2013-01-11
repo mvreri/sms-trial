@@ -29,4 +29,8 @@
         <attr name="pointerRadius" format="dimension"/>
         <attr name="showText" format="boolean"/>
     </declare-styleable>
+    
+    <declare-styleable name="KnobController">
+        <attr name="maxLevel" format="integer"/>
+    </declare-styleable>
 </resources>

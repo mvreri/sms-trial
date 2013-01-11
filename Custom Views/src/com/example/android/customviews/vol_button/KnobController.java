@@ -1,6 +1,8 @@
 package com.example.android.customviews.vol_button;
 
+import junit.framework.Assert;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
@@ -19,17 +21,22 @@ import com.example.android.customviews.R;
 
 import dtd.phs.lib.utils.Logger;
 
+/**
+ * 
+ * @author Pham Hung Son
+ *
+ */
 public class KnobController extends FrameLayout {
 
 	private static final int SHADOW_COLOR = 0x33666666;
 	private static final float SHADOW_BLUR_RADIUS = 8;
-	private static final float DIST_KNOB_2_INDICATOR = 20;
 
-	private static final int MIN_ANGLE = -135;
-	private static final int MAX_ANGLE = -45;
+	private static final int MIN_ANGLE = -135; //must be in (180,270) - not inclusive
+	private static final int MAX_ANGLE = -45; //must be in (270,360) - not inclusive
 
 	
 	private static final int DEFAULT_LAYOUT_DIMEN = 512;
+	private static final int DEFAULT_MAX_LEVEL = 10;
 	private static float mPaddingBg2Base = 20.0f;
 	private static float mPaddingBase2Knob = 6.0f;
 	private Paint mShadowPaint;
@@ -47,11 +54,31 @@ public class KnobController extends FrameLayout {
 	private RectF mShadowBounds;
 	private int mMinAngle = MIN_ANGLE;
 	private int mMaxAngle = MAX_ANGLE;
+	private int mMaxLevel;
 
 	public KnobController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setWillNotDraw(false);
+		getAttributes(context,attrs);
 		init();
+		assertAngles();
+	}
+
+	private void assertAngles() {
+		int min = (mMinAngle + 360) % 360;
+		int max = (mMaxAngle + 360) % 360;
+		Assert.assertTrue(min > 180 && min < 270);
+		Assert.assertTrue(max > 270 && max < 360);
+	}
+
+	private void getAttributes(Context context, AttributeSet attrs) {
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.KnobController, 0, 0);
+		try {
+			mMaxLevel = a.getInteger(R.styleable.KnobController_maxLevel,DEFAULT_MAX_LEVEL);
+			Logger.logInfo("maxLevel: " + mMaxLevel);
+		} finally {
+			a.recycle();
+		}
 	}
 
 	private void init() {
