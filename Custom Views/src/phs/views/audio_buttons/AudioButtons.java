@@ -225,7 +225,6 @@ public class AudioButtons extends ViewGroup {
 		canvas.drawOval(mNextButtonDropShadow, mShadowPaint);
 		canvas.drawOval(mPlayButtonDropShadow, mShadowPaint);
 		
-		canvas.draw
 	}
 	
 	static public float convertDp2Pixel(Context context, float dp) {
