@@ -1,7 +1,6 @@
 package phs.views;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
@@ -9,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -136,23 +134,22 @@ public class PetrButton extends ViewGroup {
 	}
 	
 	public class InnerButton extends View {
-		private int mWidth;
-		private int mHeight;
+		private float mWidth;
+		private float mHeight;
 		private RectF mBounds;
 		private Paint mBtnPaint;
+		private float mShadowDim;
 		public InnerButton(Context context) {
 			super(context);
 			mBtnPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mBtnPaint.setColor(0xFF0000FF);
+			mShadowDim = ViewHelpers.convertDp2Pixel(context, DEFAULT_BASE_SHADOW_DIM);
 		}
 
 		@Override
 		protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 			super.onSizeChanged(w, h, oldw, oldh);
-			mWidth = w;
-			mHeight = h;
-			mBounds = new RectF(0,0,w,h);
-			
+			mHeight = w - 2 * mShadowDim;
 		}
 		@Override
 		protected void onDraw(Canvas canvas) {
