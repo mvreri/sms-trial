@@ -1,4 +1,4 @@
-package com.example.android.customviews.audio_buttons;
+package phs.views.audio_buttons;
 
 import com.example.android.customviews.R;
 
@@ -224,6 +224,8 @@ public class AudioButtons extends ViewGroup {
 		canvas.drawOval(mPrevButtonDropShadow, mShadowPaint);
 		canvas.drawOval(mNextButtonDropShadow, mShadowPaint);
 		canvas.drawOval(mPlayButtonDropShadow, mShadowPaint);
+		
+		canvas.draw
 	}
 	
 	static public float convertDp2Pixel(Context context, float dp) {

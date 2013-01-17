@@ -1,10 +1,10 @@
 package com.example.android.customviews;
 
+import phs.views.vol_button.NewKnobController;
 import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.android.customviews.R;
-import com.example.android.customviews.vol_button.NewKnobController;
 
 public class TestNewKnob extends Activity {
 	private NewKnobController knobController;
