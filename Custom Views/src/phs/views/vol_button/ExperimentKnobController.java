@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.BlurMaskFilter.Blur;
+import android.graphics.Paint.Style;
 import android.graphics.Shader.TileMode;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
@@ -23,22 +24,38 @@ import dtd.phs.lib.utils.Logger;
 
 public class ExperimentKnobController extends FrameLayout {
 
+
 	private static final int COLOR_WHITE = 0xFFffFFff;
-	private static final int SHADOW_COLOR = 0x33666666;
-	private static final float SHADOW_BLUR_RADIUS = 8;
+	
 
 	//Background
 	private static final int BG_GRADIENT_START = 0xffE4e4E4;
 	private static final int BG_GRADIENT_END = 0xffF9f9F9;
 	private static final float DEFAULT_BG_SHADOW_HEIGHT = 1.0f;	
 
+	//Base
+	private static final float BASE_STROKE_WIDTH = 2.0f;
+	private static final float BASE_DELTA_STROKE = 4.0f;
+	private static final int BASE_STROKE_COLOR = 0xffCCccCC;
+	private static final int BASE_GRADIENT_END = 0xffEFefEF;
+	private static final int BASE_GRADIENT_START = 0xffD5d5D5;
 
+	//Shadow
+	private static final int SHADOW_COLOR = 0x22666666;
+	private static final float KNOB_SHADOW_OFFSET = 0.0f;
+	private static final float SHADOW_BLUR_RADIUS = 8.0f;
+	private static final float SHADOW_DELTA = 10.0f;
+
+	
 	private static final int MIN_ANGLE = -135;
 	private static final int MAX_ANGLE = -45;
 
 
 	private static final int DEFAULT_LAYOUT_DIMEN = 512;
 	private static final float KNOB_INDICATOR_FACTOR = 10;
+
+	
+	
 	private static float mPaddingBg2Base = 20.0f;
 	private static float mPaddingBase2Knob = 6.0f;
 	private Paint mShadowPaint;
@@ -61,6 +78,10 @@ public class ExperimentKnobController extends FrameLayout {
 	private Paint mWhitePaint;
 	private Paint mBGPaint;
 	private LinearGradient mBGGradient;
+	private LinearGradient mBaseGradient;
+	private Paint mBasePaint;
+	private float mDimUnit;
+	private Paint mBaseStrokePaint;
 
 	public ExperimentKnobController(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -70,6 +91,8 @@ public class ExperimentKnobController extends FrameLayout {
 
 	private void init() {
 		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+		
+		mDimUnit = ViewHelpers.convertDp2Pixel(getContext(), 1.0f);
 
 		mDetector = new GestureDetector(getContext(), new GestureListener());
 
@@ -79,7 +102,14 @@ public class ExperimentKnobController extends FrameLayout {
 
 		mKnob = BitmapFactory.decodeResource(getResources(), R.drawable.knob_button); //without current indicator
 		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current_indicator_ic);
+		
+		//Base
 		mKnobBase = BitmapFactory.decodeResource(getResources(), R.drawable.knob_base);
+		mBasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mBaseStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mBaseStrokePaint.setStyle(Style.STROKE);
+		mBaseStrokePaint.setColor(BASE_STROKE_COLOR);
+		mBaseStrokePaint.setStrokeWidth(BASE_STROKE_WIDTH * mDimUnit + BASE_DELTA_STROKE );
 		
 		mKnobBg = BitmapFactory.decodeResource(getResources(), R.drawable.knob_bg);
 		mBGShadHeight = ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_BG_SHADOW_HEIGHT);
@@ -124,7 +154,7 @@ public class ExperimentKnobController extends FrameLayout {
 		mBGShaBounds = ViewHelpers.cloneRect(mBgBounds);
 		mBGShaBounds.offset(0, mBGShadHeight);
 
-		mPaddingBg2Base = bgDiameter / 20;
+		mPaddingBg2Base = bgDiameter / 15;
 		float baseDiameter = Math.max(1.0f, bgDiameter - 2* mPaddingBg2Base);
 		offsetX += mPaddingBg2Base;
 		offsetY += mPaddingBg2Base;
@@ -135,6 +165,8 @@ public class ExperimentKnobController extends FrameLayout {
 				baseDiameter
 				);
 		mBaseBounds.offset(offsetX, offsetY);
+		mBaseGradient = new LinearGradient(0, 0, 0, mBaseBounds.height(), BASE_GRADIENT_START, BASE_GRADIENT_END, TileMode.CLAMP);
+		mBasePaint.setShader(mBaseGradient);
 
 		mPaddingBase2Knob = bgDiameter / 40;
 		float knobDiameter = Math.max(1.0f, baseDiameter - 2*mPaddingBase2Knob);
@@ -154,6 +186,14 @@ public class ExperimentKnobController extends FrameLayout {
 		//				mKnobBounds.right - 20.0f,
 		//				mKnobBounds.bottom + 40.0f
 		//				);
+		
+		mShadowBounds = ViewHelpers.cloneRect(mKnobBounds);
+		float shadowDelta = mDimUnit * SHADOW_DELTA; //TODO: this must be adjustable or automatic calculate base on the knob size !
+		mShadowBounds.left += shadowDelta;
+		mShadowBounds.right -= shadowDelta;
+		mShadowBounds.top += shadowDelta;
+		mShadowBounds.bottom += shadowDelta;
+		mShadowBounds.offset(0, KNOB_SHADOW_OFFSET * mDimUnit);
 		computeIndicatorBounds(knobDiameter);
 		
 	}
@@ -192,8 +232,13 @@ public class ExperimentKnobController extends FrameLayout {
 		canvas.drawOval(mBGShaBounds, mWhitePaint);
 		//canvas.drawBitmap(mKnobBg,null,mBgBounds,null);
 		canvas.drawOval(mBgBounds, mBGPaint);
-		canvas.drawBitmap(mKnobBase,null,mBaseBounds,null);
-		//		canvas.drawOval(mShadowBounds, mShadowPaint);
+		
+		//canvas.drawBitmap(mKnobBase,null,mBaseBounds,null);
+		canvas.drawCircle((mBaseBounds.left + mBaseBounds.right)/2, (mBaseBounds.bottom + mBaseBounds.top)/2, mBaseBounds.width()/2 + BASE_STROKE_WIDTH * mDimUnit-BASE_DELTA_STROKE, mBaseStrokePaint);
+		canvas.drawOval(mBaseBounds, mBasePaint);
+		
+		canvas.drawOval(mShadowBounds, mShadowPaint);
+		
 		canvas.drawBitmap(mKnob,null,mKnobBounds,null);
 
 	}
