@@ -17,6 +17,7 @@ public class TestChooser extends Activity {
 		"TestAudioButtons",
 		"TestKnob",
 		"TestNewKnob",
+		"TestExpKnob",
 		"TestPetrButtons",
 		"TestAllElements"
 	};

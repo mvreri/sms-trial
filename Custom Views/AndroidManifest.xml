@@ -31,6 +31,7 @@
         </activity>
         <activity android:name="TestPetrButtons"></activity>
         <activity android:name="TestAllElements"></activity>
+        <activity android:name="TestExpKnob"></activity>
     </application>
 
 </manifest>
