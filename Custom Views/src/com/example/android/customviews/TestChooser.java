@@ -17,7 +17,8 @@ public class TestChooser extends Activity {
 		"TestAudioButtons",
 		"TestKnob",
 		"TestNewKnob",
-		"TestPetrButtons"
+		"TestPetrButtons",
+		"TestAllElements"
 	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class TestChooser extends Activity {
 		ListView listview = new ListView(getApplicationContext());
 		setContentView(listview);
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, CLASSES);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item, CLASSES);
 		listview.setAdapter(adapter);
 
 		listview.setOnItemClickListener(new OnItemClickListener() {

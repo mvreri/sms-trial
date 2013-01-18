@@ -7,10 +7,42 @@
     android:gravity="center"
     android:orientation="vertical" >
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/button_layout_x_pad"
+        android:paddingRight="@dimen/button_layout_x_pad"
+        android:paddingTop="0dp" >
+
         <phs.views.PetrButton
-            android:id="@+id/btHello"
-            android:layout_width="170dp"
-            android:layout_height="128dp"
+            android:id="@+id/btYes"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/petr_layout_height"
+            android:background="@android:color/transparent"
+            android:layout_weight="1"
+            custom:basePadding="@dimen/petr_base_pad"
+            custom:textSize="@dimen/fs_main_bt"
+            custom:textColor="@color/btn_text"
+            custom:text="@string/Transform"
+            android:layout_marginRight="@dimen/std_margin" 
             >
         </phs.views.PetrButton>
+
+        <phs.views.PetrButton
+            android:id="@+id/btNo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/petr_layout_height"
+            android:layout_weight="1"
+            custom:basePadding="@dimen/petr_base_pad"
+            custom:text="@string/Mute" 
+            custom:textSize="@dimen/fs_main_bt"
+            custom:textColor="@color/btn_text"
+            android:background="@android:color/transparent"
+            android:layout_marginLeft="@dimen/std_margin"
+            >
+        </phs.views.PetrButton>
+    </LinearLayout>
+
 </LinearLayout>

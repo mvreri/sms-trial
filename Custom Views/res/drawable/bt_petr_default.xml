@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+	<corners
+	    android:radius="@dimen/btn_petr_corner"	    
+	    />
+	<gradient
+	    android:startColor="#efefef"
+	    android:endColor="#bababa"
+	    android:angle="-90" 
+	    />
+</shape>

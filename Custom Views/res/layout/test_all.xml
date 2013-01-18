@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.android.customviews"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg"
+    android:paddingTop="@dimen/ctr_y_pad"
+    android:paddingBottom="@dimen/ctr_y_pad"
+    android:orientation="vertical" >
+
+    <phs.views.AudioButtons
+        android:id="@+id/audio_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="96dp"
+        android:background="@android:color/transparent"
+        custom:hapticFeedback="on"
+        custom:nextImg="@drawable/next_button"
+        custom:playImg="@drawable/play_button"
+        custom:previousImg="@drawable/prev_button" >
+    </phs.views.AudioButtons>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"        
+       	android:gravity="center"
+        android:padding="0dp" >
+
+        <phs.views.vol_button.NewKnobController
+            android:id="@+id/knob_contr"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:background="@color/main_bg"
+            android:layout_gravity="center"
+            android:padding="0dp" >
+        </phs.views.vol_button.NewKnobController>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@dimen/button_layout_x_pad"
+        android:paddingRight="@dimen/button_layout_x_pad"
+        android:paddingTop="0dp" >
+
+        <phs.views.PetrButton
+            android:id="@+id/btYes"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/petr_layout_height"
+            android:layout_marginRight="@dimen/std_margin"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            custom:basePadding="@dimen/petr_base_pad"
+            custom:text="@string/Transform"
+            custom:textColor="@color/btn_text"
+            custom:textSize="@dimen/fs_main_bt" >
+        </phs.views.PetrButton>
+
+        <phs.views.PetrButton
+            android:id="@+id/btNo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/petr_layout_height"
+            android:layout_marginLeft="@dimen/std_margin"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            custom:basePadding="@dimen/petr_base_pad"
+            custom:text="@string/Mute"
+            custom:textColor="@color/btn_text"
+            custom:textSize="@dimen/fs_main_bt" >
+        </phs.views.PetrButton>
+    </LinearLayout>
+
+</LinearLayout>

@@ -40,4 +40,15 @@
             <enum name="off" value="0"/>
 		</attr>
     </declare-styleable>
+    
+    <declare-styleable name="PetrButton">
+        <attr name="basePadding" format="dimension"/>
+        <attr name="baseShadowDim" format="dimension"/>
+        <attr name="buttonShadowDim" format="dimension"/>
+        <attr name="text" format="string"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="imgSrc" format="integer"/>
+        <attr name="buttonCornerRadius" format="dimension"/>
+    </declare-styleable>
 </resources>
