@@ -30,8 +30,18 @@
         <attr name="showText" format="boolean"/>
     </declare-styleable>
     
-    
+<!--     
     <declare-styleable name="AudioButtons">
+        <attr name="previousImg" format="integer"/>
+        <attr name="playImg" format="integer"/>
+        <attr name="nextImg" format="integer"/>
+        <attr name="hapticFeedback" format="enum">
+            <enum name="on" value="1"/>
+            <enum name="off" value="0"/>
+		</attr>
+    </declare-styleable>
+-->
+    <declare-styleable name="NewAudioButtons">
         <attr name="previousImg" format="integer"/>
         <attr name="playImg" format="integer"/>
         <attr name="nextImg" format="integer"/>

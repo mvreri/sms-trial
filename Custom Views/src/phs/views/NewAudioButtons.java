@@ -3,12 +3,16 @@ package phs.views;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -18,7 +22,9 @@ import android.widget.ImageView;
 
 import com.example.android.customviews.R;
 
-public class AudioButtons extends ViewGroup {
+public class NewAudioButtons extends ViewGroup {
+
+
 
 
 	public class MyButton extends ImageView {
@@ -47,6 +53,7 @@ public class AudioButtons extends ViewGroup {
 	
 	private static final int OFF_HAPTIC = 0;
 	private static final int ON_HAPTIC = 1;
+	private static final int WHITE_COLOR = 0xffFFffFF;
 
 	private RectF mPrevBgBounds;
 	private RectF mPlayBgBounds;
@@ -56,7 +63,7 @@ public class AudioButtons extends ViewGroup {
 	private Paint mNextBgPaint;
 	private LinearGradient linearGradient;
 	private ImageView mPrevButton;
-	private ImageView mPlayButton;
+	private InnerButton mPlayButton;
 	private ImageView mNextButton;
 	private RectF mPrevBgShadow;
 	private float mDropShadowHeight;
@@ -68,8 +75,10 @@ public class AudioButtons extends ViewGroup {
 	private RectF mNextButtonDropShadow;
 	private Paint mShadowPaint;
 	private boolean mHapticFeedback;
+	private float mDimUnit;
+	private Paint mWhitePaint;
 
-	public AudioButtons(Context context, AttributeSet attrs) {
+	public NewAudioButtons(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setLayerType(LAYER_TYPE_SOFTWARE, null); //for the shadow blur
 		setWillNotDraw(false); 
@@ -77,36 +86,43 @@ public class AudioButtons extends ViewGroup {
 	}
 
 	private void init(AttributeSet attrs) {
-//		TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.AudioButtons);
-//		Drawable nextImg = null;
-//		Drawable prevImg = null;
-//		Drawable playImg = null;
-//		try {
-//			nextImg = a.getDrawable(R.styleable.AudioButtons_nextImg);
-//			prevImg = a.getDrawable(R.styleable.AudioButtons_previousImg);
-//			playImg = a.getDrawable(R.styleable.AudioButtons_playImg);
-//			
-//			int hf = a.getInteger(R.styleable.AudioButtons_hapticFeedback, OFF_HAPTIC);
-//			mHapticFeedback = true;
-//			if ( hf == OFF_HAPTIC ) mHapticFeedback = false;
-//			
-//		} finally {
-//			a.recycle();
-//		}
-//		mPrevButton = new MyButton(getContext());
-//		mPrevButton.setImageDrawable(prevImg);
-//
+		TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.NewAudioButtons);
+		Drawable nextImg = null;
+		Drawable prevImg = null;
+		Drawable playImg = null;
+		try {
+			nextImg = a.getDrawable(R.styleable.NewAudioButtons_nextImg);
+			prevImg = a.getDrawable(R.styleable.NewAudioButtons_previousImg);
+			playImg = a.getDrawable(R.styleable.NewAudioButtons_playImg);
+			
+			int hf = a.getInteger(R.styleable.NewAudioButtons_hapticFeedback, OFF_HAPTIC);
+			mHapticFeedback = true;
+			if ( hf == OFF_HAPTIC ) mHapticFeedback = false;
+			
+		} finally {
+			a.recycle();
+		}
+		
+		mDimUnit = ViewHelpers.convertDp2Pixel(getContext(), 1.0f);
+		mPrevButton = new MyButton(getContext());
+		mPrevButton.setImageDrawable(prevImg);
+
 //		mPlayButton = new MyButton(getContext());
 //		mPlayButton.setImageDrawable(playImg);
-//		
-//		mNextButton = new MyButton(getContext());
-//		mNextButton.setImageDrawable(nextImg);
-//		
-//		addView(mPrevButton);
-//		addView(mNextButton);
-//		addView(mPlayButton);
+		mPlayButton = new InnerButton(getContext(), playImg);
+		
+		mNextButton = new MyButton(getContext());
+		mNextButton.setImageDrawable(nextImg);
+		
+		addView(mPrevButton);
+		addView(mNextButton);
+		addView(mPlayButton);
+		
+		mWhitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mWhitePaint.setColor(WHITE_COLOR);
 		
 	}
+
 	
 	public void setOnPreviousListener(View.OnClickListener lst) {
 		//TODO: haptic feedback
@@ -200,7 +216,7 @@ public class AudioButtons extends ViewGroup {
 		return new RectF(bounds.left, bounds.top + mDropShadowHeight, bounds.right, bounds.bottom + mDropShadowHeight);
 	}
 
-	private void callLayout(ImageView view, RectF bgBounds, float bgDiameter, float buttonPadding, RectF dropShadow) {
+	private void callLayout(View view, RectF bgBounds, float bgDiameter, float buttonPadding, RectF dropShadow) {
 		float centerX = (bgBounds.left + bgBounds.right) / 2.0f;
 		float centerY = (bgBounds.top + bgBounds.bottom) / 2.0f;
 		int left = (int) (centerX - (bgDiameter/2.0f) + buttonPadding);
@@ -234,5 +250,60 @@ public class AudioButtons extends ViewGroup {
 		return px;
 	}
 
+	
+	
+	public class InnerButton extends View {
 
+		private static final float INNER_BUTTON_RATIO = 0.3f;
+		private static final float INNER_UPPER_SHADOW = 1.0f;
+		private static final int BTN_START_COLOR = 0xffBAbaBA;
+		private static final int BTN_END_COLOR = 0xffF9f9F9;
+		private Bitmap mImg;
+		private int mWidth;
+		private int mHeight;
+		private RectF mInnerBounds;
+		private float mBGDiameter;
+		private RectF mBGBounds;
+		private RectF mUpShadBounds;
+		private Paint mBGPaint;
+		private Shader btnShader;
+
+		public InnerButton(Context context, Drawable img) {
+			super(context);
+			this.mImg = ViewHelpers.drawableToBitmap(img);
+			mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		}
+		
+		@Override
+		protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+			super.onSizeChanged(w, h, oldw, oldh);
+			mWidth = w;
+			mHeight = h;
+			float upperShadowHeight = INNER_UPPER_SHADOW * mDimUnit;
+			mBGDiameter = Math.min(h, w) - upperShadowHeight;
+			mBGBounds = new RectF(0,0,mBGDiameter,mBGDiameter);
+			mUpShadBounds = ViewHelpers.cloneRect(mBGBounds);
+			
+			mBGBounds.offset(0, upperShadowHeight);
+			btnShader = new LinearGradient(0, 0, 0, mBGBounds.height(), BTN_START_COLOR, BTN_END_COLOR, TileMode.CLAMP);
+			mBGPaint.setShader(btnShader);
+			
+
+			float imgDiameter = mBGDiameter * INNER_BUTTON_RATIO;
+			float offX = (w - imgDiameter) / 2 ;
+			float offY = (h - imgDiameter) / 2 + upperShadowHeight;
+			
+			mInnerBounds = new RectF(0,0,imgDiameter,imgDiameter);
+			mInnerBounds.offset(offX, offY);
+		}
+		
+		@Override
+		protected void onDraw(Canvas canvas) {
+			super.onDraw(canvas);
+			canvas.drawOval(mUpShadBounds, mWhitePaint);
+			canvas.drawOval(mBGBounds, mBGPaint);
+			canvas.drawBitmap(mImg, null, mInnerBounds, null);
+		}
+
+	}
 }
