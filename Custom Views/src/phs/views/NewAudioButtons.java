@@ -254,7 +254,7 @@ public class NewAudioButtons extends ViewGroup {
 	
 	public class InnerButton extends View {
 
-		private static final float INNER_BUTTON_RATIO = 0.3f;
+		private static final float INNER_BUTTON_RATIO = 0.33f;
 		private static final float INNER_UPPER_SHADOW = 1.0f;
 		private static final int BTN_START_COLOR = 0xffBAbaBA;
 		private static final int BTN_END_COLOR = 0xffF9f9F9;

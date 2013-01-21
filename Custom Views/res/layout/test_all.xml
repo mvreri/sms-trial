@@ -15,7 +15,7 @@
         android:background="@android:color/transparent"
         custom:hapticFeedback="on"
         custom:nextImg="@drawable/next_button"
-        custom:playImg="@drawable/play"
+        custom:playImg="@drawable/play_button"
         custom:previousImg="@drawable/prev_button" >
     </phs.views.NewAudioButtons>
 
@@ -26,14 +26,14 @@
        	android:gravity="center"
         android:padding="0dp" >
 
-        <phs.views.vol_button.NewKnobController
+        <phs.views.vol_button.ExperimentKnobController
             android:id="@+id/knob_contr"
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:background="@color/main_bg"
             android:layout_gravity="center"
             android:padding="0dp" >
-        </phs.views.vol_button.NewKnobController>
+        </phs.views.vol_button.ExperimentKnobController>
     </LinearLayout>
 
     <LinearLayout

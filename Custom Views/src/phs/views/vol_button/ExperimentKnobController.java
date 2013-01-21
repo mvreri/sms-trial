@@ -25,6 +25,11 @@ import dtd.phs.lib.utils.Logger;
 public class ExperimentKnobController extends FrameLayout {
 
 
+
+
+	
+
+
 	private static final int COLOR_WHITE = 0xFFffFFff;
 	
 
@@ -32,6 +37,7 @@ public class ExperimentKnobController extends FrameLayout {
 	private static final int BG_GRADIENT_START = 0xffE4e4E4;
 	private static final int BG_GRADIENT_END = 0xffF9f9F9;
 	private static final float DEFAULT_BG_SHADOW_HEIGHT = 1.0f;	
+	private static final int BG_TO_BASE_PADDING_RATIO = 12;
 
 	//Base
 	private static final float BASE_STROKE_WIDTH = 2.0f;
@@ -39,12 +45,12 @@ public class ExperimentKnobController extends FrameLayout {
 	private static final int BASE_STROKE_COLOR = 0xffCCccCC;
 	private static final int BASE_GRADIENT_END = 0xffEFefEF;
 	private static final int BASE_GRADIENT_START = 0xffD5d5D5;
+	private static final int BASE_2_KNOB_PADDING_RATIO = 18;
 
 	//Shadow
-	private static final int SHADOW_COLOR = 0x22666666;
-	private static final float KNOB_SHADOW_OFFSET = 0.0f;
-	private static final float SHADOW_BLUR_RADIUS = 8.0f;
-	private static final float SHADOW_DELTA = 10.0f;
+	private static final int SHADOW_COLOR = 0x80000000;
+	private static final float SHADOW_BLUR_RADIUS = 25.0f;
+	private static final float SHADOW_DELTA = 20.0f;
 
 	
 	private static final int MIN_ANGLE = -135;
@@ -54,16 +60,16 @@ public class ExperimentKnobController extends FrameLayout {
 	private static final int DEFAULT_LAYOUT_DIMEN = 512;
 	private static final float KNOB_INDICATOR_FACTOR = 10;
 
-	
+	//Knob
+	private static final float WHITE_SHADOW_HEIGHT = 1.0f;
+	private static final int KNOB_START_COLOR = 0xffF9f9F9;
+	private static final int KNOB_END_COLOR = 0xffBAbaBA;
 	
 	private static float mPaddingBg2Base = 20.0f;
 	private static float mPaddingBase2Knob = 6.0f;
 	private Paint mShadowPaint;
 	private GestureDetector mDetector;
-	private Bitmap mKnob;
 	private Bitmap mVolumeIndicator;
-	private Bitmap mKnobBase;
-	private Bitmap mKnobBg;
 	private RectF mBgBounds;
 	private RectF mBaseBounds;
 	private RectF mKnobBounds;
@@ -83,6 +89,13 @@ public class ExperimentKnobController extends FrameLayout {
 	private float mDimUnit;
 	private Paint mBaseStrokePaint;
 
+
+	private RectF mKnobUpShadBounds;
+
+
+	private LinearGradient mKnobRadient;
+	private Paint mKnobPaint;
+
 	public ExperimentKnobController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setWillNotDraw(false);
@@ -100,24 +113,22 @@ public class ExperimentKnobController extends FrameLayout {
 		mShadowPaint.setColor(SHADOW_COLOR);
 		mShadowPaint.setMaskFilter(new BlurMaskFilter(SHADOW_BLUR_RADIUS, Blur.NORMAL));
 
-		mKnob = BitmapFactory.decodeResource(getResources(), R.drawable.knob_button); //without current indicator
 		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current_indicator_ic);
 		
 		//Base
-		mKnobBase = BitmapFactory.decodeResource(getResources(), R.drawable.knob_base);
 		mBasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mBaseStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mBaseStrokePaint.setStyle(Style.STROKE);
 		mBaseStrokePaint.setColor(BASE_STROKE_COLOR);
 		mBaseStrokePaint.setStrokeWidth(BASE_STROKE_WIDTH * mDimUnit + BASE_DELTA_STROKE );
 		
-		mKnobBg = BitmapFactory.decodeResource(getResources(), R.drawable.knob_bg);
 		mBGShadHeight = ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_BG_SHADOW_HEIGHT);
 		mWhitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mWhitePaint.setColor(COLOR_WHITE);
 		mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		
-
+		mKnobPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		
 		mCurrIndicator = new CurrentIndicator(getContext()); //TODO: layout in onSizeChanged
 		
 		//		mCurrIndicator.setImageResource(R.drawable.current_indicator);
@@ -134,7 +145,6 @@ public class ExperimentKnobController extends FrameLayout {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-		Logger.logInfo("onSizeChanged: w=" + w + " # h=" +h);
 		float xpad = getPaddingLeft() + getPaddingRight();
 		float ypad = getPaddingBottom() + getPaddingTop();
 
@@ -154,7 +164,7 @@ public class ExperimentKnobController extends FrameLayout {
 		mBGShaBounds = ViewHelpers.cloneRect(mBgBounds);
 		mBGShaBounds.offset(0, mBGShadHeight);
 
-		mPaddingBg2Base = bgDiameter / 15;
+		mPaddingBg2Base = bgDiameter / BG_TO_BASE_PADDING_RATIO;
 		float baseDiameter = Math.max(1.0f, bgDiameter - 2* mPaddingBg2Base);
 		offsetX += mPaddingBg2Base;
 		offsetY += mPaddingBg2Base;
@@ -168,7 +178,7 @@ public class ExperimentKnobController extends FrameLayout {
 		mBaseGradient = new LinearGradient(0, 0, 0, mBaseBounds.height(), BASE_GRADIENT_START, BASE_GRADIENT_END, TileMode.CLAMP);
 		mBasePaint.setShader(mBaseGradient);
 
-		mPaddingBase2Knob = bgDiameter / 40;
+		mPaddingBase2Knob = bgDiameter / BASE_2_KNOB_PADDING_RATIO;
 		float knobDiameter = Math.max(1.0f, baseDiameter - 2*mPaddingBase2Knob);
 		offsetX += mPaddingBase2Knob;
 		offsetY += mPaddingBase2Knob;
@@ -179,21 +189,16 @@ public class ExperimentKnobController extends FrameLayout {
 				knobDiameter
 				);
 		mKnobBounds.offset(offsetX, offsetY);
-
-		//		mShadowBounds = new RectF(
-		//				mKnobBounds.left + 20.0f ,
-		//				mKnobBounds.top + 20.0f,
-		//				mKnobBounds.right - 20.0f,
-		//				mKnobBounds.bottom + 40.0f
-		//				);
+		mKnobRadient = new LinearGradient(0, 0, 0, mKnobBounds.height(), KNOB_START_COLOR, KNOB_END_COLOR, TileMode.CLAMP);
+		mKnobPaint.setShader(mKnobRadient);
 		
+		mKnobUpShadBounds = ViewHelpers.cloneRect(mKnobBounds);
+		mKnobUpShadBounds.offset(0, - mDimUnit * WHITE_SHADOW_HEIGHT);
+
 		mShadowBounds = ViewHelpers.cloneRect(mKnobBounds);
 		float shadowDelta = mDimUnit * SHADOW_DELTA; //TODO: this must be adjustable or automatic calculate base on the knob size !
-		mShadowBounds.left += shadowDelta;
-		mShadowBounds.right -= shadowDelta;
-		mShadowBounds.top += shadowDelta;
-		mShadowBounds.bottom += shadowDelta;
-		mShadowBounds.offset(0, KNOB_SHADOW_OFFSET * mDimUnit);
+		mShadowBounds.offset(0, shadowDelta);
+		
 		computeIndicatorBounds(knobDiameter);
 		
 	}
@@ -202,10 +207,6 @@ public class ExperimentKnobController extends FrameLayout {
 		float mIndDiameter = knobDiameter / KNOB_INDICATOR_FACTOR;
 		float indicatorRadius = mIndDiameter / 2;
 		float topPadding = mIndDiameter;
-		//AT 90
-//		float centerX = mKnobBounds.left + knobDiameter / 2;
-//		float centerY = mKnobBounds.top + topPadding + indicatorRadius;
-		//AT 180
 		float centerX = mKnobBounds.right - topPadding - indicatorRadius;
 		float centerY = mKnobBounds.top + knobDiameter/2;
 		mIndicatorBounds = new RectF(
@@ -230,17 +231,14 @@ public class ExperimentKnobController extends FrameLayout {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		canvas.drawOval(mBGShaBounds, mWhitePaint);
-		//canvas.drawBitmap(mKnobBg,null,mBgBounds,null);
 		canvas.drawOval(mBgBounds, mBGPaint);
-		
-		//canvas.drawBitmap(mKnobBase,null,mBaseBounds,null);
 		canvas.drawCircle((mBaseBounds.left + mBaseBounds.right)/2, (mBaseBounds.bottom + mBaseBounds.top)/2, mBaseBounds.width()/2 + BASE_STROKE_WIDTH * mDimUnit-BASE_DELTA_STROKE, mBaseStrokePaint);
 		canvas.drawOval(mBaseBounds, mBasePaint);
-		
-		canvas.drawOval(mShadowBounds, mShadowPaint);
-		
-		canvas.drawBitmap(mKnob,null,mKnobBounds,null);
 
+		canvas.drawOval(mShadowBounds, mShadowPaint);
+		canvas.drawOval(mKnobUpShadBounds, mWhitePaint);
+		canvas.drawOval(mKnobBounds, mKnobPaint);
+		
 	}
 
 
