@@ -1,5 +1,6 @@
 package com.example.android.customviews;
 
+import phs.views.NewAudioButtons;
 import phs.views.PetrButton;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -12,6 +13,7 @@ import dtd.phs.lib.utils.Helpers;
 public class TestAllElements extends Activity {
 	private PetrButton btnTransform;
 	private PetrButton btnMute;
+	private NewAudioButtons audButtons;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,14 @@ public class TestAllElements extends Activity {
 			@Override
 			public void onClick(View v) {
 				Helpers.showToast(TestAllElements.this, "Mute");
+			}
+		});
+		
+		audButtons = (NewAudioButtons) findViewById(R.id.audio_buttons);
+		audButtons.setOnPlayListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Helpers.showToast(TestAllElements.this, "Play");
 			}
 		});
 		

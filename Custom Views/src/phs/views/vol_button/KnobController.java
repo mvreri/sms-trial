@@ -65,12 +65,12 @@ public class KnobController extends FrameLayout {
 		mShadowPaint.setMaskFilter(new BlurMaskFilter(SHADOW_BLUR_RADIUS, Blur.NORMAL));
 
 		mKnob = BitmapFactory.decodeResource(getResources(), R.drawable.knob_button); //without current indicator
-		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current_indicator);
+		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current);
 		mKnobBase = BitmapFactory.decodeResource(getResources(), R.drawable.knob_base);
 		mKnobBg = BitmapFactory.decodeResource(getResources(), R.drawable.knob_bg);
 
 		mCurrIndicator = new CurrentIndicator(getContext()); //TODO: layout in onSizeChanged
-		mCurrIndicator.setImageResource(R.drawable.current_indicator);
+		mCurrIndicator.setImageResource(R.drawable.current);
 		addView(mCurrIndicator);
 
 	}

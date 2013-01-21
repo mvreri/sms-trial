@@ -4,7 +4,7 @@
 	    android:radius="@dimen/btn_petr_corner"	    
 	    />
 	<gradient
-	    android:startColor="#efefef"
+	    android:startColor="#f9f9f9"
 	    android:endColor="#bababa"
 	    android:angle="-90" 
 	    />

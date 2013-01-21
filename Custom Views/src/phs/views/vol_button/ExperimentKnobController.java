@@ -58,7 +58,7 @@ public class ExperimentKnobController extends FrameLayout {
 
 
 	private static final int DEFAULT_LAYOUT_DIMEN = 512;
-	private static final float KNOB_INDICATOR_FACTOR = 10;
+	private static final float KNOB_INDICATOR_FACTOR = 15;
 
 	//Knob
 	private static final float WHITE_SHADOW_HEIGHT = 1.0f;
@@ -113,7 +113,7 @@ public class ExperimentKnobController extends FrameLayout {
 		mShadowPaint.setColor(SHADOW_COLOR);
 		mShadowPaint.setMaskFilter(new BlurMaskFilter(SHADOW_BLUR_RADIUS, Blur.NORMAL));
 
-		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current_indicator_ic);
+		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current);
 		
 		//Base
 		mBasePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -131,7 +131,6 @@ public class ExperimentKnobController extends FrameLayout {
 		
 		mCurrIndicator = new CurrentIndicator(getContext()); //TODO: layout in onSizeChanged
 		
-		//		mCurrIndicator.setImageResource(R.drawable.current_indicator);
 		addView(mCurrIndicator);
 
 		
@@ -139,7 +138,6 @@ public class ExperimentKnobController extends FrameLayout {
 
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		// do nothing, manually call layout for each children
 	}
 
 	@Override
@@ -314,22 +312,10 @@ public class ExperimentKnobController extends FrameLayout {
 		}
 	}
 
-	//	public class CurrentIndicator extends ImageView {
-	//		public CurrentIndicator(Context context) {
-	//			super(context);
-	//		}
-	//
-	//		public void rotateTo(int rotation) {
-	//			setRotation(360-rotation);
-	//		}		
-	//	}
 
 	public class CurrentIndicator extends View {
 		private RectF mBounds;
 		private Paint mPaint;
-		private LinearGradient linearGradient;
-		private int mHeight;
-		private int mWidth;
 
 		public CurrentIndicator(Context context) {
 			super(context);
@@ -345,34 +331,14 @@ public class ExperimentKnobController extends FrameLayout {
 			super.onSizeChanged(w, h, oldw, oldh);
 			mBounds = new RectF(0,0,w,h);
 			mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mHeight = h;
-			mWidth = w;
 			
-			
-		}
-		
-		private int outerColor(double rad) {
-			double measure = (rad + 1)/2;
-			int aByte = (int) (0xff * measure);
-			return aByte | (aByte << 8) | (aByte << 16) | (0xff << 24);
-		}
-		private int innerColor(double rad) {
-			double measure = (rad + 1)/2;
-			int aByte = (int) (0xda * measure);
-			return aByte | (aByte << 8) | (aByte << 16) | (0xff << 24);
-
-			//return 0xffdadada;
 		}
 
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
 			canvas.drawBitmap(mVolumeIndicator,null,mBounds,mPaint);
-//			double rad = (1.0* mVolumeRotation* Math.PI / 180.0);
-//			double sinRotation = Math.sin(rad);
-//			linearGradient = new LinearGradient(0, 0, mWidth, 0, innerColor(sinRotation), outerColor(sinRotation), Shader.TileMode.CLAMP);
-//			mPaint.setShader(linearGradient);
-//			canvas.drawOval(mBounds, mPaint);
+
 		}
 		
 		public void rotateTo(int rotation) {
