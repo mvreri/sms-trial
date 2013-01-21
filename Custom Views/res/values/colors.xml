@@ -22,5 +22,5 @@
     <color name="slate">#ff76a9b5</color>
     <color name="main_bg">#f0f0ee</color>
     <color name="button_press">#89aefa</color>
-    <color name="btn_text">#FF797979</color>
+    <color name="btn_text">#FFAAaaAA</color>
 </resources>
