@@ -1,7 +1,6 @@
 package com.example.android.customviews;
 
 import phs.views.vol_button.ExperimentKnobController;
-import phs.views.vol_button.NewKnobController;
 import android.app.Activity;
 import android.os.Bundle;
 

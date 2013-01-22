@@ -24,17 +24,6 @@ import com.example.android.customviews.R;
 
 public class NewAudioButtons extends ViewGroup {
 
-
-
-
-	public class MyButton extends ImageView {
-		public MyButton(Context context) {
-			super(context);
-			setScaleType(ScaleType.FIT_CENTER);
-		}
-
-	}
-
 	private static final float BASE_UNIT_WIDTH = 155.0f;
 	private static final float BASE_UNIT_HEIGHT = 65.0f;
 
@@ -62,9 +51,9 @@ public class NewAudioButtons extends ViewGroup {
 	private Paint mPlayBgPaint;
 	private Paint mNextBgPaint;
 	private LinearGradient linearGradient;
-	private ImageView mPrevButton;
+	private InnerButton mPrevButton;
 	private InnerButton mPlayButton;
-	private ImageView mNextButton;
+	private InnerButton mNextButton;
 	private RectF mPrevBgShadow;
 	private float mDropShadowHeight;
 	private RectF mPlayBgShadow;
@@ -104,15 +93,11 @@ public class NewAudioButtons extends ViewGroup {
 		}
 
 		mDimUnit = ViewHelpers.convertDp2Pixel(getContext(), 1.0f);
-		mPrevButton = new MyButton(getContext());
-		mPrevButton.setImageDrawable(prevImg);
+		mPrevButton = new InnerButton(getContext(), prevImg);
 
-		//		mPlayButton = new MyButton(getContext());
-		//		mPlayButton.setImageDrawable(playImg);
 		mPlayButton = new InnerButton(getContext(), playImg);
 
-		mNextButton = new MyButton(getContext());
-		mNextButton.setImageDrawable(nextImg);
+		mNextButton = new InnerButton(getContext(), nextImg);
 
 		addView(mPrevButton);
 		addView(mNextButton);
