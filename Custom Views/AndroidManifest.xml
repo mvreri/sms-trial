@@ -7,7 +7,7 @@
         android:targetSdkVersion="15" />
 
     <application
-        android:icon="@drawable/knob_button"
+        android:icon="@drawable/play_button"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity android:name=".MainActivity" >
