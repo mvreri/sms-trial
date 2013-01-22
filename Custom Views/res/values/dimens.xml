@@ -6,7 +6,7 @@
     <dimen name="petr_base_pad">8dp</dimen>
     <dimen name="std_margin">8dp</dimen>
     <dimen name="fs_main_bt">16dp</dimen>
-    <dimen name="ctr_y_pad">16dp</dimen>
+    <dimen name="ctr_y_pad">32dp</dimen>
     <dimen name="std_pad">8dp</dimen>
     
 </resources>

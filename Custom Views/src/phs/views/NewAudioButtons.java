@@ -16,9 +16,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.android.customviews.R;
 
@@ -243,7 +241,7 @@ public class NewAudioButtons extends ViewGroup {
 		private static final float INNER_UPPER_SHADOW = 1.0f;
 		private static final int BTN_START_COLOR = 0xffF9f9F9;
 		private static final int BTN_END_COLOR = 0xffBAbaBA;
-		private static final int BLUE_COLOR = 0xff0000FF;
+		private static final int BLUE_COLOR = 0xff89aefa;
 		private Bitmap mImg;
 		private int mWidth;
 		private int mHeight;
