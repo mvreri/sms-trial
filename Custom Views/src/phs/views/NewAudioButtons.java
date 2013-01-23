@@ -254,13 +254,14 @@ public class NewAudioButtons extends ViewGroup {
 		private boolean mBeingPressed;
 		private Paint mPressedPaint;
 		private OnClickListener mOnClick;
+		private LinearGradient btnPressedShader;
 
 		public InnerButton(Context context, Drawable img) {
 			super(context);
 			this.mImg = ViewHelpers.drawableToBitmap(img);
 			mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPressedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPressedPaint.setColor(BLUE_COLOR);
+			
 			
 		}
 
@@ -281,6 +282,11 @@ public class NewAudioButtons extends ViewGroup {
 			mBGBounds.offset(0, upperShadowHeight);
 			btnShader = new LinearGradient(0, 0, 0, mBGBounds.height(), BTN_START_COLOR, BTN_END_COLOR, TileMode.CLAMP);
 			mBGPaint.setShader(btnShader);
+			
+			int btPressStartColor = getResources().getColor(R.color.start_pressed);
+			int btPressEndColor = getResources().getColor(R.color.end_pressed);
+			btnPressedShader = new LinearGradient(0, 0, 0, mBGBounds.height(), btPressStartColor, btPressEndColor, TileMode.CLAMP);
+			mPressedPaint.setShader(btnPressedShader);
 
 
 			float imgDiameter = mBGDiameter * INNER_BUTTON_RATIO;

@@ -14,9 +14,6 @@ import android.widget.Toast;
 public class TestChooser extends Activity {
 
 	final static String[] CLASSES = {
-		"TestAudioButtons",
-		"TestKnob",
-		"TestNewKnob",
 		"TestExpKnob",
 		"TestPetrButtons",
 		"TestAllElements"
@@ -33,6 +30,7 @@ public class TestChooser extends Activity {
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.simple_list_item, CLASSES);
 		listview.setAdapter(adapter);
+		listview.setBackgroundColor(0xFFffFFff);
 
 		listview.setOnItemClickListener(new OnItemClickListener() {
 

@@ -49,15 +49,13 @@ public class ExperimentKnobController extends FrameLayout {
 
 	//Shadow
 	private static final int SHADOW_COLOR = 0x80000000;
-	private static final float SHADOW_BLUR_RADIUS = 25.0f;
-	private static final float SHADOW_DELTA = 20.0f;
+	//private static final float SHADOW_BLUR_RADIUS = 25.0f;
+	//private static final float SHADOW_DELTA = 20.0f;
 
 	
 	private static final int MIN_ANGLE = -135;
 	private static final int MAX_ANGLE = -45;
 
-
-	private static final int DEFAULT_LAYOUT_DIMEN = 512;
 	private static final float KNOB_INDICATOR_FACTOR = 15;
 
 	//Knob
@@ -96,6 +94,12 @@ public class ExperimentKnobController extends FrameLayout {
 	private LinearGradient mKnobRadient;
 	private Paint mKnobPaint;
 
+
+	private float mShadowBlurRadius;
+
+
+	private float mShadowDelta;
+
 	public ExperimentKnobController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setWillNotDraw(false);
@@ -111,7 +115,6 @@ public class ExperimentKnobController extends FrameLayout {
 
 		mShadowPaint = new Paint(0);
 		mShadowPaint.setColor(SHADOW_COLOR);
-		mShadowPaint.setMaskFilter(new BlurMaskFilter(SHADOW_BLUR_RADIUS, Blur.NORMAL));
 
 		mVolumeIndicator = BitmapFactory.decodeResource(getResources(), R.drawable.current);
 		
@@ -145,10 +148,12 @@ public class ExperimentKnobController extends FrameLayout {
 		super.onSizeChanged(w, h, oldw, oldh);
 		float xpad = getPaddingLeft() + getPaddingRight();
 		float ypad = getPaddingBottom() + getPaddingTop();
+		float xmax = w - xpad;
+		float ymax = h - ypad - mBGShadHeight;
 
-		float bgDiameter = Math.min(w-xpad, h-ypad-mBGShadHeight);
-		float offsetX = getPaddingLeft();
-		float offsetY = getPaddingTop();
+		float bgDiameter = Math.min(xmax, ymax);
+		float offsetX = getPaddingLeft() + ( xmax - bgDiameter) / 2;
+		float offsetY = getPaddingTop() + ( ymax - bgDiameter) / 2;
 		mBgBounds = new RectF(
 				0.0f,
 				0.0f,
@@ -193,8 +198,11 @@ public class ExperimentKnobController extends FrameLayout {
 		mKnobUpShadBounds = ViewHelpers.cloneRect(mKnobBounds);
 		mKnobUpShadBounds.offset(0, - mDimUnit * WHITE_SHADOW_HEIGHT);
 
+		//Drop shadow for the Knob
+		mShadowBlurRadius = mKnobBounds.height() / 15; 
+		mShadowPaint.setMaskFilter(new BlurMaskFilter(mShadowBlurRadius, Blur.NORMAL));
 		mShadowBounds = ViewHelpers.cloneRect(mKnobBounds);
-		float shadowDelta = mDimUnit * SHADOW_DELTA; //TODO: this must be adjustable or automatic calculate base on the knob size !
+		float shadowDelta = mDimUnit * mKnobBounds.height() / 18;
 		mShadowBounds.offset(0, shadowDelta);
 		
 		computeIndicatorBounds(knobDiameter);
@@ -213,8 +221,8 @@ public class ExperimentKnobController extends FrameLayout {
 				centerX+indicatorRadius,
 				centerY+indicatorRadius
 				);
-		Logger.logInfo("Knob Button(l,t,r,b) = " + mKnobBounds.left + " # " + mKnobBounds.top + " # " + mKnobBounds.right + " # " + mKnobBounds.bottom);
-		Logger.logInfo("Indicator(l,t,r,b) = " + mIndicatorBounds.left + " # " + mIndicatorBounds.top + " # " + mIndicatorBounds.right + " # " + mIndicatorBounds.bottom);
+//		Logger.logInfo("Knob Button(l,t,r,b) = " + mKnobBounds.left + " # " + mKnobBounds.top + " # " + mKnobBounds.right + " # " + mKnobBounds.bottom);
+//		Logger.logInfo("Indicator(l,t,r,b) = " + mIndicatorBounds.left + " # " + mIndicatorBounds.top + " # " + mIndicatorBounds.right + " # " + mIndicatorBounds.bottom);
 		
 		mCurrIndicator.layout(
 				(int) mIndicatorBounds.left,
@@ -238,15 +246,15 @@ public class ExperimentKnobController extends FrameLayout {
 		canvas.drawOval(mKnobBounds, mKnobPaint);
 		
 	}
-
-
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		int wspec = resolveSizeAndState(DEFAULT_LAYOUT_DIMEN, widthMeasureSpec, 1);
-		int hspec = resolveSizeAndState(DEFAULT_LAYOUT_DIMEN, heightMeasureSpec, 1);
-
-		setMeasuredDimension(wspec, hspec);
-	}
+//
+//
+//	@Override
+//	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//		int wspec = resolveSizeAndState(DEFAULT_LAYOUT_DIMEN, widthMeasureSpec, 1);
+//		int hspec = resolveSizeAndState(DEFAULT_LAYOUT_DIMEN, heightMeasureSpec, 1);
+//
+//		setMeasuredDimension(wspec, hspec);
+//	}
 
 
 	@Override

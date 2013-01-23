@@ -3,7 +3,9 @@
 	<corners
 	    android:radius="@dimen/btn_petr_corner"	    
 	    />
-	<solid
-	    android:color="@color/button_press" 
+	<gradient
+	    android:startColor="@color/start_pressed"
+	    android:endColor="@color/end_pressed"
+	    android:angle="-90" 
 	    />
 </shape>

@@ -32,7 +32,6 @@ public class PetrButton extends ViewGroup {
 
 	private static final float UNDER_SHADOW_BLUR_RADIUS = 2.0f;
 	private static final int COLOR_WHITE = 0xffFFffFF;
-	private static final float BLUR_BTN_SHADOW_RADIUS = 5.0f;
 	private static final int UNDER_SHADOW_COLOR = 0xffB6B6B6;
 
 
@@ -71,7 +70,7 @@ public class PetrButton extends ViewGroup {
 	private LinearGradient linearGradient;
 	private LinearGradient btnGradient;
 	private RectF mUnderShadowBounds;
-	private float mTextSize;
+	private float mTextSize;	
 	private String mText;
 	private int mTextColor;
 
@@ -101,6 +100,7 @@ public class PetrButton extends ViewGroup {
 
 			//button corner radius
 			mBtnCornerRadius = a.getDimension(R.styleable.PetrButton_buttonCornerRadius, ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_BTN_CORNER_RADIUS));
+			Logger.logInfo("mBtnCornerRadius: "  + mBtnCornerRadius);
 		} finally {
 			a.recycle();
 		}
@@ -249,9 +249,12 @@ public class PetrButton extends ViewGroup {
 			mTextPaint.setColor(mTextColor);
 			mTextPaint.setTextSize(mTextSize);
 			
+			
 			mShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mShadowPaint.setColor(TEXT_SHADOW_COLOR);
 			mShadowPaint.setTextSize(mTextSize);
+
+			
 		}
 		
 		@Override
@@ -268,9 +271,7 @@ public class PetrButton extends ViewGroup {
 			mTextHeight = bounds.height();
 			mTextWidth = mTextPaint.measureText(mText);
 			mTextX = (mWidth - mTextWidth)/2;
-			mTextY = (mHeight + mTextSize)/2;
-			
-//			mShadowDelta = ViewHelpers.convertDp2Pixel(getContext(), TEXT_SHADOW_X);
+			mTextY = (mHeight + mTextSize)/2 - 2*mShadowDim;
 			mShadowDelta = TEXT_SHADOW_DELTA;
 			Logger.logInfo("Button Height: " + mHeight + " ## Button width= " + mWidth + " ## Text width =" + mTextWidth);
 			Logger.logInfo("TextHeight: " + mTextHeight + " text: " + mText);

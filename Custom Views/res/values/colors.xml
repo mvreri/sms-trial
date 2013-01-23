@@ -23,4 +23,6 @@
     <color name="main_bg">#f0f0ee</color>
     <color name="button_press">#89aefa</color>
     <color name="btn_text">#FFAAaaAA</color>
+    <color name="start_pressed">#ababab</color>
+    <color name="end_pressed">#dddddd</color>
 </resources>

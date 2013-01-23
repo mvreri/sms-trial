@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>    
-    <dimen name="btn_petr_corner">8dp</dimen>
+    <dimen name="btn_petr_corner">3dp</dimen>
     <dimen name="button_layout_x_pad">40dp</dimen>
     <dimen name="petr_layout_height">64dp</dimen>
-    <dimen name="petr_base_pad">8dp</dimen>
+    <dimen name="petr_base_pad">5dp</dimen>
     <dimen name="std_margin">8dp</dimen>
     <dimen name="fs_main_bt">14dp</dimen>
     <dimen name="ctr_y_pad">32dp</dimen>
     <dimen name="std_pad">8dp</dimen>
-    <dimen name="main_contr_corner">10dp</dimen>
     
 </resources>
