@@ -62,6 +62,10 @@ public class ExperimentKnobController extends FrameLayout {
 	private static final float WHITE_SHADOW_HEIGHT = 1.0f;
 	private static final int KNOB_START_COLOR = 0xffF9f9F9;
 	private static final int KNOB_END_COLOR = 0xffBAbaBA;
+
+	//Under shadow
+	private static final int KNOB_UNDER_SHADOW = 0xffB6b6B6;
+	private static final float UNDER_SHADOW_BLUR_RADIUS = 2.0f;
 	
 	private static float mPaddingBg2Base = 20.0f;
 	private static float mPaddingBase2Knob = 6.0f;
@@ -100,6 +104,12 @@ public class ExperimentKnobController extends FrameLayout {
 
 	private float mShadowDelta;
 
+
+	private Paint mKnobUnderShadow;
+
+
+	private RectF mKnobUndShadBounds;
+
 	public ExperimentKnobController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setWillNotDraw(false);
@@ -131,6 +141,10 @@ public class ExperimentKnobController extends FrameLayout {
 		mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		
 		mKnobPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mKnobUnderShadow = new Paint(0);
+		mKnobUnderShadow.setColor(KNOB_UNDER_SHADOW);
+		mKnobUnderShadow.setMaskFilter(new BlurMaskFilter(UNDER_SHADOW_BLUR_RADIUS, BlurMaskFilter.Blur.NORMAL));
+		
 		
 		mCurrIndicator = new CurrentIndicator(getContext()); //TODO: layout in onSizeChanged
 		
@@ -197,6 +211,9 @@ public class ExperimentKnobController extends FrameLayout {
 		
 		mKnobUpShadBounds = ViewHelpers.cloneRect(mKnobBounds);
 		mKnobUpShadBounds.offset(0, - mDimUnit * WHITE_SHADOW_HEIGHT);
+		
+		mKnobUndShadBounds = ViewHelpers.cloneRect(mKnobBounds);
+		mKnobUndShadBounds.offset(0, mDimUnit * WHITE_SHADOW_HEIGHT);
 
 		//Drop shadow for the Knob
 		mShadowBlurRadius = mKnobBounds.height() / 15; 
@@ -243,6 +260,7 @@ public class ExperimentKnobController extends FrameLayout {
 
 		canvas.drawOval(mShadowBounds, mShadowPaint);
 		canvas.drawOval(mKnobUpShadBounds, mWhitePaint);
+		canvas.drawOval(mKnobUndShadBounds, mKnobUnderShadow);	
 		canvas.drawOval(mKnobBounds, mKnobPaint);
 		
 	}

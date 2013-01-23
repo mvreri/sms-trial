@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 
 import com.example.android.customviews.R;
 
+import dtd.phs.lib.utils.Logger;
+
 public class NewAudioButtons extends ViewGroup {
 
 	private static final float BASE_UNIT_WIDTH = 155.0f;
@@ -242,6 +244,7 @@ public class NewAudioButtons extends ViewGroup {
 		private static final int BTN_START_COLOR = 0xffF9f9F9;
 		private static final int BTN_END_COLOR = 0xffBAbaBA;
 		private static final int BLUE_COLOR = 0xff89aefa;
+		private static final long CLICK_DURATION = 1000;
 		private Bitmap mImg;
 		private int mWidth;
 		private int mHeight;
@@ -255,14 +258,16 @@ public class NewAudioButtons extends ViewGroup {
 		private Paint mPressedPaint;
 		private OnClickListener mOnClick;
 		private LinearGradient btnPressedShader;
+		private long mStartTime;
+		private long mEndTime;
 
 		public InnerButton(Context context, Drawable img) {
 			super(context);
 			this.mImg = ViewHelpers.drawableToBitmap(img);
 			mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPressedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			
-			
+
+
 		}
 
 		public void setOnClick(OnClickListener lst) {
@@ -282,7 +287,7 @@ public class NewAudioButtons extends ViewGroup {
 			mBGBounds.offset(0, upperShadowHeight);
 			btnShader = new LinearGradient(0, 0, 0, mBGBounds.height(), BTN_START_COLOR, BTN_END_COLOR, TileMode.CLAMP);
 			mBGPaint.setShader(btnShader);
-			
+
 			int btPressStartColor = getResources().getColor(R.color.start_pressed);
 			int btPressEndColor = getResources().getColor(R.color.end_pressed);
 			btnPressedShader = new LinearGradient(0, 0, 0, mBGBounds.height(), btPressStartColor, btPressEndColor, TileMode.CLAMP);
@@ -313,16 +318,22 @@ public class NewAudioButtons extends ViewGroup {
 		public boolean onTouchEvent(MotionEvent event) {
 			switch ( event.getAction() ) {
 			case MotionEvent.ACTION_DOWN:
+				mStartTime = System.currentTimeMillis();
 				mBeingPressed = true;
 				invalidate();
 				return true;
 			case MotionEvent.ACTION_UP:
+				Logger.logInfo("Action up");
 				mBeingPressed = false;
+				mEndTime = System.currentTimeMillis();
 				invalidate();
-				if ( mOnClick != null ) 
-					this.mOnClick.onClick(this);
-				return true;
+				if ( mEndTime - mStartTime  <= CLICK_DURATION) {
+					if ( mOnClick != null ) 
+						this.mOnClick.onClick(this);
+					return true;
+				} else return false;
 			case MotionEvent.ACTION_CANCEL:
+				Logger.logInfo("Action cancel");
 				mBeingPressed = false;
 				invalidate();
 				return true;
