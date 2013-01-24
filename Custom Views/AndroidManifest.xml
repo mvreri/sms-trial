@@ -32,6 +32,8 @@
         <activity android:name="TestPetrButtons"></activity>
         <activity android:name="TestAllElements"></activity>
         <activity android:name="TestExpKnob"></activity>
+        <activity android:name="TestSlider"></activity>
+        <activity android:name="TestTabs"></activity>
     </application>
 
 </manifest>

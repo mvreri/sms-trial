@@ -9,5 +9,10 @@
     <dimen name="ctr_y_pad">32dp</dimen>
     <dimen name="std_pad">8dp</dimen>
     <dimen name="main_contr_corner">10dp</dimen>
+    <dimen name="slider_handler">24dp</dimen>
+    <dimen name="slider_pad">2dp</dimen>
+    <dimen name="tab_height">36dp</dimen>
+    <dimen name="main_layout_corner">5dp</dimen>
+    
     
 </resources>

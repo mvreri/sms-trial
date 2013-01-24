@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="0dp" >
 
-    <TextView
+    <Space
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -52,11 +52,12 @@
         </phs.views.PetrButton>
     </LinearLayout>
 
-    <TextView
+    <Space
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:background="@android:color/transparent" />
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -75,11 +76,12 @@
         </phs.views.vol_button.ExperimentKnobController>
     </LinearLayout>
 
-    <TextView
+    <Space
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:background="@android:color/transparent" />
+
 
     <phs.views.NewAudioButtons
         android:id="@+id/audio_buttons"
@@ -93,10 +95,11 @@
         custom:previousImg="@drawable/prev_button" >
     </phs.views.NewAudioButtons>
 
-    <TextView
+    <Space
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:background="@android:color/transparent" />
+
 
 </LinearLayout>

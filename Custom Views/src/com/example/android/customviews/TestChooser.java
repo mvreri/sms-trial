@@ -16,7 +16,9 @@ public class TestChooser extends Activity {
 	final static String[] CLASSES = {
 		"TestExpKnob",
 		"TestPetrButtons",
-		"TestAllElements"
+		"TestAllElements",
+		"TestSlider",
+		"TestTabs"
 	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

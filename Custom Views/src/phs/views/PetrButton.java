@@ -11,17 +11,15 @@ import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.example.android.customviews.R;
 
 import dtd.phs.lib.utils.Logger;
 
 public class PetrButton extends ViewGroup {
-
-
-
 
 	//Button
 	private static final int BLUR_SHADOW_RADIUS = 8;
@@ -41,7 +39,7 @@ public class PetrButton extends ViewGroup {
 	private static final int BASE_START_GRADIENT = 0xffe4e4e4;
 	private static final int BASE_END_GRADIENT = 0xfff9F9f9;
 	private static final float DEFAULT_BASE_PADDING = 5.0f;
-	
+
 	//Text
 	private static final float DEFAULT_TEXT_SIZE = 16.0f;
 	private static final int DEFAULT_COLOR = 0xff797979;
@@ -57,7 +55,7 @@ public class PetrButton extends ViewGroup {
 
 	private float mBasePadding;
 	private RectF mButtonBounds;
-	private ImageView mButton;
+	private View mButton;
 	private RectF mBtnShadowBounds;
 	private Paint mBtnShadowPaint;
 	private float mBtnCornerRadius;
@@ -90,7 +88,7 @@ public class PetrButton extends ViewGroup {
 			mTextSize = a.getDimension(R.styleable.PetrButton_textSize, ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_TEXT_SIZE));
 			mText = a.getString(R.styleable.PetrButton_text);
 			mTextColor = a.getColor(R.styleable.PetrButton_textColor, DEFAULT_COLOR);
-			
+
 			//base drop shadow
 			mDropShadowHeight = a.getDimension(R.styleable.PetrButton_baseShadowDim, ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_BASE_SHADOW_DIM));
 			mDropShadowWidth = a.getDimension(R.styleable.PetrButton_baseShadowDim, ViewHelpers.convertDp2Pixel(getContext(), DEFAULT_BASE_SHADOW_DIM));
@@ -110,7 +108,6 @@ public class PetrButton extends ViewGroup {
 
 		//add button view
 		mButton = new InnerButton(getContext());
-		mButton.setImageDrawable(getContext().getResources().getDrawable(R.drawable.petr_button));
 		addView(mButton);
 
 		//button shadow
@@ -230,9 +227,12 @@ public class PetrButton extends ViewGroup {
 
 	}
 
-	public class InnerButton extends ImageView {
+	public class InnerButton extends View {
 		private static final int TEXT_SHADOW_COLOR = 0xfff9f9f9;
 		private static final float TEXT_SHADOW_DELTA = 1.0f;
+		private static final int BTN_START_COLOR = 0xffF9f9F9;
+		private static final int BTN_END_COLOR = 0xffBAbaBA;
+
 		private Paint mTextPaint;
 		private int mHeight;
 		private int mWidth;
@@ -242,29 +242,48 @@ public class PetrButton extends ViewGroup {
 		private float mTextY;
 		private Paint mShadowPaint;
 		private float mShadowDelta;
+		private RectF mBGBounds;
+		private LinearGradient btnShader;
+		private Paint mBGPaint;
+		private boolean mBeingPressed;
+		private View.OnClickListener mOnClick;
+		private Paint mPressedPaint;
 
 		public InnerButton(Context context) {
 			super(context);
 			mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mTextPaint.setColor(mTextColor);
 			mTextPaint.setTextSize(mTextSize);
-			
-			
+
+
 			mShadowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mShadowPaint.setColor(TEXT_SHADOW_COLOR);
 			mShadowPaint.setTextSize(mTextSize);
 
+			mBGPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPressedPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 			
+			mBeingPressed = false;
+			mOnClick = null;
 		}
-		
+
+		public void setOnClick(OnClickListener onClick) {
+			this.mOnClick = onClick;
+		}
 		@Override
 		protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-			// TODO Auto-generated method stub
-			super.onSizeChanged(w, h, oldw, oldh);
 			mHeight = h;
 			mWidth = w;
-			
-			
+
+			//BG bounds
+			mBGBounds = new RectF(0,0,w,h);
+			btnShader = new LinearGradient(0, 0, 0, mBGBounds.height(), BTN_START_COLOR, BTN_END_COLOR, TileMode.CLAMP);
+			mBGPaint.setShader(btnShader);
+			int btPressStartColor = getResources().getColor(R.color.start_pressed);
+			int btPressEndColor = getResources().getColor(R.color.end_pressed);
+			LinearGradient btnPressedShader = new LinearGradient(0, 0, 0, mBGBounds.height(), btPressStartColor, btPressEndColor, TileMode.CLAMP);
+			mPressedPaint.setShader(btnPressedShader);
+
 			//calculate the text bounds
 			Rect bounds = new Rect();
 			mTextPaint.getTextBounds(mText, 0, mText.length(), bounds);
@@ -273,16 +292,42 @@ public class PetrButton extends ViewGroup {
 			mTextX = (mWidth - mTextWidth)/2;
 			mTextY = (mHeight + mTextSize)/2 - 2*mShadowDim;
 			mShadowDelta = TEXT_SHADOW_DELTA;
-			Logger.logInfo("Button Height: " + mHeight + " ## Button width= " + mWidth + " ## Text width =" + mTextWidth);
-			Logger.logInfo("TextHeight: " + mTextHeight + " text: " + mText);
-			Logger.logInfo("mTextX = " + mTextX + " ## mTextY = " + mTextY);
+			//			Logger.logInfo("Button Height: " + mHeight + " ## Button width= " + mWidth + " ## Text width =" + mTextWidth);
+			//			Logger.logInfo("TextHeight: " + mTextHeight + " text: " + mText);
+			//			Logger.logInfo("mTextX = " + mTextX + " ## mTextY = " + mTextY);
 		}
-		
+
 		@Override
 		protected void onDraw(Canvas canvas) {		
 			super.onDraw(canvas);
+			if ( !mBeingPressed ) {
+				canvas.drawRoundRect(mBGBounds, mBtnCornerRadius, mBtnCornerRadius, mBGPaint);
+			} else {
+				canvas.drawRoundRect(mBGBounds, mBtnCornerRadius, mBtnCornerRadius, mPressedPaint);
+			}
 			canvas.drawText(mText.toString(), mTextX + mShadowDelta, mTextY + mShadowDelta, mShadowPaint);
 			canvas.drawText(mText.toString(), mTextX, mTextY, mTextPaint);
+		}
+		
+		@Override
+		public boolean onTouchEvent(MotionEvent event) {
+			switch ( event.getAction() ) {
+			case MotionEvent.ACTION_DOWN:
+				mBeingPressed = true;
+				invalidate();
+				return true;
+			case MotionEvent.ACTION_UP:
+				mBeingPressed = false;
+				invalidate();
+				if ( mOnClick != null ) 
+					this.mOnClick.onClick(this);
+				return true;
+			case MotionEvent.ACTION_CANCEL:
+				mBeingPressed = false;
+				invalidate();
+				return true;
+			}
+			return false;
 		}
 	}
 

@@ -25,4 +25,5 @@
     <color name="btn_text">#FFAAaaAA</color>
     <color name="start_pressed">#ababab</color>
     <color name="end_pressed">#dddddd</color>
+    <color name="red">#FF0000</color>
 </resources>
