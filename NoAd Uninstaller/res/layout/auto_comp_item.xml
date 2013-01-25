@@ -6,5 +6,5 @@
     android:layout_height="wrap_content"
     android:textSize="@dimen/fs_autcomp_text"
     android:textColor="@color/autocomp_text"
-    android:padding="@dimen/std_pad"
+    android:padding="12dp"
     android:ellipsize="end" />
