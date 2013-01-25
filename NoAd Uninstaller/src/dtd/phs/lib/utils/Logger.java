@@ -10,7 +10,7 @@ public class Logger {
 	private static final String LOG_TAG = "PHS_LOG";
 
 	private enum CodeModes {DEBUG, TEST, PRODUCTION};
-	private static CodeModes CODE_MODE = CodeModes.DEBUG;
+	private static CodeModes CODE_MODE = CodeModes.PRODUCTION;
 
 	public static void logInfo(String extra) {
 		if ( CODE_MODE == CodeModes.DEBUG || CODE_MODE == CodeModes.TEST) {
