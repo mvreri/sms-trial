@@ -112,7 +112,7 @@ public class MainUninstaller extends Activity {
 						adapter.setData(apps);
 						//searchAdapter = new SearchAdapter(getApplicationContext(), apps);
 						//atSearch.setAdapter(searchAdapter);
-						ArrayAdapter<String> searchAdapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, getNames(apps));
+						ArrayAdapter<String> searchAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.auto_comp_item, getNames(apps));
 						atSearch.setAdapter(searchAdapter);
 					}
 

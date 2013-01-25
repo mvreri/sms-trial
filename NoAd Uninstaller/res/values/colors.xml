@@ -7,4 +7,5 @@
     <color name="main_bg">#5F5F5F</color>
     <color name="selected_item">#ff006eff</color>
     <color name="blur_blue">#ff006eff</color>
+    <color name="autocomp_text">#333333</color>
 </resources>

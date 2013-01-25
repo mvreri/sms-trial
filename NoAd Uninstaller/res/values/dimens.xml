@@ -13,4 +13,5 @@
     <dimen name="bottom_layout_height">52dp</dimen>
     <dimen name="dialog_button_padding">2dp</dimen>
     <dimen name="auto_item_height">36dp</dimen>
+    <dimen name="fs_autcomp_text">18dp</dimen>
 </resources>

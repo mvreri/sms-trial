@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@android:id/text1"
+    android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical" >
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/auto_item_height"
-        android:text="App name here" 
-        />
-
-</LinearLayout>
+    android:textSize="@dimen/fs_autcomp_text"
+    android:textColor="@color/autocomp_text"
+    android:padding="@dimen/std_pad"
+    android:ellipsize="end" />
