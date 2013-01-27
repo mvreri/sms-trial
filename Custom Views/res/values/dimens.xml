@@ -13,6 +13,11 @@
     <dimen name="slider_pad">2dp</dimen>
     <dimen name="tab_height">36dp</dimen>
     <dimen name="main_layout_corner">5dp</dimen>
+    <dimen name="data_xpad">36dp</dimen>
+    <dimen name="data_ypad">23dp</dimen>
+    <dimen name="tab_xpad">30dp</dimen>
+    <dimen name="tab_space">13dp</dimen>
+    <dimen name="fs_tab_title">13dp</dimen>
     
     
 </resources>

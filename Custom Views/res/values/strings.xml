@@ -24,5 +24,7 @@
     <string name="title_activity_test_chooser">TestChooser</string>
     <string name="Transform">TRANSFORM</string>
     <string name="Mute">MUTE</string>
+    <string name="mROBO">mROBO</string>
+    <string name="PHONE">PHONE</string>
 
 </resources>

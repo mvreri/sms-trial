@@ -26,4 +26,12 @@
     <color name="start_pressed">#ababab</color>
     <color name="end_pressed">#dddddd</color>
     <color name="red">#FF0000</color>
+    <color name="tab_begin">#434343</color>
+    <color name="tab_end">#252525</color>
+    <color name="tab_pressed_shadow">#505050</color>
+    <color name="tab_nor_shadow">#787878</color>
+    <color name="font_tab_title_press">#3d3d3d</color>
+    <color name="font_tab_title_nor">#ffffff</color>
+    <color name="tab_title_shadow_nor">#b6b6b6</color>
+    <color name="data_list_bg">#f3f3f3</color>
 </resources>

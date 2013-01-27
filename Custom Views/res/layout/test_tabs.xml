@@ -2,27 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@drawable/data_bg"
     android:orientation="vertical"
-    android:padding="@dimen/std_pad" >
+    android:paddingBottom="@dimen/data_ypad"
+    android:paddingLeft="@dimen/data_xpad"
+    android:paddingRight="@dimen/data_xpad"
+    android:paddingTop="@dimen/data_ypad" >
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="@dimen/tab_height"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/std_pad"
-        android:paddingRight="@dimen/std_pad" >
+        android:paddingLeft="@dimen/tab_xpad"
+        android:paddingRight="@dimen/tab_xpad" >
 
         <Button
             android:id="@+id/tabRobo"
             android:layout_width="0dp"
             android:layout_height="@dimen/tab_height"
+            android:layout_marginRight="@dimen/tab_space"
             android:layout_weight="1"
             android:background="@drawable/tab_bg"
             android:gravity="center"
-            android:text="mRobo"
-            android:layout_marginRight="@dimen/std_margin"
-            />
+            android:shadowColor="@color/tab_title_shadow_nor"
+            android:shadowDx="-1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="1.0"
+            android:text="@string/mROBO"
+            android:textColor="@color/font_tab_title_nor"
+            android:textSize="@dimen/fs_tab_title" />
 
         <Button
             android:id="@+id/tabPhone"
@@ -31,12 +39,18 @@
             android:layout_weight="1"
             android:background="@drawable/tab_bg"
             android:gravity="center"
-            android:text="Phone" />
+            android:shadowColor="@color/tab_title_shadow_nor"
+            android:shadowDx="-1.0"
+            android:shadowDy="1.0"
+            android:shadowRadius="1.0"
+            android:text="@string/PHONE"
+            android:textColor="@color/font_tab_title_nor"
+            android:textSize="@dimen/fs_tab_title" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@drawable/round_rect_white" 
-        />
+        android:background="@drawable/round_rect_mbg" />
 
 </LinearLayout>

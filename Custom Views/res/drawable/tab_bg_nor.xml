@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" >
-	<corners
-	    android:topLeftRadius="5dp"
-	    android:topRightRadius="5dp"
-	    android:bottomLeftRadius="0dp"
-	    android:bottomRightRadius="0dp"	    
-	    />
-	<solid android:color="@android:color/darker_gray" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item>
+        <shape>
+            <corners
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp"
+                android:topLeftRadius="5dp"
+                android:topRightRadius="5dp" />
+
+            <solid android:color="@color/tab_nor_shadow" />
+        </shape>
+    </item>
+    <item android:top="1px">
+        <shape>
+            <corners
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp"
+                android:topLeftRadius="5dp"
+                android:topRightRadius="5dp" />
+
+            <gradient
+                android:angle="-90"
+                android:endColor="@color/tab_end"
+                android:startColor="@color/tab_begin" />
+        </shape>
+    </item>
+
+</layer-list>
