@@ -18,7 +18,8 @@ public class TestChooser extends Activity {
 		"TestPetrButtons",
 		"TestAllElements",
 		"TestSlider",
-		"TestTabs"
+		"TestTabs",
+		"TestTabButtons"
 	};
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -34,6 +34,7 @@
         <activity android:name="TestExpKnob"></activity>
         <activity android:name="TestSlider"></activity>
         <activity android:name="TestTabs"></activity>
+        <activity android:name="TestTabButtons"></activity>
     </application>
 
 </manifest>

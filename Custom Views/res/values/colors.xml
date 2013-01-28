@@ -34,4 +34,6 @@
     <color name="font_tab_title_nor">#ffffff</color>
     <color name="tab_title_shadow_nor">#b6b6b6</color>
     <color name="data_list_bg">#f3f3f3</color>
+    <color name="lm_tab_bg">#e6e6e6</color>
+   
 </resources>

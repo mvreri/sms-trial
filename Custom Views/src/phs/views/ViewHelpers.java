@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -31,6 +32,10 @@ public class ViewHelpers {
 	    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
 	    drawable.draw(canvas);
 	    return bitmap;
+	}
+
+	public static Rect cloneRect(Rect bounds) {
+		return new Rect(bounds.left, bounds.top, bounds.right, bounds.bottom);
 	}
 
 }

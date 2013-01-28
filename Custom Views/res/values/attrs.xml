@@ -1,4 +1,5 @@
-<!-- Copyright (C) 2012 The Android Open Source Project
+<!--
+ Copyright (C) 2012 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,23 +15,24 @@
 -->
 
 <resources>
+
     <declare-styleable name="PieChart">
-        <attr name="autoCenterPointerInSlice" format="boolean"/>
-        <attr name="highlightStrength" format="float"/>
-        <attr name="labelColor" format="color"/>
-        <attr name="labelHeight" format="dimension"/>
+        <attr name="autoCenterPointerInSlice" format="boolean" />
+        <attr name="highlightStrength" format="float" />
+        <attr name="labelColor" format="color" />
+        <attr name="labelHeight" format="dimension" />
         <attr name="labelPosition" format="enum">
-            <enum name="left" value="0"/>
-            <enum name="right" value="1"/>
+            <enum name="left" value="0" />
+            <enum name="right" value="1" />
         </attr>
-        <attr name="labelWidth" format="dimension"/>
-        <attr name="labelY" format="dimension"/>
-        <attr name="pieRotation" format="integer"/>
-        <attr name="pointerRadius" format="dimension"/>
-        <attr name="showText" format="boolean"/>
+        <attr name="labelWidth" format="dimension" />
+        <attr name="labelY" format="dimension" />
+        <attr name="pieRotation" format="integer" />
+        <attr name="pointerRadius" format="dimension" />
+        <attr name="showText" format="boolean" />
     </declare-styleable>
-    
-<!--     
+
+    <!--
     <declare-styleable name="AudioButtons">
         <attr name="previousImg" format="integer"/>
         <attr name="playImg" format="integer"/>
@@ -40,25 +42,30 @@
             <enum name="off" value="0"/>
 		</attr>
     </declare-styleable>
--->
+    -->
     <declare-styleable name="NewAudioButtons">
-        <attr name="previousImg" format="integer"/>
-        <attr name="playImg" format="integer"/>
-        <attr name="nextImg" format="integer"/>
+        <attr name="previousImg" format="integer" />
+        <attr name="playImg" format="integer" />
+        <attr name="nextImg" format="integer" />
         <attr name="hapticFeedback" format="enum">
-            <enum name="on" value="1"/>
-            <enum name="off" value="0"/>
-		</attr>
+            <enum name="on" value="1" />
+            <enum name="off" value="0" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="PetrButton">
+        <attr name="basePadding" format="dimension" />
+        <attr name="baseShadowDim" format="dimension" />
+        <attr name="buttonShadowDim" format="dimension" />
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="imgSrc" format="integer" />
+        <attr name="buttonCornerRadius" format="dimension" />
     </declare-styleable>
     
-    <declare-styleable name="PetrButton">
-        <attr name="basePadding" format="dimension"/>
-        <attr name="baseShadowDim" format="dimension"/>
-        <attr name="buttonShadowDim" format="dimension"/>
-        <attr name="text" format="string"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="textColor" format="color"/>
-        <attr name="imgSrc" format="integer"/>
-        <attr name="buttonCornerRadius" format="dimension"/>
+    <declare-styleable name="LomoTabs">
+        <attr name="xpad" format="dimension"></attr>
+        <attr name="ypad" format="dimension"></attr>
     </declare-styleable>
+
 </resources>

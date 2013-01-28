@@ -19,5 +19,11 @@
     <dimen name="tab_space">13dp</dimen>
     <dimen name="fs_tab_title">13dp</dimen>
     
+    <!-- Lomo tabs -->
+    <dimen name="lm_tab_layout_height">68dp</dimen>
+    <dimen name="lm_tabs_xpad">55dp</dimen>
+    <dimen name="lm_tabs_ypad">25dp</dimen>
+    <!-- Lomo tabs -->
+    
     
 </resources>

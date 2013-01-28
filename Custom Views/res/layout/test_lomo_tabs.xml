@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res/com.example.android.customviews"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <phs.views.LomoTabs
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/lm_tab_layout_height"
+        custom:xpad="@dimen/lm_tabs_xpad"
+       	custom:ypad="@dimen/lm_tabs_ypad"
+       	android:background="@color/lm_tab_bg"         
+        >
+    </phs.views.LomoTabs>
+
+</LinearLayout>
