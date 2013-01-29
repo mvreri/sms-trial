@@ -123,18 +123,24 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/slider_handler"
             android:padding="@dimen/slider_pad"
-            android:background="@android:color/darker_gray"
+            android:background="@drawable/slide_handler_bg"
             android:scaleType="fitCenter"
             android:src="@drawable/current" />
 
-        <TextView
+        <include
+            layout="@layout/test_lomo_tabs"
+            android:id="@id/content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" 
+            />
+<!--         <TextView
             android:id="@id/content"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="@color/seafoam"
             android:gravity="center"
             android:text="Helloooo" >
-        </TextView>
+        </TextView> -->
     </SlidingDrawer>
 
 </FrameLayout>

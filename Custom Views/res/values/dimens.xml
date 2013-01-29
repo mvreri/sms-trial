@@ -23,7 +23,17 @@
     <dimen name="lm_tab_layout_height">68dp</dimen>
     <dimen name="lm_tabs_xpad">55dp</dimen>
     <dimen name="lm_tabs_ypad">25dp</dimen>
+    
     <!-- Lomo tabs -->
     
+    <!-- data list frame -->
+    <dimen name="datalist_frame_margin">36dp</dimen>
+    <dimen name="datalist_frame_pad">7dp</dimen>
+    <dimen name="datalist_corner">5dp</dimen>
+    <dimen name="datalist_stroke">1px</dimen>
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="fs_file_name">16dp</dimen>
+    <dimen name="file_item_x_pad">18dp</dimen>
+    <!-- data list frame -->
     
 </resources>

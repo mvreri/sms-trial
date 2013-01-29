@@ -66,6 +66,8 @@
     <declare-styleable name="LomoTabs">
         <attr name="xpad" format="dimension"></attr>
         <attr name="ypad" format="dimension"></attr>
+        <attr name="leftText" format="string"></attr>
+        <attr name="rightText" format="string"></attr>
     </declare-styleable>
 
 </resources>

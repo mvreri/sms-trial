@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape >
+            <solid android:color="@color/handler_grey_border"/>
+        </shape>
+    </item>
+    <item 
+        android:bottom="1dp"
+        android:top="1dp"
+        >
+        <shape >
+            <gradient
+                android:startColor="@color/handler_start"
+                android:centerColor="@color/handler_center"
+                android:endColor="@color/handler_end" 
+                android:angle="90"
+                />
+        </shape>
+    </item>
+
+</layer-list>

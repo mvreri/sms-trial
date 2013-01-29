@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.Shader;
 import android.graphics.Shader.TileMode;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
@@ -17,8 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.customviews.R;
-
-import dtd.phs.lib.utils.Logger;
 
 public class LomoTabs extends ViewGroup {
 	private static final float DEFAULT_BTN_RADIUS = 5.0f;
@@ -35,7 +32,7 @@ public class LomoTabs extends ViewGroup {
 	private static final int END_COLOR_NOR_TAB = 0xFFBfBfBf;//0xFF999999;
 	private static final int START_COLOR_PRESSED_TAB = 0xFFd0d0d0;
 	private static final int END_COLOR_PRESSED_TAB = 0xFFaFaFaF;
-	private static final float DEFAULT_TOP_SPACING = 3.0f;
+	private static final float DEFAULT_TOP_SPACING = 1.0f;
 
 	//Tab drop shadow
 	private static final int TAB_DROP_SHADOW_COLOR = 0x80000000;
@@ -44,11 +41,20 @@ public class LomoTabs extends ViewGroup {
 	private static final float DROP_SHADOW_Y_OFF = 0.0f; //
 	private static final float DEFAULT_SEP_STROKE_WIDTH = 1.0f;
 	private static final float EPSILON = (float) (1e-3);
-	private static final long CLICK_DURATION = 2000;
+	private static final long CLICK_DURATION = 1000;
 	
 	//Tab sides
-	private static final int TAB_SIDE_LEFT = 0;
+	private static final int TAB_SIDE_LEFT = 0; 	
 	private static final int TAB_SIDE_RIGHT = 1;
+	
+	private static final int START_COLOR_EMBOSS_TAB = 0x00cdcdcd;//0x00999999;
+	private static final int END_COLOR_EMBOSS_TAB = 0x33cdcdcd;
+	
+	//Text
+	private static final float DEFAULT_TEXT_SIZE = 14.0f;
+	private static final int DEFAULT_TEXT_COLOR = 0xff949494;
+	private static final int TEXT_SHADOW_COLOR = 0xfff9f9f9;
+	private static final int DEFAULT_SHAD_DELTA = 1; 
 
 	//private ShapeDrawable shapeDrawable;
 	private float mXpad;
@@ -59,7 +65,6 @@ public class LomoTabs extends ViewGroup {
 	private Rect mGreyShadBounds;
 	private float mBorderShadHeight;
 	private ShapeDrawable mGreyShadow;
-	private ShapeDrawable mTabsDrawable;
 	private Rect mDropShadBounds;
 	private ShapeDrawable mDropShadDrawable;
 
@@ -67,13 +72,19 @@ public class LomoTabs extends ViewGroup {
 	private int mSepLineTop;
 	private int mSepLineBottom;
 
+	//Separated line
 	private Paint mSepLinePaint;
 	private float mSepStrokerWidth;
+	
+	//Left tab
 	private Rect mLeftTabBounds;
-	private Rect mRightTabBounds;
+	private Rect mLTabEmbBounds;
 	private ShapeDrawable mLeftTabDrawable;
-	private float mBtnRadius;
+	
+	private Rect mRightTabBounds;
 	private ShapeDrawable mRightTabDrawable;
+	private float mBtnRadius;
+	
 	private long mStartPressedTime;
 	private long mEndPressedTime;
 	private boolean mBeingPressed = false;
@@ -81,6 +92,35 @@ public class LomoTabs extends ViewGroup {
 	private LinearGradient mPressedTabShader;
 	private LinearGradient mNorTabShader;
 	private int mCurrentSelectedSide;
+	
+	private View.OnClickListener onClickLeft;
+	private View.OnClickListener onClickRight;
+	private ShapeDrawable mLeftEmbossDrawable;
+	private LinearGradient mEmbossTabShader;
+	private Rect mRTabEmbossBounds;
+	private ShapeDrawable mRightEmbossDrawable;
+	private String mLeftText;
+	private String mRightText;
+	private float mTextSize;
+	private int mTextColor;
+	private Paint mTextPaint;
+	private Paint mTextShadPaint;
+	private int mTextHeight;
+	private int mLTextWidth;
+	private int mRTextWidth;
+	private int mLTextX;
+	private int mLTextY;
+	private int mRTextX;
+	private int mRTextY;
+	private int mTextShadDelta;
+	
+	public void setOnClickLeftTab(OnClickListener leftClick) {
+		this.onClickLeft = leftClick;
+	}
+	public void setOnClickRightTab(OnClickListener rightClick) {
+		this.onClickRight = rightClick;
+	}
+	
 
 	public LomoTabs(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -94,11 +134,20 @@ public class LomoTabs extends ViewGroup {
 
 	private void init() {
 		mBeingPressed = false;
+		onClickLeft = null;
 		mPressingSide  = TAB_SIDE_LEFT;
 		mSepLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		mSepLinePaint.setColor(COLOR_SEP_LINE);
 		mSepStrokerWidth = DEFAULT_SEP_STROKE_WIDTH;
 		mSepLinePaint.setStrokeWidth(mSepStrokerWidth);
+		
+		//Text
+		mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mTextPaint.setColor(mTextColor);
+		//mTextPaint.setTypeface(Typeface.DEFAULT_BOLD);
+		mTextShadPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		mTextShadPaint.setColor(TEXT_SHADOW_COLOR);
+		mTextShadDelta = DEFAULT_SHAD_DELTA;
 	
 	}
 
@@ -107,6 +156,9 @@ public class LomoTabs extends ViewGroup {
 		try {
 			mXpad = a.getDimension(R.styleable.LomoTabs_xpad, DEFAULT_XPAD);
 			mYpad = a.getDimension(R.styleable.LomoTabs_ypad, DEFAULT_YPAD);
+			mLeftText = a.getString(R.styleable.LomoTabs_leftText);
+			mRightText = a.getString(R.styleable.LomoTabs_rightText);
+			mTextColor = DEFAULT_TEXT_COLOR;
 		} finally {
 			a.recycle();
 		}
@@ -119,18 +171,6 @@ public class LomoTabs extends ViewGroup {
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-		//		float xpad = getPaddingLeft() + getPaddingBottom();
-		//		float ypad = getPaddingBottom() + getPaddingTop();
-		//		
-		//		float radius = ViewHelpers.convertDp2Pixel(getContext(), 15.0f);
-		//		float[] outerRadii = new float[] {radius,radius,0,0,0,0,0,0};
-		//		Shape shape = new RoundRectShape(outerRadii, null, outerRadii);
-		//		shapeDrawable = new ShapeDrawable(shape);
-		//		
-		//		shapeDrawable.setBounds(0,0,w,h);
-		//		LinearGradient shader = new LinearGradient(0, 0, 0, h, 0x00000000, 0xFFffFFff, TileMode.CLAMP);
-		//		shapeDrawable.getPaint().setShader(shader);
-		//		shapeDrawable.getPaint().setAntiAlias(true);
 		mBorderShadHeight = ViewHelpers.convertDp2Pixel(getContext(), BORDER_SHAD_HEIGHT);
 		float maxTabsHeight = h - (mYpad + 2 * mBorderShadHeight);
 		float maxTabsWidth = w - 2 * mXpad;
@@ -153,8 +193,15 @@ public class LomoTabs extends ViewGroup {
 		mTabsBounds = new Rect();
 		mTabsBounds = ViewHelpers.cloneRect(mWhiteBounds);
 		mTabsBounds.offset(0, (int) mBorderShadHeight);
-
 		computeTabsBounds(mTabsBounds);
+		
+		//TextSize
+		mTextSize = mTabsBounds.height() / 3;
+		mTextPaint.setTextSize(mTextSize);
+		mTextShadPaint.setTextSize(mTextSize);
+		
+		computeTextBounds();
+
 		//		
 		//		mTabsDrawable = new ShapeDrawable(new RoundRectShape(radii, null, radii));
 		//		mTabsDrawable.setBounds(mTabsBounds);
@@ -162,9 +209,6 @@ public class LomoTabs extends ViewGroup {
 		//		mTabsDrawable.getPaint().setAntiAlias(true);
 		//		Shader tabShader = new LinearGradient(0, 0, 0, mTabsBounds.height(), START_COLOR_NOR_TAB, END_COLOR_NOR_TAB, TileMode.CLAMP);
 		//		mTabsDrawable.getPaint().setShader(tabShader);
-
-
-
 
 		//Grey shadow
 		mGreyShadBounds = new Rect();
@@ -188,7 +232,30 @@ public class LomoTabs extends ViewGroup {
 
 	}
 
+	private void computeTextBounds() {
+		Rect leftBounds = new Rect();
+		Rect rightBounds = new Rect();
+		
+		
+		mTextPaint.getTextBounds(mLeftText, 0, mLeftText.length() , leftBounds);
+		
+		mTextPaint.getTextBounds(mRightText, 0, mRightText.length() , rightBounds);
+
+		mTextHeight = Math.max(leftBounds.height(),rightBounds.height());
+		mLTextWidth = leftBounds.width();
+		mLTextX = mLeftTabBounds.left + (mLeftTabBounds.width() - mLTextWidth) / 2;
+		mLTextY = mLeftTabBounds.top + (mLeftTabBounds.height() + mTextHeight) / 2 - (int) (2 * mBorderShadHeight);
+		mRTextWidth = rightBounds.width();
+		mRTextX = mRightTabBounds.left + (mRightTabBounds.width() - mRTextWidth) /2;
+		mRTextY = mRightTabBounds.top  + (mRightTabBounds.height() + mTextHeight) / 2 - (int) (2 * mBorderShadHeight);
+
+		
+	}
+	
 	private void computeTabsBounds(Rect mTabsBounds) {
+		
+		final int EMBOSS_RATIO = 7;
+		
 		//Seperated line:
 		mSepLineX = (mTabsBounds.left + mTabsBounds.right) / 2;
 		mSepLineTop = mTabsBounds.top;
@@ -200,13 +267,26 @@ public class LomoTabs extends ViewGroup {
 				mTabsBounds.top,
 				mSepLineX,
 				mTabsBounds.bottom);
+		mLTabEmbBounds = new Rect(
+				mLeftTabBounds.left,
+				mLeftTabBounds.bottom - (mLeftTabBounds.height() / EMBOSS_RATIO),
+				mLeftTabBounds.right,
+				mLeftTabBounds.bottom
+				);
 
 		float[] leftRadii = new float[] {0,0,0,0,0,0,mBtnRadius,mBtnRadius};
+		
 		mLeftTabDrawable = new ShapeDrawable(new RoundRectShape(leftRadii, null, leftRadii));
 		mLeftTabDrawable.getPaint().setAntiAlias(true);
 		mPressedTabShader = new LinearGradient(0, 0, 0, mTabsBounds.height(), START_COLOR_PRESSED_TAB, END_COLOR_PRESSED_TAB, TileMode.CLAMP);
 		mLeftTabDrawable.getPaint().setShader(mPressedTabShader);
 		mLeftTabDrawable.setBounds(mLeftTabBounds);
+
+		mLeftEmbossDrawable = new ShapeDrawable(new RoundRectShape(leftRadii, null, leftRadii));
+		mLeftEmbossDrawable.getPaint().setAntiAlias(true);
+		mEmbossTabShader = new LinearGradient(0, 0, 0, mLTabEmbBounds.height(), START_COLOR_EMBOSS_TAB, END_COLOR_EMBOSS_TAB, TileMode.CLAMP);
+		mLeftEmbossDrawable.getPaint().setShader(mEmbossTabShader);
+		mLeftEmbossDrawable.setBounds(mLTabEmbBounds);
 
 
 		//Right bounds
@@ -216,23 +296,33 @@ public class LomoTabs extends ViewGroup {
 				mTabsBounds.right,
 				mTabsBounds.bottom
 				);
+		
+		mRTabEmbossBounds = new Rect(
+				mRightTabBounds.left,
+				mRightTabBounds.bottom - (mRightTabBounds.height() / EMBOSS_RATIO),
+				mRightTabBounds.right,
+				mRightTabBounds.bottom
+				);
 		float[] rightRadii = new float[] {0,0,0,0,mBtnRadius,mBtnRadius,0,0};
+
 		mRightTabDrawable = new ShapeDrawable(new RoundRectShape(rightRadii, null, rightRadii));
 		mRightTabDrawable.getPaint().setAntiAlias(true);
-
 		mNorTabShader = new LinearGradient(0, 0, 0, mTabsBounds.height(), START_COLOR_NOR_TAB, END_COLOR_NOR_TAB, TileMode.CLAMP);
 		mRightTabDrawable.getPaint().setShader(mNorTabShader);
 		mRightTabDrawable.setBounds(mRightTabBounds);
-		//mRightTabDrawable.getPaint().setAlpha(180);
+		
+		mRightEmbossDrawable = new ShapeDrawable(new RoundRectShape(rightRadii, null, rightRadii));
+		mRightEmbossDrawable.getPaint().setAntiAlias(true);
+		mRightEmbossDrawable.getPaint().setShader(mEmbossTabShader);
+		mRightEmbossDrawable.setBounds(mLTabEmbBounds);
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
-
 		mDropShadDrawable.draw(canvas);
 		mGreyShadow.draw(canvas);
 		mWhiteShadow.draw(canvas);
-		//mTabsDrawable.draw(canvas);
+
 		
 		if ( mPressingSide == TAB_SIDE_LEFT ) {
 			mLeftTabDrawable.getPaint().setShader(mPressedTabShader);
@@ -242,8 +332,19 @@ public class LomoTabs extends ViewGroup {
 			mLeftTabDrawable.getPaint().setShader(mNorTabShader);
 		}
 		mLeftTabDrawable.draw(canvas);
+		mLeftEmbossDrawable.draw(canvas);
 		mRightTabDrawable.draw(canvas);
+		mRightEmbossDrawable.draw(canvas);
 		canvas.drawLine(mSepLineX, mSepLineTop, mSepLineX, mSepLineBottom, mSepLinePaint);
+		
+		
+		//Text
+		canvas.drawText(mLeftText, mLTextX + mTextShadDelta, mLTextY + mTextShadDelta, mTextShadPaint);
+		canvas.drawText(mLeftText, mLTextX, mLTextY, mTextPaint);
+		canvas.drawText(mRightText, mRTextX + mTextShadDelta, mRTextY + mTextShadDelta, mTextShadPaint);
+		canvas.drawText(mRightText, mRTextX, mRTextY, mTextPaint);
+		
+		
 	}
 
 	@Override
@@ -256,13 +357,9 @@ public class LomoTabs extends ViewGroup {
 			}
 			else return false; 
 		case MotionEvent.ACTION_UP:
-			if ( insideBounds(event,mTabsBounds) ) {
-				return handleUpAction(event);
-			} else return false;
+			return handleUpAction(event);
 		case MotionEvent.ACTION_CANCEL:
-			if ( insideBounds(event,mTabsBounds) ) {
-				return handleCancelAction(event);
-			} else return false;
+			return handleCancelAction(event);
 		default:
 			return false;
 		}
@@ -287,6 +384,12 @@ public class LomoTabs extends ViewGroup {
 
 	private void selectSide(int mPressedSide) {
 		mCurrentSelectedSide = mPressedSide;
+		if ( mPressedSide == TAB_SIDE_LEFT && onClickLeft != null ) {
+			onClickLeft.onClick(this);
+		}
+		if ( mPressedSide == TAB_SIDE_RIGHT && onClickRight != null ) {
+			onClickRight.onClick(this);
+		}
 	}
 
 	private boolean handleDownAction(MotionEvent event) {
@@ -308,8 +411,6 @@ public class LomoTabs extends ViewGroup {
 	}
 
 	private int getTabSide(MotionEvent event) {
-		float x = event.getX(0);
-		float y = event.getY(0);
 		if ( insideBounds(event,mLeftTabBounds) ) return TAB_SIDE_LEFT;
 		else return TAB_SIDE_RIGHT;
 	}
@@ -317,7 +418,6 @@ public class LomoTabs extends ViewGroup {
 	private boolean insideBounds(MotionEvent event, Rect bounds) {
 		float x = event.getX(0);
 		float y = event.getY(0);
-		Logger.logInfo("Touch: (x,y) = " + x + " ### " + y);
 		if ( beetween (x,bounds.left, bounds.right ) && beetween(y,bounds.top,bounds.bottom) ) return true;
 		return false;
 	}

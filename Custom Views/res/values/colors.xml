@@ -35,5 +35,25 @@
     <color name="tab_title_shadow_nor">#b6b6b6</color>
     <color name="data_list_bg">#f3f3f3</color>
     <color name="lm_tab_bg">#e6e6e6</color>
+    <color name="main_data_bg">#f2f2f2</color>
+    <color name="frame_stroke_outer">#ffffff</color>
+    <color name="frame_stroke_middle">#c8c8c8</color>
+    <color name="frame_stroke_inner">#dddddd</color>
+    <!-- File item -->
+    <color name="file_name">#686868</color>
+    <color name="file_name_shadow">#ffffff</color>
+    <color name="file_size">#a6a6a6</color>
+    <color name="file_size_shadow">#ffffff</color>
+    <color name="item_pressed">#d7d7d7</color>
+    <!-- File item -->
+    
+    <!-- SlideHandler -->
+    <color name="handler_start">#dddddd</color>
+    <color name="handler_center">#e0e0e0</color>
+    <color name="handler_end">#dddddd</color>
+    <color name="handler_grey_border">#80999999</color>
+    <!-- SlideHandler -->
+    
+
    
 </resources>
