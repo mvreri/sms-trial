@@ -13,4 +13,6 @@
     <!-- New UI -->
     <color name="topbar_bottom_divider">#33b5e5</color>
     <color name="topbar_text">#3d3d3d</color>
+    <color name="auto_name_color">#333333</color>
+    <color name="auto_numb_color">#666666</color>
 </resources>

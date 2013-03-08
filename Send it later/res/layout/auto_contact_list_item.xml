@@ -13,12 +13,16 @@
         android:id="@+id/tvContact"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="Son"
+        android:textColor="@color/auto_name_color"
         />
 
     <TextView
         android:id="@+id/tvNumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="+849888668866"
+        android:textColor="@color/auto_numb_color"
          />
 
 </LinearLayout>

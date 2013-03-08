@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+
+    <string name="app_name">Send it later</string>
+    <string name="please_wait">Espere por favor</string>
+    <string name="pending_messages">Mensajes Pendientes</string>
+    <string name="next">Siguiente</string>
+    <string name="sent">Enviados</string>
+    <string name="Date">Fecha:</string>
+    <string name="Ok">Ok</string>
+    <string name="Cancel">Cancelar</string>
+    <string name="Hour">Hora</string>
+    <string name="Minute">Minutos</string>
+    <string name="To">Para:</string>
+    <string name="Time">Hora:</string>
+    <string name="Done">Listo</string>
+    <string name="Never">Nunca</string>
+    <string name="Frequency">Repetir:</string>
+    <string name="Alert_on_delivery">Aviso de entrega:</string>
+    <string name="Words">Caracteres</string>
+    <string name="Message">Mensaje</string>
+    <string name="Choose_Frequency">Elegir frecuencia</string>
+    <string name="Add">Agregar</string>
+    <string name="Save">Guardar</string>
+    <string name="Rate_Application">Califica la aplicación</string>
+    <string name="Invalid_message_warning">SMS no válido: Llena los campos Mensaje/Contacto</string>
+    <string name="message_removed_success">Mensaje eliminado</string>
+    <string name="remove_item">Eliminar mensaje</string>
+    <string name="confirm_delete_item">¿Quieres eliminar el mensaje?</string>
+    <string name="Yes">Sí</string>
+    <string name="No">No</string>
+    <string name="Delete">Eliminar</string>
+    <string name="message_removed_failed">No se pudo eliminar el mensaje</string>
+    <string name="successful_sent_notification_title">Mensaje enviado exitosamente</string>
+    <string name="failed_sent_notification_title">No se pudo enviar el mensaje</string>
+    <string name="Please_enter_a_phone_number">Ingresa el número de teléfono</string>
+    <string name="Preferences">Preferencias</string>
+    <string name="Exit">Salir</string>
+    <string name="Sent_to">Enviado:</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">Programar limpieza</string>
+    <string name="Max_sent_item_summary">Conservar los últimos mensajes</string>
+    <string name="Max_sent_item_dialog_title">Conservar:</string>
+    <string name="about_us">Acerca de…</string>
+    <string name="sil_version">Send it later, versión</string>
+    <string name="feel_free">Código disponible en:</string>
+    <string name="or_send_email">Email: &lt;a href="mailto:sphamhung@yahoo.com"&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
+    <string name="Close">Cerrar</string>
+    <string name="Sent_failed">Falló el envío para:</string>
+    <string name="Sent_failed_short">Falló:</string>
+    <string name="google_code">&lt;a href="https://sms-trial.googlecode.com/svn/"&gt; Google Code &lt;/a&gt;</string>
+    <string name="Rate_App">Califica la aplicación</string>
+    <string name="Rate">Calificación</string>
+    <string name="https_sms_trial_googlecode_com_svn_">https://sms-trial.googlecode.com/svn/</string>
+    <string name="Please_support_us">Ayúdanos calificando la aplicación en el Android Market. ¡Gracias!</string>
+    <string name="Remove">Eliminar</string>
+    <string name="Resend_now">Reenviar ahora</string>
+    <string name="Edit">Editar</string>
+    <string name="Message_is_sent_sucessfully">Mensaje enviado exitosamente</string>
+    <string name="Message_resend_later">Falló el envío, intenta más tarde</string>
+    <string name="Sending_please_wait">Enviando mensaje, espera por favor…</string>
+    <string name="Today_at">Hoy, a las</string>
+    <string name="Tomorrow_at">Mañana, a las</string>
+    <string name="Yesterday_at">Ayer, a las</string>
+    <string name="First_time_running">Ejecutando por primera vez</string>
+    <string name="please_wait_while_loading_contact">Cargando contactos…</string>
+    <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
+    <string name="Enter_message_here">Ingresa el mensaje…</string>
+    <string name="more_apps">Más aplicaciones…</string>
+    <string name="Share">Compartir</string>
+    <string name="Contact">Contacto</string>
+    <string name="Share_subject">¡Checa esto!</string>
+    <string name="Share_content">Una muy buena aplicación para posponer SMS: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
+    <string name="Call_now">Llamar ahora</string>
+    <string name="sms_now">SMS ahora</string>
+    <string name="Invalid_time_warning">Hora/Fecha incorrecta, ingresa una Hora/Fecha posterior</string>
+    <string name="Insert">Insertar</string>
+
+</resources>
