@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
 
     <string-array name="max_sent_number">
@@ -7,38 +7,38 @@
         <item>100</item>
     </string-array>
     <string-array name="max_sent_number_str">
-        <item>ostatnie 5 wiadomości</item>
-        <item>ostatnie 10 wiadomości</item>
-        <item>wszystkie wiadomości</item>
+        <item>5 mensajes</item>
+        <item>10 mensajes</item>
+        <item>Todos</item>
     </string-array>
     <string-array name="frequencies">
-        <item>Raz</item>
-        <item>Codziennie</item>
-        <item>Cotygodniowo</item>
-        <item>Comiesięcznie</item>
-        <item>Corocznie</item>
-        <item>Dni robocze (Pn. - Pt.)</item>
-        <item>Weekend (So.-Niedz.)</item>
+        <item>Una vez</item>
+        <item>Diariamente</item>
+        <item>Semanalmente</item>
+        <item>Mensualmente</item>
+        <item>Anualmente</item>
+        <item>Entre semana (Lun-Vie)</item>
+        <item>Fines de semana (Sáb-Dom)</item>
     </string-array>
     <string-array name="alerts">
-        <item>Brak</item>
-        <item>Wibracją</item>
-        <item>Dźwiękiem</item>
-        <item>Dźwiękiem i wibracją</item>
+        <item>Silencioso</item>
+        <item>Vibrar</item>
+        <item>Reproducir sonido</item>
+        <item>Sonido y Vibración</item>
     </string-array>
     <string-array name="months">
-        <item>St.</item>
-        <item>Lt.</item>
-        <item>Mrz.</item>
-        <item>Kw.</item>
-        <item>Mj.</item>
-        <item>Czrw.</item>
-        <item>Lp.</item>
-        <item>Sp.</item>
-        <item>Wrz.</item>
-        <item>Prn.</item>
-        <item>Lst.</item>
-        <item>Gr.</item>
+        <item>Ene</item>
+        <item>Feb</item>
+        <item>Mar</item>
+        <item>Abr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ago</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dic</item>
     </string-array>
 
 </resources>
