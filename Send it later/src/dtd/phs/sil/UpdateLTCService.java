@@ -71,7 +71,7 @@ public class UpdateLTCService extends IntentService {
 		catch (Exception e) {
 			return null;
 		} finally {
-			contactLookupCursor.close();
+			try { contactLookupCursor.close(); } catch (Exception e) {}
 		} 
 	}
 
