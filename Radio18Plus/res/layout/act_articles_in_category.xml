@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include
+        layout="@layout/top_bar"
+        android:id="@+id/top_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/top_bar_height" />
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/list_content" />
+
+    <include
+        android:id="@+id/bottom_controllers"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/bottom_controllers_height"
+        layout="@layout/bottom_controllers" />
+
+</LinearLayout>

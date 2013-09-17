@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="font_main_title">#FFF</color>
+    <color name="top_bar_bg">#d0003e</color>
+    <color name="top_tab_bg">#8e1537</color>
+    <color name="font_tab_color">#FFF</color>
+    <color name="bottom_controller_bg">#3f3e3f</color>
+    <color name="font_bottom_bar">#b4b4b4</color>
+    <color name="progress_red">#d0003e</color>
+    <color name="main_bg">#e5e1dc</color>
+    <color name="list_divider">#c6c6c6</color>
+    <color name="font_warning">#000</color>
+    <color name="std_btn">#d0003e</color>
+    <color name="font_std_btn">#FFF</color>
+    <color name="font_cat_item">#000</color>
+    <color name="font_std">#000000</color>
+    <color name="std_btn_pressed">#8e1537</color>
+    <color name="font_help_link_text">#d0003e</color>
+    <color name="font_article_secondary">#54575a</color>
+    
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@color/main_bg"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/std_pad"
+        android:paddingRight="@dimen/std_pad" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/std_pad_x2"
+            android:layout_marginTop="@dimen/std_pad_x2"
+            android:gravity="center_horizontal"
+            android:text="@string/Help_title"
+            android:textColor="@color/font_std"
+            android:textSize="@dimen/font_main_title" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/std_pad_x2"
+            android:text="@string/Help_text"
+            android:textColor="@color/font_std"
+            android:textSize="@dimen/font_std" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/std_pad_x2"
+            android:background="@drawable/edit_text_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/std_pad" >
+
+            <LinearLayout
+                android:id="@+id/layoutEmail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="@dimen/email_ic_dim"
+                    android:layout_height="@dimen/email_ic_dim"
+                    android:src="@drawable/email" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/std_margin"
+                    android:text="@string/help_email"
+                    android:textColor="@color/font_help_link_text"
+                    android:textSize="@dimen/font_main_title" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutPhone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/std_pad_x2"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="@dimen/email_ic_dim"
+                    android:layout_height="@dimen/email_ic_dim"
+                    android:src="@drawable/phone" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/std_margin"
+                    android:text="@string/help_phone"
+                    android:textColor="@color/font_help_link_text"
+                    android:textSize="@dimen/font_main_title" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

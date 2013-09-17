@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="top_bar_height">48dp</dimen>
+    
+    <dimen name="bottom_controllers_height">56dp</dimen>
+    <dimen name="progressbar_height">2dp</dimen>
+	<dimen name="bottom_controllers_body_height">54dp</dimen>
+    
+    <dimen name="top_tab_height">32dp</dimen>
+    <dimen name="tab_indicator_height">12dp</dimen>
+    <dimen name="std_pad">8dp</dimen>
+    <dimen name="std_pad_x2">16dp</dimen>
+    <dimen name="ic_std_dim">24dp</dimen>
+    <dimen name="font_main_title">18dp</dimen>
+    <dimen name="std_margin">8dp</dimen>
+    <dimen name="font_tab_color">14dp</dimen>
+    <dimen name="tab_indicator_icon_width">18dp</dimen>
+    <dimen name="tab_indicator_icon_height">11dp</dimen>
+    <dimen name="ic_pause_height">31dp</dimen>
+    <dimen name="ic_pause_width">26dp</dimen>
+    <dimen name="font_bottom_bar">16dp</dimen>
+    <dimen name="min_loading_page_height">72dp</dimen>
+	<dimen name="std_progress_dim">16dp</dimen>
+	<dimen name="divider_height">1dp</dimen>
+	<dimen name="font_warning">16dp</dimen>
+	<dimen name="std_btn_height">48dp</dimen>
+	<dimen name="font_std">16dp</dimen>
+	<dimen name="font_std_btn">16dp</dimen>
+	<dimen name="category_item_height">60dp</dimen>
+	<dimen name="cat_icon_dim">24dp</dimen>
+	<dimen name="font_cat_item">18dp</dimen>
+	<dimen name="font_bottom_bar_secondary">12dp</dimen>
+	<dimen name="edit_text_height">40dp</dimen>
+	<dimen name="email_content_min_height">125dp</dimen>
+	<dimen name="font_help_link_text">16dp</dimen>
+	<dimen name="help_link_text_height">32dp</dimen>
+	<dimen name="email_ic_dim">32dp</dimen>
+	<dimen name="cover_dim">64dp</dimen>
+	<dimen name="font_article_name">18dp</dimen>
+	<dimen name="font_article_secondary">12dp</dimen>
+	
+
+</resources>

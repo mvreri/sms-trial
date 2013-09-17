@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Radio Nguoi Lon</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="RADIO_18_PLUS">RADIO 18+</string>
+    <string name="Chuyen_muc">Chuyên mục</string>
+    <string name="Hoi_dap">Hỏi đáp</string>
+    <string name="Huong_dan">Hướng dẫn</string>
+    <string name="loading_please_wait">Vui lòng đợi...</string>
+    <string name="connection_error_pls_retry">Lỗi kết nối, xin vui lòng thử lại sau</string>
+    <string name="Retry">Thử lại</string>
+    <string name="Send_email">Gửi nội dung</string>
+    <string name="QNA_Text">Lorem ipsum dolor sit amet, consectetuer adipiscingelit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</string>
+    <string name="Email">Email</string>
+    <string name="Content">Nội dung</string>
+    <string name="Help_title">Hướng dẫn bạn nghe đài</string>
+    <string name="help_email">sex18plus@live.com</string>
+    <string name="Help_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum blandit a nulla quis mollis. Etiam rutrum commodo elit, in volutpat lacus. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum blandit a nulla quis mollis. Etiam rutrum commodo elit, in volutpat lacus. \n\n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum blandit a nulla quis mollis. Etiam rutrum commodo elit, in volutpat lacus.</string>
+    <string name="help_phone">+84972175224</string>
+    <string name="Player_is_not_ready_pls_retry_later">Chương trình chưa sẵn sàng, vui lòng thử lại sau 5 giây </string>
+    <string name="title_activity_act_articles_in_category">ActArticlesInCategory</string>
+
+</resources>
