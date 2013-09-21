@@ -13,6 +13,7 @@ public class ActDetails extends BaseActivity {
 	private static final int FRAME_RETRY = 2;
 	private Topbar topbar;
 	private FrameLayout mainFrames;
+	private DetailsBottomBar bottomBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,8 @@ public class ActDetails extends BaseActivity {
 	}
 
 	private void initBottombar() {
-		bottomBar 
+		bottomBar = new DetailsBottomBar(findViewById(R.id.details_bottom));
+		bottomBar.onCreate();
 	}
 
 	private void initSlideshowFrames() {

@@ -6,7 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.ViewGroup;
 
-import com.vsm.radio18.ActivityWitghBottomBar;
+import com.vsm.radio18.ActivityWithBottomBar;
 import com.vsm.radio18.R;
 import com.vsm.radio18.ui.TopTabs;
 import com.vsm.radio18.ui.Topbar;
@@ -14,7 +14,7 @@ import com.vsm.radio18.ui.Topbar;
 import dtd.phs.lib.ui.images_loader.ImageCache;
 import dtd.phs.lib.utils.PreferenceHelpers;
 
-public class ActMain extends ActivityWitghBottomBar {
+public class ActMain extends ActivityWithBottomBar {
 	private static final int DEFAULT_TAB = 0;
 	private Topbar topbar;
 	private TopTabs topTabs;

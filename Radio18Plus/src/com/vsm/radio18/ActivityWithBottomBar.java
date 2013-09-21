@@ -4,11 +4,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.FragmentActivity;
-import android.view.Window;
 
 import com.vsm.radio18.data.entities.ArticleItem;
 import com.vsm.radio18.media_player.PlayerService;
@@ -18,15 +14,8 @@ import com.vsm.radio18.ui.BottomControllers;
 
 import dtd.phs.lib.utils.Logger;
 
-public class ActivityWitghBottomBar extends FragmentActivity {
+public class ActivityWithBottomBar extends BaseActivity {
 	private BottomControllers bottomControllers;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		super.onCreate(savedInstanceState);
-	}
 	
 	@Override
 	protected void onResume() {

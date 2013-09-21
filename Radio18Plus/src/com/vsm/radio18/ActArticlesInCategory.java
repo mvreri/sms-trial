@@ -32,7 +32,7 @@ import dtd.phs.lib.data_framework.RequestWorker;
 import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 
-public class ActArticlesInCategory extends ActivityWitghBottomBar {
+public class ActArticlesInCategory extends ActivityWithBottomBar {
 
 	public static final String EXTRA_CAT_NAME = "extra_cat_name";
 	public static final String EXTRA_CAT_ID = "extra_cat_id";
