@@ -17,5 +17,11 @@
     <color name="std_btn_pressed">#8e1537</color>
     <color name="font_help_link_text">#d0003e</color>
     <color name="font_article_secondary">#54575a</color>
+    <color name="seekbar_red">#d0003e</color>
+    <color name="font_bottom_details_cur_time">#FFF</color>
+    <color name="font_bottom_details_duration">#d0003e</color>
+    <color name="font_bottom_details_seperator">#737a92</color>
+    <color name="bg_bottom_body_details">#000000</color>
+    <color name="font_bottom_details_bar">#FFF</color>
     
 </resources>

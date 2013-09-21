@@ -10,6 +10,14 @@
         android:background="@color/bottom_controller_bg"
         android:orientation="horizontal" >
 
+        <ImageView
+            android:id="@+id/ivPause"
+            android:layout_width="@dimen/ic_play_pause_dim"
+            android:layout_height="@dimen/ic_play_pause_dim"
+            android:layout_gravity="center_vertical"
+            android:padding="@dimen/std_pad"
+            android:src="@drawable/ic_pause" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="fill_parent"
@@ -37,13 +45,6 @@
                 android:textColor="@color/font_bottom_bar"
                 android:textSize="@dimen/font_bottom_bar_secondary" />
         </LinearLayout>
-
-        <ImageView
-            android:id="@+id/ivPause"
-            android:layout_width="@dimen/ic_pause_height"
-            android:layout_height="@dimen/ic_pause_width"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_pause" />
     </LinearLayout>
 
     <ProgressBar

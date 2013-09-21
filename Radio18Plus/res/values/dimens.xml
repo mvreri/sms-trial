@@ -38,6 +38,11 @@
 	<dimen name="cover_dim">64dp</dimen>
 	<dimen name="font_article_name">18dp</dimen>
 	<dimen name="font_article_secondary">12dp</dimen>
+	<dimen name="details_bottom_height">64dp</dimen>
+	<dimen name="seekbar_height">16dp</dimen>
+	<dimen name="details_bottom_body_height">48dp</dimen>
+	<dimen name="font_bottom_details_time">8dp</dimen>
+	<dimen name="ic_play_pause_dim">48dp</dimen>
 	
 
 </resources>

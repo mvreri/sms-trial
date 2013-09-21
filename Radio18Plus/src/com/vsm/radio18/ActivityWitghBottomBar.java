@@ -18,7 +18,7 @@ import com.vsm.radio18.ui.BottomControllers;
 
 import dtd.phs.lib.utils.Logger;
 
-public class BaseActivity extends FragmentActivity {
+public class ActivityWitghBottomBar extends FragmentActivity {
 	private BottomControllers bottomControllers;
 	
 	@Override
