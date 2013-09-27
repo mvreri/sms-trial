@@ -1,12 +1,14 @@
 package com.vsm.radio18.ui;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.vsm.radio18.ActDetails;
 import com.vsm.radio18.R;
 import com.vsm.radio18.media_player.PlayerService;
 
@@ -18,7 +20,7 @@ public class BottomControllers {
 	private View root;
 	private TextView tvName;
 	private TextView tvTime;
-	private Context context;
+	private Activity act;
 	private PlayerService playerService;
 	private ProgressBar progressBar;
 	public int duration = UNINIT;
@@ -27,10 +29,11 @@ public class BottomControllers {
 	// the lifecycle of this updater: onResume -> onPause
 	private int progress;
 	private int curTime;
+	private int articleId;
 
-	public BottomControllers(View view) {
+	public BottomControllers(Activity act,View view) {
 		this.root = view;
-		this.context = view.getContext();
+		this.act = act;
 	}
 
 	public void onCreate() {
@@ -39,6 +42,14 @@ public class BottomControllers {
 		progressBar = (ProgressBar) root.findViewById(R.id.progressBar);
 		ivPlayPause = (ImageView) root.findViewById(R.id.ivPause);
 		disable();
+		OnClickListener onLayoutClick = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(act,ActDetails.class);
+				act.startActivity(i);
+			}
+		};
+		root.setOnClickListener(onLayoutClick);
 	}
 
 	public void onResume() {

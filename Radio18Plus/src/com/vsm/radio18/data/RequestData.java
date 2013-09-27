@@ -7,6 +7,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,14 +43,14 @@ public abstract class RequestData implements IRequest {
 			ResponseHandler<String> responseHandler = new BasicResponseHandler();
 			String jsonString = httpClient.execute(httpGet, responseHandler);
 			Object result = parseJSON(jsonString);
-			if ( result != null )
+			if (result != null)
 				cacheData(url, result);
 			return result;
 		}
 	}
 
 	private void cacheData(String url, Object result) {
-		Cache.cacheData(url,result);
+		Cache.cacheData(url, result);
 	}
 
 	private Object cachedData(String url) {
@@ -63,18 +64,32 @@ public abstract class RequestData implements IRequest {
 	/**
 	 * 
 	 * @param message
-	 * @return result if success OR null if server return status code != success 
+	 * @return result if success OR null if server return status code != success
 	 * @throws JSONException
 	 */
 	private Object parseJSON(String message) throws JSONException {
 		JSONObject jso = new JSONObject(message);
-		int status = jso.getInt(STATUS_TAG);
+		int status = -1;
+		try {
+			status = jso.getInt(STATUS_TAG);
+		} catch (JSONException e) {
+			//TODO: remove this try catch, 
+			// the codes exist only because of the stub images API doesn't have Status code !
+			//http://api.appngon.com/index.php/image/images
+			JSONArray array = new JSONArray(message);
+			if ( this instanceof ReqListImages ) {
+				return ((ReqListImages) this).parseURLs(array);
+			}
+		}
+		
 		if (status == STATUS_SUCCESS) {
 			return parseSuccessResult(jso);
 		} else {
 			return null;
 		}
+
 	}
+			
 
 	private HttpParams setTimeOut() {
 		HttpParams httpParameters = new BasicHttpParams();

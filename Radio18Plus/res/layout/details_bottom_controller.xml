@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-	android:background="@color/bg_bottom_body_details"
-    android:orientation="vertical" >
-
+<!-- 
     <SeekBar
         android:id="@+id/seekbar"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/seekbar_height"
+        android:layout_height="wrap_content"
         android:max="1000"
         android:progress="500"
         android:progressDrawable="@drawable/seekbar_progress"
-        android:thumb="@drawable/ic_thumb" />
+        android:thumb="@drawable/ic_thumb"
+        android:thumbOffset="8dp" 
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        
+        /> -->
 
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/details_bottom_body_height"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_bottom_body_details"
         >
 
         <LinearLayout
@@ -54,7 +56,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/details_bottom_body_height"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal" 
             >
@@ -73,9 +75,8 @@
                 style="@style/One_line_text"
                 android:textSize="@dimen/font_bottom_bar" 
                 android:textColor="@color/font_bottom_details_bar"
-                android:text="Some title goes here !"
+                android:text="@string/RADIO_18_PLUS"
                 />
         </LinearLayout>
     </FrameLayout>
 
-</LinearLayout>

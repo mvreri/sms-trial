@@ -93,8 +93,7 @@ public class ActivityWithBottomBar extends BaseActivity {
 	};
 	
 	protected void initBottomControllers() {
-		bottomControllers = new BottomControllers(
-				findViewById(R.id.bottom_controllers));
+		bottomControllers = new BottomControllers(this,findViewById(R.id.bottom_controllers));
 		bottomControllers.onCreate();
 	}
 	

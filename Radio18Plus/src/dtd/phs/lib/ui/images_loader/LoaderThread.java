@@ -88,8 +88,7 @@ public class LoaderThread extends Thread {
 		}
 
 		// This file had never been downloaded before -> load from internet
-		bm = Helpers.downloadBitmap(loadingItem.URL); // TODO: could be faster
-														// with HttpClient
+		bm = Helpers.downloadBitmap(loadingItem.URL); // TODO: could be faster with HttpClient
 		if (bm != null) {
 			// Logger.logInfo("Getting from internet " );
 			bm = processCutCircle(loadingItem, bm);

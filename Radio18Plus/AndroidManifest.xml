@@ -37,6 +37,7 @@
             android:label="@string/title_activity_act_articles_in_category" >
         </activity>
         <service android:name=".media_player.PlayerService"></service>
+        <activity android:name="ActDetails"></activity>
     </application>
 
 </manifest>
