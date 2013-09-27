@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.vsm.radio18.ProgressUpdater.IProgressListener;
 import com.vsm.radio18.data.ReqListImages;
@@ -21,6 +22,7 @@ import com.vsm.radio18.ui.Topbar;
 import dtd.phs.lib.data_framework.IDataListener;
 import dtd.phs.lib.data_framework.IRequest;
 import dtd.phs.lib.data_framework.RequestWorker;
+import dtd.phs.lib.ui.images_loader.ImagePreviewer;
 import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 
@@ -35,6 +37,7 @@ public class ActDetails extends BaseActivity {
 	protected PlayerService playerService;
 	private ProgressUpdater progressUpdater;
 	private Handler handler = new Handler();
+	protected ImagePreviewer previewer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class ActDetails extends BaseActivity {
 
 	private void initSlideshowFrames() {
 		mainFrames = (FrameLayout) findViewById(R.id.main_frames);
-		Helpers.showOnlyView(mainFrames, FRAME_LOADING);
+		Helpers.showOnlyView(mainFrames, FRAME_LOADING);		
 	}
 
 	private void initTopbar() {
@@ -85,7 +88,8 @@ public class ActDetails extends BaseActivity {
 
 	
 	private void releaseImages() {
-		Logger.logError("TODO: Release image previewer");
+		if ( previewer != null) 
+			previewer.onPause();
 	}
 
 	private void startLoadingImages(long articleId) {
@@ -104,6 +108,8 @@ public class ActDetails extends BaseActivity {
 					for(int i = 0 ; i < urls.size() ; i++) {
 						Logger.logInfo("ImageURL: " + urls.get(i));
 					}
+					previewer = new ImagePreviewer(urls, (ImageView) findViewById(R.id.ivPict), handler);
+					previewer.onResume();
 				} else {
 					onError(new RuntimeException("Null data returned"));
 				}
@@ -177,11 +183,23 @@ public class ActDetails extends BaseActivity {
 		public void onPlayerStateChanged(PlayerServiceStates state, Object data) {
 			switch (state) {
 			case UNINIT:
+				Logger.logError("Should not come to this state: " + state.toString());
+				break;
 			case SONG_SELECTED:
+				Logger.logError("Should not come to this state: " + state.toString());
+				break;
 			case PLAYING:
+				bottomBar.updatePlayingState();
+				break;
 			case PAUSED:
+				bottomBar.updatePlayingState();
+				break;
 			case STOP_N_WAIT:
+				bottomBar.updatePlayingState();
+				break;
 			case DEAD:
+				Logger.logError("Should not come to this state: " + state.toString());
+				break;
 			default:
 				break;
 			}

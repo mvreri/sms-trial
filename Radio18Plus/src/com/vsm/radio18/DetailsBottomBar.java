@@ -84,4 +84,12 @@ public class DetailsBottomBar {
 		tvCurTime.setText(Helpers.convert2ReadalbeTime(currentTime));
 	}
 
+	public void updatePlayingState() {
+		if ( playerService != null ) {
+			if ( playerService.isMusicPlaying() ) 
+				ivPlayPause.setImageResource(R.drawable.ic_pause);
+			else ivPlayPause.setImageResource(R.drawable.ic_play);
+		}
+	}
+
 }
