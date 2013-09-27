@@ -6,9 +6,18 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.R;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.vsm.radio18.RadioConfiguration;
+
 import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 
@@ -28,39 +37,41 @@ public class ImagePreviewer {
 		@Override
 		public void onNewBitmapLoaded(Bitmap bm) {
 			synchronized (listImages) {
+				Logger.logInfo("New bitmap is loaded !");
 				listImages.add(bm);
 				listImages.notifyAll();
 			}
 		}
 	};
 	private Handler handler;
-	
-	public ImagePreviewer(ArrayList<String> urls,  ImageView imageView, Handler handler) {
+	protected Context context;
+
+	public ImagePreviewer(ArrayList<String> urls, ImageView imageView,
+			Handler handler) {
 		this.urls = urls;
 		this.listImages = new ArrayList<Bitmap>();
 		this.weakImageView = new WeakReference<ImageView>(imageView);
 		this.handler = handler;
+		this.context = imageView.getContext();
 	}
 
-	
 	private void load() {
 		imageLoaderThread = new ImageLoaderThread(urls, loaderListener);
 		imageLoaderThread.start();
 	}
-	
+
 	private void cancelLoading() {
 		if (imageLoaderThread != null) {
-			imageLoaderThread.stop();
-			for (Bitmap bm : listImages)
-				bm.recycle();
+			imageLoaderThread.stopLoading();
 			listImages.clear();
 			imageLoaderThread = null;
 		}
 	}
-	
+
 	public interface IImageLoaderListener {
 		void onNewBitmapLoaded(Bitmap bm);
 	}
+
 	public class ImageLoaderThread extends Thread {
 
 		private ArrayList<String> urls;
@@ -146,16 +157,34 @@ public class ImagePreviewer {
 		load();
 		setBitmap(null);
 		startPreviewThread();
-		
+
 	}
 
 	private boolean setBitmap(final Bitmap bm) {
 		final ImageView imageView = weakImageView.get();
-		if ( imageView != null ) {
+		if (imageView != null) {
 			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					imageView.setImageBitmap(bm);
+					Animation startAnim = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+					startAnim.setAnimationListener(new AnimationListener() {
+						@Override
+						public void onAnimationStart(Animation animation) {
+						}
+						
+						@Override
+						public void onAnimationRepeat(Animation animation) {
+						}
+						
+						@Override
+						public void onAnimationEnd(Animation animation) {
+							imageView.setImageBitmap(bm);
+							Animation occAnimation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+							imageView.setAnimation(occAnimation);
+						}
+					});
+					imageView.startAnimation(startAnim);
+					
 				}
 			});
 			return true;
@@ -173,6 +202,7 @@ public class ImagePreviewer {
 	}
 
 	public class PreviewThread extends Thread {
+
 		private static final int UNINIT = -1;
 		private volatile boolean stopped;
 		private int currentIndex;
@@ -182,36 +212,36 @@ public class ImagePreviewer {
 			stopped = false;
 			currentIndex = UNINIT;
 		}
-		
+
 		@Override
 		public void run() {
-			synchronized (listImages) {
-				while ( ! stopped ) {
-					while (listImages.isEmpty()) {
-						try {
-							listImages.wait();
-						} catch (InterruptedException e) {
-							return;
-						}
+			while ( ! stopped ) {
+				try {
+					Bitmap nextBitmap = getNextBitmap();
+					if ( nextBitmap == null ) {
+						Thread.sleep(1000);
+						continue;
 					}
-					
-					Helpers.assertCondition( !listImages.isEmpty() );
-					Bitmap nextBm = getNextBitmap();
-					if ( ! setBitmap(nextBm) ) return;
-					try {
-						Thread.sleep(10000);
-					} catch (InterruptedException e) {
-						return;
-					}
+					if ( !nextBitmap.isRecycled() )
+						setBitmap(nextBitmap);
+					Thread.sleep(RadioConfiguration.PREVIEW_DURATION);
+				} catch (InterruptedException e) {
+					Logger.logInfo("PreviewThread is interrupted ");
+					return;
 				}
+
 			}
 		}
-		
+
 		private Bitmap getNextBitmap() {
-			if ( currentIndex == UNINIT ) 
+			if ( listImages.size() == 0 ) return null;
+
+			if (currentIndex == UNINIT)
 				currentIndex = 0;
-			else currentIndex++;
-			if ( currentIndex >= listImages.size() ) currentIndex = 0;
+			else
+				currentIndex++;
+			if (currentIndex >= listImages.size())
+				currentIndex = 0;
 			return listImages.get(currentIndex);
 		}
 
@@ -220,8 +250,5 @@ public class ImagePreviewer {
 			interrupt();
 		}
 	}
-	
-
-
 
 }

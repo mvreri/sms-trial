@@ -68,28 +68,27 @@ public abstract class RequestData implements IRequest {
 	 * @throws JSONException
 	 */
 	private Object parseJSON(String message) throws JSONException {
-		JSONObject jso = new JSONObject(message);
-		int status = -1;
 		try {
+			JSONObject jso = new JSONObject(message);
+			int status = -1;
 			status = jso.getInt(STATUS_TAG);
-		} catch (JSONException e) {
-			//TODO: remove this try catch, 
-			// the codes exist only because of the stub images API doesn't have Status code !
-			//http://api.appngon.com/index.php/image/images
-			JSONArray array = new JSONArray(message);
-			if ( this instanceof ReqListImages ) {
-				return ((ReqListImages) this).parseURLs(array);
+			if (status == STATUS_SUCCESS) {
+				return parseSuccessResult(jso);
+			} else {
+				return null;
 			}
-		}
-		
-		if (status == STATUS_SUCCESS) {
-			return parseSuccessResult(jso);
-		} else {
-			return null;
+		} catch (JSONException e) {
+			// TODO: remove this try catch,
+			// the codes exist only because of the stub images API is JSON Array NOT JSONObject
+			// http://api.appngon.com/index.php/image/images
+			JSONArray array = new JSONArray(message);
+			if (this instanceof ReqListImages) {
+				return ((ReqListImages) this).parseURLs(array);
+			} else return null;
 		}
 
+
 	}
-			
 
 	private HttpParams setTimeOut() {
 		HttpParams httpParameters = new BasicHttpParams();

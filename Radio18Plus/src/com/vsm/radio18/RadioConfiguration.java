@@ -14,4 +14,7 @@ public class RadioConfiguration {
 	public static final String HELP_PHONE_NUMBER = "+84972175224";
 	
 	public static final int IMAGE_SIZE = 100; //size for each article in pixels - should be 100 px
+	
+	//Details screen
+	public static final int PREVIEW_DURATION = 5000;
 }

@@ -93,6 +93,7 @@ public class ActDetails extends BaseActivity {
 	}
 
 	private void startLoadingImages(long articleId) {
+		Logger.logInfo("Start loading image: " + articleId);
 		IDataListener listener = new IDataListener() {
 			
 			@Override
@@ -110,6 +111,7 @@ public class ActDetails extends BaseActivity {
 					}
 					previewer = new ImagePreviewer(urls, (ImageView) findViewById(R.id.ivPict), handler);
 					previewer.onResume();
+					Helpers.showOnlyView(mainFrames, FRAME_DATA);
 				} else {
 					onError(new RuntimeException("Null data returned"));
 				}
@@ -183,10 +185,8 @@ public class ActDetails extends BaseActivity {
 		public void onPlayerStateChanged(PlayerServiceStates state, Object data) {
 			switch (state) {
 			case UNINIT:
-				Logger.logError("Should not come to this state: " + state.toString());
 				break;
 			case SONG_SELECTED:
-				Logger.logError("Should not come to this state: " + state.toString());
 				break;
 			case PLAYING:
 				bottomBar.updatePlayingState();
@@ -198,7 +198,6 @@ public class ActDetails extends BaseActivity {
 				bottomBar.updatePlayingState();
 				break;
 			case DEAD:
-				Logger.logError("Should not come to this state: " + state.toString());
 				break;
 			default:
 				break;
