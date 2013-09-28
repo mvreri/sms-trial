@@ -9,8 +9,12 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.vsm.radio18.ProgressUpdater.IProgressListener;
 import com.vsm.radio18.data.ReqListImages;
@@ -38,6 +42,7 @@ public class ActDetails extends BaseActivity {
 	private ProgressUpdater progressUpdater;
 	private Handler handler = new Handler();
 	protected ImagePreviewer previewer;
+	private SeekBar seekbar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,26 @@ public class ActDetails extends BaseActivity {
 	}
 
 	private void initBottombar() {
+		//TODO: resize thumb for all screen drawables
+		seekbar = (SeekBar) findViewById(R.id.seekbar);
+		seekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {}
+			
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {}
+			
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				if ( fromUser && playerService != null && 
+						(playerService.isMusicPlaying() || playerService.isPaused()) ) {
+					Logger.logInfo("fromUser: progress = " + progress);
+					playerService.setProgress(progress);
+				}
+			}
+		});
 		bottomBar = new DetailsBottomBar(findViewById(R.id.details_bottom));
 		bottomBar.onCreate();
 	}
@@ -61,6 +86,16 @@ public class ActDetails extends BaseActivity {
 	private void initTopbar() {
 		topbar = new Topbar(findViewById(R.id.top_bar));
 		topbar.onCreate();
+		topbar.setTopIcon(R.drawable.ic_back);
+		topbar.setTopIconClick(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		topbar.setTitle(R.string.RADIO_18_PLUS);
+		topbar.alignCenterTitle();
 	}
 
 	@Override
@@ -125,12 +160,13 @@ public class ActDetails extends BaseActivity {
 		IProgressListener progressListener = new IProgressListener() {
 			
 			@Override
-			public void onProgressChanged(int progress, final int currentTime, final int duration) {
+			public void onProgressChanged(final int progress, final int currentTime, final int duration) {
 				runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
 						bottomBar.onTimeChanged(currentTime, duration);
+						seekbar.setProgress(progress);
 					}
 				});
 				

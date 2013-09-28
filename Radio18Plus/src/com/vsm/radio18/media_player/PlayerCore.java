@@ -12,6 +12,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 
 import com.vsm.radio18.media_player.PlayerCore.ICoreListener.CoreStates;
 
+import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 
 /**
@@ -130,6 +131,7 @@ public class PlayerCore {
 		if ( songDuration <= 0 ) return false;
 		if ( coreState == CoreStates.PAUSED || coreState == CoreStates.STARTED) {
 			int position = (int) (((1.0d*progress) / 1000) * songDuration);
+			Logger.logInfo("Seek to position: " + Helpers.convert2ReadalbeTime(position));
 			androidPlayer.seekTo(position);
 			return true;
 		} else {

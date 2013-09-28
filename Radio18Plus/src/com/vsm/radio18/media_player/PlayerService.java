@@ -389,4 +389,10 @@ public class PlayerService extends Service {
 		}
 	}
 
+	public synchronized void setProgress(int progress) {
+		if ( playerCore != null && (playerState == PlayerServiceStates.PLAYING || playerState == PlayerServiceStates.PAUSED)) {
+			playerCore.seekTo(progress);
+		}
+	}
+
 }

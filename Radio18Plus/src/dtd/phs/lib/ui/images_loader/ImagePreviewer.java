@@ -10,7 +10,6 @@ import android.R;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
