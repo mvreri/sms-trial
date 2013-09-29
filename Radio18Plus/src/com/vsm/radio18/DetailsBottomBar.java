@@ -44,7 +44,8 @@ public class DetailsBottomBar {
 					if ( playerService.isMusicPlaying() ) {
 						playerService.pause();
 						ivPlayPause.setImageResource(R.drawable.ic_play);
-					} else if ( playerService.isPaused() ) {
+					} else { 
+					//if ( playerService.isPaused() ) {
 						playerService.resume();
 						ivPlayPause.setImageResource(R.drawable.ic_pause);
 					}

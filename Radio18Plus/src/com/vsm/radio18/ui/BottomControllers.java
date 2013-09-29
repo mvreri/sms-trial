@@ -177,13 +177,13 @@ public class BottomControllers {
 			if (playerService.isMusicPlaying()) {
 				ivPlayPause.setImageResource(R.drawable.ic_pause);
 				ivPlayPause.setOnClickListener(onPausePressed);
-			} else if (playerService.isPaused()) {
+//			} else if (playerService.isPaused()) {
+//				ivPlayPause.setImageResource(R.drawable.ic_play);
+//				ivPlayPause.setOnClickListener(onPlayPressed);
+			} else if ( playerService.isASongSelected() ) {
 				ivPlayPause.setImageResource(R.drawable.ic_play);
 				ivPlayPause.setOnClickListener(onPlayPressed);
-			} else if ( playerService.isASongSelected() ) {
 			}
-
-			// TODO: later - what if end of song & wanna replay ?
 		} else {
 			ivPlayPause.setImageResource(R.drawable.ic_play);
 			ivPlayPause.setOnClickListener(null);

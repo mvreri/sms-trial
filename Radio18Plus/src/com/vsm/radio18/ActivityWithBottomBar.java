@@ -82,7 +82,7 @@ public class ActivityWithBottomBar extends BaseActivity {
 				case PAUSED:
 					bottomControllers.change2PausedState();
 					break;
-				case STOP_N_WAIT:
+				case SONG_COMPLETED:
 					bottomControllers.change2StopNWaitState();
 					break;
 				case DEAD:

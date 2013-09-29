@@ -230,8 +230,9 @@ public class ActDetails extends BaseActivity {
 			case PAUSED:
 				bottomBar.updatePlayingState();
 				break;
-			case STOP_N_WAIT:
+			case SONG_COMPLETED:
 				bottomBar.updatePlayingState();
+				seekbar.setProgress(seekbar.getMax());
 				break;
 			case DEAD:
 				break;

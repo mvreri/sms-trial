@@ -27,7 +27,7 @@ public class PlayerService extends Service {
 
 	public interface IPlayerListener {
 		public enum PlayerServiceStates {
-			UNINIT, SONG_SELECTED, PLAYING, PAUSED, STOP_N_WAIT, DEAD
+			UNINIT, SONG_SELECTED, PLAYING, PAUSED, SONG_COMPLETED, DEAD
 		};
 
 		public void onPlayerStateChanged(PlayerServiceStates state, Object data);
@@ -75,7 +75,7 @@ public class PlayerService extends Service {
 			change2State(PlayerServiceStates.PAUSED, currItem);
 			if ( playerCore != null )
 				playerCore.resume();
-		} else if (playerState == PlayerServiceStates.STOP_N_WAIT ) {
+		} else if (playerState == PlayerServiceStates.SONG_COMPLETED ) {
 			Logger.logInfo("Resume from STOP_N_WAIT_ state");
 			if ( currItem != null ) {
 				playNewItem(currItem);
@@ -289,7 +289,7 @@ public class PlayerService extends Service {
 				change2State(PlayerServiceStates.PAUSED, currItem);
 				break;
 			case PLAYBACK_COMPLETED:
-				change2State(PlayerServiceStates.STOP_N_WAIT, currItem);
+				change2State(PlayerServiceStates.SONG_COMPLETED, currItem);
 				break;
 			case END:
 				//don't do anything here ! when it comes to END state that mean the Service is dying/dead
@@ -322,7 +322,7 @@ public class PlayerService extends Service {
 		case PAUSED:
 			startStopTimer();
 			break;
-		case STOP_N_WAIT:
+		case SONG_COMPLETED:
 			startStopTimer();
 			break;
 		case DEAD:
