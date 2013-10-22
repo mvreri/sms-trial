@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/std_pad"
     android:orientation="horizontal" >
-    <ImageView
+    <ImageView        
         android:layout_width="@dimen/cat_icon_dim" 
         android:layout_height="@dimen/cat_icon_dim" 
         android:src="@drawable/ic_stub_red"
+        android:layout_marginLeft="@dimen/std_margin"
         android:layout_gravity="center_vertical"
         />
 	<TextView
 	    android:id="@+id/tvName"
 	    android:layout_width="fill_parent"
+	    android:layout_marginLeft="@dimen/std_margin"
+	    android:layout_marginRight="@dimen/std_margin"
 	    android:layout_height="@dimen/category_item_height"
-	    android:padding="@dimen/std_pad"
 	    android:gravity="center_vertical"
 	    android:textSize="@dimen/font_cat_item"
 	    android:textColor="@color/font_cat_item"

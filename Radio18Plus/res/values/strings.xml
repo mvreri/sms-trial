@@ -5,9 +5,9 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="RADIO_18_PLUS">RADIO 18+</string>
-    <string name="Chuyen_muc">Chuyên mục</string>
-    <string name="Hoi_dap">Hỏi đáp</string>
-    <string name="Huong_dan">Hướng dẫn</string>
+    <string name="Chuyen_muc">CHUYÊN MỤC</string>
+    <string name="Hoi_dap">HỎI ĐÁP</string>
+    <string name="Huong_dan">HƯỚNG DẪN</string>
     <string name="loading_please_wait">Vui lòng đợi...</string>
     <string name="connection_error_pls_retry">Lỗi kết nối, xin vui lòng thử lại sau</string>
     <string name="Retry">Thử lại</string>

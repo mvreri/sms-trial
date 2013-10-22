@@ -12,7 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dtd.phs.lib.data_framework.IRequest;
-import dtd.phs.lib.utils.Logger;
 
 public abstract class RequestData implements IRequest {
 

@@ -10,7 +10,7 @@
     <dimen name="std_pad">8dp</dimen>
     <dimen name="std_pad_x2">16dp</dimen>
     <dimen name="ic_std_dim">24dp</dimen>
-    <dimen name="font_main_title">18dp</dimen>
+    <dimen name="font_main_title">21dp</dimen>
     <dimen name="std_margin">8dp</dimen>
     <dimen name="font_tab_color">14dp</dimen>
     <dimen name="tab_indicator_icon_width">18dp</dimen>
@@ -25,9 +25,9 @@
     <dimen name="std_btn_height">48dp</dimen>
     <dimen name="font_std">16dp</dimen>
     <dimen name="font_std_btn">16dp</dimen>
-    <dimen name="category_item_height">60dp</dimen>
+    <dimen name="category_item_height">64dp</dimen>
     <dimen name="cat_icon_dim">24dp</dimen>
-    <dimen name="font_cat_item">18dp</dimen>
+    <dimen name="font_cat_item">21dp</dimen>
     <dimen name="font_bottom_bar_secondary">12dp</dimen>
     <dimen name="edit_text_height">40dp</dimen>
     <dimen name="email_content_min_height">125dp</dimen>

@@ -172,8 +172,13 @@ public class Helpers {
 			con.setReadTimeout(READ_TIME_OUT);
 			is = con.getInputStream();
 			// InputStream is = (InputStream) new URL(url).getContent();
-			Bitmap bm = BitmapFactory.decodeStream(is);
-			return bm;
+			try {
+				Bitmap bm = BitmapFactory.decodeStream(is);
+				return bm;
+			} catch (OutOfMemoryError e) {
+				Logger.logError(e.toString());
+				return null;
+			}
 		} finally {
 			try {
 				is.close();
@@ -441,7 +446,7 @@ public class Helpers {
 		canvas.drawARGB(0, 0, 0, 0);
 		paint.setColor(color);
 		canvas.drawCircle(bitmap.getWidth() / 2, bitmap.getHeight() / 2,
-				Math.min(bitmap.getWidth() / 2, bitmap.getHeight() / 2 ), paint);
+				Math.min(bitmap.getWidth() / 2, bitmap.getHeight() / 2), paint);
 		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, paint);
 		return output;
@@ -451,9 +456,10 @@ public class Helpers {
 		int seconds = (currentTimeMils % 60000) / 1000;
 		int minutes = currentTimeMils / 60000;
 		String min = Integer.toString(minutes);
-		//		if (min.length() == 1) min = "0" + min;
+		// if (min.length() == 1) min = "0" + min;
 		String sec = Integer.toString(seconds);
-		if (sec.length() == 1) sec = "0" + sec;
+		if (sec.length() == 1)
+			sec = "0" + sec;
 		return min + ":" + sec;
 	}
 }
