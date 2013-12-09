@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHandler extends SQLiteOpenHelper {
 
-	private static final String DB_NAME = "MusicDB";
+	private static final String DB_NAME = "RadioVnDB";
 	private static final int DB_VERSION = 1;
 	private SQLiteDatabase db = null;
 
