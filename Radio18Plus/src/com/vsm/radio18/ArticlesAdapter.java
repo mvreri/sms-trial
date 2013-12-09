@@ -2,8 +2,6 @@ package com.vsm.radio18;
 
 import java.util.ArrayList;
 
-import javax.crypto.spec.IvParameterSpec;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -18,7 +16,6 @@ import com.vsm.radio18.data.entities.ArticleItem;
 import dtd.phs.lib.ui.images_loader.ImageCache;
 import dtd.phs.lib.ui.images_loader.ImageLoader;
 import dtd.phs.lib.utils.Helpers;
-import dtd.phs.lib.utils.Logger;
 
 public class ArticlesAdapter extends BaseAdapter {
 

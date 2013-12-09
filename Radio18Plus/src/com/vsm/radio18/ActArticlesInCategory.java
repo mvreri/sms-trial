@@ -127,7 +127,17 @@ public class ActArticlesInCategory extends ActivityWithBottomBar {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				ArticleItem item = adapter.getItem(position);
 				startPlayingMusic(item);
+				handler.postDelayed(startDetailsActivity, 300);
 			}
+			
+			Runnable startDetailsActivity = new Runnable() {
+				@Override
+				public void run() {
+					Intent intent = new Intent(getApplicationContext(),ActDetails.class);
+					startActivity(intent);
+				}
+			};
+
 		});
 
 	}

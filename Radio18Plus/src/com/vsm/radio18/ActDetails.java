@@ -202,7 +202,7 @@ public class ActDetails extends BaseActivity {
 			bottomBar.setPlayerService(playerService);
 			if (playerService.isASongSelected()) {
 				bottomBar.setSongName(playerService.getCurrentItem().getName());
-				startLoadingImages(playerService.getCurrentItem().getId());
+				startLoadingImages(playerService.getCurrentItem().getOnlineId());
 			} else {
 				Helpers.showToast(ActDetails.this,
 						R.string.Error_pls_retry_later);

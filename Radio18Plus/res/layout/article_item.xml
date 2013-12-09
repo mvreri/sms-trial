@@ -14,7 +14,8 @@
         android:layout_height="@dimen/cover_dim" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:paddingLeft="@dimen/std_pad"
@@ -40,5 +41,16 @@
             android:text="Mô tả bài viết, thường tương đối dài. Tối đa là 2 dòng biểu diễn trên Android. This is test, This is test, This is test, This is test, " 
             />
     </LinearLayout>
+    <Button
+        style="@style/Standard_Button"
+        android:text="@string/Mua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/std_pad_x2"
+        android:paddingRight="@dimen/std_pad_x2"
+        android:focusable="false"
+        android:layout_marginLeft="@dimen/std_pad"
+        />
 
 </LinearLayout>

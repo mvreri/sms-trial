@@ -56,7 +56,7 @@ public class PlayerService extends Service {
 		resetPlayerCore();
 		this.currItem = item;
 		change2State(PlayerServiceStates.SONG_SELECTED, item);
-		playerCore.play(item.getMp3Link());
+		playerCore.play(item.getStreamingURL());
 	}
 	
 
