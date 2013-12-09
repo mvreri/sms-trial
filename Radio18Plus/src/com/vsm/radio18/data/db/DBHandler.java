@@ -8,6 +8,8 @@ public class DBHandler extends SQLiteOpenHelper {
 
 	private static final String DB_NAME = "RadioVnDB";
 	private static final int DB_VERSION = 1;
+	private static final String[] TABLE_NAMEs = {ArticlesTable.TBL_NAME};
+	private static final String[][] FIELDs = {ArticlesTable.FIELDS};
 	private SQLiteDatabase db = null;
 
 	public DBHandler(Context context) {
@@ -16,17 +18,15 @@ public class DBHandler extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase database) {
-		//TODO:
-		database.execSQL(ArticlesTable.createTableQuery());
-//		database.execSQL(PlaylistsTable.createTableQuery());
-//		database.execSQL(SongsInPlaylistTable.createTableQuery());
+		for(int i = 0 ; i < TABLE_NAMEs.length ; i++)
+			database.execSQL(DBTable.createTable(TABLE_NAMEs[i], FIELDs[i]));
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-	    db.execSQL("DROP TABLE IF EXISTS " + ArticlesTable.TBL_NAME);
-//	    db.execSQL("DROP TABLE IF EXISTS " + PlaylistsTable.TBL_NAME);
-//	    db.execSQL("DROP TABLE IF EXISTS " + SongsInPlaylistTable.TBL_NAME);
+		for(int i = 0 ; i < TABLE_NAMEs.length ; i++) {
+			db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAMEs[i]);
+		}
 	    onCreate(db);
 	}
 	

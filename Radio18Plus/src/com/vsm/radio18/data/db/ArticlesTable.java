@@ -21,7 +21,7 @@ public class ArticlesTable extends DBTable {
 	public static final String EXTRA01 = "extra01";
 	public static final String EXTRA02 = "extra02";
 
-	private static final String[] FIELDS = {
+	static final String[] FIELDS = {
 			DB_ID + SPACE + "integer primary key autoincrement",
 			ONL_ID + SPACE + "integer unique not null",
 			ART_NAME + SPACE + "text not null", DESC + SPACE + "text",
@@ -37,13 +37,9 @@ public class ArticlesTable extends DBTable {
 		super(context);
 	}
 
-	public static String createTableQuery() {
-		return DBTable.createTable(TBL_NAME, FIELDS);
-	}
-
 	@Override
 	protected String getTableName() {
-		return this.TBL_NAME;
+		return ArticlesTable.TBL_NAME;
 	}
 
 	@Override
