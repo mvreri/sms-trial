@@ -30,6 +30,7 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.net.wifi.WifiManager;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -419,6 +420,7 @@ public class Helpers {
 	private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
 			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
+
 	public static boolean isValidEmail(String email) {
 		// Reference:
 		// http://www.mkyong.com/regular-expressions/how-to-validate-email-address-with-regular-expression/
@@ -461,5 +463,23 @@ public class Helpers {
 		if (sec.length() == 1)
 			sec = "0" + sec;
 		return min + ":" + sec;
+	}
+
+	public static String getMacAddress(Context context) {
+		try {
+			WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+			return wm.getConnectionInfo().getMacAddress();
+		} catch (Exception e) {
+			Logger.logError(e);
+			return null;
+		}
+
+	}
+	
+	private static final int USER_CODE_LENGTH = 8;	
+	public static String getUserCodeForThisPhone(Context context) {
+		String macAddress = getMacAddress(context);
+		if ( macAddress == null ) return null;
+		return MD5(macAddress).substring(0,USER_CODE_LENGTH);
 	}
 }
