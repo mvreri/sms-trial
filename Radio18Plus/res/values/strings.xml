@@ -23,4 +23,5 @@
     <string name="Error_pls_retry_later">App lỗi, xin vui lòng thử lại sau</string>
     <string name="Player_is_not_ready_pls_retry_later">Chương trình chưa sẵn sàng, vui lòng thử lại sau 5 giây </string>
     <string name="title_activity_act_articles_in_category">ActArticlesInCategory</string>
+    <string name="Balance">Số dư:</string>
 </resources>
