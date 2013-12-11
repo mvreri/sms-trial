@@ -46,6 +46,7 @@
     <dimen name="details_bottom_body_height">48dp</dimen>
     <dimen name="font_bottom_details_time">10dp</dimen>
     <dimen name="ic_play_pause_dim">48dp</dimen>
+    <dimen name="std_item_height">48dp</dimen>
     
     
 
