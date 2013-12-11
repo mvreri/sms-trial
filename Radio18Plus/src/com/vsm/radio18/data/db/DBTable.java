@@ -88,7 +88,7 @@ public abstract class DBTable {
 					getTableName(), null, null, null, null, null, itemOrderBy());
 			if ( cursor.moveToFirst() ) {
 				do {
-					
+					list.add(createDBItem(cursor));
 				} while ( cursor.moveToNext());
 			}
 			return list;
