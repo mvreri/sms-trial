@@ -15,7 +15,7 @@ import android.widget.ListView;
 
 public class TestChooser extends Activity {
 	static final String[] CLASSes = {
-		"com.vsm.radio18.test.Test_DBOperation",
+		"com.vsm.radio18.test.Test_DBOperations",
 		"com.vsm.radio18.categories.ActMain"};
 	private ArrayAdapter<String> adapter;
 	@Override

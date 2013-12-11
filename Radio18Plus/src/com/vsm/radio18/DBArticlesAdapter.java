@@ -57,5 +57,15 @@ public class DBArticlesAdapter extends BaseAdapter
 			}
 		});
 	}
+	
+	public void removeItem(int position) {
+		a.remove(position);
+		act.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+			}
+		});
+	}
 
 }

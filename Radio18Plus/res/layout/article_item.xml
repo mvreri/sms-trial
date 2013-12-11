@@ -42,6 +42,7 @@
             />
     </LinearLayout>
     <Button
+        android:id="@+id/btBuy"
         style="@style/Standard_Button"
         android:text="@string/Mua"
         android:layout_width="wrap_content"

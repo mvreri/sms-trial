@@ -13,11 +13,9 @@ import android.widget.ListView;
 
 import com.vsm.radio18.DBArticlesAdapter;
 import com.vsm.radio18.R;
-import com.vsm.radio18.data.db.ArticlesTable;
 import com.vsm.radio18.data.db.DBCenter;
 import com.vsm.radio18.data.db.QueryWorker;
 import com.vsm.radio18.data.entities.DB_ArticelItem;
-import com.vsm.radio18.data.entities.Item;
 
 import dtd.phs.lib.utils.Logger;
 
@@ -42,7 +40,9 @@ public class Test_DBOperations extends Activity {
 					@Override
 					public void run() {
 						ArrayList<DB_ArticelItem> a = DBCenter.getAllArticles(getApplicationContext());
-						adapter.refreshData(a);
+						if ( a != null ) 
+							adapter.refreshData(a);
+						else Logger.logError("Null data returned !");
 					}
 				});
 			}
@@ -58,12 +58,7 @@ public class Test_DBOperations extends Activity {
 						DB_ArticelItem item = adapter.getItem(position);
 						boolean remSucc = DBCenter.removeArticle(getApplicationContext(),item.getDBId());
 						Logger.logInfo("Remove success ?  " + remSucc);
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								adapter.notifyDataSetChanged();	
-							}
-						});
+						adapter.removeItem(position);
 					}
 				});
 			}
