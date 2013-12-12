@@ -465,7 +465,7 @@ public class Helpers {
 		return min + ":" + sec;
 	}
 
-	public static String getMacAddress(Context context) {
+	private static String getMacAddress(Context context) {
 		try {
 			WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			return wm.getConnectionInfo().getMacAddress();
@@ -476,10 +476,10 @@ public class Helpers {
 
 	}
 	
-	private static final int USER_CODE_LENGTH = 8;	
+	//private static final int USER_CODE_LENGTH = 8;	
 	public static String getUserCodeForThisPhone(Context context) {
 		String macAddress = getMacAddress(context);
 		if ( macAddress == null ) return null;
-		return MD5(macAddress).substring(0,USER_CODE_LENGTH);
+		return MD5(macAddress);
 	}
 }

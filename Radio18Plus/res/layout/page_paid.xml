@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_frames"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   	android:orientation="vertical" >
-   	<include
-   	    layout="@layout/balance_modules"
-   	    android:layout_width="fill_parent"
-   	    android:layout_height="@dimen/std_item_height" 
-   	    />
-	<include
+    android:background="@color/main_bg"
+>
+	<ProgressBar
+	    android:layout_width="@dimen/std_progress_dim"
+	    android:layout_height="@dimen/std_progress_dim"
+	    android:indeterminate="true"
+	    style="@android:style/Widget.ProgressBar.Large"
+	    android:layout_gravity="center" 
+	    />
+	<LinearLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="0dp"
-	    android:layout_weight="1"
-	    layout="@layout/list_content"	 
-	/>
-</LinearLayout>
+	    android:layout_height="fill_parent"
+	    android:orientation="horizontal" 
+	    >
+	    <include 
+	        layout="@layout/balance_modules"
+	        android:layout_width="fill_parent"
+	        android:layout_height="@dimen/std_item_height"
+	        />
+	    <ListView
+	        android:id="@+id/listview"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        style="@style/Rvn_ListView"       
+	        ></ListView>
+	</LinearLayout>
+	
+</FrameLayout>

@@ -3,6 +3,7 @@ package dtd.phs.lib.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
 
 public class PreferenceHelpers {
 
@@ -34,6 +35,9 @@ public class PreferenceHelpers {
 
 	private static final String PREF_FIRST_TIME = "PREF_FIRST_TIME";
 	private static final String PREF_LAST_CLEAN_UP_SD = "PREF_LAST_CLEAN_UP_SD_CARD";
+	private static final String PREF_ACCOUNT_CREATED = "PREF_ACCOUNT_CREATED";
+	private static final String TRUE = "true";
+	private static final String FALSE = "false";
 
 	public static boolean firstTimeRunning(Context context) {
 		String firstTime = getPreference(context, PREF_FIRST_TIME );
@@ -44,7 +48,7 @@ public class PreferenceHelpers {
 	}
 
 	public static void disableFirstTimeRunning(Context context) {
-		setPreference(context, PREF_FIRST_TIME, "false");
+		setPreference(context, PREF_FIRST_TIME, FALSE);
 	}
 
 	public static long getLastCleanupTime(Context context) {
@@ -61,6 +65,17 @@ public class PreferenceHelpers {
 
 	public static void setLastCleanupTime(Context context, long time) {
 		setPreference(context, PREF_LAST_CLEAN_UP_SD, String.valueOf(time));
+	}
+
+	public static boolean isAccountCreated(Context context) {
+		String created = getPreference(context, PREF_ACCOUNT_CREATED);
+		if (created == null ) return false;
+		if (created.equals(TRUE)) return true;
+		return false;
+	}
+
+	public static void setAccountCreated(Context context, boolean b) {
+		setPreference(context, PREF_ACCOUNT_CREATED, String.valueOf(b));
 	}
 
 }

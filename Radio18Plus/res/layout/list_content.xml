@@ -14,9 +14,7 @@
 	    android:id="@+id/listview"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:divider="@color/list_divider"
-	    android:cacheColorHint="#00000000"
-	    android:dividerHeight="@dimen/divider_height" 
+	    style="@style/Rvn_ListView"
 	    />    
     <include
         layout="@layout/retry_frame"
