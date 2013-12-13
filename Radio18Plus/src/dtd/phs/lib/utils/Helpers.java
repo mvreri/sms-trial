@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import junit.framework.Assert;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -465,10 +466,13 @@ public class Helpers {
 		return min + ":" + sec;
 	}
 
-	private static String getMacAddress(Context context) {
+	@SuppressLint("DefaultLocale")
+	public
+	static String getMacAddress(Context context) {
 		try {
 			WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			return wm.getConnectionInfo().getMacAddress();
+			String macAddress = wm.getConnectionInfo().getMacAddress();
+			return macAddress.replace(":", "").toLowerCase();
 		} catch (Exception e) {
 			Logger.logError(e);
 			return null;
@@ -476,10 +480,4 @@ public class Helpers {
 
 	}
 	
-	//private static final int USER_CODE_LENGTH = 8;	
-	public static String getUserCodeForThisPhone(Context context) {
-		String macAddress = getMacAddress(context);
-		if ( macAddress == null ) return null;
-		return MD5(macAddress);
-	}
 }

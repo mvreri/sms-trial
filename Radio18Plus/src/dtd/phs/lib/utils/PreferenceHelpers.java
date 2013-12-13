@@ -35,7 +35,7 @@ public class PreferenceHelpers {
 
 	private static final String PREF_FIRST_TIME = "PREF_FIRST_TIME";
 	private static final String PREF_LAST_CLEAN_UP_SD = "PREF_LAST_CLEAN_UP_SD_CARD";
-	private static final String PREF_ACCOUNT_CREATED = "PREF_ACCOUNT_CREATED";
+	private static final String PREF_USER_ID = "PREF_ACCOUNT_CREATED";
 	private static final String TRUE = "true";
 	private static final String FALSE = "false";
 
@@ -67,15 +67,13 @@ public class PreferenceHelpers {
 		setPreference(context, PREF_LAST_CLEAN_UP_SD, String.valueOf(time));
 	}
 
-	public static boolean isAccountCreated(Context context) {
-		String created = getPreference(context, PREF_ACCOUNT_CREATED);
-		if (created == null ) return false;
-		if (created.equals(TRUE)) return true;
-		return false;
+	public static String getUserId(Context context) {
+		String result = getPreference(context, PREF_USER_ID);
+		return result;
 	}
 
-	public static void setAccountCreated(Context context, boolean b) {
-		setPreference(context, PREF_ACCOUNT_CREATED, String.valueOf(b));
+	public static void setUserId(Context context, String userId) {
+		setPreference(context, PREF_USER_ID, userId);
 	}
 
 }

@@ -15,7 +15,7 @@ import dtd.phs.lib.data_framework.IRequest;
 
 public abstract class RequestData implements IRequest {
 
-	private static final String STATUS_TAG = "status";
+	protected static final String STATUS_TAG = "status";
 	private static final int DEFAULT_SO_TIME_OUT = 5000;
 	private static final int DEFAULT_CONN_TIME_OUT = 5000;
 	private static final int STATUS_SUCCESS = 0;
@@ -74,7 +74,7 @@ public abstract class RequestData implements IRequest {
 			if (status == STATUS_SUCCESS) {
 				return parseSuccessResult(jso);
 			} else {
-				return null;
+				return parseUnsuccessResult(jso);
 			}
 		} catch (JSONException e) {
 			// TODO: remove this try catch,
@@ -87,6 +87,11 @@ public abstract class RequestData implements IRequest {
 		}
 
 
+	}
+
+	//To be implemented in sub-classes if needed
+	protected Object parseUnsuccessResult(JSONObject jso) throws JSONException {
+		return null;
 	}
 
 	private HttpParams setTimeOut() {

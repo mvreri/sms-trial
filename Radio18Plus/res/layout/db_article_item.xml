@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="5dp"
+    android:paddingLeft="@dimen/std_pad"
+    android:paddingRight="@dimen/std_pad"
+    android:paddingTop="5dp" >
+
+    <ImageView
+        android:id="@+id/ivCover"
+        android:layout_width="@dimen/cover_dim"
+        android:layout_height="@dimen/cover_dim" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="@dimen/std_pad"
+        android:orientation="vertical"
+         >
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/One_line_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_std"
+            android:textSize="@dimen/font_article_name" 
+            android:text="Tiêu đề bài viết "/>
+        <TextView
+            android:id="@+id/tvDesc"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/font_article_secondary" 
+            android:textColor="@color/font_article_secondary"
+            android:text="Mô tả bài viết, thường tương đối dài. Tối đa là 2 dòng biểu diễn trên Android. This is test, This is test, This is test, This is test, " 
+            />
+    </LinearLayout>
+</LinearLayout>

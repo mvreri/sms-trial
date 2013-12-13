@@ -3,21 +3,27 @@ package com.vsm.radio18;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Context;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vsm.radio18.data.entities.DB_ArticelItem;
 
+import dtd.phs.lib.ui.images_loader.ImageLoader;
 import dtd.phs.lib.utils.Helpers;
 
 public class DBArticlesAdapter extends BaseAdapter 
 {
 
+
+
 	private Activity act;
 	private volatile ArrayList<DB_ArticelItem> a = new ArrayList<DB_ArticelItem>();
+	private Handler handler = new Handler();
+	private ImageLoader imageloader;
 
 	public DBArticlesAdapter(Activity act) {
 		this.act = act;
@@ -25,6 +31,14 @@ public class DBArticlesAdapter extends BaseAdapter
 	@Override
 	public int getCount() {
 		return a.size();
+	}
+	
+	public void resume() {
+		imageloader = new ImageLoader(act, handler, null);
+	}
+	
+	public void pause() {
+		imageloader.stop();
 	}
 
 	@Override
@@ -36,13 +50,30 @@ public class DBArticlesAdapter extends BaseAdapter
 	public long getItemId(int position) {
 		return position;
 	}
-
+	
+	public class Holder {
+		ImageView ivCover;
+		TextView tvName;
+		TextView tvDesc;
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO optimized later
-		View v = Helpers.inflate(act, R.layout.test_db_article_item, null);
+		View v = convertView;
+		Holder holder = null;
+		if ( v == null) {
+			v = Helpers.inflate(act, R.layout.db_article_item, null);
+			holder = new Holder();
+			holder.ivCover = (ImageView) v.findViewById(R.id.ivCover);
+			holder.tvName = (TextView) v.findViewById(R.id.tvName);
+			holder.tvDesc = (TextView) v.findViewById(R.id.tvDesc);
+			v.setTag(holder);
+		} else {
+			holder = (Holder) v.getTag();
+		}
 		DB_ArticelItem item = getItem(position);
-		((TextView)v.findViewById(R.id.tvName)).setText(item.getName());
+		holder.tvDesc.setText(item.getDesc());
+		holder.tvName.setText(item.getName());
+		imageloader.loadImage(item.getCoverURL(), holder.ivCover);
 		return v;
 	}
 	

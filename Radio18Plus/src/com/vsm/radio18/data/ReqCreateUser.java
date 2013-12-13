@@ -4,32 +4,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ReqCreateUser extends RequestData {
-	private static final String SUCCESS = "success";
-	private static final String USER_ID = "$user_id";
+	private static final String MAC_ADD = "$mac_add";
 	static final String BASE_URL = "http://sms.appngon.com/index.php/onepay_service/";
-	static final String API_NAME = "create_user?user_code="+USER_ID;
-	private String userId;
+	static final String API_NAME = "create_user?mac_add="+MAC_ADD;
+	private static final String USER_ID = "user_id";
+	private static final int USER_ALREADY_EXISTs_STATUS = 1;
+	private String macAdd;
 
-	/** TODO:
-	 * It should be: status =
-	 * 	0: success
-	 * 	1: user already exists
-	 * 	2: failed - unknown reason
-	 */
-
-	public ReqCreateUser(String userId) {
-		this.userId = userId;
+	public ReqCreateUser(String macAdd) {
+		this.macAdd = macAdd;
 	}
 	@Override
 	protected String getURL() {
-		return (BASE_URL+ API_NAME).replace(USER_ID, userId);
+		return (BASE_URL+ API_NAME).replace(MAC_ADD, macAdd);
 	}
 
 	@Override
 	protected Object parseSuccessResult(JSONObject jso) throws JSONException {
-		int succ = jso.getInt(SUCCESS);
-		if ( succ == 1 ) return Boolean.valueOf(true);
-		return Boolean.valueOf(false);
+		String userId = jso.getString(USER_ID);
+		return userId;
+	}
+	
+	@Override
+	protected Object parseUnsuccessResult(JSONObject jso) throws JSONException {
+		int status = jso.getInt(STATUS_TAG);
+		if ( status == USER_ALREADY_EXISTs_STATUS ) {
+			return jso.getString(USER_ID);
+		} else {
+			return null;
+		}
 	}
 
 }

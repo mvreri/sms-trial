@@ -68,5 +68,16 @@ public class Test_DBOperations extends Activity {
 				
 	}
 	
- 
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		adapter.resume();
+	}
+	
+	@Override
+	protected void onPause() {
+		adapter.pause();
+		super.onPause();
+	};
 }

@@ -15,7 +15,7 @@
 	<LinearLayout
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:orientation="horizontal" 
+	    android:orientation="vertical" 
 	    >
 	    <include 
 	        layout="@layout/balance_modules"
@@ -29,5 +29,10 @@
 	        style="@style/Rvn_ListView"       
 	        ></ListView>
 	</LinearLayout>
+	<include
+	    layout="@layout/retry_frame"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" 
+	    />
 	
 </FrameLayout>

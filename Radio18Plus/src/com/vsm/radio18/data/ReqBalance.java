@@ -4,12 +4,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ReqBalance extends RequestData {
-	/** TODO:
-	 * It should be: status =
-	 * 	0: success 
-	 * 	1: user not exists
-	 * 	2: unknown reason
-	 */
 	private static final String USER_ID = "$user_id";
 	static final String BASE_URL = "http://sms.appngon.com/index.php/onepay_service/";
 	static final String API_NAME = "get_user_amount?user_code="+USER_ID;
