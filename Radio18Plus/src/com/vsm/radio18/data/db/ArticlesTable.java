@@ -1,7 +1,5 @@
 package com.vsm.radio18.data.db;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.database.Cursor;
 

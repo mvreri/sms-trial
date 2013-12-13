@@ -1,7 +1,5 @@
 package com.vsm.radio18;
 
-import android.graphics.PorterDuff;
-
 import com.vsm.radio18.media_player.PlayerService;
 
 public class ProgressUpdater extends Thread {

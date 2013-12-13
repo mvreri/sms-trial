@@ -2,13 +2,9 @@ package com.vsm.radio18;
 
 import java.util.ArrayList;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -20,10 +16,6 @@ import android.widget.ListView;
 import com.vsm.radio18.data.ReqListArticles;
 import com.vsm.radio18.data.entities.ArticleItem;
 import com.vsm.radio18.data.entities.CategoryItem;
-import com.vsm.radio18.media_player.PlayerService;
-import com.vsm.radio18.media_player.PlayerService.IPlayerListener;
-import com.vsm.radio18.media_player.PlayerService.PlayerServiceBinder;
-import com.vsm.radio18.ui.BottomControllers;
 import com.vsm.radio18.ui.Topbar;
 
 import dtd.phs.lib.data_framework.IDataListener;

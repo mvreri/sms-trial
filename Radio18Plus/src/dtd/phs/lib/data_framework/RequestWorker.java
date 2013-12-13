@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 
 import android.os.Handler;
 import dtd.phs.lib.utils.Helpers;
-import dtd.phs.lib.utils.Logger;
 
 public class RequestWorker {
 

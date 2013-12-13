@@ -1,8 +1,8 @@
 package com.vsm.radio18.data.entities;
 
-import com.vsm.radio18.data.db.ArticlesTable;
-
 import android.content.ContentValues;
+
+import com.vsm.radio18.data.db.ArticlesTable;
 
 public class DB_ArticelItem extends ArticleItem  {
 

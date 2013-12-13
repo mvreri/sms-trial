@@ -2,9 +2,6 @@ package com.vsm.radio18.test;
 
 import java.util.ArrayList;
 
-import dtd.phs.lib.utils.Helpers;
-import dtd.phs.lib.utils.Logger;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import dtd.phs.lib.utils.Logger;
 
 public class TestChooser extends Activity {
 	static final String[] CLASSes = {

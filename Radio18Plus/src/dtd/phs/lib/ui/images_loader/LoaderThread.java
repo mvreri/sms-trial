@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 
-import com.vsm.radio18.RadioConfiguration;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;

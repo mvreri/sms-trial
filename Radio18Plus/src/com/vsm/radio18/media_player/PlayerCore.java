@@ -2,7 +2,6 @@ package com.vsm.radio18.media_player;
 
 import java.io.IOException;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnBufferingUpdateListener;
 import android.media.MediaPlayer.OnCompletionListener;
