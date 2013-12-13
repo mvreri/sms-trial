@@ -14,7 +14,7 @@ public class TopTabs {
 
 	private static final int[] TITLEs_ID = {
 		R.id.tvChuyenMuc,
-		R.id.tvHoiDap,
+		R.id.tvPaid,
 		R.id.tvHuongDan,
 	};
 	

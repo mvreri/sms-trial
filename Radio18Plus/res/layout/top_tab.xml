@@ -18,12 +18,12 @@
         android:textSize="@dimen/font_tab_color" />
 
     <TextView
-        android:id="@+id/tvHoiDap"
+        android:id="@+id/tvPaid"
         android:layout_width="0dp"
         android:layout_height="@dimen/top_tab_height"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="@string/Hoi_dap"
+        android:text="@string/Da_mua"
         android:textColor="@color/font_tab_color"
         android:textSize="@dimen/font_tab_color" />
 

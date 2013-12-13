@@ -24,4 +24,5 @@
     <string name="Player_is_not_ready_pls_retry_later">Chương trình chưa sẵn sàng, vui lòng thử lại sau 5 giây </string>
     <string name="title_activity_act_articles_in_category">ActArticlesInCategory</string>
     <string name="Balance">Số dư </string>
+    <string name="Da_mua">ĐÃ MUA</string>
 </resources>
