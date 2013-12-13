@@ -479,5 +479,9 @@ public class Helpers {
 		}
 
 	}
-	
+
+	public static String formatRate(double rate) {
+		int intRate = (int) rate; 
+		return NumberFormat.getInstance().format(intRate);
+	}	
 }

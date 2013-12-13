@@ -138,7 +138,7 @@ public class FragPaid extends BaseFragment {
 				public void onCompleted(Object data) {
 					if (data != null) {
 						int amount = (Integer) data;
-						tvBalance.setText("" + amount);
+						tvBalance.setText("" + Helpers.formatRate(amount));
 						Helpers.showOnlyView(mainFrames, FRAME_DATA);
 					} else
 						onError(new Exception("Null data returned"));

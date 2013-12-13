@@ -86,7 +86,7 @@ public class ArticlesAdapter extends BaseAdapter {
 			holder.ivCover.setImageBitmap(bm);
 		} else if (imageLoader != null) {
 			holder.ivCover.setImageBitmap(null);
-			imageLoader.loadImage(coverURL, holder.ivCover, true);
+			imageLoader.loadImage(coverURL, holder.ivCover, false);
 		}
 		holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
 		return v;
