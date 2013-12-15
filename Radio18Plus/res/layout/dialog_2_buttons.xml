@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/Dialog_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Title" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/std_btn" />
+
+    <TextView
+        android:padding="@dimen/std_pad"
+        android:id="@+id/tvMessage"
+        style="@style/Dialog_Content"
+        android:text="Some message here, this is just a stub "
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/std_btn" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btLeft"
+            style="@style/Dialog_Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/std_pad"
+            android:text="Btn Left" />
+
+        <View
+            android:layout_width="@dimen/divider_height"
+            android:layout_height="fill_parent"
+            android:background="@color/std_btn" />
+
+        <Button
+            android:id="@+id/btRight"
+            style="@style/Dialog_Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:padding="@dimen/std_pad"
+            android:text="Btn Right" />
+    </LinearLayout>
+
+</LinearLayout>

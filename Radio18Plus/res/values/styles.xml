@@ -30,4 +30,18 @@
         <item name="android:dividerHeight">@dimen/divider_height</item>
         <item name="android:cacheColorHint">#00000000</item>
     </style>
+    <style name="Dialog_title">
+        <item name="android:textColor">@color/std_btn</item>
+        <item name="android:textSize">@dimen/font_dialog_title</item>
+        <item name="android:padding">@dimen/std_pad</item>
+    </style>
+    <style name="Dialog_Button">
+        <item name="android:textColor">@color/font_std</item>
+        <item name="android:textSize">@dimen/font_dialog_btn</item>
+        <item name="android:background">@drawable/dialog_btn_bg</item>
+    </style>
+    <style name="Dialog_Content">
+        <item name="android:textColor">@color/font_dialog_content</item>
+        <item name="android:textSize">@dimen/font_dialog_content</item>
+    </style>
 </resources>

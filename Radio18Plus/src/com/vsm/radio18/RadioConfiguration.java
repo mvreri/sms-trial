@@ -5,6 +5,7 @@ public class RadioConfiguration {
 	//Cache Images
 	public static final int MAX_IMAGES_MEM_CACHE = 100;
 	public static final long IMAGES_ON_SDCARD_CACHED_DAYS = 14;
+	public static final boolean USING_ROUNDED_IMAGE = true;
 	
 	//Q&A
 	public static final String SUPPORT_EMAIL = "buingocphuong75@gmail.com";

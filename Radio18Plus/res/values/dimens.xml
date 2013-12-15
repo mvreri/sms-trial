@@ -18,9 +18,14 @@
     <dimen name="ic_pause_height">31dp</dimen>
     <dimen name="ic_pause_width">26dp</dimen>
     <dimen name="font_bottom_bar">16dp</dimen>
+    
+    <dimen name="font_dialog_title">18dp</dimen>
+    <dimen name="font_dialog_content">16dp</dimen>
+    <dimen name="font_dialog_btn">14dp</dimen>
+    
     <dimen name="min_loading_page_height">72dp</dimen>
     <dimen name="std_progress_dim">16dp</dimen>
-    <dimen name="divider_height">1dp</dimen>
+    <dimen name="divider_height">1px</dimen>
     <dimen name="font_warning">16dp</dimen>
     <dimen name="std_btn_height">48dp</dimen>
     <dimen name="font_std">16dp</dimen>

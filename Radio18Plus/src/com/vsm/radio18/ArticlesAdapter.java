@@ -2,7 +2,6 @@ package com.vsm.radio18;
 
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -19,6 +18,8 @@ import com.vsm.radio18.data.ReqCreateUser;
 import com.vsm.radio18.data.db.DBCenter;
 import com.vsm.radio18.data.db.QueryWorker;
 import com.vsm.radio18.data.entities.ArticleItem;
+import com.vsm.radio18.ui.DialogRetry;
+import com.vsm.radio18.ui.DialogRetry.IDialogRetryListener;
 
 import dtd.phs.lib.data_framework.IDataListener;
 import dtd.phs.lib.data_framework.IRequest;
@@ -31,6 +32,7 @@ import dtd.phs.lib.utils.PreferenceHelpers;
 
 public class ArticlesAdapter extends BaseAdapter {
 
+	private static final String DIALOG_WARNING_SMS = "DIALOG_WARNING_SMS";
 	private static final String DIALOG_RETRY = "DIALOG_RETRY";
 	private ArrayList<ArticleItem> list;
 	private ImageLoader imageLoader;
@@ -92,7 +94,7 @@ public class ArticlesAdapter extends BaseAdapter {
 			holder.ivCover.setImageBitmap(bm);
 		} else if (imageLoader != null) {
 			holder.ivCover.setImageBitmap(null);
-			imageLoader.loadImage(coverURL, holder.ivCover, false);
+			imageLoader.loadImage(coverURL, holder.ivCover, RadioConfiguration.USING_ROUNDED_IMAGE);
 		}
 		holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
 		return v;
@@ -160,10 +162,10 @@ public class ArticlesAdapter extends BaseAdapter {
 						createUser(item);
 						break;
 					case ReqBuyItem.NOT_ENOUGH_MONEY:
-						showWarningSMSDialog();
+						showWarningSMSDialog(item);
 						break;
 					case ReqBuyItem.UNKNOWN_ERROR:
-						showRetryDialog();
+						showRetryDialog(item);
 						break;
 					default: Helpers.assertCondition(false);
 					}
@@ -173,8 +175,36 @@ public class ArticlesAdapter extends BaseAdapter {
 		RequestWorker.addRequest(request, listener, handler);
 	}
 
-	protected void showRetryDialog() {
-		DialogRetryListener dlistener;
+	protected void showWarningSMSDialog(ArticleItem item) {
+		
+		IDialogSMSListener dlistener = new IDialogSMSListener () {
+			@Override
+			public void onClosed() {
+				//No-op
+			}
+			
+			@Override
+			public void onAccepted() {
+				sendSMS();
+			}
+		}; 
+		DialogWarningSMS dialog = DialogWarningSMS.getInstance(dlistener); 
+		dialog.show(act.getSupportFragmentManager(), DIALOG_WARNING_SMS);
+	}
+
+	protected void showRetryDialog(final ArticleItem item) {
+		IDialogRetryListener dlistener = new IDialogRetryListener() {
+			
+			@Override
+			public void onRetryClick() {
+				buyItem(item);
+			}
+			
+			@Override
+			public void onClosed() {
+				//no-op
+			}
+		};
 		DialogRetry dialog = DialogRetry.getInstance(dlistener);
 		dialog.show(act.getSupportFragmentManager(),DIALOG_RETRY);
 	}
@@ -186,7 +216,7 @@ public class ArticlesAdapter extends BaseAdapter {
 			@Override
 			public void onError(Exception e) {
 				Logger.logError(e);
-				showRetryDialog();
+				showRetryDialog(item);
 			}
 
 			@Override
