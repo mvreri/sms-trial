@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -13,24 +14,31 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.vsm.radio18.data.ReqBuyItem;
+import com.vsm.radio18.data.ReqCreateUser;
 import com.vsm.radio18.data.db.DBCenter;
 import com.vsm.radio18.data.db.QueryWorker;
 import com.vsm.radio18.data.entities.ArticleItem;
 
+import dtd.phs.lib.data_framework.IDataListener;
+import dtd.phs.lib.data_framework.IRequest;
+import dtd.phs.lib.data_framework.RequestWorker;
 import dtd.phs.lib.ui.images_loader.ImageCache;
 import dtd.phs.lib.ui.images_loader.ImageLoader;
 import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
+import dtd.phs.lib.utils.PreferenceHelpers;
 
 public class ArticlesAdapter extends BaseAdapter {
 
+	private static final String DIALOG_RETRY = "DIALOG_RETRY";
 	private ArrayList<ArticleItem> list;
 	private ImageLoader imageLoader;
-	private Activity act;
+	private FragmentActivity act;
 	private Handler handler = new Handler();
 	private ArrayList<OnClickListener> onItemBuyClick;
 
-	public ArticlesAdapter(Activity activity) {
+	public ArticlesAdapter(FragmentActivity activity) {
 		this.act = activity;
 		list = new ArrayList<ArticleItem>();
 		onItemBuyClick = new ArrayList<OnClickListener>();
@@ -80,7 +88,7 @@ public class ArticlesAdapter extends BaseAdapter {
 		holder.tvDesc.setText(item.getDesc());
 		String coverURL = item.getCoverURL();
 		Bitmap bm = ImageCache.getCacheImage(coverURL);
-		if ( bm != null ) {
+		if (bm != null) {
 			holder.ivCover.setImageBitmap(bm);
 		} else if (imageLoader != null) {
 			holder.ivCover.setImageBitmap(null);
@@ -98,32 +106,101 @@ public class ArticlesAdapter extends BaseAdapter {
 	}
 
 	public void refreshData(ArrayList<ArticleItem> list) {
+		//TODO: query the paid/unpaid status. How ?
 		this.list.clear();
 		this.onItemBuyClick.clear();
-		for(int i = 0 ; i < list.size(); i++) {
+		for (int i = 0; i < list.size(); i++) {
 			this.list.add(list.get(i));
-			final int  position = i;
+			final int position = i;
 			this.onItemBuyClick.add(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					buyItem(position);
+					ArticleItem item = getItem(position);
+					buyItem(item);
 				}
 			});
 		}
 		notifyDataSetChanged();
 	}
 
-	protected void buyItem(int position) {
-		final ArticleItem item = getItem(position);
-		//TODO: later - send sms, check request ....
-		QueryWorker.add(new Runnable() {
+	protected void buyItem(final ArticleItem item) {
+		
+		String userId = PreferenceHelpers.getUserId(act);
+		if (userId != null) {
+			requestBuyItem(userId,item);
+		} else createUser(item);
+	}
+
+	private void requestBuyItem(String userId, final ArticleItem item) {
+		IRequest request = new ReqBuyItem(userId, RadioConfiguration.ITEM_PRICE);
+		IDataListener listener = new IDataListener() {
+			@Override
+			public void onError(Exception e) {
+				// TODO Auto-generated method stub
+				
+			}
 			
 			@Override
-			public void run() {
-				boolean succ = DBCenter.addItem(act.getApplicationContext(), item);
-				Logger.logInfo("Is item added to db ? " + succ);
+			public void onCompleted(Object data) {
+				if ( data == null ) {
+					onError(new Exception("Null data returned"));
+				} else {
+					int code = (Integer) data;
+					switch (code) {
+					case ReqBuyItem.SUCCESS:
+						QueryWorker.add(new Runnable() {
+							@Override
+							public void run() {
+								DBCenter.addItem(act, item);
+								//TODO: update paid/unpaid status								
+							}
+						});
+						break;
+					case ReqBuyItem.USER_NOT_EXISTs:
+						createUser(item);
+						break;
+					case ReqBuyItem.NOT_ENOUGH_MONEY:
+						showWarningSMSDialog();
+						break;
+					case ReqBuyItem.UNKNOWN_ERROR:
+						showRetryDialog();
+						break;
+					default: Helpers.assertCondition(false);
+					}
+				}
 			}
-		});
+		};
+		RequestWorker.addRequest(request, listener, handler);
+	}
+
+	protected void showRetryDialog() {
+		DialogRetryListener dlistener;
+		DialogRetry dialog = DialogRetry.getInstance(dlistener);
+		dialog.show(act.getSupportFragmentManager(),DIALOG_RETRY);
+	}
+
+	protected void createUser(final ArticleItem item) {
+		IRequest request = new ReqCreateUser(Helpers.getMacAddress(act));
+		IDataListener listener = new IDataListener() {
+
+			@Override
+			public void onError(Exception e) {
+				Logger.logError(e);
+				showRetryDialog();
+			}
+
+			@Override
+			public void onCompleted(Object data) {
+				if (data != null) {
+					String userId = (String) data;
+					PreferenceHelpers.setUserId(act, userId);
+					buyItem(item);
+				} else {
+					onError(new Exception("Null data returned"));
+				}
+			}
+		};
+		RequestWorker.addRequest(request, listener, handler);
 	}
 
 }

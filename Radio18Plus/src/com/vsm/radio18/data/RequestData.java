@@ -80,10 +80,12 @@ public abstract class RequestData implements IRequest {
 			// TODO: remove this try catch,
 			// the codes exist only because of the stub images API is JSON Array NOT JSONObject
 			// http://api.appngon.com/index.php/image/images
-			JSONArray array = new JSONArray(message);
 			if (this instanceof ReqListImages) {
+				JSONArray array = new JSONArray(message);
 				return ((ReqListImages) this).parseURLs(array);
-			} else return null;
+			} else {
+				throw e;
+			}
 		}
 
 

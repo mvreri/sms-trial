@@ -17,4 +17,6 @@ public class RadioConfiguration {
 	
 	//Details screen
 	public static final int PREVIEW_DURATION = 5000;
+	
+	public static final int ITEM_PRICE = 5000;
 }

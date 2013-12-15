@@ -9,6 +9,13 @@ public class ReqBuyItem extends RequestData {
 	private static final String ITEM_PRICE = "$item_price";
 	static final String BASE_URL = "http://sms.appngon.com/index.php/onepay_service/";
 	static final String API_NAME = "buy_item?user_code="+USER_ID+"&item_price="+ ITEM_PRICE;
+	
+	//Status codes:
+	public static final int SUCCESS = 0;
+	public static final int USER_NOT_EXISTs = 1;
+	public static final int NOT_ENOUGH_MONEY = 2;
+	public static final int UNKNOWN_ERROR = 3;
+	
 	private String userId;
 	private int price;
 	
@@ -25,13 +32,14 @@ public class ReqBuyItem extends RequestData {
 	}
 
 	@Override
-	protected Object parseSuccessResult(JSONObject jso) throws JSONException {
-		return Boolean.valueOf(true);
+	protected Integer parseSuccessResult(JSONObject jso) throws JSONException {
+		return Integer.valueOf(SUCCESS);
 	}
 	
 	@Override
-	protected Object parseUnsuccessResult(JSONObject jso) throws JSONException {
-		return Boolean.valueOf(false);
+	protected Integer parseUnsuccessResult(JSONObject jso) throws JSONException {
+		int status = jso.getInt(STATUS_TAG);
+		return Integer.valueOf(status);
 	}
 
 }
