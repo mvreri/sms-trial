@@ -29,8 +29,7 @@
         <activity android:name="com.vsm.radio18.categories.ActMain" >
         </activity>
         <activity
-            android:name="com.vsm.radio18.ActArticlesInCategory"
-            android:label="@string/title_activity_act_articles_in_category" >
+            android:name="com.vsm.radio18.ActArticlesInCategory" >
         </activity>
         <service android:name=".media_player.PlayerService"></service>
         <activity android:name="ActDetails"></activity>

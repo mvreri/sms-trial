@@ -20,4 +20,11 @@ public class RadioConfiguration {
 	public static final int PREVIEW_DURATION = 5000;
 	
 	public static final int ITEM_PRICE = 5000;
+	
+	//SMS
+	public static final String SMS_NUMBER = "8038"; //8738 more expensive !
+	public static final String USER_CODE = "$user_code";
+	public static final String SMS_CONTENT = "RD18 " + USER_CODE; //8738 more expensive !
+	
+	
 }

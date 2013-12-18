@@ -2,8 +2,11 @@ package com.vsm.radio18;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Handler;
+import android.sax.StartElementListener;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,6 +23,8 @@ import com.vsm.radio18.data.db.QueryWorker;
 import com.vsm.radio18.data.entities.ArticleItem;
 import com.vsm.radio18.ui.DialogRetry;
 import com.vsm.radio18.ui.DialogRetry.IDialogRetryListener;
+import com.vsm.radio18.ui.DialogWarningSMS;
+import com.vsm.radio18.ui.DialogWarningSMS.IDialogSMSListener;
 
 import dtd.phs.lib.data_framework.IDataListener;
 import dtd.phs.lib.data_framework.IRequest;
@@ -94,7 +99,8 @@ public class ArticlesAdapter extends BaseAdapter {
 			holder.ivCover.setImageBitmap(bm);
 		} else if (imageLoader != null) {
 			holder.ivCover.setImageBitmap(null);
-			imageLoader.loadImage(coverURL, holder.ivCover, RadioConfiguration.USING_ROUNDED_IMAGE);
+			imageLoader.loadImage(coverURL, holder.ivCover,
+					RadioConfiguration.USING_ROUNDED_IMAGE);
 		}
 		holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
 		return v;
@@ -108,7 +114,7 @@ public class ArticlesAdapter extends BaseAdapter {
 	}
 
 	public void refreshData(ArrayList<ArticleItem> list) {
-		//TODO: query the paid/unpaid status. How ?
+		// TODO: query the paid/unpaid status. How ?
 		this.list.clear();
 		this.onItemBuyClick.clear();
 		for (int i = 0; i < list.size(); i++) {
@@ -126,11 +132,12 @@ public class ArticlesAdapter extends BaseAdapter {
 	}
 
 	protected void buyItem(final ArticleItem item) {
-		
+
 		String userId = PreferenceHelpers.getUserId(act);
 		if (userId != null) {
-			requestBuyItem(userId,item);
-		} else createUser(item);
+			requestBuyItem(userId, item);
+		} else
+			createUser(item);
 	}
 
 	private void requestBuyItem(String userId, final ArticleItem item) {
@@ -138,13 +145,12 @@ public class ArticlesAdapter extends BaseAdapter {
 		IDataListener listener = new IDataListener() {
 			@Override
 			public void onError(Exception e) {
-				// TODO Auto-generated method stub
-				
+				Logger.logError(e);
 			}
-			
+
 			@Override
 			public void onCompleted(Object data) {
-				if ( data == null ) {
+				if (data == null) {
 					onError(new Exception("Null data returned"));
 				} else {
 					int code = (Integer) data;
@@ -154,7 +160,7 @@ public class ArticlesAdapter extends BaseAdapter {
 							@Override
 							public void run() {
 								DBCenter.addItem(act, item);
-								//TODO: update paid/unpaid status								
+								// TODO: update paid/unpaid status
 							}
 						});
 						break;
@@ -167,7 +173,8 @@ public class ArticlesAdapter extends BaseAdapter {
 					case ReqBuyItem.UNKNOWN_ERROR:
 						showRetryDialog(item);
 						break;
-					default: Helpers.assertCondition(false);
+					default:
+						Helpers.assertCondition(false);
 					}
 				}
 			}
@@ -176,37 +183,51 @@ public class ArticlesAdapter extends BaseAdapter {
 	}
 
 	protected void showWarningSMSDialog(ArticleItem item) {
-		
-		IDialogSMSListener dlistener = new IDialogSMSListener () {
+
+		IDialogSMSListener dlistener = new IDialogSMSListener() {
 			@Override
 			public void onClosed() {
-				//No-op
+				// No-op
 			}
-			
+
 			@Override
 			public void onAccepted() {
 				sendSMS();
 			}
-		}; 
-		DialogWarningSMS dialog = DialogWarningSMS.getInstance(dlistener); 
+
+			private void sendSMS() {
+				Uri smsUri = Uri.parse("tel:" + RadioConfiguration.SMS_NUMBER);
+				Intent i = new Intent(Intent.ACTION_VIEW, smsUri);
+				CharSequence userId = PreferenceHelpers.getUserId(act);
+				Helpers.assertCondition(userId != null);
+				if (userId != null) {
+					String content = RadioConfiguration.SMS_CONTENT.replace(
+							RadioConfiguration.USER_CODE, userId);
+					i.putExtra("sms_body", content);
+					i.setType("vnd.android-dir/mms-sms");
+					act.startActivity(i); // TODO: start activity for result !
+				}
+			}
+		};
+		DialogWarningSMS dialog = DialogWarningSMS.getInstance(dlistener);
 		dialog.show(act.getSupportFragmentManager(), DIALOG_WARNING_SMS);
 	}
 
 	protected void showRetryDialog(final ArticleItem item) {
 		IDialogRetryListener dlistener = new IDialogRetryListener() {
-			
+
 			@Override
 			public void onRetryClick() {
 				buyItem(item);
 			}
-			
+
 			@Override
 			public void onClosed() {
-				//no-op
+				// no-op
 			}
 		};
 		DialogRetry dialog = DialogRetry.getInstance(dlistener);
-		dialog.show(act.getSupportFragmentManager(),DIALOG_RETRY);
+		dialog.show(act.getSupportFragmentManager(), DIALOG_RETRY);
 	}
 
 	protected void createUser(final ArticleItem item) {

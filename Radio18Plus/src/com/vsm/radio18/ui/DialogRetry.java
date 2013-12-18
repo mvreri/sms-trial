@@ -7,9 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.vsm.radio18.R;
-import com.vsm.radio18.ui.DialogRetry.IDialogRetryListener;
 
 import dtd.phs.lib.ui.PHS_DialogFragment;
 
@@ -26,9 +26,14 @@ public class DialogRetry extends PHS_DialogFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		rootView = inflater.inflate(R.layout.dialog_retry_buy_item, container, false);
-		btRetry = (Button) findViewById(R.id.btRetry);
-		btClose = (Button) findViewById(R.id.btClose);
+		rootView = inflater.inflate(R.layout.dialog_2_buttons, container, false);
+		btRetry = (Button) findViewById(R.id.btRight);
+		btClose = (Button) findViewById(R.id.btLeft);
+		((TextView) findViewById(R.id.tvTitle)).setText(R.string.Connection_error);
+		((TextView) findViewById(R.id.tvMessage)).setText(R.string.Do_u_want_to_retry);
+		
+		btClose.setText(R.string.Close);
+		btRetry.setText(R.string.Retry);
 		
 		btClose.setOnClickListener(new View.OnClickListener() {
 			

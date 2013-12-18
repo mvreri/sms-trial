@@ -58,6 +58,7 @@
             android:background="@android:color/transparent"
             android:padding="@dimen/std_pad"
             android:text="Btn Right" />
+
     </LinearLayout>
 
 </LinearLayout>
