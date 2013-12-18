@@ -3,6 +3,7 @@ package com.vsm.radio18;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.vsm.radio18.data.entities.DB_ArticelItem;
 
+import dtd.phs.lib.ui.images_loader.ImageCache;
 import dtd.phs.lib.ui.images_loader.ImageLoader;
 import dtd.phs.lib.utils.Helpers;
 
@@ -73,7 +75,13 @@ public class DBArticlesAdapter extends BaseAdapter
 		DB_ArticelItem item = getItem(position);
 		holder.tvDesc.setText(item.getDesc());
 		holder.tvName.setText(item.getName());
-		imageloader.loadImage(item.getCoverURL(), holder.ivCover);
+		Bitmap bm = ImageCache.getCacheImage(item.getCoverURL());
+		if ( bm == null ) {
+			holder.ivCover.setImageBitmap(null);
+			imageloader.loadImage(item.getCoverURL(), holder.ivCover, RadioConfiguration.USING_ROUNDED_IMAGE);
+		} else {
+			holder.ivCover.setImageBitmap(bm);
+		}
 		return v;
 	}
 	

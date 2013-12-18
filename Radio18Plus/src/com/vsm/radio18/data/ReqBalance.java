@@ -22,5 +22,20 @@ public class ReqBalance extends RequestData {
 		int amount = jso.getInt(AMOUNT);
 		return Integer.valueOf(amount);
 	}
+	
+	@Override
+	protected void cacheData(String url, Object result) {
+		//no-op
+	}
+	
+	@Override
+	protected boolean isCached(String url) {
+		return false;
+	}
+	
+	@Override
+	protected Object cachedData(String url) {
+		return null;
+	}
 
 }

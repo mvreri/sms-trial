@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import dtd.phs.lib.data_framework.IRequest;
+import dtd.phs.lib.utils.Logger;
 
 public abstract class RequestData implements IRequest {
 
@@ -32,6 +33,7 @@ public abstract class RequestData implements IRequest {
 	@Override
 	public Object requestData() throws Exception {
 		String url = getURL();
+		Logger.logInfo(url);
 		if (isCached(url)) {
 			return cachedData(url);
 		} else {
@@ -48,15 +50,15 @@ public abstract class RequestData implements IRequest {
 		}
 	}
 
-	private void cacheData(String url, Object result) {
+	protected void cacheData(String url, Object result) {
 		Cache.cacheData(url, result);
 	}
 
-	private Object cachedData(String url) {
+	protected Object cachedData(String url) {
 		return Cache.getCachedData(url);
 	}
 
-	private boolean isCached(String url) {
+	protected boolean isCached(String url) {
 		return Cache.isCache(url);
 	}
 

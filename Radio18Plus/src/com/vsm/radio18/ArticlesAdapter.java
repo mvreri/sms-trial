@@ -146,6 +146,7 @@ public class ArticlesAdapter extends BaseAdapter {
 			@Override
 			public void onError(Exception e) {
 				Logger.logError(e);
+				showRetryDialog(item);
 			}
 
 			@Override

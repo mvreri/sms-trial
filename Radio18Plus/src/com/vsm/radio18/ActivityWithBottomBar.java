@@ -12,6 +12,7 @@ import com.vsm.radio18.media_player.PlayerService.IPlayerListener;
 import com.vsm.radio18.media_player.PlayerService.PlayerServiceBinder;
 import com.vsm.radio18.ui.BottomControllers;
 
+import dtd.phs.lib.utils.Helpers;
 import dtd.phs.lib.utils.Logger;
 
 public class ActivityWithBottomBar extends BaseActivity {
@@ -95,6 +96,14 @@ public class ActivityWithBottomBar extends BaseActivity {
 	protected void initBottomControllers() {
 		bottomControllers = new BottomControllers(this,findViewById(R.id.bottom_controllers));
 		bottomControllers.onCreate();
+	}
+
+	public void startPlayingMusic(ArticleItem item) {
+		if ( ! bound2Service ) {
+			Helpers.showToast(this, R.string.Player_is_not_ready_pls_retry_later);
+		} else {
+			playerService.playNewItem(item);
+		}
 	}
 	
 }

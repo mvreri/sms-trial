@@ -1,5 +1,7 @@
 package com.vsm.radio18.categories;
 
+import com.vsm.radio18.ActivityWithBottomBar;
+
 import android.content.Context;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,14 +15,11 @@ public class RadioPagesAdapter extends FragmentPagerAdapter {
 	public static final int FRAG_CATEGORIES = 0;
 	public static final int FRAG_PAID = 1;
 	public static final int FRAG_QNA = 2;
-	private Context context;
-	private Handler handler;
+	private ActivityWithBottomBar hostedAct;
 
-	public RadioPagesAdapter(FragmentManager fMan, Context context,
-			Handler handler) {
+	public RadioPagesAdapter(FragmentManager fMan, ActivityWithBottomBar hostedAct, Handler handler) {
 		super(fMan);
-		this.context = context;
-		this.handler = handler;
+		this.hostedAct = hostedAct;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class RadioPagesAdapter extends FragmentPagerAdapter {
 		case FRAG_CATEGORIES:
 			return FragCategories.getInstance();
 		case FRAG_PAID:
-			return FragPaid.getInstance();
+			return FragPaid.getInstance(hostedAct);
 		case FRAG_QNA:
 			return FragQNA.getInstance();
 

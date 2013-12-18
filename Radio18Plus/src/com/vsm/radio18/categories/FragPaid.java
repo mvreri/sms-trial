@@ -2,6 +2,7 @@ package com.vsm.radio18.categories;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -9,11 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.vsm.radio18.ActDetails;
+import com.vsm.radio18.ActivityWithBottomBar;
 import com.vsm.radio18.DBArticlesAdapter;
 import com.vsm.radio18.R;
 import com.vsm.radio18.data.ReqBalance;
@@ -34,9 +39,12 @@ public class FragPaid extends BaseFragment {
 	private static final int FRAME_LOADING = 0;
 	private static final int FRAME_DATA = 1;
 	protected static final int FRAME_RETRY = 2;
+	private ActivityWithBottomBar hostedAct;
 
-	public static Fragment getInstance() {
-		return new FragPaid();
+	public static Fragment getInstance(ActivityWithBottomBar hostedAct) {
+		FragPaid frag = new FragPaid();
+		frag.hostedAct = hostedAct;
+		return frag;
 	}
 
 	private FrameLayout mainFrames;
@@ -61,8 +69,26 @@ public class FragPaid extends BaseFragment {
 		listview = (ListView) findViewById(R.id.listview);
 		adapter = new DBArticlesAdapter(getActivity());
 		listview.setAdapter(adapter);
-		// TODO: item click
+		listview.setOnItemClickListener(itemClick);
 	}
+	
+	OnItemClickListener itemClick = new OnItemClickListener() {
+		@Override
+		public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+			DB_ArticelItem item = adapter.getItem(position);
+			hostedAct.startPlayingMusic(item);
+			handler.postDelayed(startDetailsActivity, 300);
+		}
+		
+		Runnable startDetailsActivity = new Runnable() {
+			@Override
+			public void run() {
+				Intent intent = new Intent(hostedAct,ActDetails.class);
+				startActivity(intent);
+			}
+		};
+	};
+
 
 	private void initRetryFrame() {
 		btRetry = (Button) findViewById(R.id.btRetry);

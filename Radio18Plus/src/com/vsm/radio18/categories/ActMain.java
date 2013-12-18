@@ -62,7 +62,7 @@ public class ActMain extends ActivityWithBottomBar {
 
 	private void initPages() {
 		pager = (ViewPager) findViewById(R.id.pager);
-		pagesAdapter = new RadioPagesAdapter(getSupportFragmentManager(), getApplicationContext(), handler);
+		pagesAdapter = new RadioPagesAdapter(getSupportFragmentManager(), this, handler);
 		pager.setAdapter(pagesAdapter);
 		pager.setCurrentItem(DEFAULT_TAB);
 

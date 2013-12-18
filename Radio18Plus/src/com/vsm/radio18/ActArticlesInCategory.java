@@ -135,14 +135,6 @@ public class ActArticlesInCategory extends ActivityWithBottomBar {
 	}
 
 
-	protected void startPlayingMusic(ArticleItem item) {
-		if ( ! bound2Service ) {
-			Helpers.showToast(this, R.string.Player_is_not_ready_pls_retry_later);
-		} else {
-			playerService.playNewItem(item);
-		}
-	}
-
 	private void requestData() {
 		Helpers.showOnlyView(mainFrames, FRAME_LOADING);
 		IRequest request = new ReqListArticles(category.getId());
