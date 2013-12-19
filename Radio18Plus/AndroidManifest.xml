@@ -26,7 +26,11 @@
         </activity>
         <activity android:name="com.vsm.radio18.Test_ActListArticles" >
         </activity>
-        <activity android:name="com.vsm.radio18.categories.ActMain" >
+        <activity android:name="com.vsm.radio18.categories.ActMain" ><intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.vsm.radio18.ActArticlesInCategory" >
@@ -34,11 +38,7 @@
         <service android:name=".media_player.PlayerService"></service>
         <activity android:name="ActDetails"></activity>
         <activity android:name=".test.Test_DBOperations"></activity>
-        <activity android:name=".test.TestChooser"><intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter></activity>
+        <activity android:name=".test.TestChooser"></activity>
     </application>
 
 </manifest>
