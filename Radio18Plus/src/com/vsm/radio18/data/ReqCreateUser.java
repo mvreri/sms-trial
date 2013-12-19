@@ -3,7 +3,7 @@ package com.vsm.radio18.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ReqCreateUser extends RequestData {
+public class ReqCreateUser extends PaymentRequest {
 	private static final String MAC_ADD = "$mac_add";
 	static final String BASE_URL = "http://sms.appngon.com/index.php/onepay_service/";
 	static final String API_NAME = "create_user?mac_add="+MAC_ADD;

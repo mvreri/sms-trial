@@ -26,9 +26,11 @@
     <string name="Da_mua">ĐÃ MUA</string>
     <string name="Connection_error">Lỗi kết nối</string>
     <string name="Close">Đóng</string>
-    <string name="SMS_fee">SMS thu phí</string>
+    <string name="Not_enough_money">Không đủ tiền</string>
     <string name="SMS_Warning">Bạn có muốn nạp 15,000 VND qua SMS không ?</string>
     <string name="Yes">Có</string>
     <string name="No">Không</string>
+    <string name="Price">Giá</string>
     <string name="Do_u_want_to_retry">Bạn có muốn thử lại không ?</string>
+    <string name="Do_u_want_to_buy_it">Bạn có muốn mua không ?</string>
 </resources>

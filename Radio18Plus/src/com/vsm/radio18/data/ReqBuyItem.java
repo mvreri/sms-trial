@@ -3,7 +3,7 @@ package com.vsm.radio18.data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ReqBuyItem extends RequestData {
+public class ReqBuyItem extends PaymentRequest {
 
 	private static final String USER_ID = "$user_id";
 	private static final String ITEM_PRICE = "$item_price";
@@ -33,7 +33,7 @@ public class ReqBuyItem extends RequestData {
 
 	@Override
 	protected Integer parseSuccessResult(JSONObject jso) throws JSONException {
-		return Integer.valueOf(SUCCESS);
+		return Integer.valueOf(jso.getInt(STATUS_TAG));
 	}
 	
 	@Override

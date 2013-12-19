@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Handler;
-import android.sax.StartElementListener;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +21,8 @@ import com.vsm.radio18.data.ReqCreateUser;
 import com.vsm.radio18.data.db.DBCenter;
 import com.vsm.radio18.data.db.QueryWorker;
 import com.vsm.radio18.data.entities.ArticleItem;
+import com.vsm.radio18.ui.DialogBuy;
+import com.vsm.radio18.ui.DialogBuy.IDialogBuyListener;
 import com.vsm.radio18.ui.DialogRetry;
 import com.vsm.radio18.ui.DialogRetry.IDialogRetryListener;
 import com.vsm.radio18.ui.DialogWarningSMS;
@@ -76,6 +77,10 @@ public class ArticlesAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	public boolean isPaid(int position) {
+		return isPaid[position];
+	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -92,7 +97,7 @@ public class ArticlesAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) v.getTag();
 		}
-		ArticleItem item = getItem(position);
+		ArticleItem item = list.get(position);
 		holder.tvName.setText(item.getName());
 		holder.tvDesc.setText(item.getDesc());
 		String coverURL = item.getCoverURL();
@@ -105,11 +110,11 @@ public class ArticlesAdapter extends BaseAdapter {
 					RadioConfiguration.USING_ROUNDED_IMAGE);
 		}
 		if ( isPaid[position] ) {
-			holder.btBuy.setVisibility(View.VISIBLE);
-			holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
-		} else {
 			holder.btBuy.setVisibility(View.GONE);
 			holder.btBuy.setOnClickListener(null);
+		} else {
+			holder.btBuy.setVisibility(View.VISIBLE);
+			holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
 		}
 		return v;
 	}
@@ -140,6 +145,25 @@ public class ArticlesAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 		checkPaidStatus();	
 	}
+	
+	public void processBuy(final ArticleItem item) {
+		IDialogBuyListener dlistener = new IDialogBuyListener() {
+			@Override
+			public void onClosed() {
+				//no-op
+			}
+			
+			@Override
+			public void onAccepted() {
+				buyItem(item);
+			}
+		};
+		
+		DialogBuy dialog = DialogBuy.getInstance(dlistener);
+		dialog.show(act.getSupportFragmentManager(),"DIALOG_BUY");
+		
+	}
+
 
 	protected void buyItem(final ArticleItem item) {
 
@@ -228,11 +252,12 @@ public class ArticlesAdapter extends BaseAdapter {
 			}
 
 			private void sendSMS() {
-				Uri smsUri = Uri.parse("tel:" + RadioConfiguration.SMS_NUMBER);
-				Intent i = new Intent(Intent.ACTION_VIEW, smsUri);
+				
+				Intent i = new Intent(Intent.ACTION_VIEW);
 				CharSequence userId = PreferenceHelpers.getUserId(act);
 				Helpers.assertCondition(userId != null);
 				if (userId != null) {
+					i.putExtra("address", RadioConfiguration.SMS_NUMBER);
 					String content = RadioConfiguration.SMS_CONTENT.replace(
 							RadioConfiguration.USER_CODE, userId);
 					i.putExtra("sms_body", content);
@@ -285,5 +310,6 @@ public class ArticlesAdapter extends BaseAdapter {
 		};
 		RequestWorker.addRequest(request, listener, handler);
 	}
+
 
 }

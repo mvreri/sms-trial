@@ -118,8 +118,11 @@ public class ActArticlesInCategory extends ActivityWithBottomBar {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				ArticleItem item = adapter.getItem(position);
-				startPlayingMusic(item);
-				handler.postDelayed(startDetailsActivity, 300);
+				if ( adapter.isPaid(position)) {
+					startPlayingMusic(item);
+					handler.postDelayed(startDetailsActivity, 300);
+				} else adapter.processBuy(item);
+			
 			}
 			
 			Runnable startDetailsActivity = new Runnable() {

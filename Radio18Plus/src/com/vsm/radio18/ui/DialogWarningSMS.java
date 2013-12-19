@@ -30,7 +30,7 @@ public class DialogWarningSMS extends PHS_DialogFragment {
 		rootView = inflater.inflate(R.layout.dialog_2_buttons, container, false);
 		btNo = (Button) findViewById(R.id.btLeft);
 		btYes = (Button) findViewById(R.id.btRight);
-		((TextView) findViewById(R.id.tvTitle)).setText(R.string.SMS_fee);
+		((TextView) findViewById(R.id.tvTitle)).setText(R.string.Not_enough_money);
 		((TextView) findViewById(R.id.tvMessage)).setText(R.string.SMS_Warning);
 		
 		btYes.setText(R.string.Yes);
