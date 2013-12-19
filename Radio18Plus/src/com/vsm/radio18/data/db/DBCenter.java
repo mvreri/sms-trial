@@ -1,6 +1,7 @@
 package com.vsm.radio18.data.db;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.content.Context;
 
@@ -51,6 +52,33 @@ public class DBCenter {
 			}
 		}
 
+	}
+	
+	/**
+	 * 
+	 * @param a
+	 * @param context
+	 * @return paid status if success, null otherwise
+	 */
+	public static boolean[] checkPaidStatus(ArrayList<ArticleItem> a, Context context) {
+		boolean[] paid = new boolean[a.size()];
+		Arrays.fill(paid, false);
+		ArrayList<DB_ArticelItem> dbList = getAllArticles(context);
+		if ( dbList == null ) return paid;
+		
+		for(int i = 0; i < a.size(); i++) {
+			ArticleItem onlItem = a.get(i);
+			paid[i] = found(onlItem.getOnlineId(), dbList);
+		}
+		return paid;
+		
+	}
+
+	private static boolean found(long onlineId, ArrayList<DB_ArticelItem> dbList) {
+		for(DB_ArticelItem item : dbList) {
+			if ( item.getOnlineId() == onlineId ) return true;
+		}
+		return false;
 	}
 
 	/**

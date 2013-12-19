@@ -24,5 +24,6 @@
     <color name="bg_bottom_body_details">#000000</color>
     <color name="font_bottom_details_bar">#FFF</color>
     <color name="font_dialog_content">#000000</color>
+    <color name="dialog_bg">#FFFFFF</color>
     
 </resources>

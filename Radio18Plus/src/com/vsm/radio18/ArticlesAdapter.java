@@ -1,6 +1,7 @@
 package com.vsm.radio18;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -44,6 +45,7 @@ public class ArticlesAdapter extends BaseAdapter {
 	private FragmentActivity act;
 	private Handler handler = new Handler();
 	private ArrayList<OnClickListener> onItemBuyClick;
+	protected boolean[] isPaid;
 
 	public ArticlesAdapter(FragmentActivity activity) {
 		this.act = activity;
@@ -102,7 +104,13 @@ public class ArticlesAdapter extends BaseAdapter {
 			imageLoader.loadImage(coverURL, holder.ivCover,
 					RadioConfiguration.USING_ROUNDED_IMAGE);
 		}
-		holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
+		if ( isPaid[position] ) {
+			holder.btBuy.setVisibility(View.VISIBLE);
+			holder.btBuy.setOnClickListener(onItemBuyClick.get(position));
+		} else {
+			holder.btBuy.setVisibility(View.GONE);
+			holder.btBuy.setOnClickListener(null);
+		}
 		return v;
 	}
 
@@ -114,9 +122,10 @@ public class ArticlesAdapter extends BaseAdapter {
 	}
 
 	public void refreshData(ArrayList<ArticleItem> list) {
-		// TODO: query the paid/unpaid status. How ?
 		this.list.clear();
 		this.onItemBuyClick.clear();
+		this.isPaid = new boolean[list.size()];
+		Arrays.fill(isPaid, false);
 		for (int i = 0; i < list.size(); i++) {
 			this.list.add(list.get(i));
 			final int position = i;
@@ -129,6 +138,7 @@ public class ArticlesAdapter extends BaseAdapter {
 			});
 		}
 		notifyDataSetChanged();
+		checkPaidStatus();	
 	}
 
 	protected void buyItem(final ArticleItem item) {
@@ -138,6 +148,21 @@ public class ArticlesAdapter extends BaseAdapter {
 			requestBuyItem(userId, item);
 		} else
 			createUser(item);
+	}
+	
+	private void checkPaidStatus() {
+		QueryWorker.add(new Runnable() {
+			@Override
+			public void run() {
+				isPaid = DBCenter.checkPaidStatus( list, act.getApplicationContext());
+				act.runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						notifyDataSetChanged();
+					}
+				});
+			}
+		});
 	}
 
 	private void requestBuyItem(String userId, final ArticleItem item) {
@@ -161,7 +186,13 @@ public class ArticlesAdapter extends BaseAdapter {
 							@Override
 							public void run() {
 								DBCenter.addItem(act, item);
-								// TODO: update paid/unpaid status
+								act.runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										checkPaidStatus();
+									}
+								});
+								
 							}
 						});
 						break;
