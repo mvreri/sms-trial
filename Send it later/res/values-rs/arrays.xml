@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 порука</item>
+        <item>10 порука</item>
+        <item>Све поруке</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Једном</item>
+        <item>Дневно</item>
+        <item>Седмично</item>
+        <item>Месечно</item>
+        <item>Годишње</item>
+        <item>Радним даном (Пон-Пет)</item>
+        <item>Викендом (Суб-Нед)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Тихо</item>
+        <item>Вибрирај</item>
+        <item>Репродукуј звук</item>
+        <item>Вибрирање и звук</item>
+    </string-array>
+    <string-array name="months">
+        <item>Јан.</item>
+        <item>Феб.</item>
+        <item>Мар.</item>
+        <item>Апр.</item>
+        <item>Мај.</item>
+        <item>Јун</item>
+        <item>Јул</item>
+        <item>Авг.</item>
+        <item>Сеп.</item>
+        <item>Окт.</item>
+        <item>Нов.</item>
+        <item>Дец.</item>
+    </string-array>
+
+</resources>

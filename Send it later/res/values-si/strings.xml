@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pošlji kasneje</string>
+    <string name="please_wait">Počakajte</string>
+    <string name="pending_messages">Sporočila na čakanju</string>
+    <string name="next">Naslednje</string>
+    <string name="sent">Pošlji</string>
+    <string name="Date">Datum:</string>
+    
+    <string name="Ok">V redu</string>
+    <string name="Cancel">Prekliči</string>
+    <string name="Hour">Ura</string>
+    <string name="Minute">Minut</string>
+    <string name="To">Za:</string>
+    <string name="Time">Čas:</string>
+    <string name="Done">Urejeno</string>
+    <string name="Never">Nikoli</string>
+    <string name="Frequency">Pogostost: </string>
+    <string name="Alert_on_delivery">Obvestilo ob dostavi:</string>
+    <string name="Words">Besede</string>
+    <string name="Message">Sporočilo</string>
+    <string name="Choose_Frequency">Izberite pogostost</string>
+    <string name="Add">Dodaj</string>
+    <string name="Save">Shrani</string>
+    <string name="Rate_Application">Ocenite aplikacijo</string>
+    <string name="Invalid_message_warning">Neveljaven SMS: Izpolnite polje za kontakt/sporočilo</string>
+    <string name="message_removed_success">Sporočilo uspešno odstranjeno</string>
+    <string name="remove_item">Odstrani sporočilo</string>
+    <string name="confirm_delete_item">Ali želite izbrisati to sporočilo?</string>
+    <string name="Yes">Da</string>
+    <string name="No">Ne</string>
+    <string name="Delete">Izbriši</string>
+    <string name="message_removed_failed">Odstranjevanje sporočila neuspešno</string>
+    <string name="successful_sent_notification_title">Sporočilo uspešno poslano</string>
+    <string name="failed_sent_notification_title">Neuspešno pošiljanje sporočila</string>
+    <string name="Please_enter_a_phone_number">Vnesite telefonsko številko</string>
+    <string name="Preferences">Nastavitve</string>
+    <string name="Exit">Izhod</string>
+    <string name="Sent_to">Poslano:</string>
+    <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
+    <string name="Max_sent_item">Samodejno počisti poslana sporočila</string>
+    <string name="Max_sent_item_summary">Obdrži le najnovejša sporočila</string>
+    <string name="Max_sent_item_dialog_title">Obdrži najnovejša</string>
+    
+    
+    <string name="about_us">O nas</string>
+    <string name="sil_version">Pošlji kasneje, verzija </string>
+    <string name="feel_free">Brezplačna koda na:</string>
+    <string name="or_send_email">E-pošta: &lt;a href="mailto:sphamhung@yahoo.com"&gt;sphamhung@yahoo.com&lt;/a&gt;</string>
+    <string name="Close">Zapri</string>
+    <string name="Sent_failed">Neuspešno pošiljanje za: </string>
+    <string name="Sent_failed_short">Neuspešno: </string>
+    <string name="google_code">&lt;a href="https://sms-trial.googlecode.com/svn/"&gt; Google Code &lt;/a&gt;</string>
+    <string name="Rate_App">Ocenite aplikacijo</string>
+    <string name="Rate">Ocenite</string>
+    <string name="https_sms_trial_googlecode_com_svn_">https://sms-trial.googlecode.com/svn/</string>
+    <string name="Please_support_us">Z ocenjevanjem aplikacije na Android Market-u nam boste pomagali. Hvala!</string>
+    <string name="Remove">Odstrani</string>
+    <string name="Resend_now">Pošlji ponovno takoj</string>
+    <string name="Edit">Uredi</string>
+    <string name="Message_is_sent_sucessfully">Sporočilo je bilo uspešno poslano</string>
+    <string name="Message_resend_later">Pošiljanje neuspešno, poskusite ponovno kasneje</string>
+    <string name="Sending_please_wait">Sporočilo se pravkar pošilja, prosimo počakajte...</string>
+    <string name="Today_at">Danes, ob</string>
+    <string name="Tomorrow_at">Jutri, ob</string>
+    <string name="Yesterday_at">Včeraj, ob</string>
+    <string name="First_time_running">Čas prvega zagona</string>
+    <string name="please_wait_while_loading_contact">Nalaganje kontaktov</string>
+    <string name="vn_special_characters">àáảãạäèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợöùúủũụưừứửữựüỳýỷỹỵăằắẳẵặâầấẩẫậđ</string>
+    <string name="Enter_message_here">Sporočilo vnesite tukaj...</string>
+    <string name="more_apps">Več aplikacij...</string>
+    <string name="Share">Deli</string>
+    <string name="Contact">Kontakt</string>
+    <string name="Share_subject">Deli</string>
+    <string name="Share_content">Dobra aplikacija za pošiljanje sporočil po urniku: https://play.google.com/store/apps/details?id=dtd.phs.sil</string>
+    <string name="Call_now">Pokliči takoj</string>
+    <string name="sms_now">Pošlji SMS takoj</string>
+    <string name="Invalid_time_warning">Neveljaven čas, izberite kasnejši datum/čas</string>
+    <string name="Insert">Vstavi</string>
+</resources>

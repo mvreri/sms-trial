@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 сообщений</item>
+        <item>10 сообщений</item>
+        <item>Все сообщения</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Толко раз</item>
+        <item>Каждый день</item>
+        <item>Еженеделно</item>
+        <item>Ежемесячно</item>
+        <item>Каждый год</item>
+        <item>Неделя (Пон.-Пят.)</item>
+        <item>Выходные (Суб. Воск.)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Тищина</item>
+        <item>Вибрация</item>
+        <item>Голос</item>
+        <item>Вибрация и голос</item>
+    </string-array>
+    <string-array name="months">
+        <item>Ян.</item>
+        <item>Фев.</item>
+        <item>Мар.</item>
+        <item>Апр.</item>
+        <item>Май</item>
+        <item>Июнь.</item>
+        <item>Июль.</item>
+        <item>Авг.</item>
+        <item>Сен.</item>
+        <item>Окт.</item>
+        <item>Ноя.</item>
+        <item>Дек.</item>
+    </string-array>
+
+</resources>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 sporočil</item>
+        <item>10 sporočil</item>
+        <item>Vsa sporočila</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Enkrat</item>
+        <item>Dnevno</item>
+        <item>Tedensko</item>
+        <item>Mesečno</item>
+        <item>Letno</item>
+        <item>Ob delavnikih (Pon-Pet)</item>
+        <item>Ob vikendih (Sob-Ned)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Tiho</item>
+        <item>Vibriraj</item>
+        <item>Predvajaj zvok</item>
+        <item>Vibriranje in zvok</item>
+    </string-array>
+    <string-array name="months">
+        <item>Jan.</item>
+        <item>Feb.</item>
+        <item>Mar.</item>
+        <item>Apr.</item>
+        <item>Maj</item>
+        <item>Jun.</item>
+        <item>Jul.</item>
+        <item>Avg.</item>
+        <item>Sep.</item>
+        <item>Okt.</item>
+        <item>Nov.</item>
+        <item>Dec.</item>
+    </string-array>
+
+</resources>
