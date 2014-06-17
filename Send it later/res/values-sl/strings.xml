@@ -38,9 +38,9 @@
     <string name="Exit">Izhod</string>
     <string name="Sent_to">Poslano:</string>
     <string name="PREF_MAX_SENT_ITEM">PREF_MAX_SENT_ITEM</string>
-    <string name="Max_sent_item">Samodejno počisti poslana sporočila</string>
+    <string name="Max_sent_item">Počisti poslana sporočila</string>
     <string name="Max_sent_item_summary">Obdrži le najnovejša sporočila</string>
-    <string name="Max_sent_item_dialog_title">Obdrži najnovejša</string>
+    <string name="Max_sent_item_dialog_title">Obdrži najnovejših</string>
     
     
     <string name="about_us">O nas</string>
