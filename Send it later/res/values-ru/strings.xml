@@ -5,12 +5,12 @@
     <string name="pending_messages">В очереди</string>
     <string name="next">Следуюший</string>
     <string name="sent">Отправит</string>
-    <string name="date">Время:</string>
+    <string name="Date">Время:</string>
     
     <string name="Ok">Ok</string>
     <string name="Cancel">Отмена</string>
-    <string name="hour">Час</string>
-    <string name="minute">Минута</string>
+    <string name="Hour">Час</string>
+    <string name="Minute">Минута</string>
     <string name="To">Кому:</string>
     <string name="Time">Время:</string>
     <string name="Done">Зделано</string>
@@ -58,7 +58,7 @@
     <string name="Remove">Удали</string>
     <string name="Resend_now">Отправь заного</string>
     <string name="Edit">Редактировать</string>
-    <string name="Message_is_sent_successfully">Сообщение удачно отправлено</string>
+    <string name="Message_is_sent_sucessfully">Сообщение удачно отправлено</string>
     <string name="Message_resend_later">Отправка не удалась , повторите попытку по пожже</string>
     <string name="Sending_please_wait">Отправка, пожалуста подождите вЂ¦</string>
     <string name="Today_at">Сегодня, в</string>
