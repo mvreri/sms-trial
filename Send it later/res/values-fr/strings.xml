@@ -17,7 +17,7 @@
     <string name="Never">Jamais</string>
     <string name="Frequency">Fréquence : </string>
     <string name="Alert_on_delivery">Notification d\'envoi :</string>
-    <string name="Words">Caractères / SMS</string>
+    <string name="Characters">Caractères / SMS</string>
     <string name="Message">Message</string>
     <string name="Choose_Frequency">Choisir la fréquence</string>
     <string name="Add">Ajouter</string>

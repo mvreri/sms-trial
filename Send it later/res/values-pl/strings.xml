@@ -17,7 +17,7 @@
     <string name="Never">Nigdy</string>
     <string name="Frequency">Częstotliwość: </string>
     <string name="Alert_on_delivery">Powiadomienie:</string>
-    <string name="Words">Znaków / Wiadomości</string>
+    <string name="Characters">Znaków / Wiadomości</string>
     <string name="Message">Treść</string>
     <string name="Choose_Frequency">Częstotliwość</string>
     <string name="Add">Dodaj</string>

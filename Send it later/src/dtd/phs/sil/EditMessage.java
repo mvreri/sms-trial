@@ -292,7 +292,7 @@ extends Activity
 				tvCountWords.post(new Runnable() {
 					@Override
 					public void run() {
-						tvCountWords.setText(res.getString(R.string.Words)+": "  + s.length()+ " / " + parts.size());
+						tvCountWords.setText(res.getString(R.string.Characters)+": "  + s.length()+ " / " + parts.size());
 					}
 				});
 			}
