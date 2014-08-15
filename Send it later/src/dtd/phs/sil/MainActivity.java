@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Fragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -53,15 +54,12 @@ implements IContactLoader
 	private static final int[] NORMAL_TAB_RES = {R.drawable.clock_desat , R.drawable.message_desat};
 	private static final int DIALOG_RATE = R.id.btRate;
 
-
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
-
 		initAnimations();
 		addFrames();
 		processBottomTabs();
