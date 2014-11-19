@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="max_sent_number">
+        <item>5</item>
+        <item>10</item>
+        <item>100</item>
+    </string-array>
+    <string-array name="max_sent_number_str">
+        <item>5 messaggi</item>
+        <item>10 messaggi</item>
+        <item>Tutti messaggi</item>
+    </string-array>
+    <string-array name="frequencies">
+        <item>Una volta</item>
+        <item>Quotidiana</item>
+        <item>Settimanale</item>
+        <item>Mensile</item>
+        <item>Annuale</item>
+        <item>Giorno feriale (Lun.- Ven.)</item>
+        <item>Fine settimana (Sab.- Dom.)</item>
+    </string-array>
+    <string-array name="alerts">
+        <item>Silenzioso</item>
+        <item>Vibrazione</item>
+        <item>Riproduci suono</item>
+        <item>Suono e vibrazione</item>
+    </string-array>
+    <string-array name="months">
+        <item>Gen.</item>
+        <item>Feb.</item>
+        <item>Mar.</item>
+        <item>Apr.</item>
+        <item>Mag.</item>
+        <item>Giu.</item>
+        <item>Lug.</item>
+        <item>Ago.</item>
+        <item>Set.</item>
+        <item>Ott.</item>
+        <item>Nov.</item>
+        <item>Dic.</item>
+    </string-array>
+
+</resources>
